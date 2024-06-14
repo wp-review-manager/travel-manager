@@ -1,7 +1,7 @@
 <?php
     $avatar = get_avatar($post->post_author, 25);
     $display_name = "<span class='display_name'>" . get_the_author_meta('display_name', $post->post_author) . "</span>";
-    $star_count =  get_post_meta($post->ID, 'WPWVT_total_stars', true);
+    $star_count =  get_post_meta($post->ID, 'TM_total_stars', true);
     $star_count = ($star_count) ? intval($star_count) : 0;
 ?>
 <li>

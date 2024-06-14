@@ -43,45 +43,56 @@ class WPTravelManager {
                 'dashicons-editor-code',
                 25
             );
-            $submenu['wpp-plugin-with-vue-tailwind.php']['dashboard'] = array(
+            $submenu['travel-manager.php']['dashboard'] = array(
                 'Dashboard',
                 'manage_options',
-                'admin.php?page=wpp-plugin-with-vue-tailwind.php#/',
+                'admin.php?page=travel-manager.php#/',
             );
-            $submenu['wpp-plugin-with-vue-tailwind.php']['contact'] = array(
-                'Contact',
+            $submenu['travel-manager.php']['trips'] = array(
+                'Trips',
                 'manage_options',
-                'admin.php?page=wpp-plugin-with-vue-tailwind.php#/contact',
+                'admin.php?page=travel-manager.php#/trips',
+            );
+            $submenu['travel-manager.php']['bookings'] = array(
+                'Bookings',
+                'manage_options',
+                'admin.php?page=travel-manager.php#/bookings',
+            );
+            $submenu['travel-manager.php']['customers'] = array(
+                'Customers',
+                'manage_options',
+                'admin.php?page=travel-manager.php#/customers',
             );
         });
     }
 
     public function renderAdminPage()
     {
-        wp_enqueue_script('WPWVT-script-boot', TM_URL . 'assets/admin/js/start.js', array('jquery'), TM_VERSION, false);
-        wp_enqueue_style('WPWVT-global-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
+        wp_enqueue_script('TM-script-boot', TM_URL . 'assets/admin/js/start.js', array('jquery'), TM_VERSION, false);
+        wp_enqueue_style('TM-global-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
+        wp_enqueue_style('TM-admin-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
 
-        $WPWVT = apply_filters('WPWVT/admin_app_vars', array(
+        $TM = apply_filters('TM/admin_app_vars', array(
             //'image_upload_url' => admin_url('admin-ajax.php?action=wpf_global_settings_handler&route=wpf_upload_image'),
             'assets_url' => TM_URL . 'assets/',
             'ajaxurl' => admin_url('admin-ajax.php')
         ));
 
-        wp_localize_script('WPWVT-script-boot', 'WPWVTAdmin', $WPWVT);
+        wp_localize_script('TM-script-boot', 'TMAdmin', $TM);
 
-        echo '<div class="WPWVT-admin-page" id="WPWVT_app">
-            <div class="main-menu text-white-200 bg-wheat-600 p-4">
-                <router-link to="/">
+        echo '<div class="TM-admin-page" id="TM_app">
+            <div class="tm-main-menu">
+                <router-link class="tm-menu-item" to="/">
                     Dashboard
-                </router-link> |
-                <router-link to="/trips" >
+                </router-link> 
+                <router-link class="tm-menu-item" to="/trips" >
                     Trips
                 </router-link>
-                <router-link to="/bookings" >
+                <router-link class="tm-menu-item" to="/bookings" >
                     Bookings
                 </router-link>
-                <router-link to="/customers" >
-                    Bookings
+                <router-link class="tm-menu-item" to="/customers" >
+                    Customers
                 </router-link>
             </div>
             <hr/>

@@ -1,0 +1,14 @@
+.TM-admin-page {
+    background-color: $tm-neutral-50;
+    margin-left: -20px;
+    .tm-main-menu {
+        background-color: $tm-neutral-50;
+        border-right: 1px solid $tm-neutral-100;
+        padding: 20px;
+        .tm-menu-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 6px 12px;
+        }
+    }
+}

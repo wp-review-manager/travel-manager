@@ -85,7 +85,7 @@ export default class WPTravelManager {
             return;
         }
 
-        this.addFilter('WPWVT_top_menus', this.appVars.slug, function (menus) {
+        this.addFilter('TM_top_menus', this.appVars.slug, function (menus) {
             menus = menus.filter(m => m.route !== route.name);
             menus.push({
                 route: route.name,
@@ -94,7 +94,7 @@ export default class WPTravelManager {
             return menus;
         });
 
-        this.addFilter('WPWVT_global_routes', this.appVars.slug, function (routes) {
+        this.addFilter('TM_global_routes', this.appVars.slug, function (routes) {
             routes = routes.filter(r => r.name !== route.name);
             routes.push(route);
             return routes;
@@ -138,7 +138,7 @@ export default class WPTravelManager {
     }
 
     saveData(key, data) {
-        let existingData = window.localStorage.getItem('__WPWVT_data');
+        let existingData = window.localStorage.getItem('__TM_data');
 
         if (!existingData) {
             existingData = {};
@@ -148,11 +148,11 @@ export default class WPTravelManager {
 
         existingData[key] = data;
 
-        window.localStorage.setItem('__WPWVT_data', JSON.stringify(existingData));
+        window.localStorage.setItem('__TM_data', JSON.stringify(existingData));
     }
 
     getData(key, defaultValue = false) {
-        let existingData = window.localStorage.getItem('__WPWVT_data');
+        let existingData = window.localStorage.getItem('__TM_data');
         existingData = JSON.parse(existingData);
         if (!existingData) {
             return defaultValue;
