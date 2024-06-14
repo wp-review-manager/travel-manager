@@ -1,29 +1,32 @@
 <template>
-  <div>
-    <div class="relative bg-blueGray-100">
-      <dashboard-navbar />
-      <header-stats />
-      <div class="px-4 md:px-10 mx-auto w-full -m-24">
-        <Dashboard/>
-        <router-view />
-        <footer-admin />
-      </div>
-    </div>
-  </div>
+  <el-table :data="tableData" style="width: 100%">
+    <el-table-column prop="date" label="Date" width="180" />
+    <el-table-column prop="name" label="Name" width="180" />
+    <el-table-column prop="address" label="Address" />
+  </el-table>
 </template>
-<script>
-import DashboardNavbar from "./Navbars/DashboardNavbar.vue";
-import HeaderStats from "./Headers/HeaderStats.vue";
-import FooterAdmin from "./Footers/FooterAdmin.vue";
 
-import Dashboard from './Dashboard.vue';
-export default {
-  name: "admin-layout",
-  components: {
-    DashboardNavbar,
-    HeaderStats,
-    FooterAdmin,
-    Dashboard
+<script  setup>
+const tableData = [
+  {
+    date: '2016-05-03',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
   },
-};
+  {
+    date: '2016-05-02',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-04',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
 </script>
