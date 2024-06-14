@@ -35,10 +35,10 @@ class WPPluginWithVueTailwind {
             }
             global $submenu;
             add_menu_page(
-                'WPPluginVueTailwind',
-                'WP Plugin Vue Tailwind',
+                'TravelManager',
+                'Travel Manager',
                 'manage_options',
-                'wpp-plugin-with-vue-tailwind.php',
+                'travel-manager.php',
                 array($this, 'renderAdminPage'),
                 'dashicons-editor-code',
                 25
@@ -72,10 +72,16 @@ class WPPluginWithVueTailwind {
         echo '<div class="WPWVT-admin-page" id="WPWVT_app">
             <div class="main-menu text-white-200 bg-wheat-600 p-4">
                 <router-link to="/">
-                    Home
+                    Dashboard
                 </router-link> |
-                <router-link to="/contact" >
-                    Contact
+                <router-link to="/trips" >
+                    Trips
+                </router-link>
+                <router-link to="/bookings" >
+                    Bookings
+                </router-link>
+                <router-link to="/customers" >
+                    Bookings
                 </router-link>
             </div>
             <hr/>
