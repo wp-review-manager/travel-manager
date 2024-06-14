@@ -1,6 +1,6 @@
 import routes from './routes';
 import { createWebHashHistory, createRouter } from 'vue-router'
-import WPPluginVueTailwind from './Bits/WPPluginVueTailwind';
+import WPTravelManager from './Bits/WPTravelManager';
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -8,11 +8,11 @@ const router = createRouter({
 });
 
 
-const framework = new WPPluginVueTailwind();
+const framework = new WPTravelManager();
 
-framework.app.config.globalProperties.appVars = window.WPPluginVueTailwindAdmin;
+framework.app.config.globalProperties.appVars = window.WPTravelManagerAdmin;
 
-window.WPPluginVueTailwindApp = framework.app.use(router).mount('#WPWVT_app');
+window.WPTravelManagerApp = framework.app.use(router).mount('#WPWVT_app');
 
 router.afterEach((to, from) => {
     jQuery('.WPWVT_menu_item').removeClass('active');

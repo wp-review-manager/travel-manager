@@ -3,14 +3,14 @@
 /**
  * Autoloader
  *
- * @package WPPluginVueTailwind
+ * @package WPTravelManager
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 include 'global_functions.php';
-if (!function_exists('WPPluginVueTailwindAutoload')) {
+if (!function_exists('WPTravelManagerAutoload')) {
     /**
      * Plugin autoloader.
      *
@@ -22,10 +22,10 @@ if (!function_exists('WPPluginVueTailwindAutoload')) {
      *
      * @param $class
      */
-    function WPPluginVueTailwindAutoload($class)
+    function WPTravelManagerAutoload($class)
     {
         // Do not load unless in plugin domain.
-        $namespace = 'WPPluginWithVueTailwind';
+        $namespace = 'WPTravelManager';
         if (strpos($class, $namespace) !== 0) {
             return;
         }
@@ -45,5 +45,5 @@ if (!function_exists('WPPluginVueTailwindAutoload')) {
         }
     }
     // Register the autoloader.
-    spl_autoload_register('WPPluginVueTailwindAutoload');
+    spl_autoload_register('WPTravelManagerAutoload');
 }

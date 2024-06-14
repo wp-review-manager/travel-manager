@@ -1,6 +1,6 @@
 <?php
 
-namespace WPPluginWithVueTailwind\Classes;
+namespace WPTravelManager\Classes;
 
 if (!defined('ABSPATH')) {
     exit;

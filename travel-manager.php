@@ -13,7 +13,7 @@ define('TM_DIR', plugin_dir_path(__FILE__));
 
 define('TM_VERSION', '1.0.5');
 
-class WPPluginWithVueTailwind {
+class WPTravelManager {
     public function boot()
     {
         $this->loadClasses();
@@ -99,13 +99,13 @@ class WPPluginWithVueTailwind {
         //activation deactivation hook
         register_activation_hook(__FILE__, function ($newWorkWide) {
             require_once(TM_DIR . 'includes/Classes/Activator.php');
-            $activator = new \WPPluginWithVueTailwind\Classes\Activator();
+            $activator = new \WPTravelManager\Classes\Activator();
             $activator->migrateDatabases($newWorkWide);
         });
     }
 }
 
-(new WPPluginWithVueTailwind())->boot();
+(new WPTravelManager())->boot();
 
 
 
