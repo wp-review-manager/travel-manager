@@ -82,18 +82,23 @@ class WPTravelManager {
 
         echo '<div class="TM-admin-page" id="TM_app">
             <div class="tm-main-menu">
-                <router-link class="tm-menu-item" to="/">
-                    Dashboard
-                </router-link> 
-                <router-link class="tm-menu-item" to="/trips" >
-                    Trips
-                </router-link>
-                <router-link class="tm-menu-item" to="/bookings" >
-                    Bookings
-                </router-link>
-                <router-link class="tm-menu-item" to="/customers" >
-                    Customers
-                </router-link>
+                <div class="tm-menu-logo">
+                    <h3>TRAVEL Manager</h3>
+                </div>
+                <div class="menu-item">
+                    <router-link class="tm-menu-item" to="/">
+                        Dashboard
+                    </router-link> 
+                    <router-link class="tm-menu-item" to="/trips" >
+                        Trips
+                    </router-link>
+                    <router-link class="tm-menu-item" to="/bookings" >
+                        Bookings
+                    </router-link>
+                    <router-link class="tm-menu-item" to="/customers" >
+                        Customers
+                    </router-link>
+                </div>
             </div>
             <hr/>
             <router-view></router-view>

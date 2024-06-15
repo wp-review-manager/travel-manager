@@ -3,12 +3,27 @@
     margin-left: -20px;
     .tm-main-menu {
         background-color: $tm-neutral-50;
-        border-right: 1px solid $tm-neutral-100;
+        border-right: 1px solid $tm-primary-100;
         padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .tm-menu-logo {
+            h3 {
+                @include text($color: $tm-primary-500, $size: 22px, $weight: 800, $lineHeight: 28px);
+            }
+        }
         .tm-menu-item {
-            background: #fff;
+            padding: 10px 16px;
             border-radius: 8px;
-            padding: 6px 12px;
+            @include text($color: $tm-dark-500, $size: 15px, $weight: 500, $lineHeight: 22px);
+            &:hover {
+                color: $tm-primary-500;
+            }
+            &.router-link-active {
+                background: $tm-primary-50;
+                color: $tm-primary-500;
+            }
         }
     }
 }

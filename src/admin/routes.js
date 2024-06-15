@@ -10,8 +10,18 @@ export default [{
         },
     },
     {
-        path: '/contact',
-        name: 'contact',
+        path: '/trips',
+        name: 'trips',
+        component: Contact
+    },
+    {
+        path: '/bookings',
+        name: 'bookings',
+        component: Contact
+    },
+    {
+        path: '/customers',
+        name: 'customers',
         component: Contact
     }
 ];
