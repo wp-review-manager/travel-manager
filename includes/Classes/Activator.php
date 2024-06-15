@@ -41,18 +41,120 @@ class Activator
         * and write your own query at createUserFavorite function
         */
 
-        $this->sampleTable();
+        $this->migrateDestinationTable();
+        $this->migrateAttributesTable();
+        $this->migrateTripCategoriesTable();
+        $this->migrateActivityTable();
+        $this->migrateDefaultyTable();
+        $this->migratePricingCategoriesTable();
     }
 
-    public function sampleTable()
+    public function migrateDestinationTable()
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'TM_user_favorites';
+        $table_name = $wpdb->prefix . 'tm_destinations';
         $sql = "CREATE TABLE $table_name (
             id int(10) NOT NULL AUTO_INCREMENT,
-            user_id int(10) NOT NULL,
-            post_id int(10) NOT NULL,
+            place_name VARCHAR(255) NOT NULL,
+            place_slug VARCHAR(255) NOT NULL,
+            place_desc LONGTEXT  NULL,
+            images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateAttributesTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_attributes';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            attr_title VARCHAR(255) NOT NULL,
+            attr_slug VARCHAR(255) NOT NULL,
+            attr_desc LONGTEXT  NULL,
+            images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateTripCategoriesTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_trip_categories';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            trip_category_name VARCHAR(255) NOT NULL,
+            trip_category_slug VARCHAR(255) NOT NULL,
+            trip_category_desc LONGTEXT  NULL,
+            images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateActivityTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_trip_activity';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            trip_activity_name VARCHAR(255) NOT NULL,
+            trip_activity_slug VARCHAR(255) NOT NULL,
+            trip_activity_desc LONGTEXT  NULL,
+            images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateDefaultyTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_trip_defaulty';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            trip_defaulty_name VARCHAR(255) NOT NULL,
+            trip_defaulty_slug VARCHAR(255) NOT NULL,
+            trip_defaulty_desc LONGTEXT  NULL,
+            images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migratePricingCategoriesTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_pricing_categories';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            pricing_categories_name VARCHAR(255) NOT NULL,
+            pricing_categories_slug VARCHAR(255) NOT NULL,
+            pricing_categories_desc LONGTEXT  NULL,
+            images LONGTEXT null,
             created_at timestamp NULL DEFAULT NULL,
             updated_at timestamp NULL DEFAULT NULL,
             PRIMARY KEY (id)
