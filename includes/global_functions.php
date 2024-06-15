@@ -15,3 +15,8 @@ function TM_getAvatar($email, $size)
         $email
     );
 }
+
+function TMDBModel($tableName = false)
+{
+    return new \WPTravelManager\Classes\Models\Model($tableName);
+}
