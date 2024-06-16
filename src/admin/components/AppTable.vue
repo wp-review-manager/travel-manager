@@ -9,6 +9,9 @@
         <el-table :data="tableData" style="width: 100%">
             <slot name="columns"></slot>
         </el-table>
+        <div class="tm-pagination table-footer">
+            <slot name="footer"></slot>
+        </div>
     </div>
 </template>
 

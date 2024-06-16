@@ -20,6 +20,17 @@
             max-width: 250px;
         }
     }
+    .table-footer {
+        padding: 16px 20px;
+        padding-top: 4px;
+        .el-pagination {
+            display: flex;
+            justify-content: flex-end;
+            .el-pagination__total {
+                margin-right: 20px;
+            }
+        }
+    }
     table {
         thead > tr > th {
             background-color: $tm-neutral-50 !important;

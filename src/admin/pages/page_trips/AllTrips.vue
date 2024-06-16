@@ -10,16 +10,20 @@
             <AppDatePicker />
         </template>
         <template #columns>
-            <el-table-column prop="date" label="Date" width="180" />
+            <el-table-column prop="date" label="Date" width="220" />
             <el-table-column prop="name" label="Name" width="180" />
             <el-table-column prop="state" label="State" width="180" />
-            <el-table-column prop="city" label="City" width="180" />
+            <el-table-column prop="city" label="City" width="220" />
             <el-table-column prop="zip" label="Zip" width="180" />
             <el-table-column  label="Operations" width="120">
                 <template #default>
                     <el-button link type="primary" size="small">Edit</el-button>
                 </template>
             </el-table-column>
+        </template>
+
+        <template #footer>
+            <el-pagination small background layout="prev, pager, next" :total="50" class="mt-4" />
         </template>
     </AppTable>
 </template>
