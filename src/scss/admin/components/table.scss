@@ -20,4 +20,12 @@
             max-width: 250px;
         }
     }
+    table {
+        thead > tr > th {
+            background-color: $tm-neutral-50 !important;
+        }
+        tr {
+            height: 60px;
+        }
+    }
 }

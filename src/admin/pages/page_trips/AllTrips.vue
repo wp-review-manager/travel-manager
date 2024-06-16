@@ -1,15 +1,40 @@
 <template>
-    <AppTable :tableData="tableData"/>
+    <AppTable :tableData="tableData">
+        <template #header>
+            <h1 class="table-title">All Trips</h1>
+            <el-button size="large" type="primary" icon="Plus">Add New Trip </el-button>
+        </template>
+        <template #filter>
+            <el-input class="tm-search-input" v-model="input1" style="width: 240px" size="large"
+                placeholder="Please Input" prefix-icon="Search" />
+            <AppDatePicker />
+        </template>
+        <template #columns>
+            <el-table-column prop="date" label="Date" width="180" />
+            <el-table-column prop="name" label="Name" width="180" />
+            <el-table-column prop="state" label="State" width="180" />
+            <el-table-column prop="city" label="City" width="180" />
+            <el-table-column prop="zip" label="Zip" width="180" />
+            <el-table-column  label="Operations" width="120">
+                <template #default>
+                    <el-button link type="primary" size="small">Edit</el-button>
+                </template>
+            </el-table-column>
+        </template>
+    </AppTable>
 </template>
 
 <script>
-import AppTable from  "@/components/AppTable.vue";
+import AppTable from "@/components/AppTable.vue";
+import AppDatePicker from "@/components/element/AppDatePicker.vue"
 export default {
     components: {
-        AppTable
+        AppTable,
+        AppDatePicker
     },
     data() {
         return {
+            input1: '',
             tableData: [
                 {
                     date: '2016-05-03',
