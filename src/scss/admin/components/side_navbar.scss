@@ -1,0 +1,21 @@
+.tm-side-navbar-wrapper {
+    background-color: $tm_background_color;
+    width: 220px;
+    height: 100vh;
+    .tm-side-navbar {
+        li {
+            margin-bottom: 0px;
+            a {
+                text-decoration: inherit;
+                padding: 12px;
+                display: block;
+                width: 100%;
+                @include text($color: $tm-dark-500, $size: 14px, $weight: 600, $lineHeight: 22px);
+                &.router-link-exact-active {
+                    background: $tm-primary-500;
+                    color: $tm-text-light;
+                }
+            }
+        }
+    }
+}

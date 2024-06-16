@@ -1,8 +1,7 @@
 .TM-admin-page {
-    background-color: $tm-neutral-50;
     margin-left: -20px;
     .tm-main-menu {
-        background-color: $tm-neutral-50;
+        background-color: $tm_background_color;
         border-right: 1px solid $tm-primary-100;
         padding: 20px;
         display: flex;

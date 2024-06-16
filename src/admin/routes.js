@@ -1,10 +1,13 @@
-import Admin from '@pages/page_dashboard/Dashboard.vue';
-import Contact from './pages/page_dashboard/Dashboard.vue';
+import Dashboard from '@pages/page_dashboard/Dashboard.vue';
+import GlobalSettings from './pages/page_global_settings/GlobalSettings.vue';
+import TripIndex from '@/pages/page_trips/TripIndex.vue';
+import AllTrips from '@/pages/page_trips/AllTrips.vue';
 
-export default [{
+export default [
+    {
         path: '/',
         name: 'dashboard',
-        component: Admin,
+        component: Dashboard,
         meta: {
             active: 'dashboard'
         },
@@ -12,16 +15,57 @@ export default [{
     {
         path: '/trips',
         name: 'trips',
-        component: Contact
+        component: TripIndex,
+        children: [
+            {
+              path: '',
+              component: AllTrips,
+            },
+            {
+                path: 'destinations',
+                component: Dashboard,
+            },
+            {
+                path: 'travel-categories',
+                component: Dashboard,
+            },
+            {
+                path: 'attributes',
+                component: Dashboard,
+            },
+            {
+                path: 'activities',
+                component: Dashboard,
+            },
+            {
+                path: 'deficulty-levels',
+                component: Dashboard,
+            },
+            {
+                path: 'pricing-categories',
+                component: Dashboard,
+            },
+
+          ],
     },
     {
         path: '/bookings',
         name: 'bookings',
-        component: Contact
+        component: Dashboard
     },
     {
         path: '/customers',
         name: 'customers',
-        component: Contact
-    }
+        component: Dashboard
+    },
+    {
+        path: '/enquiries',
+        name: 'enquiries',
+        component: Dashboard
+    },
+    {
+        path: '/settings',
+        name: 'settings',
+        component: GlobalSettings,
+    },
 ];

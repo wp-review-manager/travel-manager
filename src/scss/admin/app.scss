@@ -1,5 +1,10 @@
 @import './color.scss';
 @import './mixin.scss';
 @import './base.css';
+@import './variable.scss';
 @import './global_css.scss';
-@import './components/navbar.scss'
+@import './components/navbar.scss';
+@import './components/side_navbar.scss';
+
+//pages
+@import './pages/trips/trip_index.scss'

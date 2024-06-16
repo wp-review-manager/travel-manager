@@ -1,0 +1,10 @@
+.tm-trip-wrapper  {
+    display: flex;
+    gap: 20px;
+    .tm-trip-content-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+        background-color: $tm_background_color;
+    }
+}
