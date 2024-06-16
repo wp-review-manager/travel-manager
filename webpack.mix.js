@@ -1,4 +1,16 @@
 let mix = require('laravel-mix');
+const path = require('path');
+
+mix.webpackConfig({
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src/admin'),
+        '@components': path.resolve(__dirname, 'src/admin/components'),
+        '@pages': path.resolve(__dirname, 'src/admin/pages') 
+      },
+    },
+  });
+
 mix.setPublicPath('assets');
 
 mix.setResourceRoot('../');

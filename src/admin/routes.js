@@ -1,5 +1,5 @@
-import Admin from './Components/Admin.vue';
-import Contact from './Components/Contact.vue';
+import Admin from '@pages/page_dashboard/Dashboard.vue';
+import Contact from './pages/page_dashboard/Dashboard.vue';
 
 export default [{
         path: '/',
