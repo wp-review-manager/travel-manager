@@ -2,9 +2,8 @@
     display: flex;
     gap: 20px;
     .tm-trip-content-wrapper {
-        width: 100%;
+        width: calc(100% - 240px);
         min-height: 100vh;
         padding: 20px;
-        background-color: $tm_background_color;
     }
 }

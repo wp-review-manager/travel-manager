@@ -1,0 +1,23 @@
+.tm-table-wrapper {
+    background: $tm_background_color;
+    border-radius: 8px;
+    .tm-table-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: $tm_border;
+        border-radius: 8px 8px 0px 0px;
+        .table-title {
+            @include text($size: 20px, $weight: 600)
+        }
+    }
+    .tm-table-filter {
+        padding: 14px 20px;
+        border-bottom: $tm_border;
+        display: flex;
+        gap: 20px;
+        .el-date-editor {
+            max-width: 250px;
+        }
+    }
+}
