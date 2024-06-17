@@ -1,6 +1,7 @@
 <?php
 namespace WPTravelManager\Classes\Controllers;
 use WPTravelManager\Classes\Services\DestinationServices;
+use WPTravelManager\Classes\Models\Destination;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class DestinationController {
@@ -10,6 +11,7 @@ class DestinationController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_destinations' => 'postDestinations',
+            'get_destinations' => 'getDestinations',
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -33,5 +35,16 @@ class DestinationController {
         } else {
             wp_send_json_error('Failed to add destination');
         }
+    }
+
+    public function getDestinations() {
+        $response = (new Destination())->getDestination();
+
+        wp_send_json_success(
+            array(
+                'data' => $response,
+                'message' => 'Destinations fetched successfully'
+            )
+        );
     }
 }

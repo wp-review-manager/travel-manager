@@ -1,6 +1,6 @@
 <template>
     <div class="tm_form_wrapper">
-        <h1 class="tm_form_title">Add New Destinations</h1>
+        <!-- <h1 class="tm_form_title"></h1> -->
         <div class="input-wrapper">
             <p class="form-label" for="name">Name *</p>
             <el-input required v-model="destination.place_name" style="width: 100%" placeholder="Please Input" size="large" />
@@ -59,7 +59,7 @@ export default {
                 this.slug_error = "Slug is required";
                 return;
             }
-            
+
             jQuery
             .post(ajaxurl, {
                 action: "tm_destinations",

@@ -1,0 +1,23 @@
+.tm-app-modal {
+    border-radius: 8px;
+    padding: 0;
+    .el-dialog__header {
+        border-bottom: $tm-border;
+        padding: 20px;
+        .el-dialog__title {
+            @include text($size: 20px, $weight: 600);
+        }
+        .el-dialog__headerbtn {
+            font-size: 16px;
+            font-weight: 700;
+            background: $tm-neutral-100;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            margin: 17px 15px;
+        }
+    }
+    .el-dialog__body {
+        padding: 14px;
+    }
+}
