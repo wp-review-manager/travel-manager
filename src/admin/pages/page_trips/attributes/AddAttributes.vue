@@ -16,7 +16,7 @@
 
         <div class="input-wrapper">
             <p class="form-label" for="name">Upload Image</p>
-            <ImageUpload />
+            <ImageUpload :image="image" />
         </div>
 
     </div>
@@ -31,6 +31,7 @@ export default {
     data() {
         return {
             input1: '',
+            image: {},
         }
     }
 }

@@ -10,6 +10,11 @@
         height: 80px;
         width: 80px;
         border-radius: 8px;
+        img {
+            aspect-ratio: 2 / 2;
+            object-fit: cover;
+            border-radius: 8px;
+        }
         .icon > svg {
             width: 20px;
             height: 20px;
