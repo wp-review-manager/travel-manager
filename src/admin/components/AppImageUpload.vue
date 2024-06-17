@@ -6,9 +6,15 @@
             class="tm_photo_holder file_upload_icon_btn"
         >
             <img :src="img?.url" :alt="img?.name"/>
+            <div @click="deleteImage(image, index)"  class="tm-delete-image">
+                <Icon icon="tm-cancel" />
+            </div>
         </div>
         <div v-else-if="hasImage(image)" class="tm_photo_holder file_upload_icon_btn">
             <img :src="image?.url" :alt="image?.name"/>
+            <div @click="deleteImage(image)" class="tm-delete-image">
+                <Icon icon="tm-cancel" />
+            </div>
         </div>
         <div v-if="buttonText" class="file_upload_text_btn">
             <Button @click="initUploader">
@@ -75,6 +81,15 @@ export default {
         },
         hasImage(image) {
             return image?.url?.length > 0;
+        },
+        deleteImage(image, index = null) {
+            if(index !== null) {
+                this.image.splice(index, 1);
+            } else {
+                this.image.url = "";
+                this.image.id = "";
+                this.image.name = "";
+            }
         }
     }
 }

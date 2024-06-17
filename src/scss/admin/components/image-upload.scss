@@ -26,5 +26,21 @@
             cursor: pointer;
         }
     }
+    .tm_photo_holder {
+        position: relative;
+        img {
+            cursor: default;
+        }
+        .tm-delete-image {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            padding: 4px;
+            background: $tm-primary-500;
+            border-radius: 50%;
+            color: $tm_text_light;
+            cursor: pointer;
+        }
+    }
 
 }
