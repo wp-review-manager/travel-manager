@@ -6,5 +6,26 @@
         min-height: 100vh;
         padding: 20px;
         padding-left: 2px;
+        .tm_destinations_wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            .tm_form_wrapper {
+                width: 30%;
+                background: #fff;
+                border-radius: 8px;
+                .tm_form_title {
+                    @include text($size: 20px, $weight: 600);
+                    border-bottom: $tm_border;
+                    padding: 20px;
+                }
+                .input-wrapper {
+                    padding: 20px;
+                }
+            }
+            .tm-table-wrapper {
+                width: 70%;
+            }
+        }
     }
 }

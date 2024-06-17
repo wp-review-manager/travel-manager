@@ -1,0 +1,25 @@
+.tm_photo_card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    .file_upload_icon_btn{
+        border: 2px dashed $tm-neutral-500;
+        // background: $tm-neutral-100;
+        background: $tm-neutral-50;
+        height: 80px;
+        width: 80px;
+        border-radius: 8px;
+        .icon > svg {
+            width: 20px;
+            height: 20px;
+            fill: $tm-neutral-400;
+            margin: 0 auto;
+            margin-top: 29px;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+}

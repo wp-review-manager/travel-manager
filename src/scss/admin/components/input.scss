@@ -1,12 +1,14 @@
-.tm-search-input {
-    .el-input__wrapper{
-        border-radius: 8px;
-        .el-input__inner {
+.el-input__wrapper{
+    border-radius: 8px;
+    .el-input__inner {
+        border: none;
+        &:focus {
             border: none;
-            &:focus {
-                border: none;
-                box-shadow: none;
-            }
+            box-shadow: none;
         }
     }
+}
+.form-label {
+    @include text($size: 14px, $weight: 500);
+    margin-bottom: 5px;
 }
