@@ -20,3 +20,19 @@ function TMDBModel($tableName = false)
 {
     return new \WPTravelManager\Classes\Models\Model($tableName);
 }
+
+function tmValidateNonce($key = 'tm_admin_nonce')
+{
+    $nonce = \Azonpress\Classes\ArrayHelper::get($_REQUEST, $key);
+    $shouldVerify = apply_filters('tm_nonce_verify', true);
+
+    if ($shouldVerify && !wp_verify_nonce($nonce, $key)) {
+        $errors = apply_filters('azp_nonce_error', [
+            'error' => [
+                __('Nonce verification failed, please try again.', 'azp_app')
+            ]
+        ]);
+
+        wp_send_json($errors['error'], 422);
+    }
+}

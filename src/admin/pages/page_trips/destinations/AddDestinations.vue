@@ -2,36 +2,79 @@
     <div class="tm_form_wrapper">
         <h1 class="tm_form_title">Add New Destinations</h1>
         <div class="input-wrapper">
-            <p class="form-label" for="name">Name</p>
-            <el-input v-model="input1" style="width: 100%" placeholder="Please Input" size="large" />
+            <p class="form-label" for="name">Name *</p>
+            <el-input required v-model="destination.place_name" style="width: 100%" placeholder="Please Input" size="large" />
+            <p class="error-message">{{ name_error }}</p>
         </div>
         <div class="input-wrapper">
-            <p class="form-label" for="name">Slug</p>
-            <el-input v-model="input1" style="width: 100%" placeholder="Please Input" size="large" />
+            <p class="form-label" for="name">Slug *</p>
+            <el-input v-model="destination.place_slug" style="width: 100%" placeholder="Please Input" size="large" />
+            <p class="error-message">{{ slug_error }}</p>
         </div>
         <div class="input-wrapper">
             <p class="form-label" for="name">Description</p>
-            <el-input v-model="input1" style="width: 100%" placeholder="Please Input" size="large" type="textarea" />
+            <el-input v-model="destination.place_desc" style="width: 100%" placeholder="Please Input" size="large" type="textarea" />
         </div>
 
         <div class="input-wrapper">
             <p class="form-label" for="name">Upload Image</p>
-            <ImageUpload :is_multiple="true" :image="images" />
+            <ImageUpload :image="destination.images" />
+        </div>
+
+        <div class="input-wrapper" @click="saveDestination()">
+            <el-button size="large" type="primary">Save Destination</el-button>
         </div>
 
     </div>
 </template>
 
 <script>
-import ImageUpload from "@/components/AppImageUpload.vue"
+import ImageUpload from "@/components/AppImageUpload.vue";
+
 export default {
     components: {
         ImageUpload
     },
     data() {
         return {
-            input1: '',
-            images: [],
+            destination: {
+                place_name: "",
+                place_slug: "",
+                place_desc: "",
+                images: {}
+            },
+            name_error: "",
+            slug_error: ""
+        }
+    },
+    methods: {
+        saveDestination() {
+            this.name_error = "";
+            this.slug_error = "";
+            if (this.destination.place_name === "") {
+                this.name_error = "Name is required";
+                return;
+            }
+            if (this.destination.place_slug === "") {
+                this.slug_error = "Slug is required";
+                return;
+            }
+            
+            jQuery
+            .post(ajaxurl, {
+                action: "tm_destinations",
+                route: "post_destinations",
+                tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                data: this.destination
+            }).then((response) => {
+                this.$notify({
+                    title: 'Success',
+                    message: response.data,
+                    type: 'success',
+                    position: 'bottom-right',
+                })
+                console.log(response);
+            });
         }
     }
 }

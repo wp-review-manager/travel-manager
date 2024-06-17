@@ -1,5 +1,4 @@
 <?php
-
 namespace WPTravelManager\Classes;
 
 if (!defined('ABSPATH')) {
