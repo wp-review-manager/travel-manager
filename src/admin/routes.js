@@ -4,7 +4,12 @@ import GlobalSettings from './pages/page_global_settings/GlobalSettings.vue';
 import TripIndex from '@/pages/page_trips/TripIndex.vue';
 import AllTrips from '@/pages/page_trips/trips/AllTrips.vue';
 import AllDestinations from '@/pages/page_trips/destinations/AllDestinations.vue';
-import AllAttributes from '@/pages/page_trips/attributes/AllAttributes.vue';
+import AllAttributes from '@/pages/page_trips/destinations/AllDestinations.vue';
+
+// Settings section components
+import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
+import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
+import PaymentSettings from '@/pages/page_settings/payment/PaymentSettings.vue';
 
 export default [
     {
@@ -69,6 +74,18 @@ export default [
     {
         path: '/settings',
         name: 'settings',
-        component: GlobalSettings,
+        component: SettingsIndex,
+        children: [
+            {
+                path: '',
+                component: GeneralSettings,
+                name: 'general-settings',
+            },
+            {
+                path: 'payment',
+                component: PaymentSettings,
+                name: 'payment-settings',
+            },
+        ]
     },
 ];
