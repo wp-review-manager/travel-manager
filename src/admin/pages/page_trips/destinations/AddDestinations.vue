@@ -67,6 +67,7 @@ export default {
                 tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 data: this.destination
             }).then((response) => {
+                this.$emit("updateDataAfterNewAdd", this.destination)
                 this.$notify({
                     title: 'Success',
                     message: response.data,
