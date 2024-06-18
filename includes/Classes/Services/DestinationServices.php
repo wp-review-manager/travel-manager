@@ -9,12 +9,18 @@ class DestinationServices {
         $data['place_slug'] = sanitize_text_field( Arr::get($data, 'place_slug') );
         $data['place_desc'] = sanitize_text_field( Arr::get($data, 'place_desc') );
 
-        if (!empty($data['images'])) {
-            $data['images']['id'] = sanitize_text_field( Arr::get($data,'images.id', '') );
-            $data['images']['url'] = sanitize_url( Arr::get($data, 'images.url', '') );
-            $data['images']['name'] = sanitize_text_field( Arr::get($data, 'images.name', '') );
-            $data['images'] = maybe_serialize($data['images']);
+        $data['images']['id'] = sanitize_text_field( Arr::get($data,'images.id', '') );
+        $data['images']['url'] = sanitize_url( Arr::get($data, 'images.url', '') );
+        $data['images']['name'] = sanitize_text_field( Arr::get($data, 'images.name', '') );
+        $data['images'] = maybe_serialize($data['images']);
+        
+        $id = Arr::get($data, 'id', null);
+        if($id !== null) {
+            $data['id'] = absint($data['id']);
         }
+        
+        $data['created_at'] = $id ? $data['created_at']  : current_time('mysql');
+        $data['updated_at'] = current_time('mysql');
    
         return $data;
     }

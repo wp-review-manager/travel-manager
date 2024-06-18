@@ -47,6 +47,19 @@ export default {
             slug_error: ""
         }
     },
+    props: {
+        destination_data: {
+            type: Object,
+        }
+    },
+    watch: {
+        destination_data: {
+            handler: function (val) {
+                this.destination = val;
+            },
+            deep: true
+        }
+    },
     methods: {
         saveDestination() {
             this.name_error = "";
@@ -76,6 +89,12 @@ export default {
                 })
                 console.log(response);
             });
+        }
+    },
+    mounted() {
+        console.log(this.destination_data);
+        if (this.destination_data) {
+            this.destination = this.destination_data;
         }
     }
 }

@@ -71,6 +71,7 @@ export default {
                             that.image.push(image);
                         });
                     } else {
+                        console.log(attach, {image: that.image});
                         that.image.id = attach.id;
                         that.image.url = attach.url;
                         that.image.name = attach.name;
@@ -91,6 +92,6 @@ export default {
                 this.image.name = "";
             }
         }
-    }
+    },
 }
 </script>

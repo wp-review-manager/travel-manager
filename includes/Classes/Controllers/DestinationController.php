@@ -27,7 +27,21 @@ class DestinationController {
         if (!empty($validation)) {
             wp_send_json_error($validation);
         }
+        // Update destination
+        $destination_id = Arr::get($sanitize_data, 'id');
+     
+        if ($destination_id) {
+            $response = TMDBModel('tm_destinations')
+                ->where('id', $destination_id)
+                ->update($sanitize_data);
+            if ($response) {
+                wp_send_json_success('Destination updated successfully');
+            } else {
+                wp_send_json_error('Failed to update destination');
+            }
+        }
 
+        // Add destination
         $response = TMDBModel('tm_destinations')->insert($sanitize_data);
         
         if ($response) {
