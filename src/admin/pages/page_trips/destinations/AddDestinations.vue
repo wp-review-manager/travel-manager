@@ -53,6 +53,7 @@ export default {
         }
     },
     watch: {
+        // Its required to watch the destination_data to update the destination object
         destination_data: {
             handler: function (val) {
                 this.destination = val;
@@ -80,14 +81,20 @@ export default {
                 tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 data: this.destination
             }).then((response) => {
-                this.$emit("updateDataAfterNewAdd", this.destination)
+                this.$emit("updateDataAfterNewAdd", this.destination);
+                this.destination = {
+                    place_name: "",
+                    place_slug: "",
+                    place_desc: "",
+                    images: {}
+                };
                 this.$notify({
                     title: 'Success',
                     message: response.data,
                     type: 'success',
                     position: 'bottom-right',
                 })
-                console.log(response);
+                
             });
         }
     },

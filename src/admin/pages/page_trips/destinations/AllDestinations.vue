@@ -40,7 +40,7 @@ Copy code
                             </el-button>
                         </el-tooltip>
                         <el-tooltip class="box-item" effect="dark" content="Click to delete destinations" placement="top-start">
-                            <el-button link type="primary" size="small">
+                            <el-button @click="openDeleteDestinationModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -72,6 +72,26 @@ Copy code
                 <AddDestinations :destination_data="destination" />
             </template>
         </AppModal>
+
+        <AppModal
+            :title="'Delete Destinations'"
+            :width="400"
+            :showFooter="false"
+            ref="delete_destination_modal">
+            <template #body>
+                <div class="delete-modal-body">
+                    <h1>Are you sure ?</h1>
+                    <p>You want to delete this destinations</p>
+                </div>
+            </template>
+            <template #footer>
+                <div class="tm-modal-footer">
+                    <el-button @click="$refs.delete_destination_modal.handleClose()" type="default" size="medium">Cancel</el-button>
+                    <el-button @click="deleteDestination" type="primary" size="medium">Delete</el-button>
+                </div>
+            </template>
+        </AppModal>
+
     </div>
 </template>
 
@@ -100,6 +120,7 @@ export default {
             add_destination_modal: false,
             currentPage: 1,
             pageSize: 10,
+            active_id: null
         }
     },
 
@@ -124,6 +145,21 @@ export default {
                     that.loading = false;
                 })
         },
+        deleteDestination() {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_destinations",
+                    route: "delete_destinations",
+                    id: that.active_id,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.getDestinations();
+                    that.$refs.delete_destination_modal.handleClose();
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
         openDestinationAddModal() {
             this.$refs.add_destination_modal.openModel();
         },
@@ -131,9 +167,14 @@ export default {
             this.destination = row;
             this.$refs.update_destination_modal.openModel();
         },
+        openDeleteDestinationModal(row) {
+            this.active_id = row.id;
+            this.$refs.delete_destination_modal.openModel();
+        },
         updateDataAfterNewAdd(new_destination) {
+            this.$refs.add_destination_modal.handleClose();
             this.destinations.unshift(new_destination);
-        }
+        },
     },
     created() {
         this.getDestinations();

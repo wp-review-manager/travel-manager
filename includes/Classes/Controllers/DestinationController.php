@@ -12,10 +12,26 @@ class DestinationController {
         $routeMaps = array(
             'post_destinations' => 'postDestinations',
             'get_destinations' => 'getDestinations',
+            'delete_destinations' => 'deleteDestinations',
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
             die();
+        }
+    }
+
+    public function deleteDestinations() {
+        $destination_id = Arr::get($_REQUEST, 'id');
+        if (!$destination_id) {
+            wp_send_json_error('Destination ID is required');
+        }
+
+        $response = Destination::deleteDestination($destination_id);
+
+        if ($response) {
+            wp_send_json_success('Destination deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete destination');
         }
     }
 
@@ -27,27 +43,13 @@ class DestinationController {
         if (!empty($validation)) {
             wp_send_json_error($validation);
         }
-        // Update destination
-        $destination_id = Arr::get($sanitize_data, 'id');
-     
-        if ($destination_id) {
-            $response = TMDBModel('tm_destinations')
-                ->where('id', $destination_id)
-                ->update($sanitize_data);
-            if ($response) {
-                wp_send_json_success('Destination updated successfully');
-            } else {
-                wp_send_json_error('Failed to update destination');
-            }
-        }
-
-        // Add destination
-        $response = TMDBModel('tm_destinations')->insert($sanitize_data);
         
+        $response = (new Destination())->saveDestination($sanitize_data);
+
         if ($response) {
-            wp_send_json_success('Destination added successfully');
+            wp_send_json_success('Destination updated successfully');
         } else {
-            wp_send_json_error('Failed to add destination');
+            wp_send_json_error('Failed to updated destination');
         }
     }
 

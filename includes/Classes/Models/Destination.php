@@ -28,4 +28,17 @@ class Destination extends Model
         return $data;
 
     }
+
+    public static function deleteDestination($destination_id) {
+        return TMDBModel('tm_destinations')->where('id', $destination_id)->delete();
+    }
+
+    public function saveDestination($data) {
+        $id = Arr::get($data, 'id', null);
+        if ($id) {
+            return TMDBModel('tm_destinations')->where('id', $id)->update($data);
+        } else {
+            return TMDBModel('tm_destinations')->insert($data);
+        }
+    }
 }

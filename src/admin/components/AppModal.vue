@@ -1,14 +1,7 @@
 <template>
     <el-dialog class="tm-app-modal" v-model="dialogVisible" :title="title" width="500" :before-close="handleClose">
         <slot name="body"></slot>
-        <template #footer v-if="showFooter">
-            <div class="dialog-footer">
-                <el-button @click="dialogVisible = false">{{ cancelButtonText }}</el-button>
-                <el-button type="primary" @click="dialogVisible = false">
-                    {{ confirmButtonText }}
-                </el-button>
-            </div>
-        </template>
+        <slot name="footer"></slot>
     </el-dialog>
 </template>
 
