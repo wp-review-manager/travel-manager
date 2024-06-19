@@ -1,0 +1,34 @@
+.tm-trip-edit-wrapper {
+    .tm-trip-edit-header {
+        margin: 20px;
+        padding: 14px;
+        margin-bottom: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        border-radius: 8px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .shortcode {
+                @include text($size: 14px, $weight: 600, $color: $tm-dark-300);
+                background: $tm-neutral-100;
+                padding: 4px 12px;
+                border-radius: 8px;
+            }
+            .save-btn {
+                margin-left: 0px;
+            }
+        }
+    }
+    .tm-trip-edit-body {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        .tm-trip-content-wrapper {
+            margin: 20px 0;
+        }
+    }
+}

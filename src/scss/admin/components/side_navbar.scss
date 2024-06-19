@@ -12,10 +12,23 @@
                 display: block;
                 width: 100%;
                 @include text($color: $tm-dark-500, $size: 14px, $weight: 600, $lineHeight: 22px);
-                &.router-link-exact-active {
-                    background: $tm-primary-500;
+            }
+            &:has(a.router-link-exact-active) {
+                background: $tm-primary-500;
+                a {
                     color: $tm-text-light;
                 }
+            }
+        }
+    }
+    &.tm-settings-navbar {
+        margin: 20px;
+        border-radius: 8px;
+        .tm-side-navbar {
+            margin-top: 0px;
+            padding: 20px;
+            li {
+                border-radius: 8px;
             }
         }
     }

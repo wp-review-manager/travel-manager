@@ -1,5 +1,5 @@
 <template>
-    <div class="tm-side-navbar-wrapper">
+    <div class="tm-side-navbar-wrapper" :style="{ width: width }">
         <ul class="tm-side-navbar">
             <li v-for="route in routes" :key="route.label">
                 <router-link :to="route.to">
@@ -18,7 +18,11 @@ export default {
         routes: {
             type: Array,
             required: true
-        }
+        },
+        width: {
+            type: String,
+            default: "200px"
+        }  
     }
 }
 </script>

@@ -1,10 +1,14 @@
 import Dashboard from '@pages/page_dashboard/Dashboard.vue';
 import GlobalSettings from './pages/page_global_settings/GlobalSettings.vue';
 // Trip section components
-import TripIndex from '@/pages/page_trips/TripIndex.vue';
+import TripIndex from '@/pages/page_trips/TripsIndex.vue';
 import AllTrips from '@/pages/page_trips/trips/AllTrips.vue';
 import AllDestinations from '@/pages/page_trips/destinations/AllDestinations.vue';
 import AllAttributes from '@/pages/page_trips/destinations/AllDestinations.vue';
+
+//Trip edit section 
+import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
+import GeneralInfo from '@/pages/page_trips/trips/trip/GeneralInfo.vue';
 
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
@@ -28,6 +32,7 @@ export default [
             {
               path: '',
               component: AllTrips,
+              name: 'all-trips',
             },
             {
                 path: 'destinations',
@@ -55,6 +60,23 @@ export default [
             },
 
           ],
+    },
+    {
+        path: '/trip/:id/edit/',
+        name: 'edit-trip',
+        component: EditTrip,
+        children:[
+            {
+                path: '',
+                component: GeneralInfo,
+                name: 'general-info',
+            },
+            {
+                path: 'prices-and-dates',
+                component: GeneralInfo,
+                name: 'price-and-dates',
+            }
+        ]
     },
     {
         path: '/bookings',

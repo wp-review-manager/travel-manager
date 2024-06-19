@@ -217,3 +217,27 @@ const pricing_categories = {
     description: "Pricing category description",
     icon: { image_link: "", alt: ""},
 }
+
+
+
+
+// Settings Page Start
+
+const trip_info_settings = {
+    id: 1,
+    options: [{
+        field_name: "Field name",
+        field_icon: "icon_name",
+        field_type: "text/number/textarea/select/duration",
+        field_placeholder: "Field placeholder",
+    }]
+}
+// By deafult Overview, Itenary, Map, FAQs, Gallery, Cost 
+const trip_tabs_settings = {
+    id: 1,
+    tabs: [{
+        tab_name: "Tab name",
+        tab_icon: "icon_name",
+        enable: "yes",
+    }]
+}

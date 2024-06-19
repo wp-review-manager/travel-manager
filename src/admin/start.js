@@ -1,5 +1,6 @@
 import routes from './routes';
-import { createWebHashHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router';
+import Clipboard from 'v-clipboard'
 import WPTravelManager from './Bits/WPTravelManager';
 import { ElNotification } from 'element-plus';
 
@@ -11,6 +12,7 @@ const router = createRouter({
 
 const framework = new WPTravelManager();
 
+framework.app.use(Clipboard);
 framework.app.config.globalProperties.appVars = window.WPTravelManagerAdmin;
 framework.app.config.globalProperties.$notify = ElNotification;
 

@@ -2,7 +2,7 @@
     <AppTable :tableData="tableData">
         <template #header>
             <h1 class="table-title">All Trips</h1>
-            <el-button size="large" type="primary" icon="Plus">Add New Trip </el-button>
+            <el-button @click="createTripAndRedirect()" size="large" type="primary" icon="Plus">Add New Trip </el-button>
         </template>
         <template #filter>
             <el-input class="tm-search-input" v-model="input1" style="width: 240px" size="large"
@@ -21,7 +21,6 @@
                 </template>
             </el-table-column>
         </template>
-
         <template #footer>
             <el-pagination small background layout="prev, pager, next" :total="50" class="mt-4" />
         </template>
@@ -77,6 +76,11 @@ export default {
                     tag: 'Office',
                 },
             ]
+        }
+    },
+    methods: {
+        createTripAndRedirect() {
+            this.$router.push('/trip/444/edit/')
         }
     }
 }

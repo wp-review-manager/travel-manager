@@ -1,6 +1,6 @@
 <template>
     <div class="tm-trip-wrapper">
-        <SideNavBar :routes="routes"/>
+        <SideNavBar class="tm-settings-navbar" :width="'220px'"  :routes="routes"/>
         <div class="tm-trip-content-wrapper">
             <router-view></router-view>
         </div>
