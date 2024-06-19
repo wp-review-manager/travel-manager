@@ -63,6 +63,22 @@ class Trips extends Model {
         $offset = ($page - 1) * $limit;
         $search = sanitize_text_field( Arr::get($_REQUEST, 'search', '') );
         $status = sanitize_text_field( Arr::get($_REQUEST, 'status', 'publish') );
+        $filter_date = Arr::get($_REQUEST, 'filter_date', '');
+
+        // Initialize date_query array
+        $date_query = array();
+
+        // If filter_date is provided and contains start and end dates
+        if (!empty($filter_date) && count($filter_date) == 2) {
+            $start_date = sanitize_text_field($filter_date[0]);
+            $end_date = sanitize_text_field($filter_date[1]);
+
+            $date_query[] = array(
+                'after'     => $start_date,
+                'before'    => $end_date,
+                'inclusive' => true,
+            );
+        }
 
         $args = array(
             'post_type' => 'tm_trip',
@@ -70,6 +86,7 @@ class Trips extends Model {
             'posts_per_page' => $limit,
             'offset' => $offset,
             's' => $search,
+            'date_query'     => $date_query,
         );
         
        $trips = get_posts($args);
@@ -83,6 +100,7 @@ class Trips extends Model {
             'post_status' => $status,
             'posts_per_page' => -1,
             's' => $search,
+            'date_query'     => $date_query,
         ));
 
         return array(

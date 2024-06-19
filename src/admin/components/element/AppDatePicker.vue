@@ -1,4 +1,5 @@
 <template>
+
     <el-date-picker
         v-model="date"
         type="daterange"
@@ -6,12 +7,27 @@
         start-placeholder="Start date"
         end-placeholder="End date"
         size="large"
+        align="right"
+        unlink-panels
+        @change="changeDate"
     />
   </template>
   
   <script >
+  import dayjs from 'dayjs'
   export default {
-    props: ["date"]
+    // props: ["date"],
+    data() {
+      return {
+        date: ""
+      };
+    },
+    methods: {
+      changeDate() {
+        let date_data = this.date?.map(d => dayjs(d).format('YYYY-MM-DD'))
+        this.$emit("changeDate", date_data);
+      }
+    }
   }
 
   </script>

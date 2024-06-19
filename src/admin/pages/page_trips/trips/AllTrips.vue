@@ -7,7 +7,7 @@
         <template #filter>
             <el-input class="tm-search-input" @change="getAllTrips()" v-model="search" style="width: 240px" size="large"
                 placeholder="Please Input" prefix-icon="Search" />
-            <AppDatePicker />
+            <AppDatePicker @changeDate="changeDate" />
         </template>
         <template #columns>
             <el-table-column prop="ID" label="ID" width="100" />
@@ -68,6 +68,7 @@ export default {
     data() {
         return {
             search: '',
+            filter_date: '',
             currentPage: 1,
             pageSize: 10,
             total_trips: 100,
@@ -100,7 +101,8 @@ export default {
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                     page: that.currentPage,
                     per_page: that.pageSize,
-                    search: that.search
+                    search: that.search,
+                    filter_date: that.filter_date
                 }).then((response) => {
                     that.trips = response.data.trips;
                     that.total_trips = response.data.total;
@@ -120,6 +122,10 @@ export default {
         redirectEditPage(row) {
             this.$router.push(`/trip/${row.ID}/edit/`)
         },
+        changeDate(date) {
+            this.filter_date = date;
+            this.getAllTrips();
+        }
     },
     mounted() {
         this.getAllTrips();
