@@ -17,7 +17,7 @@
         <div class="tm-trip-edit-body">
             <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes"/>
             <div class="tm-trip-content-wrapper">
-                <router-view></router-view>
+                <router-view :trip_info="trip_info"></router-view>
             </div>
         </div>
     </div>
@@ -34,6 +34,7 @@ export default {
         return {
             trip_id: null,
             routes: [],
+            trip_info: {}
         }
     },
     methods: {
@@ -43,11 +44,26 @@ export default {
                 type: "success",
                 position: "bottom-right"
             });
+        },
+        getTripInfo(tripId) {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_trips",
+                    route: "get_trip_info",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                    trip_id: tripId
+                }).then((response) => {
+                    that.trip_info = response.data;
+                }).fail((error) => {
+                    console.log(error);
+                })
         }
     },
 
     mounted () {
         this.trip_id = this.$route.params.id;
+        this.getTripInfo(this.trip_id);
         this.routes = [
                 {
                     label: 'General',

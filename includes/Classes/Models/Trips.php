@@ -109,4 +109,14 @@ class Trips extends Model {
         );
     }
 
+    public function getTripInfo($tripId)
+    {
+        $trip = get_post($tripId);
+        // $tripMeta = get_post_meta($tripId);
+        // $trip->trip_meta = $tripMeta;
+        $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
+        
+        return $trip;
+    }
+
 }

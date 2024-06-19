@@ -12,7 +12,7 @@ class TripsController {
         $routeMaps = array(
             'create_or_update_trip' => 'createOrUpdateTrip',
             'get_trips' => 'getTrips',
-            'delete_destinations' => 'deleteDestinations',
+            'get_trip_info' => 'getTripInfo',
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -41,6 +41,15 @@ class TripsController {
     {
         $tripModal = new Trips();
         $response = $tripModal->getTrips();
+
+        wp_send_json_success($response);
+    }
+
+    public function getTripInfo()
+    {
+        $tripId = sanitize_text_field(Arr::get($_REQUEST, 'trip_id'));
+        $tripModal = new Trips();
+        $response = $tripModal->getTripInfo($tripId);
 
         wp_send_json_success($response);
     }
