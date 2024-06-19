@@ -26,9 +26,22 @@
     .tm-trip-edit-body {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
         .tm-trip-content-wrapper {
             margin: 20px 0;
+            width: calc(100% - 280px);
+            background: #fff;
+            border-radius: 8px;
+            .section-title {
+                @include text($size: 18px, $weight: 600, $color: $tm-dark-300);
+                padding: 16px 20px;
+                border-bottom: $tm-border;
+            }
+            .tm_form_wrapper {
+                padding: 20px;
+                .input-wrapper {
+                    margin-bottom: 20px;
+                }
+            }
         }
     }
 }
