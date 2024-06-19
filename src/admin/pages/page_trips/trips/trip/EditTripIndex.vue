@@ -2,10 +2,12 @@
     <div class="tm-trip-edit-wrapper">
         <div class="tm-trip-edit-header">
             <div class="header-left">
-                <el-button type="default"><el-icon class="el-icon--left"><Back /></el-icon>Back To All Trips</el-button>
+                <router-link to="/trips/">
+                    <el-button type="default"><el-icon class="el-icon--left"><Back /></el-icon>Back To All Trips</el-button>
+                </router-link>
             </div>
             <div class="header-right">
-                <button class="shortcode" v-clipboard="'dhjfjhgdshjfgjsdgf'" v-clipboard:success="clipboardSuccessHandler">
+                <button class="tm-shortcode" v-clipboard="'dhjfjhgdshjfgjsdgf'" v-clipboard:success="clipboardSuccessHandler">
                     Copy to clipboard
                 </button>
                 <el-button type="default">Preview</el-button>
@@ -30,18 +32,8 @@ export default {
     },
     data () {
         return {
-            routes: [
-                {
-                    label: 'General',
-                    icon: 'mdi-bus',
-                    to: '/trip/444/edit/'
-                },
-                {
-                    label: "Prices And Dates",
-                    icon: "mdi-settings",
-                    to: "/trip/444/edit/prices-and-dates"
-                }
-            ]
+            trip_id: null,
+            routes: [],
         }
     },
     methods: {
@@ -52,6 +44,22 @@ export default {
                 position: "bottom-right"
             });
         }
+    },
+
+    mounted () {
+        this.trip_id = this.$route.params.id;
+        this.routes = [
+                {
+                    label: 'General',
+                    icon: 'mdi-bus',
+                    to: `/trip/${this.trip_id}/edit/`
+                },
+                {
+                    label: "Prices And Dates",
+                    icon: "mdi-settings",
+                    to: `/trip/${this.trip_id}/edit/prices-and-dates`
+                }
+            ]
     }
 
 }

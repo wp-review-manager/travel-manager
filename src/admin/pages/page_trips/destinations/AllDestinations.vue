@@ -48,7 +48,6 @@ Copy code
                 </el-table-column>
             </template>
             <template #footer>
-                <h1>pagination</h1>
                 <el-pagination
                     v-model:current-page="currentPage"
                     v-model:page-size="pageSize"
