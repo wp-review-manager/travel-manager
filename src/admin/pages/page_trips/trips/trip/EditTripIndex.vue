@@ -2,7 +2,7 @@
     <div class="tm-trip-edit-wrapper">
         <div class="tm-trip-edit-header">
             <div class="header-left">
-                <el-button type="default">Back To All Trips</el-button>
+                <el-button type="default"><el-icon class="el-icon--left"><Back /></el-icon>Back To All Trips</el-button>
             </div>
             <div class="header-right">
                 <button class="shortcode" v-clipboard="'dhjfjhgdshjfgjsdgf'" v-clipboard:success="clipboardSuccessHandler">
