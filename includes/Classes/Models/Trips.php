@@ -124,7 +124,7 @@ class Trips extends Model {
     {
         $trip = get_post($tripId);
         $tripMeta = get_post_meta($tripId);
-        $tripMeta_data = Arr::get($tripMeta, 'trip_meta', []);
+        $tripMeta_data = Arr::get($tripMeta, 'trip_meta', null);
         $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
         
         return array(
