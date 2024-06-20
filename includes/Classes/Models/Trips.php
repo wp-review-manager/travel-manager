@@ -9,15 +9,26 @@ class Trips extends Model {
 
     public function updateTrip($tripId)
     {
-        // $tripData = array(
-        //     'post_title' => sanitize_text_field(Arr::get($_REQUEST, 'trip_title')),
-        //     'post_content' => sanitize_text_field(Arr::get($_REQUEST, 'trip_description')),
-        //     'post_status' => sanitize_text_field(Arr::get($_REQUEST, 'trip_status')),
-        //     'post_type' => 'trip',
-        // );
-        // $tripId = wp_update_post(array_merge(array('ID' => $tripId), $tripData));
-        // $this->saveTripMeta($tripId);
-        // return $tripId;
+        $trip_info = Arr::get($_REQUEST, 'trip_info', []);
+        $trip_title = sanitize_text_field( Arr::get($trip_info, 'post_title', 'New Trip Title') );
+        $trip_description = sanitize_text_field( Arr::get($trip_info, 'post_content', '<p>New Trip Description</p>') );
+
+        $sanitized_trip_meta = (new TripsServices())->sanitizeTripMeta(Arr::get($_REQUEST, 'trip_meta', []));
+        $validate_and_serialized = (new TripsServices())->validateTripMeta($sanitized_trip_meta, $tripId, $trip_title, $trip_description);
+
+        $tripData = array(
+            'ID' => $tripId,
+            'post_title' => $trip_title,
+            'post_content' => $trip_description,
+            'post_status' => sanitize_text_field(Arr::get($trip_info, 'post_status', 'publish')),
+            'post_type' => 'tm_trip',
+        );
+
+        wp_update_post($tripData);
+
+        update_post_meta($tripId, 'trip_meta', $validate_and_serialized);
+
+        return $tripId;
     }
 
     public function createTrip()
@@ -112,11 +123,14 @@ class Trips extends Model {
     public function getTripInfo($tripId)
     {
         $trip = get_post($tripId);
-        // $tripMeta = get_post_meta($tripId);
-        // $trip->trip_meta = $tripMeta;
+        $tripMeta = get_post_meta($tripId);
+        $tripMeta_data = Arr::get($tripMeta, 'trip_meta', []);
         $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
         
-        return $trip;
+        return array(
+            'trip' => $trip,
+            'trip_meta' => $tripMeta_data
+        );
     }
 
 }

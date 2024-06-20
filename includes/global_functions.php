@@ -23,7 +23,7 @@ function TMDBModel($tableName = false)
 
 function tmValidateNonce($key = 'tm_admin_nonce')
 {
-    $nonce = \Azonpress\Classes\ArrayHelper::get($_REQUEST, $key);
+    $nonce = \WPTravelManager\Classes\ArrayHelper::get($_REQUEST, $key);
     $shouldVerify = apply_filters('tm_nonce_verify', true);
 
     if ($shouldVerify && !wp_verify_nonce($nonce, $key)) {

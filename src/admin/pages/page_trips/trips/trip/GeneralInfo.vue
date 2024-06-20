@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="couple-inputs">
-                    <el-input v-model="meta.general.duration.duration" style="width: 100%" type="number" size="large" />
+                    <el-input min="0" v-model="meta.general.duration.duration" style="width: 100%" type="number" size="large" />
                     <el-select v-model="meta.general.duration.type" placeholder="Select Duration Type" size="large" style="width: 240px">
                         <el-option label="Days" value="days" />
                         <el-option label="Hours" value="hours" />
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="couple-inputs">
-                    <el-input v-model="meta.general.nights.duration" style="width: 100%" type="number" size="large" />
+                    <el-input min="0" v-model="meta.general.nights.duration" style="width: 100%" type="number" size="large" />
                     <el-select v-model="meta.general.nights.type" placeholder="Select Duration Type" size="large" style="width: 240px">
                         <el-option label="Days" value="nights" />
                     </el-select>
@@ -70,7 +70,7 @@
                             </el-icon>
                         </el-tooltip>
                     </div>
-                    <el-input v-model="meta.general.max_traveler" style="width: 100%" type="number" size="large" />
+                    <el-input min="0" v-model="meta.general.max_traveler" style="width: 100%" type="number" size="large" />
                 </div>
 
                 <div style="width: 100%" class="input-wrapper">
@@ -160,12 +160,12 @@
                     <div style="display: flex; gap: 20px; align-items: center;">
                     <div class="input-wrapper" style="width: 50%;" >
                         <p class="form-label" for="name">Minimum Age *</p>
-                        <el-input type="number" v-model="meta.general.min_max_age.min_age" style="width: 100%"  size="large" />
+                        <el-input min="0" type="number" v-model="meta.general.min_max_age.min_age" style="width: 100%"  size="large" />
                     </div>
 
                     <div class="input-wrapper" style="width: 50%;">
                         <p class="form-label" for="name">Maximum Age *</p>
-                        <el-input type="number" v-model="meta.general.min_max_age.max_age" style="width: 100%"  size="large" />
+                        <el-input min="0" type="number" v-model="meta.general.min_max_age.max_age" style="width: 100%"  size="large" />
                     </div>
                     </div>
                 </template>
@@ -184,33 +184,14 @@ export default {
     data() {
         return {
             trip_id: null,
-            meta: {
-                general: {
-                    trip_code: `TM-${this.$route.params.id}`,
-                    duration: {
-                        type: "days",
-                        duration: 2
-                    },
-                    nights: {
-                        type: "nights",
-                        duration: 3,
-                    },
-                    cut_time: {
-                        enable: "no",
-                        start_of_date: "",
-                        end_of_date: "",
-                    },
-                    min_max_age: {
-                        enable: "yes",
-                        min_age: 2,
-                        max_age: 44
-                    },
-                }
-            }
         }
     },
     props: {
         trip_info: {
+            type: Object,
+            default: () => { }
+        },
+        meta: {
             type: Object,
             default: () => { }
         }
