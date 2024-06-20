@@ -18,6 +18,9 @@
             <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes"/>
             <div class="tm-trip-content-wrapper">
                 <router-view :meta="trip_meta" :trip_info="trip_info"></router-view>
+                <div class="tm-trip-edit-footer">
+                    <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And Continue</el-button>
+                </div>
             </div>
         </div>
     </div>
@@ -112,6 +115,18 @@ export default {
                 }).fail((error) => {
                     console.log(error);
                 })
+        },
+
+        updateTripAndContinueNextRoute() {
+            this.updateTripInfo();
+            this.goToNextRoute();
+        },
+        goToNextRoute() {
+            const currentIndex = this.routes.findIndex(route => route.to === this.$route.path);
+
+            if (currentIndex !== -1 && currentIndex < this.routes.length - 1) {
+                this.$router.push(this.routes[currentIndex + 1].to);
+            }
         }
 
     },
@@ -129,9 +144,16 @@ export default {
                     label: "Prices And Dates",
                     icon: "mdi-settings",
                     to: `/trip/${this.trip_id}/edit/prices-and-dates`
-                }
+                },
             ]
     }
 
 }
 </script>
+
+<style scoped>
+.tm-trip-edit-footer {
+    padding: 20px;
+    text-align: end;
+}
+</style>
