@@ -15,8 +15,9 @@ const trips = {
 
     cut_time: {
         enable: "yes",
-        type: "days",
-        starting_date: "2023-11-12"
+        start_of_date: "2023-11-12",
+        cut_off_date: "2023-11-12",
+
     },
 
     min_max_age: {

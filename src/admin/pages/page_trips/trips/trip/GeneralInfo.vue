@@ -60,35 +60,49 @@
 
             </div>
 
-            <div class="cut-off-time-section">
-                <div class="input-wrapper" >
+            <app-card :title="'Enable Trip Schedule Time'" :sub_title="'Enable trip schedule time for bookings. The trip schedule time sets the period during which bookings are allowed, both before and after the specified time.'">
+                <template v-slot:actions>
+                    <el-switch
+                        v-model="meta.general.cut_time.enable"
+                        size="large"
+                        active-value="yes"
+                        inactive-value="no"
+                    />
+                </template>
 
-                    <div class="tooltip-label">
-                        <p class="form-label" for="name">Nights *</p>
-                        <el-tooltip effect="dark"
-                            content="Enter the trip duration in nights." placement="top">
-                            <el-icon>
-                                <InfoFilled />
-                            </el-icon>
-                        </el-tooltip>
+                <template v-slot:body v-if="meta.general.cut_time.enable == 'yes'">
+                    <div class="input-wrapper" >
+                        <div class="tooltip-label">
+                            <p class="form-label" for="name">Nights *</p>
+                            <el-tooltip effect="dark"
+                                content="Enter the trip duration in nights." placement="top">
+                                <el-icon>
+                                    <InfoFilled />
+                                </el-icon>
+                            </el-tooltip>
+                        </div>
+
+                        <div class="couple-inputs">
+                            <el-input v-model="meta.general.nights.duration" style="width: 100%" type="number" size="large" />
+                            <el-select v-model="meta.general.nights.type" placeholder="Select Duration Type" size="large" style="width: 240px">
+                                <el-option label="Days" value="days" />
+                                <el-option label="Hours" value="hours" />
+                            </el-select>
+                        </div>
                     </div>
-
-                    <div class="couple-inputs">
-                        <el-input v-model="meta.general.nights.duration" style="width: 100%" type="number" size="large" />
-                        <el-select v-model="meta.general.nights.type" placeholder="Select Duration Type" size="large" style="width: 240px">
-                            <el-option label="Days" value="days" />
-                            <el-option label="Hours" value="hours" />
-                        </el-select>
-                    </div>
-
-                </div>
-            </div>
+                </template>
+                
+            </app-card>
         </div>
     </div>
 </template>
 
 <script>
+import AppCard from "@/components/AppCard.vue";
 export default {
+    components: {
+        AppCard
+    },
     data() {
         return {
             trip_id: null,
@@ -102,7 +116,12 @@ export default {
                     nights: {
                         type: "nights",
                         duration: 3,
-                    }
+                    },
+                    cut_time: {
+                        enable: "yes",
+                        start_of_date: "2023-11-12",
+                        cut_off_date: "2023-11-12",
+                    },
                 }
             }
         }

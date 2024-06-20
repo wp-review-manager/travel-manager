@@ -1,0 +1,22 @@
+.app-card {
+    border-radius: 8px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: $tm-border;
+    .app-card-header {
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: $tm-border;
+        .app-card-header-title {
+            @include text($size: 16px, $weight: 500);
+        }
+        .app-card-header-sub-title {
+            margin-top: 4px;
+        }
+    }
+    .app-card-body {
+        padding: 10px 16px;
+    }
+
+}
