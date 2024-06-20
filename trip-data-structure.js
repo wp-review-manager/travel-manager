@@ -26,11 +26,11 @@ const trips = {
         max_age: 44
     },
 
-    min_max_participents: {
-        enable: "yes",
-        min: 2,
-        max: 44
-    },
+    // min_max_participents: {
+    //     enable: "yes",
+    //     min: 2,
+    //     max: 44
+    // },
 
     max_traveler: 44,
     trip_type: "Group",
