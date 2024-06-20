@@ -18,7 +18,7 @@ export default {
         return {
             routes: [
                 {
-                    label: 'Trips',
+                    label: 'All Trips',
                     icon: 'mdi-bus',
                     to: '/trips/'
                 },

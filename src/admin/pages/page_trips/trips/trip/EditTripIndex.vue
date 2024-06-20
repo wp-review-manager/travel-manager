@@ -3,11 +3,14 @@
         <div class="tm-trip-edit-header">
             <div class="header-left">
                 <router-link to="/trips/">
-                    <el-button type="default"><el-icon class="el-icon--left"><Back /></el-icon>Back To All Trips</el-button>
+                    <el-button type="default"><el-icon class="el-icon--left">
+                            <Back />
+                        </el-icon>Back To All Trips</el-button>
                 </router-link>
             </div>
             <div class="header-right">
-                <button class="tm-shortcode" v-clipboard="trip_info.shortcode" v-clipboard:success="clipboardSuccessHandler">
+                <button class="tm-shortcode" v-clipboard="trip_info.shortcode"
+                    v-clipboard:success="clipboardSuccessHandler">
                     {{ trip_info.shortcode }}
                 </button>
                 <el-button type="default">Preview</el-button>
@@ -15,11 +18,12 @@
             </div>
         </div>
         <div class="tm-trip-edit-body">
-            <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes"/>
+            <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes" />
             <div class="tm-trip-content-wrapper">
                 <router-view :meta="trip_meta" :trip_info="trip_info"></router-view>
                 <div class="tm-trip-edit-footer">
-                    <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And Continue</el-button>
+                    <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And
+                        Continue</el-button>
                 </div>
             </div>
         </div>
@@ -33,7 +37,7 @@ export default {
     components: {
         SideNavBar
     },
-    data () {
+    data() {
         return {
             trip_id: null,
             routes: [],
@@ -64,10 +68,39 @@ export default {
                         max_age: 44
                     },
                 },
-                price_and_date: {
-                    trip_price: 100,
-                    trip_discount: 10,
-                }
+                packages: [
+                    {
+                        id: 1,
+                        title: "Trip package name : Ex: Golden/ Regular",
+                        available_booking_date: {
+                            enable: "yes",
+                            start_date: "2023-11-12",
+                            end_date: "2023-11-12"
+                        },
+
+                        package_quantity: {
+                            enable: "yes",
+                            quantity: 44
+                        },
+
+                        pricing: [
+                            {
+                                adult: {
+                                    enable: "yes",
+                                    label: "Adult",
+                                    price: 500,
+                                    pricing_type: "per_person/group",// Should research about group
+                                    selling_price: {
+                                        enable: "yes",
+                                        price: 400
+                                    },
+                                    min_pax: 3,
+                                    max_pax: 5,
+                                },
+                            }
+                        ]
+                    }
+                ]
             }
         }
     },
@@ -131,21 +164,21 @@ export default {
 
     },
 
-    mounted () {
+    mounted() {
         this.trip_id = this.$route.params.id;
         this.getTripInfo(this.trip_id);
         this.routes = [
-                {
-                    label: 'General',
-                    icon: 'mdi-bus',
-                    to: `/trip/${this.trip_id}/edit/`
-                },
-                {
-                    label: "Prices And Dates",
-                    icon: "mdi-settings",
-                    to: `/trip/${this.trip_id}/edit/prices-and-dates`
-                },
-            ]
+            {
+                label: 'General',
+                icon: 'mdi-bus',
+                to: `/trip/${this.trip_id}/edit/`
+            },
+            {
+                label: "Pricing",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/pricing`
+            },
+        ]
     }
 
 }
@@ -155,5 +188,6 @@ export default {
 .tm-trip-edit-footer {
     padding: 20px;
     text-align: end;
+    border-top: 1px solid #e0e0e0;
 }
 </style>

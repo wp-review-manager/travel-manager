@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <app-card :title="'Enable Trip Schedule Time'" :sub_title="'Enable trip schedule time for bookings. The trip schedule time sets the period during which bookings are allowed, both before and after the specified time.'">
+            <app-card :title="'Enable Fixed Departure'" :sub_title="' The Tour Availability Date Ranges sets the period during which bookings are allowed, both before and after the specified time.'">
                 <template v-slot:actions>
                     <el-switch
                         v-model="meta.general.cut_time.enable"

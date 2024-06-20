@@ -2,6 +2,16 @@
     color: $tm-text-light;
     background: $tm-primary-500;
 }
+
+.el-button--success {
+    color: $tm-text-light;
+    background: $tm-dark-500;
+    border-color: $tm-dark-500;
+    &:hover {
+        background: $tm-dark-600;
+        border-color: $tm-dark-500;
+    }
+}
 .el-button {
     border-radius: 8px;
 }

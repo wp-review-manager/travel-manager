@@ -5437,6 +5437,11 @@ sockjs@^0.3.24:
     uuid "^8.3.2"
     websocket-driver "^0.7.4"
 
+sortablejs@^1.14.0:
+  version "1.15.2"
+  resolved "https://registry.npmjs.org/sortablejs/-/sortablejs-1.15.2.tgz"
+  integrity sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==
+
 source-list-map@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/source-list-map/-/source-list-map-2.0.1.tgz"
@@ -5856,6 +5861,11 @@ vue-demi@*:
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.8.tgz"
   integrity sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==
 
+vue-draggable-next@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/vue-draggable-next/-/vue-draggable-next-2.2.1.tgz"
+  integrity sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==
+
 vue-loader@^16.3.0:
   version "16.8.3"
   resolved "https://registry.npmjs.org/vue-loader/-/vue-loader-16.8.3.tgz"
@@ -5888,7 +5898,7 @@ vue-template-compiler@^2.6.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-"vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.20, vue@^3.2.45, vue@3.4.29:
+"vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.2, vue@^3.2.20, vue@^3.2.45, vue@3.4.29:
   version "3.4.29"
   resolved "https://registry.npmjs.org/vue/-/vue-3.4.29.tgz"
   integrity sha512-8QUYfRcYzNlYuzKPfge1UWC6nF9ym0lx7mpGVPJYNhddxEf3DD0+kU07NTL0sXuiT2HuJuKr/iEO8WvXvT0RSQ==

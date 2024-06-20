@@ -9,6 +9,7 @@ import AllAttributes from '@/pages/page_trips/destinations/AllDestinations.vue';
 //Trip edit section 
 import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
 import GeneralInfo from '@/pages/page_trips/trips/trip/GeneralInfo.vue';
+import Pricing from "@/pages/page_trips/trips/trip/Pricing.vue"
 
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
@@ -72,9 +73,9 @@ export default [
                 name: 'general-info',
             },
             {
-                path: 'prices-and-dates',
-                component: GeneralInfo,
-                name: 'price-and-dates',
+                path: 'pricing',
+                component: Pricing,
+                name: 'pricing',
             }
         ]
     },
