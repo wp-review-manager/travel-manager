@@ -1,3 +1,4 @@
+@import "./general.scss";
 .tm-trip-edit-wrapper {
     .tm-trip-edit-header {
         margin: 20px;
@@ -40,6 +41,18 @@
                 padding: 20px;
                 .input-wrapper {
                     margin-bottom: 20px;
+                    .tooltip-label{
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+                    .couple-inputs {
+                        display: flex;
+                        gap: 20px;
+                        .el-input, .el-select {
+                            width: 50% !important;
+                        }
+                    }
                 }
             }
         }

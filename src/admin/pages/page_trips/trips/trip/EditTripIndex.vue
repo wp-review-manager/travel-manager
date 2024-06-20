@@ -7,8 +7,8 @@
                 </router-link>
             </div>
             <div class="header-right">
-                <button class="tm-shortcode" v-clipboard="'dhjfjhgdshjfgjsdgf'" v-clipboard:success="clipboardSuccessHandler">
-                    Copy to clipboard
+                <button class="tm-shortcode" v-clipboard="trip_info.shortcode" v-clipboard:success="clipboardSuccessHandler">
+                    {{ trip_info.shortcode }}
                 </button>
                 <el-button type="default">Preview</el-button>
                 <el-button class="save-btn" type="primary">Save Info</el-button>
