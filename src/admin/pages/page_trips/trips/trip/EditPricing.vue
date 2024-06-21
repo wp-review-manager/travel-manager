@@ -48,7 +48,7 @@
             <el-input v-model="package_info.package_quantity" style="width: 100%" type="number" min="0" size="large" />
         </div>
 
-        <AppCard :title="`Pricing For - ${ price.label }`" v-for="(price, index) in package_info.pricing">
+        <AppCard :title="`Pricing Categories - ${ price.label }`" v-for="(price, index) in package_info.pricing">
             <template v-slot:actions>
                 <div style="display: flex; align-items: center; gap: 4px;">
                     <el-switch
@@ -57,8 +57,8 @@
                         active-value="yes"
                         inactive-value="no"
                     ></el-switch>
-                    <div class="delete-icon" style="font-size: 22px; cursor: pointer;">
-                        <Icon icon="tm-delete" @click="deletePricing(index)" />
+                    <div @click="deletePricing(index)" class="delete-icon" style="font-size: 22px; cursor: pointer;">
+                        <Icon icon="tm-delete"  />
                     </div>
                 </div>
             </template>
@@ -134,13 +134,14 @@ export default {
                 enable: "yes",
                 pricing_type: "person",
                 label: "old",
-                price: 0,
-                selling_price: 0,
+                price: 100,
+                selling_price: 90,
                 min_pax: 0,
                 max_pax: 0
             });
         },
         deletePricing(index) {
+            console.log(index);
             this.package_info.pricing.splice(index, 1);
         }
     }
