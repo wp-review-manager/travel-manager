@@ -4,7 +4,7 @@
         <div class="tm_form_wrapper">
             <h2 class="package-title">Package Name</h2>
             <draggable class="dragArea list-group w-full" :list="meta.packages" @change="log">
-                <div class="packaging-list" v-for="package_data in meta.packages" :key="package_data.id">
+                <div class="packaging-list" v-for="(package_data, index) in meta.packages" :key="package_data.id">
                     <div class="input-wrapper">
                         <el-icon>
                             <DCaret />
@@ -13,8 +13,8 @@
                             placeholder="Enter Trip Title,  Ex: Golden/ Regular" size="large" />
                     </div>
                     <div class="action-buttons">
-                        <el-button size="large" type="success">Edit Pricing</el-button>
-                        <el-button size="large" icon="Delete" />
+                        <el-button @click="openEditPackageModal(package_data)" size="large" type="success">Edit Pricing</el-button>
+                        <el-button @click="deleteConfirmation(index)" size="large" icon="Delete" />
                     </div>
 
                 </div>
@@ -25,17 +25,37 @@
                 <Icon icon="tm-plus" />
             </div>
         </div>
+
+        <AppModal
+            :title="`Edit Pricing - ${package_info.title}`"
+            :width="800"
+            :showFooter="false"
+            ref="edit_package_modal">
+            <template #body>
+                <EditPricing :package_info="package_info" />
+            </template>
+            <template #footer>
+                <div class="pricing-save-btn">
+                    <el-button @click="saveTrip(index)" size="large" type="primary">Save</el-button>
+                </div>
+            </template>
+        </AppModal>
+        
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import Icon from '@/components/Icons/AppIcon.vue'
-import { VueDraggableNext } from 'vue-draggable-next'
+import Icon from '@/components/Icons/AppIcon.vue';
+import AppModal from '@/components/AppModal.vue';
+import EditPricing from './EditPricing.vue';
+import { VueDraggableNext } from 'vue-draggable-next';
 export default defineComponent({
     components: {
         draggable: VueDraggableNext,
-        Icon
+        Icon,
+        AppModal,
+        EditPricing
     },
     props: {
         meta: {
@@ -47,6 +67,7 @@ export default defineComponent({
         return {
             enabled: true,
             dragging: false,
+            package_info: {}
         }
     },
     methods: {
@@ -67,29 +88,47 @@ export default defineComponent({
                     start_date: "2023-11-12",
                     end_date: "2023-11-12"
                 },
-
-                package_quantity: {
-                    enable: "yes",
-                    quantity: 44
-                },
-
+                package_quantity: 0,
                 pricing: [
                     {
-                        adult: {
-                            enable: "yes",
-                            label: "Adult",
-                            price: 500,
-                            pricing_type: "per_person/group",// Should research about group
-                            selling_price: {
-                                enable: "yes",
-                                price: 400
-                            },
-                            min_pax: 3,
-                            max_pax: 5,
-                        },
+                        enable: "yes",
+                        label: "Adult",
+                        price: 500,
+                        pricing_type: "per_person/group",// Should research about group
+                        selling_price: 400,
+                        min_pax: 3,
+                        max_pax: 5,
                     }
                 ]
             })
+        },
+        deleteConfirmation(index) {
+            this.$confirm('This will permanently delete the package. Continue?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning',
+            }).then(() => {
+                this.meta.packages.splice(index, 1);
+                this.$notify({
+                    type: 'success',
+                    message: 'Delete completed',
+                    position: 'bottom-right'
+                });
+            }).catch(() => {
+                this.$notify({
+                    type: 'info',
+                    message: 'Delete canceled',
+                    position: 'bottom-right'
+                });
+            });
+        },
+        openEditPackageModal(row) {
+            this.package_info = row;
+            this.$refs.edit_package_modal.openModel();
+        },
+        saveTrip(index) {
+            this.$emit('saveTrip', index);
+            this.$refs.edit_package_modal.handleClose();
         }
     },
 })

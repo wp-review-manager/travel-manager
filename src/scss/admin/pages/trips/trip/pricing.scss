@@ -1,4 +1,7 @@
 .tm_pricing_wrapper {
+    .el-dialog__body  {
+        padding: 20px;
+    }
     .tm_form_wrapper {
         .package-title {
             padding: 10px 20px;
@@ -34,5 +37,37 @@
                 text-decoration: underline;
             }
         }
+    }
+    .tm-trip-edit-pricing {
+        .tm-trip-edit-pricing-header{
+            @include text($size: 16px, $weight: 500);
+        }
+        .add-new-package {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: underline;
+            color: $tm-primary-500;
+        }
+        .enable_booking_date {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 10px 0;
+            p {
+                @include text($size: 14px, $weight: 500);
+            }
+        }
+        .booking_date {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+    }
+    .pricing-save-btn {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
     }
 }

@@ -20,7 +20,7 @@
         <div class="tm-trip-edit-body">
             <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes" />
             <div class="tm-trip-content-wrapper">
-                <router-view :meta="trip_meta" :trip_info="trip_info"></router-view>
+                <router-view @saveTrip="updateTripInfo" :meta="trip_meta" :trip_info="trip_info"></router-view>
                 <div class="tm-trip-edit-footer">
                     <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And
                         Continue</el-button>
@@ -77,26 +77,16 @@ export default {
                             start_date: "2023-11-12",
                             end_date: "2023-11-12"
                         },
-
-                        package_quantity: {
-                            enable: "yes",
-                            quantity: 44
-                        },
-
+                        package_quantity:0,
                         pricing: [
                             {
-                                adult: {
-                                    enable: "yes",
-                                    label: "Adult",
-                                    price: 500,
-                                    pricing_type: "per_person/group",// Should research about group
-                                    selling_price: {
-                                        enable: "yes",
-                                        price: 400
-                                    },
-                                    min_pax: 3,
-                                    max_pax: 5,
-                                },
+                                enable: "yes",
+                                label: "Adult",
+                                price: 500,
+                                pricing_type: "per_person/group",// Should research about group
+                                selling_price: 400,
+                                min_pax: 3,
+                                max_pax: 5,
                             }
                         ]
                     }
