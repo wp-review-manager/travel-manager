@@ -13,7 +13,14 @@
                             placeholder="Enter Trip Title,  Ex: Golden/ Regular" size="large" />
                     </div>
                     <div class="action-buttons">
-                        <el-button @click="openEditPackageModal(package_data)" size="large" type="success">Edit Pricing</el-button>
+                        <el-switch
+                            v-model="package_data.enable"
+                            size="large"
+                            active-value="yes"
+                            inactive-value="no"
+                            style="margin: 0px 10px;"
+                        ></el-switch>
+                        <el-button :class="package_data.enable == 'no' ? 'disabled_edit' : ''" @click="openEditPackageModal(package_data)" size="large" type="success">Edit Pricing</el-button>
                         <el-button @click="deleteConfirmation(index)" size="large" icon="Delete" />
                     </div>
 
@@ -78,6 +85,7 @@ export default defineComponent({
             this.meta.packages.push({
                 id: this.meta.packages.length + 1,
                 title: 'Ex: Golden/ Regular',
+                enable: "yes",
                 available_booking_date: {
                     enable: "yes",
                     start_date: "",
@@ -123,8 +131,10 @@ export default defineComponent({
             });
         },
         openEditPackageModal(row) {
-            this.package_info = row;
-            this.$refs.edit_package_modal.openModel();
+            if (row.enable == 'yes') {
+                this.package_info = row;
+                this.$refs.edit_package_modal.openModel();
+            }
         },
         saveTrip(index) {
             this.$emit('saveTrip', index);

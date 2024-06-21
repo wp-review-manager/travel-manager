@@ -72,6 +72,7 @@ export default {
                     {
                         id: 1,
                         title: "Trip package name : Ex: Golden/ Regular",
+                        enable: "yes",
                         available_booking_date: {
                             enable: "yes",
                             start_date: "2023-11-12",
