@@ -42,6 +42,23 @@ class TripsServices {
             }
         }
 
+        $packages = Arr::get($trip_meta, 'packages', []);
+        
+        foreach ($packages as $key => $package) {
+            if (empty($package['title'])) {
+                $errors[] = 'Package title is required';
+            }
+            $pricings = Arr::get($package, 'pricing', []);
+
+            foreach ($pricings as $key => $pricing) {
+                if (empty($pricing['price']) || +$pricing['price'] < 0 || gettype(+$pricing['price']) != 'integer') {
+                    $errors[] = 'Package price is required and must be greater than 0';
+                }
+            }
+            
+        }
+    
+
         if (!empty($errors)) {
             wp_send_json_error(array('messages' => $errors));
         }
