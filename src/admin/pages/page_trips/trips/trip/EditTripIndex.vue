@@ -67,6 +67,14 @@ export default {
                         min_age: 2,
                         max_age: 44
                     },
+                    description: {
+                        description: "Trip description",
+                        section_title: "Section Title",
+                        trip_highlights: {
+                            title: "Highlights",
+                            options: ["Dinner", "Car rent", "Manali"]
+                        }
+                    }
                 },
                 packages: [
                     {
@@ -170,6 +178,11 @@ export default {
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/pricing`
             },
+            {
+                label: "Overview",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/overview`
+            }
         ]
     }
 

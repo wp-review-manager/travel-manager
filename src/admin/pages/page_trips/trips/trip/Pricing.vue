@@ -55,7 +55,7 @@
 import { defineComponent } from 'vue'
 import Icon from '@/components/Icons/AppIcon.vue';
 import AppModal from '@/components/AppModal.vue';
-import EditPricing from './EditPricing.vue';
+import EditPricing from './_EditPricing.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 export default defineComponent({
     components: {

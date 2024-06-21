@@ -10,6 +10,7 @@ import AllAttributes from '@/pages/page_trips/destinations/AllDestinations.vue';
 import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
 import GeneralInfo from '@/pages/page_trips/trips/trip/GeneralInfo.vue';
 import Pricing from "@/pages/page_trips/trips/trip/Pricing.vue"
+import OverView from "@/pages/page_trips/trips/trip/OverView.vue"
 
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
@@ -76,6 +77,11 @@ export default [
                 path: 'pricing',
                 component: Pricing,
                 name: 'pricing',
+            },
+            {
+                path: 'overview',
+                component: OverView,
+                name: 'overview',
             }
         ]
     },
