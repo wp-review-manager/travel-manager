@@ -72,7 +72,7 @@ export default {
                         section_title: "Section Title",
                         trip_highlights: {
                             title: "Highlights",
-                            options: ["Dinner", "Car rent", "Manali"]
+                            options: [{ label: "Highlight 1" }, { label: "Highlight 2" }]
                         }
                     }
                 },

@@ -14,14 +14,30 @@
                 </div>
             </template>
         </app-card>
+
+        <app-card :title="'Trip Highlights'" style="margin-top: 20px;">
+            <template v-slot:body>
+                <div class="input-wrapper">
+                    <p class="form-label">Section Title</p>
+                    <el-input v-model="meta.general.description.trip_highlights.title" size="large" />
+                </div>
+
+                <div class="input-wrapper">
+                    <p class="form-label">Trip Highlights</p>
+                    <Options :options="meta.general.description.trip_highlights.options" />
+                </div>
+            </template>
+        </app-card>
     </div>
 </template>
 <script>
 import AppCard from "@/components/AppCard.vue";
+import Options from "@/components/AppOptions.vue";
 export default {
     name: 'OverView',
     components: {
-        AppCard
+        AppCard,
+        Options
     },
     props: {
         meta: {

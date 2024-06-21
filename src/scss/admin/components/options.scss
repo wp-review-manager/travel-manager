@@ -1,0 +1,32 @@
+.tm-app-options {
+    border: $tm-border;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0px;
+    .app-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 24px 0px;
+        .draggable-icon {
+            font-size: 22px;
+            cursor:move;
+        }
+        .option-content {
+            width: 100%;
+        }
+        .delete-icon {
+            border: $tm-border;
+            padding: 9px;
+            border-radius: 8px;
+        }
+    }
+    .add-new-option {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        text-decoration: underline;
+        cursor: pointer;
+        color: $tm-primary-500;
+    }
+}
