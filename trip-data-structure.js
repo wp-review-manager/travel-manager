@@ -99,16 +99,11 @@ const trip_itinerary =  {
     options: [
         {
             title: "Day 1",
-            desc: "itinerary description",
-            hotel: {
-                name: "Hotel name",
-                rating: 3,
-                image: { image_link: "", alt: ""}
-            }
+            description: "itinerary description",
         },
         {
-            title: "Day 2",
-            desc: "Going to kashmir"
+            label: "Day 2",
+            value: "Going to kashmir"
         }
     ]
 }

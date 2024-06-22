@@ -99,7 +99,20 @@ export default {
                             }
                         ]
                     }
-                ]
+                ],
+                itinerary: {
+                    title: "Trip itinerary title",
+                    options: [
+                        {
+                            title: "Day 1",
+                            description: "itinerary description",
+                        },
+                        {
+                            title: "Day 2",
+                            description: "itinerary description",
+                        },
+                    ]
+                }
             }
         }
     },
@@ -182,6 +195,26 @@ export default {
                 label: "Overview",
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/overview`
+            },
+            {
+                label: "Itinerary",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/itinerary`
+            },
+            {
+                label: "Gallery",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/gallery`
+            },
+            {
+                label: "FAQ",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/faq`
+            },
+            {
+                label: "Reviews",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/reviews`
             }
         ]
     }

@@ -11,7 +11,7 @@ import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
 import GeneralInfo from '@/pages/page_trips/trips/trip/GeneralInfo.vue';
 import Pricing from "@/pages/page_trips/trips/trip/Pricing.vue"
 import OverView from "@/pages/page_trips/trips/trip/OverView.vue"
-
+import Itinerary from "@/pages/page_trips/trips/trip/Itinerary.vue"
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
 import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
@@ -82,7 +82,12 @@ export default [
                 path: 'overview',
                 component: OverView,
                 name: 'overview',
-            }
+            },
+            {
+                path: 'itinerary',
+                component: Itinerary,
+                name: 'itinerary',
+            },
         ]
     },
     {
