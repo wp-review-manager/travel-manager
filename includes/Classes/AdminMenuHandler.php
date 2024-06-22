@@ -57,6 +57,13 @@ class AdminMenuHandler {
         wp_enqueue_style('TM-global-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
         wp_enqueue_style('TM-admin-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
 
+        if (function_exists('wp_enqueue_editor')) {
+            wp_enqueue_editor();
+        }
+        if (function_exists('wp_enqueue_media')) {
+            wp_enqueue_media();
+        }
+
         $TM = apply_filters('TM/admin_app_vars', array(
             //'image_upload_url' => admin_url('admin-ajax.php?action=wpf_global_settings_handler&route=wpf_upload_image'),
             'assets_url' => TM_URL . 'assets/',
