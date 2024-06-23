@@ -47,7 +47,7 @@ export default {
         is_multiple: {
             type: Boolean,
             default: false
-        }
+        },
     },
     methods: {
         initUploader(event) {

@@ -226,6 +226,7 @@ const trip_info_settings = {
         field_icon: "icon_name",
         field_type: "text/number/textarea/select/duration",
         field_placeholder: "Field placeholder",
+        fixed: "yes"
     }]
 }
 // By deafult Overview, Itenary, Map, FAQs, Gallery, Cost 

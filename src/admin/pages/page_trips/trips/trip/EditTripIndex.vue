@@ -124,10 +124,16 @@ export default {
                         services: [{ label: "Lunch" }]
                     },
                 },
-                trip_info: {
-                    title: "section title",
-                    options: [{ label: "WIFI", value: "no" }, { label: "Admission fee", value: "Now not here" }] 
+                trip_gallery: {
+                    enable_image_gallery: "yes",
+                    images: [{image_link: "image_link", alt: "text"}],
+                    enable_video_gallery: "yes",
+                    videos: [{video_link: "image_link", alt: "text"}]
                 }
+                // trip_info: {
+                //     title: "section title",
+                //     options: [{ label: "WIFI", value: "no" }, { label: "Admission fee", value: "Now not here" }] 
+                // }
             }
         }
     },
@@ -221,11 +227,11 @@ export default {
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/includes-excludes`
             },
-            {
-                label: "Trip Info",
-                icon: "mdi-settings",
-                to: `/trip/${this.trip_id}/edit/trip-info`
-            },
+            // {
+            //     label: "Trip Info",
+            //     icon: "mdi-settings",
+            //     to: `/trip/${this.trip_id}/edit/trip-info`
+            // },
             {
                 label: "Gallery",
                 icon: "mdi-settings",
