@@ -1,7 +1,7 @@
 <template>
     <div class="tm-app-options" style="border: none; padding: 0;">
         <draggable class="dragArea list-group w-full" :list="options">
-            <div v-for="(option, index) in options" class="app-option" :key="index" style="border-bottom: 1px solid #E8EAF1; padding-bottom: 24px;margin: 20px 0px;">
+            <div v-for="(option, index) in options" class="app-option" :key="index">
                 <div class="draggable-icon">
                     <el-icon>
                         <DCaret />
@@ -55,3 +55,13 @@ export default defineComponent({
     }
 });
 </script>
+
+<style lang="scss" scoped>
+.app-option {
+    border-bottom: 1px solid #E8EAF1; padding: 24px 0px;
+    &:hover {
+       background-color: #E8EAF1;
+       border-radius: 8px; 
+    }
+}
+</style>

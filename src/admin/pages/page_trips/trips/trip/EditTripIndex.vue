@@ -112,6 +112,17 @@ export default {
                             description: "itinerary description",
                         },
                     ]
+                },
+                inc_exc: {
+                    section_title : "Enter the cost tab section title",
+                    includes: {
+                        title: "Cost Includes Title",
+                        services: [{ label: "Dinner" }, { label: "Breakfast" }]
+                    },
+                    excludes: {
+                        title: "Cost excludes Title",
+                        services: [{ label: "Lunch" }]
+                    },
                 }
             }
         }
@@ -200,6 +211,11 @@ export default {
                 label: "Itinerary",
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/itinerary`
+            },
+            {
+                label: "Includes/Excludes",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/includes-excludes`
             },
             {
                 label: "Gallery",
