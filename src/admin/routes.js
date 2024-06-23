@@ -13,6 +13,8 @@ import Pricing from "@/pages/page_trips/trips/trip/Pricing.vue"
 import OverView from "@/pages/page_trips/trips/trip/OverView.vue"
 import Itinerary from "@/pages/page_trips/trips/trip/Itinerary.vue"
 import IncludeAndExclude from "@/pages/page_trips/trips/trip/IncludeAndExclude.vue"
+import TripInfo from "@/pages/page_trips/trips/trip/TripInfo.vue"
+
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
 import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
@@ -93,6 +95,11 @@ export default [
                 path: 'includes-excludes',
                 component: IncludeAndExclude,
                 name: 'include-exclude',
+            },
+            {
+                path: 'trip-info',
+                component: TripInfo,
+                name: 'trip-info',
             },
         ]
     },

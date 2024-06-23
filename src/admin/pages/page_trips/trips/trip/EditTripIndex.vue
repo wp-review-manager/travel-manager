@@ -123,6 +123,10 @@ export default {
                         title: "Cost excludes Title",
                         services: [{ label: "Lunch" }]
                     },
+                },
+                trip_info: {
+                    title: "section title",
+                    options: [{ label: "WIFI", value: "no" }, { label: "Admission fee", value: "Now not here" }] 
                 }
             }
         }
@@ -216,6 +220,11 @@ export default {
                 label: "Includes/Excludes",
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/includes-excludes`
+            },
+            {
+                label: "Trip Info",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/trip-info`
             },
             {
                 label: "Gallery",
