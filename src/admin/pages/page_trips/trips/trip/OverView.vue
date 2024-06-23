@@ -10,7 +10,8 @@
 
                 <div class="input-wrapper">
                     <p class="form-label">Trip Description</p>
-                    <el-input v-model="meta.general.description.description" type="textarea" size="large" />
+                    <WpEditor :value="meta.general.description.description" />
+                    <!-- <el-input v-model="meta.general.description.description" type="textarea" size="large" /> -->
                 </div>
             </template>
         </app-card>
@@ -33,11 +34,13 @@
 <script>
 import AppCard from "@/components/AppCard.vue";
 import Options from "@/components/AppOptions.vue";
+import WpEditor from "@/components/common/WPEditor.vue";
 export default {
     name: 'OverView',
     components: {
         AppCard,
-        Options
+        Options,
+        WpEditor
     },
     props: {
         meta: {

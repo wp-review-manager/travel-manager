@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import popover from './input-popover-dropdown.vue'
+import popover from './InputPopoverDropdown'
 export default{
     name: 'wp-editor',
     components: {
