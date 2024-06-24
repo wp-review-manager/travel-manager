@@ -3,13 +3,11 @@
 @import "./overview.scss";
 .tm-trip-edit-wrapper {
     .tm-trip-edit-header {
-        margin: 20px;
         padding: 14px;
         margin-bottom: 0px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: #fff;
         border-radius: 8px;
         .header-right {
             display: flex;
@@ -27,13 +25,35 @@
         }
     }
     .tm-trip-edit-body {
-        display: flex;
-        align-items: flex-start;
+        .tm-side-navbar-wrapper {
+            width: 100% !important;
+            height: auto;
+            background-color: transparent;
+            .tm-side-navbar {
+                display: flex;
+                width: 100%;
+                max-width: 1040px;
+                margin: 20px auto;
+                background: #fff;
+                border-radius: 8px;
+                padding: 10px;
+                li {
+                    a {
+                        padding: 10px 20px;
+                    }
+                    &:has(a.router-link-exact-active) {
+                        border-radius: 8px;
+                    }
+                }
+            }
+        }
         .tm-trip-content-wrapper {
             margin: 20px 0;
-            width: calc(100% - 280px);
+            width: 100%;
+            max-width: 1040px;
             background: #fff;
             border-radius: 8px;
+            margin: 0 auto;
             .section-title {
                 @include text($size: 18px, $weight: 600, $color: $tm-dark-300);
                 padding: 16px 20px;

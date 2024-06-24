@@ -28,21 +28,21 @@ class AdminMenuHandler {
                 'manage_options',
                 'admin.php?page=travel-manager.php#/trips',
             );
-            $submenu['travel-manager.php']['bookings'] = array(
-                'Bookings',
-                'manage_options',
-                'admin.php?page=travel-manager.php#/bookings',
-            );
-            $submenu['travel-manager.php']['customers'] = array(
-                'Customers',
-                'manage_options',
-                'admin.php?page=travel-manager.php#/customers',
-            );
-            $submenu['travel-manager.php']['enquiries'] = array(
-                'Enquiries',
-                'manage_options',
-                'admin.php?page=travel-manager.php#/enquiries',
-            );
+            // $submenu['travel-manager.php']['bookings'] = array(
+            //     'Bookings',
+            //     'manage_options',
+            //     'admin.php?page=travel-manager.php#/bookings',
+            // );
+            // $submenu['travel-manager.php']['customers'] = array(
+            //     'Customers',
+            //     'manage_options',
+            //     'admin.php?page=travel-manager.php#/customers',
+            // );
+            // $submenu['travel-manager.php']['enquiries'] = array(
+            //     'Enquiries',
+            //     'manage_options',
+            //     'admin.php?page=travel-manager.php#/enquiries',
+            // );
             $submenu['travel-manager.php']['settings'] = array(
                 'Settings',
                 'manage_options',
@@ -74,6 +74,18 @@ class AdminMenuHandler {
         ));
 
         wp_localize_script('TM-script-boot', 'wpTravelManager', $TM);
+    // <router-link class="tm-menu-item" to="/">
+    //     Dashboard
+    // </router-link> 
+    // <router-link class="tm-menu-item" to="/bookings" >
+    //     Bookings
+    // </router-link>
+    // <router-link class="tm-menu-item" to="/customers" >
+    //     Customers
+    // </router-link>
+    // <router-link class="tm-menu-item" to="/enquiries" >
+    // Enquiries
+    // </router-link>
 
         echo '<div class="TM-admin-page" id="TM_app">
             <div class="tm-main-menu">
@@ -81,20 +93,8 @@ class AdminMenuHandler {
                     <h3>TRAVEL Manager</h3>
                 </div>
                 <div class="menu-item">
-                    <router-link class="tm-menu-item" to="/">
-                        Dashboard
-                    </router-link> 
                     <router-link class="tm-menu-item" to="/trips" >
                         Trips
-                    </router-link>
-                    <router-link class="tm-menu-item" to="/bookings" >
-                        Bookings
-                    </router-link>
-                    <router-link class="tm-menu-item" to="/customers" >
-                        Customers
-                    </router-link>
-                    <router-link class="tm-menu-item" to="/enquiries" >
-                    Enquiries
                     </router-link>
                     <router-link class="tm-menu-item" to="/settings" >
                         Settings

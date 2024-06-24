@@ -18,13 +18,13 @@
             </div>
         </div>
         <div class="tm-trip-edit-body">
-            <SideNavBar class="tm-settings-navbar" :width="'220px'" :routes="routes" />
+            <SideNavBar :width="'220px'" :routes="routes" />
             <div class="tm-trip-content-wrapper">
                 <router-view @saveTrip="updateTripInfo" :meta="trip_meta" :trip_info="trip_info"></router-view>
-                <div class="tm-trip-edit-footer">
-                    <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And
-                        Continue</el-button>
-                </div>
+            </div>
+            <div class="tm-trip-edit-footer">
+                <el-button @click="updateTripAndContinueNextRoute()" type="primary" size="large">Save And
+                    Continue</el-button>
             </div>
         </div>
     </div>
@@ -255,8 +255,12 @@ export default {
 
 <style scoped>
 .tm-trip-edit-footer {
-    padding: 20px;
+    padding: 20px 0px;
     text-align: end;
-    border-top: 1px solid #e0e0e0;
+    /* border-top: 1px solid #e0e0e0; */
+    background-color: transparent;
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
 }
 </style>
