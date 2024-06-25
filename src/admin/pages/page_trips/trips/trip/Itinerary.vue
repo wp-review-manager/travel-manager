@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <AppCard :title="'Itinerary'" style="margin: 20px; margin-top: 0;">
+        <AppCard class="tm_label_card" :title="'Itinerary Plan'" style="margin: 20px; margin-top: 0;">
             <template #body>
                 <Options :options="meta.itinerary.options"  />
             </template>

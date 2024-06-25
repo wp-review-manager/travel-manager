@@ -60,7 +60,7 @@ export default defineComponent({
 .app-option {
     border-bottom: 1px solid #E8EAF1; padding: 24px 0px;
     &:hover {
-       background-color: #E8EAF1;
+       background-color: #f3f4f747;
        border-radius: 8px; 
     }
 }

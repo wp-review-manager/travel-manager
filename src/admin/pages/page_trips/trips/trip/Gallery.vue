@@ -12,7 +12,7 @@
                     />
                 </template>
 
-                <template v-slot:body v-if="meta.trip_gallery.enable_video_gallery == 'yes'">
+                <template v-slot:body v-if="meta.trip_gallery.enable_image_gallery == 'yes'">
                     <ImageGallery :image="meta.trip_gallery?.images " :is_multiple="true"/>
                 </template>
 

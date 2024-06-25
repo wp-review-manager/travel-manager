@@ -7,7 +7,7 @@
                 <el-input v-model="meta.inc_exc.section_title" style="width: 100%" placeholder="Enter Cost Tab Section Title" size="large" />
             </div>
         </div>
-        <AppCard :title="'Includes'" style="margin: 20px; margin-top: 0;">
+        <AppCard class="tm_label_card" :title="'Includes'" style="margin: 20px; margin-top: 0;">
             <template #body>
                 <div class="input-wrapper">
                     <p class="form-label">Section Title</p>
@@ -17,7 +17,7 @@
             </template>
         </AppCard>
 
-        <AppCard :title="'Includes'" style="margin: 20px; margin-top: 0;">
+        <AppCard class="tm_label_card" :title="'Excludes'" style="margin: 20px; margin-top: 0;">
             <template #body>
                 <div class="input-wrapper">
                     <p class="form-label">Section Title</p>

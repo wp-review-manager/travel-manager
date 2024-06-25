@@ -1,7 +1,7 @@
 .tm_pricing_wrapper {
-    .el-dialog__body  {
-        padding: 20px;
-    }
+    .el-dialog__body {
+        padding: 0px !important;
+    } 
     .tm_form_wrapper {
         .package-title {
             padding: 10px 20px;
@@ -48,6 +48,7 @@
             gap: 4px;
             text-decoration: underline;
             color: $tm-primary-500;
+            margin-left: 20px;
         }
         .enable_booking_date {
             display: flex;

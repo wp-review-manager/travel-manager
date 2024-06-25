@@ -1,29 +1,24 @@
 <template>
     <div class="tm-include-exclude-wrapper">
         <h2 class="section-title">Map</h2>
-        <div class="tm_form_wrapper">
-            <app-card :title="'Map Image'" >
-                <template v-slot:body >
-                    <ImageGallery :image="meta.map?.image "/>
-                </template>
-            </app-card>
-        </div>
-
-        <div class="tm_form_wrapper">
-            <app-card :title="'Map Iframe Code'">
-                <template v-slot:body >
-                    <div class="tm_form_wrapper">
-                        <div class="input-wrapper">
-                            <p class="form-label">Enter The Map Iframe Code</p>
-                            <div class="couple-inputs">
-                                <el-input type="textarea" rows="6" v-model="meta.map.iframe_code" style="width: 100% !important" />
-                            </div>
+        <app-card class="tm_label_card" :title="'Map Image'" >
+            <template v-slot:body >
+                <ImageGallery :image="meta.map?.image "/>
+            </template>
+        </app-card>
+        
+        <app-card class="tm_label_card" :title="'Map Iframe Code'">
+            <template v-slot:body >
+                <div class="tm_form_wrapper">
+                    <div class="input-wrapper">
+                        <p class="form-label">Enter The Map Iframe Code</p>
+                        <div class="couple-inputs">
+                            <el-input type="textarea" rows="6" v-model="meta.map.iframe_code" style="width: 100% !important" />
                         </div>
                     </div>
-                </template>
-            </app-card>
-
-        </div>
+                </div>
+            </template>
+        </app-card>
 
     </div>
 </template>

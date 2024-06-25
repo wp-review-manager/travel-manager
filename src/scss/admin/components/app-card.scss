@@ -21,3 +21,13 @@
     }
 
 }
+
+.tm_label_card {
+    margin: 0px !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: none !important;
+    .app-card-header {
+        background-color: $tm-gray-50;
+    }
+}

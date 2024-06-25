@@ -1,54 +1,55 @@
 <template>
     <div class="tm-trip-edit-pricing">
-        <div class="tm-trip-edit-pricing-header">
-            <h2>Edit Pricing</h2>
-        </div>
-        <div class="enable_booking_date">
-            <p>Enable Booking Date</p>
-            <el-switch
-                v-model="package_info.available_booking_date.enable"
-                size="medium"
-                active-value="yes"
-                inactive-value="no"
-            ></el-switch>
-        </div>
-
-        <div v-if="package_info.available_booking_date.enable == 'yes'" class="booking_date">
-            <div class="input-wrapper">
-                <p class="form-label">Start Date *</p>
-                <el-date-picker
-                    v-model="package_info.available_booking_date.start_date"
-                    type="date"
-                    placeholder="Select Date"
-                    size="large"
-                    style="width: 100%"
-                ></el-date-picker>
+        <div style="padding: 20px;">
+            <div class="tm-trip-edit-pricing-header">
+                <h2>Edit Pricing</h2>
             </div>
-            <div class="input-wrapper">
-                <p class="form-label">End Date *</p>
-                <el-date-picker
-                    v-model="package_info.available_booking_date.end_date"
-                    type="date"
-                    placeholder="Select Date"
-                    size="large"
-                    style="width: 100%"
-                ></el-date-picker>
+            <div class="enable_booking_date">
+                <p>Enable Booking Date</p>
+                <el-switch
+                    v-model="package_info.available_booking_date.enable"
+                    size="medium"
+                    active-value="yes"
+                    inactive-value="no"
+                ></el-switch>
+            </div>
+
+            <div v-if="package_info.available_booking_date.enable == 'yes'" class="booking_date">
+                <div class="input-wrapper">
+                    <p class="form-label">Start Date *</p>
+                    <el-date-picker
+                        v-model="package_info.available_booking_date.start_date"
+                        type="date"
+                        placeholder="Select Date"
+                        size="large"
+                        style="width: 100%"
+                    ></el-date-picker>
+                </div>
+                <div class="input-wrapper">
+                    <p class="form-label">End Date *</p>
+                    <el-date-picker
+                        v-model="package_info.available_booking_date.end_date"
+                        type="date"
+                        placeholder="Select Date"
+                        size="large"
+                        style="width: 100%"
+                    ></el-date-picker>
+                </div>
+            </div>
+
+            <div class="input-wrapper" style="width: 50%; margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <p class="form-label">Package  Quantity</p>
+                    <el-tooltip effect="dark" content="Please enter the number of packages available for this trip. If there is no limit, type 0" placement="top">
+                        <el-icon>
+                            <InfoFilled />
+                        </el-icon>
+                    </el-tooltip>
+                </div>
+                <el-input v-model="package_info.package_quantity" style="width: 100%" type="number" min="0" size="large" />
             </div>
         </div>
-
-        <div class="input-wrapper" style="width: 50%; margin-bottom: 20px;">
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <p class="form-label">Package  Quantity</p>
-                <el-tooltip effect="dark" content="Please enter the number of packages available for this trip. If there is no limit, type 0" placement="top">
-                    <el-icon>
-                        <InfoFilled />
-                    </el-icon>
-                </el-tooltip>
-            </div>
-            <el-input v-model="package_info.package_quantity" style="width: 100%" type="number" min="0" size="large" />
-        </div>
-
-        <AppCard :title="`Pricing Categories - ${ price.label }`" v-for="(price, index) in package_info.pricing">
+        <AppCard class="tm_label_card" :title="`Pricing Categories - ${ price.label }`" v-for="(price, index) in package_info.pricing">
             <template v-slot:actions>
                 <div style="display: flex; align-items: center; gap: 4px;">
                     <el-switch
