@@ -1,13 +1,13 @@
 <template>
     <div class="tm_photo_card">
-        <div
-            v-if="is_multiple && image.length > 0"
+        <div v-if="is_multiple && image?.length > 0"
             v-for="(img, index) in image"
-            class="tm_photo_holder file_upload_icon_btn"
         >
-            <img :src="img?.url" :alt="img?.name"/>
-            <div @click="deleteImage(image, index)"  class="tm-delete-image">
-                <Icon icon="tm-cancel" />
+            <div v-if="img.url" class="tm_photo_holder file_upload_icon_btn">
+                <img :src="img?.url" :alt="img?.name" v-if="img.url?.length"/>
+                <div @click="deleteImage(image, index)"  class="tm-delete-image">
+                    <Icon icon="tm-cancel" />
+                </div>
             </div>
         </div>
         <div v-else-if="hasImage(image)" class="tm_photo_holder file_upload_icon_btn">
@@ -62,6 +62,7 @@ export default {
                     const attach = select.first().toJSON();
 
                     if (that.is_multiple) {
+                        console.log(attach, {image: that.image});
                         select.toJSON()?.map((item) => {
                             let image = {
                                 id: item.id,

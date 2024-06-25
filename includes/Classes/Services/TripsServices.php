@@ -1,13 +1,20 @@
 <?php
 namespace WPTravelManager\Classes\Services;
+use WPTravelManager\Classes\Helper;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 class TripsServices {
 
     public function sanitizeTripMeta($trip_meta) {
-        array_walk_recursive($trip_meta, function (&$value) {
-            $value = sanitize_text_field($value);
+        array_walk_recursive($trip_meta, function (&$value, $key) {
+            if ('iframe_code' == $key) {
+                $allow_html_tag_for_iframe = Helper::allowHtmlTagForIframe();
+                 $value = wp_kses($value, $allow_html_tag_for_iframe);
+            }
+            else {
+                $value = sanitize_text_field($value, $key);
+            }
         });
-    
+
         return $trip_meta;
     }
 

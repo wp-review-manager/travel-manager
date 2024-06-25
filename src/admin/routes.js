@@ -15,6 +15,7 @@ import Itinerary from "@/pages/page_trips/trips/trip/Itinerary.vue"
 import IncludeAndExclude from "@/pages/page_trips/trips/trip/IncludeAndExclude.vue"
 import TripInfo from "@/pages/page_trips/trips/trip/TripInfo.vue"
 import Gallery from "@/pages/page_trips/trips/trip/Gallery.vue"
+import Map from "@/pages/page_trips/trips/trip/Map.vue"
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
 import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
@@ -106,6 +107,11 @@ export default [
                 component: Gallery,
                 name: 'gallery',
             },
+            {
+                path: 'map',
+                component: Map,
+                name: 'map',
+            }
         ]
     },
     {

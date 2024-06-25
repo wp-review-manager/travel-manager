@@ -126,10 +126,15 @@ export default {
                 },
                 trip_gallery: {
                     enable_image_gallery: "yes",
-                    images: [{image_link: "image_link", alt: "text"}],
+                    images: [{id: "", url:"", name: ""}],
                     enable_video_gallery: "yes",
                     videos: [{video_link: "image_link", alt: "text"}]
-                }
+                },
+                map: {
+                    title: "Map section title",
+                    image: {id: "", url:"", name: ""},
+                    iframe_code: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3152.0000000000005!2d144.9630573152587!3d-37.813627079751286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6429d7f7d7f5f%3A0x405f7b6f0c1f0e0!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1636710000000!5m2!1sen!2sau' width='600' height='450' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+                },
                 // trip_info: {
                 //     title: "section title",
                 //     options: [{ label: "WIFI", value: "no" }, { label: "Admission fee", value: "Now not here" }] 
@@ -236,6 +241,11 @@ export default {
                 label: "Gallery",
                 icon: "mdi-settings",
                 to: `/trip/${this.trip_id}/edit/gallery`
+            },
+            {
+                label: "Map",
+                icon: "mdi-settings",
+                to: `/trip/${this.trip_id}/edit/map`
             },
             {
                 label: "FAQ",

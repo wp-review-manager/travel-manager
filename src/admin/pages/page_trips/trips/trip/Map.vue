@@ -1,51 +1,22 @@
 <template>
     <div class="tm-include-exclude-wrapper">
-        <h2 class="section-title">Gallery</h2>
+        <h2 class="section-title">Map</h2>
         <div class="tm_form_wrapper">
-            <app-card :title="'Enable Image Gallery'" :sub_title="'If you want to hide/show image gallery from frontend you just enable/disable'">
-                <template v-slot:actions>
-                    <el-switch
-                        v-model="meta.trip_gallery.enable_image_gallery"
-                        size="large"
-                        active-value="yes"
-                        inactive-value="no"
-                    />
+            <app-card :title="'Map Image'" >
+                <template v-slot:body >
+                    <ImageGallery :image="meta.map?.image "/>
                 </template>
-
-                <template v-slot:body v-if="meta.trip_gallery.enable_video_gallery == 'yes'">
-                    <ImageGallery :image="meta.trip_gallery?.images " :is_multiple="true"/>
-                </template>
-
             </app-card>
         </div>
 
         <div class="tm_form_wrapper">
-            <app-card :title="'Enable Video Gallery'" :sub_title="'If you want to hide/show video gallery from frontend you just enable/disable'">
-                <template v-slot:actions>
-                    <el-switch
-                        v-model="meta.trip_gallery.enable_video_gallery"
-                        size="large"
-                        active-value="yes"
-                        inactive-value="no"
-                    />
-                </template>
-
-                <template v-slot:body v-if="meta.trip_gallery.enable_video_gallery == 'yes'">
+            <app-card :title="'Map Iframe Code'">
+                <template v-slot:body >
                     <div class="tm_form_wrapper">
                         <div class="input-wrapper">
-                            <p class="form-label">Enter YouTube or Vimeo URL</p>
+                            <p class="form-label">Enter The Map Iframe Code</p>
                             <div class="couple-inputs">
-                                <el-input min="0" v-model="youtube_video_url" style="width: 100% !important" placeholder="https://www.youtube.com/" size="large" />
-                                <el-button @click="addVideoUrl()" type="primary" size="large">Add</el-button>
-                            </div>
-                        </div>
-
-                        <div class="tm-trip-gallery-thumbnail-container">
-                            <div class="tm-trip-gallery-thumbnail" v-for="(thumbnail, index) in meta.trip_gallery.videos">
-                                <img :src="thumbnail?.thumbnail" :alt="thumbnail?.alt"/>
-                                <div @click="deleteVideo(index)" class="delete-btn">
-                                    <Icon icon="tm-delete" />
-                                </div>
+                                <el-input type="textarea" rows="6" v-model="meta.map.iframe_code" style="width: 100% !important" />
                             </div>
                         </div>
                     </div>
