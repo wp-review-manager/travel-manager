@@ -70,6 +70,6 @@ class TripsServices {
             wp_send_json_error(array('messages' => $errors));
         }
      
-        return json_encode( $trip_meta );
+        return maybe_serialize( $trip_meta );
     }
 }

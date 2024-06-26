@@ -123,13 +123,25 @@ class Trips extends Model {
     public function getTripInfo($tripId)
     {
         $trip = get_post($tripId);
+        if (!$trip) {
+            wp_send_json_error('Trip not found');
+        }
+
         $tripMeta = get_post_meta($tripId);
         $tripMeta_data = Arr::get($tripMeta, 'trip_meta', null);
         $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
-        
+
+
+       
+        if ($tripMeta_data[0][0] == 's') { // means the data is serialized as string
+             // Remove extra serialization string
+            $pos = strpos($tripMeta_data[0], '"');
+            $tripMetaData = substr($tripMeta_data[0], $pos + 1);
+        }
+      
         return array(
             'trip' => $trip,
-            'trip_meta' => $tripMeta_data
+            'trip_meta' => maybe_unserialize($tripMetaData)
         );
     }
 

@@ -161,7 +161,7 @@ export default {
                 }).then((response) => {
                     console.log(response);
                     that.trip_info = response.data.trip;
-                    that.trip_meta = response.data?.trip_meta ?  JSON.parse(response.data.trip_meta) : that.trip_meta;
+                    that.trip_meta = response.data?.trip_meta ?  response.data.trip_meta : that.trip_meta;
                 }).fail((error) => {
                     console.log(error);
                 })
