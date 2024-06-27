@@ -248,9 +248,9 @@ export default {
                 to: `/trip/${this.trip_id}/edit/map`
             },
             {
-                label: "FAQ",
+                label: "FAQs",
                 icon: "mdi-settings",
-                to: `/trip/${this.trip_id}/edit/faq`
+                to: `/trip/${this.trip_id}/edit/faqs`
             },
             {
                 label: "Reviews",

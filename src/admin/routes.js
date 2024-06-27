@@ -16,6 +16,7 @@ import IncludeAndExclude from "@/pages/page_trips/trips/trip/IncludeAndExclude.v
 import TripInfo from "@/pages/page_trips/trips/trip/TripInfo.vue"
 import Gallery from "@/pages/page_trips/trips/trip/Gallery.vue"
 import Map from "@/pages/page_trips/trips/trip/Map.vue"
+import TripFaq from "@/pages/page_trips/trips/trip/TripFaq.vue"
 // Settings section components
 import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
 import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
@@ -111,6 +112,11 @@ export default [
                 path: 'map',
                 component: Map,
                 name: 'map',
+            },
+            {
+                path: 'faqs',
+                component: TripFaq,
+                name: 'faqs',
             }
         ]
     },

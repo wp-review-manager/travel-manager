@@ -25,9 +25,20 @@ class TripsController {
         $tripId = sanitize_text_field(Arr::get($_REQUEST, 'trip_id'));
         $tripModal = new Trips();
         if ($tripId) {
-            $response = $tripModal->updateTrip($tripId);
+    
+            $sanitized_trip_meta = (new TripsServices())->sanitizeTripMeta(Arr::get($_REQUEST, 'trip_meta', []));
+            $validate_and_serialized = (new TripsServices())->validateTripMeta($sanitized_trip_meta, $tripId, $trip_title, $trip_description);
+            
+            $response = $tripModal->updateTrip($tripId, $validate_and_serialized);
         } else {
-            $response = $tripModal->createTrip();
+            $tripData = array(
+                'post_title' => sanitize_text_field(Arr::get($_REQUEST, 'trip_title', 'New Trip Title')),
+                'post_content' => sanitize_text_field(Arr::get($_REQUEST, 'trip_description', '<p>New Trip Description</p>')),
+                'post_status' => sanitize_text_field(Arr::get($_REQUEST, 'trip_status', 'publish')),
+                'post_type' => 'tm_trip',
+            );
+
+            $response = $tripModal->createTrip($tripData);
         }
 
         wp_send_json(array(

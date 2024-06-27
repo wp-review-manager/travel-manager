@@ -18,19 +18,11 @@ class TripsServices {
         return $trip_meta;
     }
 
-    public function validateTripMeta($trip_meta, $trip_id, $trip_title, $trip_description) {
+    public function validateTripMeta($trip_meta, $trip_id) {
         $errors = [];
 
         if (empty($trip_id)) {
             $errors[] = 'Trip ID is required';
-        }
-
-        if (empty($trip_title)) {
-            $errors[] = 'Trip title is required';
-        }
-
-        if (empty($trip_description)) {
-            $errors[] = 'Trip description is required';
         }
         
         $general = Arr::get($trip_meta, 'general', []);

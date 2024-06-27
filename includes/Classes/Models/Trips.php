@@ -7,15 +7,12 @@ class Trips extends Model {
     protected $model = 'posts';
     protected $metaModel = 'postmeta';
 
-    public function updateTrip($tripId)
+    public function updateTrip($tripId, $validate_and_serialized)
     {
         $trip_info = Arr::get($_REQUEST, 'trip_info', []);
         $trip_title = sanitize_text_field( Arr::get($trip_info, 'post_title', 'New Trip Title') );
         $trip_description = sanitize_text_field( Arr::get($trip_info, 'post_content', '<p>New Trip Description</p>') );
-
-        $sanitized_trip_meta = (new TripsServices())->sanitizeTripMeta(Arr::get($_REQUEST, 'trip_meta', []));
-        $validate_and_serialized = (new TripsServices())->validateTripMeta($sanitized_trip_meta, $tripId, $trip_title, $trip_description);
-
+        
         $tripData = array(
             'ID' => $tripId,
             'post_title' => $trip_title,
@@ -31,14 +28,8 @@ class Trips extends Model {
         return $tripId;
     }
 
-    public function createTrip()
+    public function createTrip($tripData = [])
     {
-        $tripData = array(
-            'post_title' => sanitize_text_field(Arr::get($_REQUEST, 'trip_title', 'New Trip Title')),
-            'post_content' => sanitize_text_field(Arr::get($_REQUEST, 'trip_description', '<p>New Trip Description</p>')),
-            'post_status' => sanitize_text_field(Arr::get($_REQUEST, 'trip_status', 'publish')),
-            'post_type' => 'tm_trip',
-        );
         $tripId = wp_insert_post($tripData);
 
         if ($tripId) {
@@ -48,23 +39,6 @@ class Trips extends Model {
             ]);
         }
         return $tripId;
-    }
-
-    public function saveTripMeta($tripId)
-    {
-        $tripMeta = array(
-            'trip_price' => sanitize_text_field(Arr::get($_REQUEST, 'trip_price', 0)),
-            'trip_duration' => sanitize_text_field(Arr::get($_REQUEST, 'trip_duration', 0)),
-            'trip_start_date' => sanitize_text_field(Arr::get($_REQUEST, 'trip_start_date', date('Y-m-d'))),
-            'trip_end_date' => sanitize_text_field(Arr::get($_REQUEST, 'trip_end_date', date('Y-m-d'))),
-            'trip_max_people' => sanitize_text_field(Arr::get($_REQUEST, 'trip_max_people', 0)),
-            'trip_min_people' => sanitize_text_field(Arr::get($_REQUEST, 'trip_min_people', 0)),
-            'trip_location' => sanitize_text_field(Arr::get($_REQUEST, 'trip_location', '')),
-            'trip_destination' => sanitize_text_field(Arr::get($_REQUEST, 'trip_destination', '')),
-        );
-        foreach ($tripMeta as $key => $value) {
-            update_post_meta($tripId, $key, $value);
-        }
     }
 
     public function getTrips()
