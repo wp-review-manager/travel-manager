@@ -31,7 +31,7 @@
                         </el-button>
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" content="Click to delete destinations" placement="top-start">
-                        <el-button @click="openDeleteDestinationModal(row)" link type="primary" size="small">
+                        <el-button @click="confirmDeleteTrip(row)" link type="primary" size="small">
                             <Icon icon="tm-delete" />
                         </el-button>
                     </el-tooltip>
@@ -125,7 +125,40 @@ export default {
         changeDate(date) {
             this.filter_date = date;
             this.getAllTrips();
-        }
+        },
+        confirmDeleteTrip(row) {
+            this.$confirm('This will delete the trip. Continue?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.deleteTrip(row);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: 'Delete canceled'
+                });
+            });
+        },
+        deleteTrip(row) {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_trips",
+                    route: "delete_trip",
+                    trip_id: row.ID,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.$notify({
+                        type: 'success',
+                        message: 'Trip deleted successfully',
+                        position: 'bottom-right'
+                    });
+                    that.getAllTrips();
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
     },
     mounted() {
         this.getAllTrips();

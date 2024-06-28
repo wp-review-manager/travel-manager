@@ -10,8 +10,8 @@
                 <div class="option-content">
                     <div class="input-wrapper">
                         <p class="form-label" for="name">Day {{ index + 1 }}</p>
-                        <el-input style="margin-bottom: 16px;" v-model="option.title" placeholder="Itinerary Title" size="large" />
-                        <el-input type="textarea" rows="6" v-model="option.description" placeholder="Itinerary description" size="large" />
+                        <el-input style="margin-bottom: 16px;" v-model="option.title" :placeholder="title" size="large" />
+                        <el-input type="textarea" rows="6" v-model="option.description" :placeholder="description" size="large" />
                     </div>
                 </div>
                 <div class="delete-icon" @click="deleteOption(index)">
@@ -40,13 +40,21 @@ export default defineComponent({
         options: {
             type: Array,
             default: () => []
+        },
+        title: {
+            type: String,
+            default: 'Itinerary Title'
+        },
+        description: {
+            type: String,
+            default: 'Itinerary description'
         }
     },
     methods: {
         addNewOption() {
             this.options.push({
-                title: 'Itinerary Title',
-                description: 'Itinerary description'
+                title: this.title,
+                description: this.description
             });
         },
         deleteOption(index) {

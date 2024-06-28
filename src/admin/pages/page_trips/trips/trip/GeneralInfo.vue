@@ -9,12 +9,11 @@
                 <!-- <p class="error-message">{{ slug_error }}</p> -->
             </div>
 
-            <div class="input-wrapper">
+            <!-- <div class="input-wrapper">
                 <p class="form-label" for="name">Trip Code *</p>
                 <el-input v-model="meta.general.trip_code" style="width: 100%"
                     placeholder="Enter Unique Trip Code , Ex: WTE-4606" size="large" />
-                <!-- <p class="error-message">{{ slug_error }}</p> -->
-            </div>
+            </div> -->
 
             <div class="input-wrapper">
 
@@ -103,6 +102,32 @@
                     </el-select>
                 </div>
             </div>
+
+            <app-card :title="'Affiliate Trip'" :sub_title="'If you want to affiliate by this trip, please enable'">
+                <template v-slot:actions>
+                    <el-switch
+                        v-model="meta.affiliate.enable"
+                        size="large"
+                        active-value="yes"
+                        inactive-value="no"
+                    />
+                </template>
+
+                <template v-slot:body v-if="meta.affiliate.enable == 'yes'">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                    <div class="input-wrapper" style="width: 50%;" >
+                        <p class="form-label" for="name">Affiliate Link *</p>
+                        <el-input v-model="meta.affiliate.affiliate_link" style="width: 100%"  size="large" />
+                    </div>
+
+                    <div class="input-wrapper" style="width: 50%;">
+                        <p class="form-label" for="name">Affiliate Button Text *</p>
+                        <el-input place v-model="meta.affiliate.btn_text" style="width: 100%"  size="large" />
+                    </div>
+                    </div>
+                </template>
+                
+            </app-card>
 
             <app-card :title="'Enable Fixed Departure'" :sub_title="' The Tour Availability Date Ranges sets the period during which bookings are allowed, both before and after the specified time.'">
                 <template v-slot:actions>

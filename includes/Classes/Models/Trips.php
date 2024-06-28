@@ -105,8 +105,6 @@ class Trips extends Model {
         $tripMeta_data = Arr::get($tripMeta, 'trip_meta', null);
         $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
 
-
-       
         if ($tripMeta_data[0][0] == 's') { // means the data is serialized as string
              // Remove extra serialization string
             $pos = strpos($tripMeta_data[0], '"');
@@ -117,6 +115,19 @@ class Trips extends Model {
             'trip' => $trip,
             'trip_meta' => maybe_unserialize($tripMetaData)
         );
+    }
+
+    public function deleteTrip($tripId)
+    {
+        $trip = get_post($tripId);
+        if (!$trip) {
+            wp_send_json_error('Trip not found');
+        }
+
+        wp_delete_post($tripId);
+        delete_post_meta($tripId, 'trip_meta');
+
+        return $tripId;
     }
 
 }
