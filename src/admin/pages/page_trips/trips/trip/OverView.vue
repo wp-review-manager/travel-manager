@@ -11,7 +11,7 @@
                 <div class="input-wrapper">
                     <p class="form-label">Trip Description</p>
                     {{ meta.general.description.description }}
-                    <WpEditor :value="meta.general.description.description" />
+                    <WpEditor v-model="meta.general.description.description" />
                     <!-- <el-input v-model="meta.general.description.description" type="textarea" size="large" /> -->
                 </div>
             </template>

@@ -1,14 +1,6 @@
 <template>
     <div class="wp_vue_editor_wrapper">
-        <popover
-            v-if="editorShortcodes.length"
-            class="popover-wrapper"
-            :class="{'popover-wrapper-plaintext': !hasWpEditor}"
-            :data="editorShortcodes"
-            @command="handleCommand">
-        </popover>
-        <textarea v-if="hasWpEditor && !no_tiny_mce" class="wp_vue_editor" :id="editor_id">{{value}}</textarea>
-
+        <textarea v-if="hasWpEditor && !no_tiny_mce" class="wp_vue_editor" :id="editor_id">{{modelValue}}</textarea>
         <textarea v-else
             class="wp_vue_editor wp_vue_editor_plain"
             v-model="plain_content"
@@ -30,7 +22,7 @@ export default{
                 return 'wp_editor_'+ Date.now() + parseInt(Math.random() * 1000);
             }
         },
-        value: {
+        modelValue: {
             type: String,
             default() {
                 return '';
@@ -52,14 +44,14 @@ export default{
     data() {
         return {
             hasWpEditor: !!window.wp.editor,
-            plain_content: this.value,
-            cursorPos: this.value.length,
+            plain_content: this.modelValue,
+            cursorPos: this.modelValue.length,
             no_tiny_mce: false
         }
     },
     watch: {
         plain_content() {
-            this.$emit('input', this.plain_content);
+            this.$emit('update:modelValue', this.plain_content);
         },
     },
     methods: {
@@ -97,7 +89,7 @@ export default{
         },
         changeContentEvent() {
             let content = wp.editor.getContent(this.editor_id);
-            this.$emit('input', content);
+            this.$emit('update:modelValue', content);
         },
 
         handleCommand(command) {
