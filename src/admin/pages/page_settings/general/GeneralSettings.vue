@@ -1,3 +1,3 @@
 <template>
-    General Settings
+    <p> General Settings </p>
 </template>

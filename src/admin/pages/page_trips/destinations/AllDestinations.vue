@@ -62,6 +62,7 @@ Copy code
                 />
             </template>
         </AppTable>
+        
         <AppModal
             :title="'Update Destinations'"
             :width="800"

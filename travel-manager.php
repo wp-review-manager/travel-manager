@@ -16,7 +16,7 @@ define('TM_VERSION', '1.0.5');
 add_action('plugins_loaded', function () {
     include TM_DIR . 'includes/Classes/Bootstrap.php';
     $bootstrap = new \WPTravelManager\Classes\Bootstrap();
-    $bootstrap->boot();
+    $bootstrap->Boot();
 });
 
 

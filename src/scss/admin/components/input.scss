@@ -8,7 +8,7 @@
         }
     }
 }
-.form-label {
+.form-label, .el-form-item__label {
     @include text($size: 14px, $weight: 500);
     margin-bottom: 5px;
 }
