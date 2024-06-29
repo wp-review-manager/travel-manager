@@ -31,7 +31,6 @@ class Model
         if (is_array($selects)) {
             $selects = array_unique(array_merge($selects, $this->selects));
         } else {
-            // Ensure $selects is an array
             $selects = array_unique(array_merge([$selects], $this->selects));
         }
 
@@ -93,7 +92,6 @@ class Model
 
         return $this;
     }
-
 
     public function limit($limit)
     {
@@ -271,6 +269,20 @@ class Model
     public function getDB()
     {
         return $this->db;
+    }
+
+    // Define a hasOne relationship
+    public function hasOne($relatedModel, $foreignKey, $localKey = 'id')
+    {
+        $related = new $relatedModel();
+        return $related->where($foreignKey, '=', $this->{$localKey})->first();
+    }
+
+    // Define a hasMany relationship
+    public function hasMany($relatedModel, $foreignKey, $localKey = 'id')
+    {
+        $related = new $relatedModel();
+        return $related->where($foreignKey, '=', $this->{$localKey})->get();
     }
 }
 ?>
