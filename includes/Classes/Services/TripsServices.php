@@ -5,10 +5,16 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 class TripsServices {
 
     public function sanitizeTripMeta($trip_meta) {
+
         array_walk_recursive($trip_meta, function (&$value, $key) {
             if ('iframe_code' == $key) {
                 $allow_html_tag_for_iframe = Helper::allowHtmlTagForIframe();
                  $value = wp_kses($value, $allow_html_tag_for_iframe);
+            }
+            if ('description' == $key) {
+                $value = $value;
+                // $allow_html_tag = Helper::allowHtmlTag();
+                // $value = wp_kses($value, $allow_html_tag);
             }
             else {
                 $value = sanitize_text_field($value, $key);

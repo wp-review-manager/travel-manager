@@ -15,14 +15,14 @@ class Model
     {
         global $wpdb;
         if ($table) {
-            $this->model = $wpdb->prefix.$table;
+            $this->model = $wpdb->prefix . $table;
         }
         $this->db = $wpdb;
     }
 
     public function table($table)
     {
-        $this->model = $this->db->prefix.$table;
+        $this->model = $this->db->prefix . $table;
         return $this;
     }
 
@@ -31,9 +31,10 @@ class Model
         if (is_array($selects)) {
             $selects = array_unique(array_merge($selects, $this->selects));
         } else {
-            $this->selects[] = $selects;
-            $selects = array_unique($selects);
+            // Ensure $selects is an array
+            $selects = array_unique(array_merge([$selects], $this->selects));
         }
+
         $this->selects = $selects;
         return $this;
     }
@@ -131,27 +132,27 @@ class Model
                     $whereValue = $where[2];
                 } else {
                     if ($where[1] != 'IN') {
-                        $whereValue = "'".$where[2]."'";
+                        $whereValue = "'" . $where[2] . "'";
                     } else {
                         $whereValue = $where[2];
                     }
                 }
                 if ($index == 0) {
-                    $statement = 'WHERE '.$where[0].' '.$where[1].' '.$whereValue;
+                    $statement = 'WHERE ' . $where[0] . ' ' . $where[1] . ' ' . $whereValue;
                 } else {
-                    $statement .= ' AND '.$where[0].' '.$where[1].' '.$whereValue;
+                    $statement .= ' AND ' . $where[0] . ' ' . $where[1] . ' ' . $whereValue;
                 }
             }
         }
         if ($this->whereBetween && !$this->wheres) {
             foreach ($this->whereBetween as $whereBetween) {
-                $statement .= ' WHERE '.$whereBetween[0].' BETWEEN "'.$whereBetween[1].'" AND "'.$whereBetween[2].'"';
+                $statement .= ' WHERE ' . $whereBetween[0] . ' BETWEEN "' . $whereBetween[1] . '" AND "' . $whereBetween[2] . '"';
             }
         }
 
         if ($this->whereBetween && $this->wheres) {
             foreach ($this->whereBetween as $whereBetween) {
-                $statement .= ' '.$whereBetween[3]. ' ' .$whereBetween[0].' BETWEEN "'.$whereBetween[1].'" AND "'.$whereBetween[2].'"';
+                $statement .= ' ' . $whereBetween[3] . ' ' . $whereBetween[0] . ' BETWEEN "' . $whereBetween[1] . '" AND "' . $whereBetween[2] . '"';
             }
         }
         return $statement;
@@ -170,7 +171,7 @@ class Model
         $statement = '';
 
         if ($this->orderBy) {
-            $statement .= 'ORDER BY '.$this->orderBy[0].' '.$this->orderBy[1]. ' ';
+            $statement .= 'ORDER BY ' . $this->orderBy[0] . ' ' . $this->orderBy[1] . ' ';
         }
 
         if ($this->limit) {
@@ -272,3 +273,4 @@ class Model
         return $this->db;
     }
 }
+?>

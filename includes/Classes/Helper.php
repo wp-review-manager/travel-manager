@@ -23,4 +23,12 @@ class Helper {
             // Add more tags and attributes as needed
         );
     }
+
+    public static function allowHtmlTag() {
+        return array(
+            '*' => array(
+                '*' => []
+            )
+        );
+    }
 }
