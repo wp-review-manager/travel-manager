@@ -81,7 +81,7 @@ export default {
                 tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 data: this.attributes
             }).then((response) => {
-                this.$emit("updateDataAfterNewAdd", this.attributes);
+                this.$emit("updateDataAfterNewAddAttribute", this.attributes);
                 this.attributes = {
                     attr_title: "",
                     attr_slug: "",

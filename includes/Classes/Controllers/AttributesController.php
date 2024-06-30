@@ -12,6 +12,8 @@ class AttributesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_attributes' => 'postAttributes',
+            'get_attributes' => 'getAttributes',
+            'delete_attributes' => 'deleteAttributes',
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -36,6 +38,32 @@ class AttributesController {
             wp_send_json_success('Attributes updated successfully');
         } else {
             wp_send_json_error('Failed to updated Attributes');
+        }
+    }
+
+    public function getAttributes() {
+        $response = (new Attributes())->getAttributes();
+
+        wp_send_json_success(
+            array(
+                'data' => $response,
+                'message' => 'Destinations fetched successfully'
+            )
+        );
+    }
+
+    public function deleteAttributes() {
+        $attributes_id = Arr::get($_REQUEST, 'id');
+        if (!$attributes_id) {
+            wp_send_json_error('Attributes ID is required');
+        }
+
+        $response = Attributes::deleteAttributes($attributes_id);
+
+        if ($response) {
+            wp_send_json_success('Attributes deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete Attributes');
         }
     }
 
