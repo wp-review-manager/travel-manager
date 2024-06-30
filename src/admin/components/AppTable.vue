@@ -6,6 +6,7 @@
         <div class="tm-table-filter">
             <slot name="filter"></slot>
         </div>
+
         <el-table :data="tableData" style="width: 100%">
             <slot name="columns"></slot>
         </el-table>

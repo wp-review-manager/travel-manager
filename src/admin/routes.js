@@ -4,7 +4,7 @@ import GlobalSettings from './pages/page_global_settings/GlobalSettings.vue';
 import TripIndex from '@/pages/page_trips/TripsIndex.vue';
 import AllTrips from '@/pages/page_trips/trips/AllTrips.vue';
 import AllDestinations from '@/pages/page_trips/destinations/AllDestinations.vue';
-import AllAttributes from '@/pages/page_trips/destinations/AllDestinations.vue';
+import AllAttributes from '@/pages/page_trips/attributes/AllAttributes.vue';
 
 //Trip edit section 
 import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';

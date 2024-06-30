@@ -1,3 +1,3 @@
 <template>
-    GlobalSettings
+   <p> GlobalSettings</p>
 </template>
