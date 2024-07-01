@@ -13,7 +13,7 @@
                     v-clipboard:success="clipboardSuccessHandler">
                     {{ trip_info.shortcode }}
                 </button>
-                <el-button type="default">Preview</el-button>
+                <el-button @click="redirectPreviewPage(trip_info)" type="default">Preview</el-button>
                 <el-button @click="updateTripInfo()" class="save-btn" type="primary">Save Info</el-button>
             </div>
         </div>
@@ -208,6 +208,10 @@ export default {
             if (currentIndex !== -1 && currentIndex < this.routes.length - 1) {
                 this.$router.push(this.routes[currentIndex + 1].to);
             }
+        },
+
+        redirectPreviewPage(trip_info) {
+            window.open(trip_info.preview_url, '_blank');
         }
 
     },

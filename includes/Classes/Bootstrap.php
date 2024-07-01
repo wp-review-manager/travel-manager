@@ -2,6 +2,7 @@
 namespace WPTravelManager\Classes;
 use WPTravelManager\Classes\Routes\AjaxActions;
 use WPTravelManager\Classes\Routes\ShortcodeRegister;
+use WPTravelManager\Classes\Hooks\Actions;
 
 class Bootstrap {
     public function Boot () {
@@ -10,6 +11,7 @@ class Bootstrap {
         (new ShortcodeRegister())->register();
         (new AjaxActions())->register();
         (new AdminMenuHandler())->renderMenu();
+        (new Actions());
     }
 
     public function loadClasses()
@@ -26,4 +28,5 @@ class Bootstrap {
             $activator->migrateDatabases($newWorkWide);
         });
     }
+
 }

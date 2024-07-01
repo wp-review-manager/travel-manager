@@ -78,6 +78,7 @@ class Trips extends Model {
 
        foreach ($trips as $key => $trip) {
            $trips[$key]->shortcode = '[tm_trip id="' . $trip->ID . '"]';
+           $trips[$key]->preview_url = site_url('?wp_tm_trip_preview=' . $trip->ID);
        }
 
        $total = get_posts(array(
@@ -104,6 +105,7 @@ class Trips extends Model {
         $tripMeta = get_post_meta($tripId);
         $tripMeta_data = Arr::get($tripMeta, 'trip_meta', null);
         $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
+        $trip->preview_url = site_url('?wp_tm_trip_preview=' . $trip->ID);
 
         if ($tripMeta_data[0][0] == 's') { // means the data is serialized as string
              // Remove extra serialization string
