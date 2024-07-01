@@ -1,0 +1,28 @@
+.tm_trip_preview_wrapper {
+    background: $tm-gray-neutral;
+    .tm_preview_header {
+        display: flex;
+        padding: 20px;
+        justify-content: space-between;
+        background: $tm_background_color;
+        border-bottom: $tm_border;
+        .tm_preview_left_header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            .tm_trip_title {
+                font-size: 24px;
+                font-weight: 600;
+                border-right: $tm_border;
+                padding-right: 20px;
+            }
+            .tm_trip_actions {
+                a {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                }
+            }
+        }
+    }
+}

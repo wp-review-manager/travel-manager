@@ -1,3 +1,6 @@
-h1{
-    color: red;
-}
+@import '../admin/color.scss';
+@import '../admin/mixin.scss';
+@import '../admin/base.css';
+@import '../admin/variable.scss';
+@import '../admin/global_css.scss';
+@import './Trip/preview.scss';
