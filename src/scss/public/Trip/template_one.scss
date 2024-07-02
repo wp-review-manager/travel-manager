@@ -1,0 +1,17 @@
+.tm_trip_one_shortcode_preview_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    .tm_trip_main {
+        width: 70%;
+        background-color: $tm_background_color;
+        border-radius: 8px;
+    }
+    .tm_trip_sidebar {
+        background-color: $tm_background_color;
+        width: calc(30% - 20px);
+        min-width: 300px;
+        border-radius: 8px;
+    }
+}
