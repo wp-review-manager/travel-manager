@@ -3,6 +3,10 @@
         <article>
             <div class="entry-header">
                 <h1 class="entry-title"><?php echo esc_html($title); ?></h1>
+                <span class="wte-title-duration">
+                    <p class="duration"> 11 </p>
+                    <p class="days"> Days </p>
+                </span>
             </div>
         </article>
     </main>
