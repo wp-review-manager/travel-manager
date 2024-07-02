@@ -101,6 +101,36 @@
                         <el-option label="Booking not started" value="booking_not_started" />
                     </el-select>
                 </div>
+
+                <div style="width: 100%" class="input-wrapper">
+                    <p class="form-label" for="name">Trip Destinations *</p>
+                    <el-select v-model="meta.general.trip_destination" placeholder="Select Booking Status" size="large" style="width: 100%">
+                        <el-option label="Kashmir" value="kashmir" />
+                        <el-option label="Shilong" value="shilong" />
+                    </el-select>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px;">
+                <div style="width: 100%" class="input-wrapper">
+                    <p class="form-label" for="name">Trip Accommodation </p>
+                    <el-input v-model="meta.general.accommodation" style="width: 100%" placeholder="Ex: Hotel, Resort, Camp"
+                        size="large" />
+                </div>
+
+                <div style="width: 100%" class="input-wrapper">
+                    <p class="form-label" for="name">Transportation </p>
+                    <el-input v-model="meta.general.transportation" style="width: 100%" placeholder="Ex: Bus, Train, Flight"
+                        size="large" />
+                </div>
+
+
+                <div style="width: 100%" class="input-wrapper">
+                    <p class="form-label" for="name">Departure </p>
+                    <el-input v-model="meta.general.departure_location" style="width: 100%" placeholder="Ex: Delhi, Mumbai, Pune"
+                        size="large" />
+                </div>
+
             </div>
 
             <app-card :title="'Affiliate Trip'" :sub_title="'If you want to affiliate by this trip, please enable'">
@@ -115,15 +145,15 @@
 
                 <template v-slot:body v-if="meta.affiliate.enable == 'yes'">
                     <div style="display: flex; gap: 20px; align-items: center;">
-                    <div class="input-wrapper" style="width: 50%;" >
-                        <p class="form-label" for="name">Affiliate Link *</p>
-                        <el-input v-model="meta.affiliate.affiliate_link" style="width: 100%"  size="large" />
-                    </div>
+                        <div class="input-wrapper" style="width: 50%;" >
+                            <p class="form-label" for="name">Affiliate Link *</p>
+                            <el-input v-model="meta.affiliate.affiliate_link" style="width: 100%"  size="large" />
+                        </div>
 
-                    <div class="input-wrapper" style="width: 50%;">
-                        <p class="form-label" for="name">Affiliate Button Text *</p>
-                        <el-input place v-model="meta.affiliate.btn_text" style="width: 100%"  size="large" />
-                    </div>
+                        <div class="input-wrapper" style="width: 50%;">
+                            <p class="form-label" for="name">Affiliate Button Text *</p>
+                            <el-input place v-model="meta.affiliate.btn_text" style="width: 100%"  size="large" />
+                        </div>
                     </div>
                 </template>
                 

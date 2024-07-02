@@ -1,5 +1,6 @@
 .tm_trip_preview_wrapper {
-    background: $tm-gray-neutral;
+    background: $tm-gray-100;
+    min-height: 100vh;
     .tm_preview_header {
         display: flex;
         padding: 20px;
@@ -24,5 +25,17 @@
                 }
             }
         }
+        .tm_preview_right_header {
+            .tm_trip_shortcode {
+                background: $tm-gray-300;
+                padding: 4px 12px;
+                border-radius: 8px;
+            }
+        }
+    }
+    .tm_preview_content {
+        background-color: $tm_background_color;
+        margin: 20px;
+        border-radius: 8px;
     }
 }
