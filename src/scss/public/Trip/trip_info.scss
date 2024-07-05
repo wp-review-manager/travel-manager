@@ -1,0 +1,24 @@
+.tm_trip_entry_content {
+    .tm_secondary_trip_info {
+        display: grid;
+        grid-template-columns: auto auto;
+        margin: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 1px rgba(0, 0, 0, .04);
+        border-radius: 4px;
+        @media (max-width: 600px) {
+            grid-template-columns: auto;
+        }
+        .tm_trip_price {
+            padding: 10px 20px;
+            .tm_info_label {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                @include text($color: $tm_dark_200, $size: 14px, $weight: 400);
+            }
+            .tm_price_value {
+                @include text($color: $tm_dark_400, $size: 15px, $weight: 400);
+            }
+        }
+    }
+}
