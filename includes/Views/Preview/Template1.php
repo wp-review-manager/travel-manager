@@ -33,6 +33,7 @@ use WPTravelManager\Views\Components\Tab;
             </div>
 
             <?php echo Tab::RenderTab(); ?>
+
         </article>
     </main>
     <div class="tm_trip_sidebar">

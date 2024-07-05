@@ -2,3 +2,7 @@
 @import './template_one.scss';
 @import './components/index.scss';
 @import './trip_info.scss';
+
+.tm_section_title {
+     @include text($size: 38px, $weight: 600, $color: $tm-dark-500, $lineHeight: 74px);
+}

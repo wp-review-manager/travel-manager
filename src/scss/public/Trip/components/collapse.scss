@@ -1,0 +1,45 @@
+// .tm_collapse-container {
+//     width: 200px;
+// }
+
+.tm_collapse {
+    border-bottom: $tm_border;
+    margin-bottom: 5px;
+}
+
+.tm_collapse-btn {
+    width: 100%;
+    padding: 20px 0px;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .dashicons {
+        color: #fff;
+        background: $tm-primary-400;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        font-size: 16px;
+    }
+    p {
+          @include text($size: 16px, $weight: 600, $color: $tm-dark-500);
+    }
+    &:hover {
+        p {
+            color: $tm-primary-400;
+        }
+    }
+}
+
+.tm_collapse-content {
+    display: none;
+    padding: 10px;
+    background-color: $tm_background_color;
+}

@@ -30,8 +30,35 @@
     padding: 20px;
     border-top: none;
     background-color: #fff;
+    margin-top: 20px;
 }
 
 .tm_tab_content.active {
     display: block;
+}
+
+.tm_overview_content {
+    .tm_section_title{
+        @include h3-medium;
+    }
+    .tm_overview_content{
+        @include text($color: $tm_dark_400, $size: 14px, $weight: 400);
+        .tm_overview_highlights {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 8px 0px;
+            .dashicons {
+                background: $tm_primary_500;
+                border-radius: 25px;
+                width: 18px;
+                height: 18px;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+            }
+        }
+    }
 }
