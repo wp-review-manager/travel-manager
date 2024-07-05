@@ -13,9 +13,11 @@ class Tab
             <ul class="tm_tab_menu">
                 <li class="tab active" data-tab="overview">OverView</li>
                 <li class="tab" data-tab="itinerary">Itinerary</li>
-                <li class="tab" data-tab="cost">cost</li>
-                <li class="tab" data-tab="review">Review</li>
+                <li class="tab" data-tab="cost">Cost</li>
+                <li class="tab" data-tab="faqs">FAQs</li>
+                <li class="tab" data-tab="map">Map</li>
             </ul>
+
             <div class="tm_tab_content tm_overview_content active" id="overview">
                 <div class="tm_section_title">
                     <h2>Overview</h2>
@@ -53,14 +55,43 @@ class Tab
                     </div>
                 </div>
             </div>
+
             <div class="tm_tab_content" id="itinerary">
                 <?php echo Collapse::RenderCollapse(); ?>
             </div>
+
             <div class="tm_tab_content" id="cost">
-                <p>This is the content of Tab 3.</p>
+                <div class="tm_trip_cost_section">
+                    <h1 class="tm_section_title">Cost</h1>
+                    <div class="tm_trip_included_section">
+                        <h2 class="tm_sub_section_title">The Cost Includes</h2>
+                        <div class="tm_trip_included_content">
+                            <ul>
+                                <?php foreach (range(1,10) as $i) : ?>
+                                    <li> <span class="dashicons dashicons-saved"></span>Pick-up or Drop-off service from and to Airport(in our own vehicle)</li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+
+                        <h2 style="margin-top: 20px" class="tm_sub_section_title">The Cost Exclude</h2>
+                        <div class="tm_trip_exclude_content">
+                            <ul>
+                                <?php foreach (range(1,10) as $i) : ?>
+                                    <li> <span class="dashicons dashicons-no-alt"></span>Pick-up or Drop-off service from and to Airport(in our own vehicle)</li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="tm_tab_content" id="review">
-                <p>This is the content of Tab review.</p>
+
+            <div class="tm_tab_content" id="faqs">
+                <?php echo Collapse::RenderCollapse('FAQs'); ?>
+            </div>
+
+            <div class="tm_tab_content" id="map">
+            <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps tracker sport</a></iframe></div>
             </div>
         </div';
         <?php
