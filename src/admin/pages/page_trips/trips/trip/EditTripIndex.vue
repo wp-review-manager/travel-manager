@@ -49,6 +49,10 @@ export default {
                     trip_type: "group",
                     trip_category: "adventure",
                     trip_status: "available_to_booking",
+                    transportation: "Bus, Airlines",
+                    trip_destination: "Kathmandu",
+                    accommodation: "3 Star Hotel",
+                    departure_location: "Kathmandu",
                     duration: {
                         type: "days",
                         duration: 2

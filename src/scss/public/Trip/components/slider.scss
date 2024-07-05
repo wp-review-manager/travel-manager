@@ -1,0 +1,36 @@
+.tm_gallery_wrapper {
+    padding: 20px;
+    .tm_trip_slider {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    .tm_trip_slider__container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    .tm_trip_slider__slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+    .tm_trip_slider__slide img {
+        width: 100%;
+        aspect-ratio: 2 / 1;
+        border-radius: 8px;
+        display: block;
+    }
+    .tm_trip_slider__controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+    .tm_trip_slider__control {
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+    }
+}
