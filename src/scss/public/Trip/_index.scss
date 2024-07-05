@@ -6,3 +6,6 @@
 .tm_section_title {
      @include text($size: 38px, $weight: 600, $color: $tm-dark-500, $lineHeight: 74px);
 }
+.tm_sub_section_title {
+     @include text($size: 18px, $weight: 600, $color: $tm-dark-500, $lineHeight: 48px);
+}

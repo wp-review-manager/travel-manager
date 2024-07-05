@@ -7,6 +7,16 @@
         width: 70%;
         background-color: $tm_background_color;
         border-radius: 8px;
+        .dashicons {
+            color: #fff;
+            background: $tm-primary-400;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            font-size: 16px;
+        }
         .entry-header {
             padding: 20px;
             @include flex($justify: space-between);
@@ -36,6 +46,26 @@
                     border-radius: 0px 0px 8px 8px;
                     text-align: center;
                }
+            }
+        }
+        .tm_trip_included_section {
+            .tm_trip_included_content, .tm_trip_exclude_content {
+                ul {
+                    padding: 0px;
+                    margin: 0px;
+                    li {
+                        list-style: none;
+                        padding: 10px 20px;
+                        @include text($size: 14px, $weight: 400, $color: $tm-dark-500, $lineHeight: 24px);
+                        display: flex;
+                        gap: 10px;
+                    }
+                }
+            }
+            .tm_trip_exclude_content {
+                .dashicons{
+                    background: $tm-red-500;
+                }
             }
         }
     }
