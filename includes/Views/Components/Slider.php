@@ -5,7 +5,7 @@ class Slider {
     public static function RenderSlider() {
         ob_start();
         ?>
-
+        <!-- Slider starts here -->
         <div class="tm_trip_slider">
             <div class="tm_trip_slider__container">
                 <div class="tm_trip_slider__slide">
@@ -39,6 +39,8 @@ class Slider {
             </div>
 
         </div>
+
+        <!-- Gallery starts here -->
         <div class="tm_gallery_wrapper">
             <div id="tm_trip_lightbox" class="tm_trip_lightbox">
                 <span class="tm_trip_close">&times;</span>

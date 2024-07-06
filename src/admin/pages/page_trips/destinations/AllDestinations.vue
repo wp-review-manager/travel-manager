@@ -1,5 +1,3 @@
-vue
-Copy code
 <template>
     <div class="tm_destinations_wrapper">
         <AppModal
