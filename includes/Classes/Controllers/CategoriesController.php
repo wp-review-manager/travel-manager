@@ -11,7 +11,11 @@ class CategoriesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_categories' => 'postCategories',
+            'get_categories' => 'getCategories',
+            'delete_categories' => 'deleteCategories',
+
         );
+        
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
             die();
@@ -29,9 +33,35 @@ class CategoriesController {
         $response = (new Categories())->saveCategories($sanitize_data);
 
         if ($response) {
-            wp_send_json_success('Ca updated successfully');
+            wp_send_json_success('Categories updated successfully');
         } else {
-            wp_send_json_error('Failed to updated destination');
+            wp_send_json_error('Failed to updated Categories');
+        }
+    }
+
+    public function getCategories() {
+        $response = (new Categories())->getCategories();
+
+        wp_send_json_success(
+            array(
+                'data' => $response,
+                'message' => 'Categories fetched successfully'
+            )
+        );
+    }
+    
+    public function deleteCategories() {
+        $categories_id = Arr::get($_REQUEST, 'id');
+        if (!$categories_id) {
+            wp_send_json_error('Categories ID is required');
+        }
+
+        $response = Categories::deleteCategories($categories_id);
+
+        if ($response) {
+            wp_send_json_success('Categories deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete Categories');
         }
     }
 

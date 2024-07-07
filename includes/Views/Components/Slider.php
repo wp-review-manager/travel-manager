@@ -33,7 +33,7 @@ class Slider {
                     Gallery
                 </button>
                 <button id="tm_video_gallery_btn">
-                    <span class="dashicons dashicons-format-gallery"></span>
+                    <span class="dashicons dashicons-video-alt3"></span>
                     Video
                 </button>
             </div>

@@ -4,7 +4,7 @@
     gap: 20px;
     align-items: flex-start;
     .tm_trip_main {
-        width: 70%;
+        width: 65%;
         background-color: $tm_background_color;
         border-radius: 8px;
         .dashicons {
@@ -71,8 +71,11 @@
     }
     .tm_trip_sidebar {
         background-color: $tm_background_color;
-        width: calc(30% - 20px);
+        width: calc(35% - 20px);
         min-width: 300px;
         border-radius: 8px;
+        .tm_trip_starting_price {
+            
+        }
     }
 }

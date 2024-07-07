@@ -37,6 +37,19 @@ use WPTravelManager\Views\Components\Tab;
         </article>
     </main>
     <div class="tm_trip_sidebar">
-        sidebar
+            <div class="tm_trip_starting_price_list">
+                <div class="tm_trip_starting_price">
+                    <div class="tm_regular_price">
+                        <span class="tm_label">From</span>
+                        <span class="tm_price">$800</span>
+                    </div>
+                    <div class="tm_regular_price">
+                        <span class="tm_label">From</span>
+                        <span class="tm_price">$800</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
