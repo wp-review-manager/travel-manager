@@ -9,13 +9,13 @@ class Slider {
         <div class="tm_trip_slider">
             <div class="tm_trip_slider__container">
                 <div class="tm_trip_slider__slide">
-                    <img src="https://st2.depositphotos.com/4695029/7141/i/450/depositphotos_71419053-stock-photo-beautiful-swimming-pool.jpg" alt="Slide 1">
+                    <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787954.jpg?t=st=1720375303~exp=1720378903~hmac=0a38180731d0b51233e87b02a98d7a4b39e8bfae5e6b9ed1865caf577619f42c&w=2000" alt="Slide 1">
                 </div>
                 <div class="tm_trip_slider__slide">
-                    <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg" alt="Slide 2">
+                    <img src="https://img.freepik.com/free-photo/beautiful-waterfall-landscape_23-2150526212.jpg?t=st=1720375389~exp=1720378989~hmac=3b1f53430870289dc298c8a5045a1ff91c359ee7f5cc222b5c19266fa541eeca&w=2000" alt="Slide 2">
                 </div>
                 <div class="tm_trip_slider__slide">
-                    <img src="https://img.freepik.com/free-photo/house-landscape-pool-relaxation-garden_1203-4900.jpg" alt="Slide 3">
+                    <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787950.jpg?t=st=1720375435~exp=1720379035~hmac=8b971fe94f51f0bfe4eebd8f319694389eb5ec85f157cdd40dddde4ecb33dda8&w=2000" alt="Slide 3">
                 </div>
             </div>
             <div class="tm_trip_slider__controls">
@@ -55,7 +55,7 @@ class Slider {
             </div>
 
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
-                <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg" class="tm_trip_gallery_item" data-index="0">
+                <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787950.jpg?t=st=1720375435~exp=1720379035~hmac=8b971fe94f51f0bfe4eebd8f319694389eb5ec85f157cdd40dddde4ecb33dda8&w=2000" class="tm_trip_gallery_item" data-index="0">
                 <img src="https://img.freepik.com/free-photo/house-landscape-pool-relaxation-garden_1203-4900.jpg" class="tm_trip_gallery_item" data-index="1">
                 <img src="image3.jpg" class="tm_trip_gallery_item" data-index="2">
             </div>

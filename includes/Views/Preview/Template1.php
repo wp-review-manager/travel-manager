@@ -66,7 +66,7 @@ use WPTravelManager\Views\Components\CheckAvailability;
             </div>
 
             <div class="tm_check_availability">
-                <button class="tm_button">Check Availablity</button>
+                <button id="tm_openModal" class="tm_button tm_openModal">Check Availablity</button>
             </div>
 
             <div class="tm_booking_message">

@@ -17,6 +17,25 @@
     padding: 20px;
     border: 1px solid #888;
     width: 80%; 
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    .tm_trip_process_tabs {
+        width: 70%;
+        .tm_tab_container {
+            box-shadow: none;
+            margin: 0px;
+            padding: 0px;
+            border-right: $tm_border;
+        }
+    }
+    .tm_trip_process_sidebar {
+        width: 30%;
+        .tm_trip_booking_summary {
+            padding: 20px;
+        }
+    }
 }
 
 .tm_close {
