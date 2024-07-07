@@ -1,29 +1,30 @@
 <template>
     <div class="tm_destinations_wrapper">
         <AppModal
-            :title="'Add New Destinations'"
+            :title="'Add New Category'"
             :width="800"
             :showFooter="false"
-            ref="add_destination_modal">
+            ref="add_category_modal">
             <template #body>
-                <AddDestinations @updateDataAfterNewAdd="updateDataAfterNewAdd" />
+                <AddCategories @updateDataAfterNewAdd="updateDataAfterNewAdd" />
             </template>
         </AppModal>
 
-        <AppTable :tableData="destinations" v-loading="loading">
+        <AppTable :tableData="categories" v-loading="loading">
             <template #header>
-                <h1 class="table-title">All Destinations</h1>
-                <el-button @click="openDestinationAddModal" size="large" type="primary" icon="Plus">Add New Destination</el-button>
+                <h1 class="table-title">All Travel Categories</h1>
+                <el-button @click="openCategoryAddModal" size="large" type="primary" icon="Plus">Add New Category</el-button>
             </template>
+
             <template #filter>
-                <el-input @change="getDestinations" class="tm-search-input" v-model="search" style="width: 240px" size="large"
+                <el-input @change="getCategories" class="tm-search-input" v-model="search" style="width: 240px" size="large"
                     placeholder="Please Input" prefix-icon="Search" />
             </template>
             <template #columns>
                 <el-table-column prop="id" label="ID" width="40" />
-                <el-table-column prop="place_name" label="Place Name" width="auto" />
-                <el-table-column prop="place_slug" label="Slug" width="auto" />
-                <el-table-column prop="place_desc" label="Description" width="420" />
+                <el-table-column prop="trip_category_name" label="Category Name" width="auto" />
+                <el-table-column prop="trip_category_slug" label="Slug" width="auto" />
+                <el-table-column prop="trip_category_desc" label="Description" width="420" />
                 <el-table-column label="Image" width="auto">
                     <template #default="{ row }">
                         <img v-if="row.images?.url" :src="row.images?.url" alt="image" style="width: 60px; height: 60px; object-fit: cover;">
@@ -32,13 +33,13 @@
                 </el-table-column>
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
-                        <el-tooltip class="box-item" effect="dark" content="Click to edit destinations" placement="top-start">
-                            <el-button @click="openUpdateDestinationModal(row)" link type="primary" size="small">
+                        <el-tooltip class="box-item" effect="dark" content="Click to edit categories" placement="top-start">
+                            <el-button @click="openUpdateCategoriesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
-                        <el-tooltip class="box-item" effect="dark" content="Click to delete destinations" placement="top-start">
-                            <el-button @click="openDeleteDestinationModal(row)" link type="primary" size="small">
+                        <el-tooltip class="box-item" effect="dark" content="Click to delete categories" placement="top-start">
+                            <el-button @click="openDeleteCategoriesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -51,45 +52,47 @@
                     v-model:page-size="pageSize"
                     :page-sizes="[10, 20, 30, 40]"
                     large
-                    :disabled="total_destinations <= pageSize"
+                    :disabled="total_categories <= pageSize"
                     background
                     layout="total, sizes, prev, pager, next"
-                    :total="+total_destinations"
-                    @size-change="getDestinations"
-                    @current-change="getDestinations"
+                    :total="+total_categories"
+                    @size-change="getCategories"
+                    @current-change="getCategories"
                 />
             </template>
+           
         </AppTable>
-        
+
         <AppModal
-            :title="'Update Destinations'"
+            :title="'Update Categories'"
             :width="800"
             :showFooter="false"
-            ref="update_destination_modal">
+            ref="update_category_modal">
             <template #body>
-                <AddDestinations :destination_data="destination" />
+                <AddCategories :categories_data="category" />
             </template>
         </AppModal>
 
         <AppModal
-            :title="'Delete Destinations'"
+            :title="'Delete Categories'"
             :width="400"
             :showFooter="false"
-            ref="delete_destination_modal">
+            ref="delete_categories_modal">
             <template #body>
                 <div class="delete-modal-body">
                     <h1>Are you sure ?</h1>
-                    <p>You want to delete this destinations</p>
+                    <p>You want to delete this categories</p>
                 </div>
             </template>
             <template #footer>
                 <div class="tm-modal-footer">
-                    <el-button @click="$refs.delete_destination_modal.handleClose()" type="default" size="medium">Cancel</el-button>
-                    <el-button @click="deleteDestination" type="primary" size="medium">Delete</el-button>
+                    <el-button @click="$refs.delete_categories_modal.handleClose()" type="default" size="medium">Cancel</el-button>
+                    <el-button @click="deleteCategories" type="primary" size="medium">Delete</el-button>
                 </div>
             </template>
         </AppModal>
-
+        
+      
     </div>
 </template>
 
@@ -97,7 +100,7 @@
 import AppTable from "@/components/AppTable.vue";
 import AppModal from "@/components/AppModal.vue";
 import AppDatePicker from "@/components/element/AppDatePicker.vue"
-import AddDestinations from "@/pages/page_trips/destinations/AddDestinations.vue"
+import AddCategories from "@/pages/page_trips/categories/AddCategories.vue"
 import Icon from "@/components/Icons/AppIcon.vue"
 
 export default {
@@ -105,77 +108,79 @@ export default {
         AppTable,
         AppModal,
         AppDatePicker,
-        AddDestinations,
+        AddCategories,
         Icon
     },
     data() {
         return {
             search: '',
-            destinations: [],
-            destination: {},
-            total_destinations: 0,
+            categories: [],
+            category: {},
+            total_categories: 0,
             loading: false,
-            add_destination_modal: false,
+            add_category_modal: false,
             currentPage: 1,
             pageSize: 10,
             active_id: null
         }
     },
-
     methods: {
-        getDestinations() {
+        getCategories() {
             this.loading = true;
             let that = this;
             jQuery
                 .post(ajaxurl, {
-                    action: "tm_destinations",
-                    route: "get_destinations",
+                    action: "tm_categories",
+                    route: "get_categories",
                     per_page: this.pageSize,
                     page: this.currentPage,
                     search: that.search,
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 }).then((response) => {
-                    that.destinations = response?.data?.data?.destinations;
-                    that.total_destinations = response?.data?.data?.total;
+                    that.categories = response?.data?.data?.categories;
+                    that.total_categories = response?.data?.data?.total;
                 }).fail((error) => {
                     console.log(error);
                 }).always(() => {
                     that.loading = false;
                 })
         },
-        deleteDestination() {
+        deleteCategories() {
             let that = this;
             jQuery
                 .post(ajaxurl, {
-                    action: "tm_destinations",
-                    route: "delete_destinations",
+                    action: "tm_categories",
+                    route: "delete_categories",
                     id: that.active_id,
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 }).then((response) => {
-                    that.getDestinations();
-                    that.$refs.delete_destination_modal.handleClose();
+                    that.getCategories();
+                    that.$refs.delete_categories_modal.handleClose();
                 }).fail((error) => {
                     console.log(error);
                 })
         },
-        openDestinationAddModal() {
-            this.$refs.add_destination_modal.openModel();
+      
+        openCategoryAddModal() {
+            this.$refs.add_category_modal.openModel();
         },
-        openUpdateDestinationModal(row) {
-            this.destination = row;
-            this.$refs.update_destination_modal.openModel();
-        },
-        openDeleteDestinationModal(row) {
+        openDeleteCategoriesModal(row) {
             this.active_id = row.id;
-            this.$refs.delete_destination_modal.openModel();
+            this.$refs.delete_categories_modal.openModel();
         },
-        updateDataAfterNewAdd(new_destination) {
-            this.$refs.add_destination_modal.handleClose();
-            this.destinations.unshift(new_destination);
+        openUpdateCategoriesModal(row) {
+            this.category = row;
+            this.$refs.update_category_modal.openModel();
         },
+        updateDataAfterNewAdd(new_category) {
+            this.$refs.add_category_modal.handleClose();
+            this.category.unshift(new_category);
+        },
+
     },
     created() {
-        this.getDestinations();
+        this.getCategories();
     },
+
 }
 </script>

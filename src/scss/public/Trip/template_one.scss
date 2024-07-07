@@ -4,7 +4,7 @@
     gap: 20px;
     align-items: flex-start;
     .tm_trip_main {
-        width: 70%;
+        width: 67%;
         background-color: $tm_background_color;
         border-radius: 8px;
         .dashicons {
@@ -70,9 +70,111 @@
         }
     }
     .tm_trip_sidebar {
-        background-color: $tm_background_color;
-        width: calc(30% - 20px);
+        width: calc(33% - 20px);
         min-width: 300px;
-        border-radius: 8px;
+        .tm_availability_wrapper {
+            background-color: $tm_background_color;
+            border-radius: 8px;
+            .tm_trip_starting_price_list {
+                display: flex;
+                align-items: flex-start;
+                gap: 20px;
+                justify-content: space-between;
+                padding: 20px;
+                .tm_trip_starting_price {
+                    .tm_regular_price {
+                        .tm_label {
+                            @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
+                        }
+                        .tm_price {
+                            @include text($size: 18px, $weight: 500, $color: $tm-dark-300, $lineHeight: 24px);
+                            text-decoration: line-through;
+                            margin-left: 6px;
+                        }
+                    }
+                    .tm_selling_price {
+                        .tm_label {
+                            @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
+                        }
+                        .tm_price {
+                            @include h2-medium;
+                            margin-left: 6px;
+                        }
+                    }
+                }
+            }
+    
+            .tm_check_availability {
+                padding: 20px;
+                text-align: center;
+                .tm_button {
+                    width: 100%;
+                    border-radius: 8px;
+                    background: $tm-primary-500;
+                    color: #fff;
+                    @include text($size: 16px, $weight: 600, $color: #fff, $lineHeight: 24px);
+                    &:hover {
+                        background: $tm-primary-700;
+                    }
+                }
+            }
+    
+            .tm_booking_message {
+                padding: 20px;
+                @include text($size: 14px, $weight: 400, $color: $tm-dark-500, $lineHeight: 24px);
+                a {
+                    color: $tm-primary-500;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .tm_trip_inquiry_form_wrapper {
+            .tm_inquiry_title {
+                @include h2-medium;
+                padding: 20px;
+                border-bottom: $tm_border;
+            }
+            background-color: $tm_background_color;
+            border-radius: 8px; 
+            margin: 20px 0px;
+            .tm_inquiry_form{
+                padding: 20px;
+                padding-top: 0px;
+                .tm_form_group {
+                    margin: 20px 0px;
+                    p {
+                        @include text($size: 14px, $weight: 400, $color: $tm-dark-500, $lineHeight: 24px);
+                        margin-bottom: 10px;
+                    }
+                    input {
+                        width: 100%;
+                        border-radius: 8px;
+                        border: $tm_border;
+                    }
+                    select {
+                        width: 100%;
+                        border-radius: 8px;
+                        border: $tm_border;
+                        height: 50px;
+                        padding: 10px;
+                        font-size: 16px;
+                    }
+                    .tm_button {
+                        width: 100%;
+                        border-radius: 8px;
+                        background: $tm-primary-500;
+                        color: #fff;
+                        @include text($size: 16px, $weight: 600, $color: #fff, $lineHeight: 24px);
+                        &:hover {
+                            background: $tm-primary-700;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

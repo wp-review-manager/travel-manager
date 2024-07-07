@@ -1,5 +1,5 @@
 <template>
-    <el-dialog class="tm-app-modal" v-model="dialogVisible" :title="title" width="500" :before-close="handleClose">
+    <el-dialog :close-on-click-modal="false" class="tm-app-modal" v-model="dialogVisible" :title="title" width="500" :before-close="handleClose">
         <slot name="body"></slot>
         <slot name="footer"></slot>
     </el-dialog>

@@ -5,6 +5,7 @@ import TripIndex from '@/pages/page_trips/TripsIndex.vue';
 import AllTrips from '@/pages/page_trips/trips/AllTrips.vue';
 import AllDestinations from '@/pages/page_trips/destinations/AllDestinations.vue';
 import AllAttributes from '@/pages/page_trips/attributes/AllAttributes.vue';
+import AllCategories from '@/pages/page_trips/categories/AllCategories.vue';
 
 //Trip edit section 
 import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
@@ -47,7 +48,7 @@ export default [
             },
             {
                 path: 'travel-categories',
-                component: Dashboard,
+                component: AllCategories,
             },
             {
                 path: 'attributes',

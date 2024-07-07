@@ -4,6 +4,35 @@
         position: relative;
         width: 100%;
         overflow: hidden;
+        #tm_trip_gallery_button, #tm_video_gallery_btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: $tm_background_color;
+            @include text($size: 14px, $weight: 400, $color: $tm-dark-500);
+            padding: 4px 12px;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            .dashicons {
+                font-size: 14px;
+                background: transparent;
+                color: $tm-dark-500;
+            }
+            &:hover {
+                background: $tm-primary-500;
+                color: white;
+                .dashicons {
+                    color: white;
+                }
+            }
+        
+        }
+        #tm_video_gallery_btn {
+            left: 124px;
+        }
     }
     .tm_trip_slider__container {
         display: flex;
