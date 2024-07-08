@@ -19,8 +19,6 @@ class ActivitiesController {
     }
 
     public function postActivities() {
-        dd('hello');
-        exit();
         $form_data = Arr::get($_REQUEST, 'data');
         $sanitize_data = ActivitiesServices::sanitize($form_data);
         $validation = ActivitiesServices::validate($sanitize_data);

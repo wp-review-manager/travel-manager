@@ -4,6 +4,7 @@ use WPTravelManager\Classes\Controllers\DestinationController;
 use WPTravelManager\Classes\Controllers\AttributesController;
 use WPTravelManager\Classes\Controllers\TripsController;
 use WPTravelManager\Classes\Controllers\CategoriesController;
+use WPTravelManager\Classes\Controllers\ActivitiesController;
 
 class AjaxActions {
     public function register () {
