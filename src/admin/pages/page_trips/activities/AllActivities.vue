@@ -1,11 +1,11 @@
 <template>
     <div class="tm_destinations_wrapper">
 
-     <AppModal
+        <AppModal
             :title="'Add New Activities'"
             :width="800"
             :showFooter="false"
-            ref="add_activitice_modal">
+            ref="add_activities_modal">
             <template #body>
                 <AddActivities  />
             </template>
@@ -89,7 +89,7 @@ export default {
             activity: {},
             total_activities: 0,
             loading: false,
-            add_activitice_modal: false,
+            add_activities_modal: false,
             currentPage: 1,
             pageSize: 10,
             active_id: null
@@ -119,7 +119,7 @@ export default {
         },
       
         openActivitiesAddModal() {
-            this.$refs.add_activitice_modal.openModel();
+            this.$refs.add_activities_modal.openModel();
         },
     },
        created() {

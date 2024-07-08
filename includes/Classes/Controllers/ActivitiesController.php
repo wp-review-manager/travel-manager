@@ -11,6 +11,7 @@ class ActivitiesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_activities' => 'postActivities',
+            'get_activities' => 'getActivities'
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -36,5 +37,14 @@ class ActivitiesController {
             wp_send_json_error('Failed to updated activities');
         }
     }
+    public function getActivities() {
+        $response = (new Activities())->getActivities();
 
+        wp_send_json_success(
+            array(
+                'data' => $response,
+                'message' => 'Activities fetched successfully'
+            )
+        );
+    }
 }

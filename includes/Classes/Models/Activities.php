@@ -5,7 +5,16 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class Activities extends Model
 {
-    protected $model = 'tm_trip_activity';
+    protected $model = 'tm_activities';
+
+    public function saveActivities($data) {
+        $id = Arr::get($data, 'id', null);
+        if ($id) {
+            return TMDBModel('tm_trip_activity')->where('id', $id)->update($data);
+        } else {
+            return TMDBModel('tm_trip_activity')->insert($data);
+        }
+    }
 
     public function getActivities() {
         $per_page = sanitize_text_field(Arr::get($_REQUEST, 'per_page', 0));
@@ -15,7 +24,7 @@ class Activities extends Model
         $order = sanitize_text_field(Arr::get($_REQUEST, 'order', 'DESC'));
         $offset = ($page - 1) * $per_page;
 
-        $query = $this->table($this->model)->select('*')->where('place_name', 'LIKE', '%'.$search.'%');
+        $query = $this->table('tm_trip_activity')->select('*')->where('trip_activity_name', 'LIKE', '%'.$search.'%');
         $total = $query->getCount();
         $response = $query->orderBy($orderby, $order)->limit($per_page)->offset($offset)->get();
 
@@ -29,13 +38,5 @@ class Activities extends Model
         return $data;
 
     }
-    
-    public function saveActivities($data) {
-        $id = Arr::get($data, 'id', null);
-        if ($id) {
-            return TMDBModel('tm_trip_activity')->where('id', $id)->update($data);
-        } else {
-            return TMDBModel('tm_trip_activity')->insert($data);
-        }
-    }
+
 }
