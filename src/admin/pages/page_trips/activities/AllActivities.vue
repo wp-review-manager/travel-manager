@@ -21,6 +21,7 @@
                 <el-input @change="getActivities" class="tm-search-input" v-model="search" style="width: 240px" size="large"
                     placeholder="Please Input" prefix-icon="Search" />
             </template>
+           
             <template #columns>
                 <el-table-column prop="id" label="ID" width="40" />
                 <el-table-column prop="trip_activity_name" label="activity Name" width="auto" />
@@ -34,13 +35,13 @@
                 </el-table-column>
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
-                        <el-tooltip class="box-item" effect="dark" content="Click to edit destinations" placement="top-start">
-                            <el-button @click="openUpdateDestinationModal(row)" link type="primary" size="small">
+                        <el-tooltip class="box-item" effect="dark" content="Click to edit activities" placement="top-start">
+                            <el-button @click="openUpdateActivitiesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
-                        <el-tooltip class="box-item" effect="dark" content="Click to delete destinations" placement="top-start">
-                            <el-button @click="openDeleteDestinationModal(row)" link type="primary" size="small">
+                        <el-tooltip class="box-item" effect="dark" content="Click to delete activities" placement="top-start">
+                            <el-button @click="openDeleteActivitiesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -61,8 +62,36 @@
                     @current-change="getActivities"
                 />
             </template>
-
         </AppTable>
+
+        <AppModal
+            :title="'Update Activities'"
+            :width="800"
+            :showFooter="false"
+            ref="update_activities_modal">
+            <template #body>
+                <AddActivities :activities_data="activity" />
+            </template>
+        </AppModal>
+
+        <AppModal
+            :title="'Delete Activities'"
+            :width="400"
+            :showFooter="false"
+            ref="delete_activities_modal">
+            <template #body>
+                <div class="delete-modal-body">
+                    <h1>Are you sure ?</h1>
+                    <p>You want to delete this activities</p>
+                </div>
+            </template>
+            <template #footer>
+                <div class="tm-modal-footer">
+                    <el-button @click="$refs.delete_activities_modal.handleClose()" type="default" size="medium">Cancel</el-button>
+                    <el-button @click="deleteActivities" type="primary" size="medium">Delete</el-button>
+                </div>
+            </template>
+        </AppModal>
 
     </div>
 </template>
@@ -97,7 +126,7 @@ export default {
     },
 
     methods: {
-           getActivities() {
+        getActivities() {
             this.loading = true;
             let that = this;
             jQuery
@@ -117,9 +146,32 @@ export default {
                     that.loading = false;
                 })
         },
+        deleteActivities() {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_activities",
+                    route: "delete_activities",
+                    id: that.active_id,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.getActivities();
+                    that.$refs.delete_activities_modal.handleClose();
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
       
         openActivitiesAddModal() {
             this.$refs.add_activities_modal.openModel();
+        },
+        openUpdateActivitiesModal(row) {
+            this.activities = row;
+            this.$refs.update_activities_modal.openModel();
+        },
+        openDeleteActivitiesModal(row) {
+            this.active_id = row.id;
+            this.$refs.delete_activities_modal.openModel();
         },
     },
        created() {

@@ -11,7 +11,8 @@ class ActivitiesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_activities' => 'postActivities',
-            'get_activities' => 'getActivities'
+            'get_activities' => 'getActivities',
+            'delete_activities' => 'deleteActivities'
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -46,5 +47,19 @@ class ActivitiesController {
                 'message' => 'Activities fetched successfully'
             )
         );
+    }
+    public function deleteActivities() {
+        $activities_id = Arr::get($_REQUEST, 'id');
+        if (!$activities_id) {
+            wp_send_json_error('Activities ID is required');
+        }
+       
+        $response = Activities::deleteActivities($activities_id);
+       
+        if ($response) {
+            wp_send_json_success('Activities deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete activities');
+        }
     }
 }

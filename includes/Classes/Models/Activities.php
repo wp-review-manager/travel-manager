@@ -7,6 +7,10 @@ class Activities extends Model
 {
     protected $model = 'tm_activities';
 
+    public static function deleteActivities($activities_id) {
+        return TMDBModel('tm_trip_activity')->where('id', $activities_id)->delete();
+    }
+
     public function saveActivities($data) {
         $id = Arr::get($data, 'id', null);
         if ($id) {
@@ -38,5 +42,6 @@ class Activities extends Model
         return $data;
 
     }
+   
 
 }
