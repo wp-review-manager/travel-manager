@@ -4,7 +4,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 1px rgba(0, 0, 0, .04);
 }
 
-.tm_tab_menu {
+.tm_tab_menu, .tm_availability_tab_menu {
     display: flex;
     list-style: none;
     padding: 0;
@@ -12,20 +12,20 @@
     border-bottom: $tm_border;
 }
 
-.tm_tab_menu .tab {
+.tm_tab_menu .tab, .tm_availability_tab_menu .tab {
     padding: 10px 30px;
     cursor: pointer;
     border-bottom: none;
     @include text($color: $tm_dark_400, $size: 16px, $weight: 600);
 }
 
-.tm_tab_menu .tab.active {
+.tm_tab_menu .tab.active, .tm_availability_tab_menu .tab.active {
     background-color: #fff;
     border-bottom: 2px solid $tm_primary_500;
     color: $tm_primary_400;
 }
 
-.tm_tab_content {
+.tm_tab_content, .tm_availability_tab_content {
     display: none;
     padding: 20px;
     border-top: none;
@@ -33,7 +33,7 @@
     margin-top: 20px;
 }
 
-.tm_tab_content.active {
+.tm_tab_content.active, .tm_availability_tab_content.active {
     display: block;
 }
 
