@@ -47,6 +47,20 @@ export default {
             slug_error: ""
         }
     },
+    props: {
+        activities_data: {
+            type: Object,
+        }
+    },
+    watch: {
+        // Its required to watch the destination_data to update the destination object
+        activities_data: {
+            handler: function (val) {
+                this.activities = val;
+            },
+            deep: true
+        }
+    },
    
     methods: {
         saveActivities() {
@@ -85,6 +99,12 @@ export default {
             });
         }
     },
+    mounted() {
+        console.log(this.activities_data);
+        if (this.activities_data) {
+            this.activities = this.activities_data;
+        }
+    }
   
 }
 </script>

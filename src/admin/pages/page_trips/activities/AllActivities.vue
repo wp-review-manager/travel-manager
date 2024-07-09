@@ -7,7 +7,7 @@
             :showFooter="false"
             ref="add_activities_modal">
             <template #body>
-                <AddActivities  />
+                <AddActivities @updateDataAfterNewAdd="updateDataAfterNewAdd"  />
             </template>
         </AppModal>
 
@@ -165,14 +165,19 @@ export default {
         openActivitiesAddModal() {
             this.$refs.add_activities_modal.openModel();
         },
-        openUpdateActivitiesModal(row) {
-            this.activities = row;
-            this.$refs.update_activities_modal.openModel();
-        },
+       
         openDeleteActivitiesModal(row) {
             this.active_id = row.id;
             this.$refs.delete_activities_modal.openModel();
         },
+        openUpdateActivitiesModal(row) {
+            this.activity = row;
+            this.$refs.update_activities_modal.openModel();
+        },
+        // updateDataAfterNewAdd(new_activities) {
+        //     this.$refs.add_activities_modal.handleClose();
+        //     this.activities.unshift(new_activities);
+        // },
     },
        created() {
         this.getActivities();
