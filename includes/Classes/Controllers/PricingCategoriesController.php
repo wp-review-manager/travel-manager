@@ -11,7 +11,8 @@ class PricingCategoriesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_pricing_categories' => 'postPricingCategories',
-            'get_pricing_categories' => 'getPricingCategories'
+            'get_pricing_categories' => 'getPricingCategories',
+            'delete_pricing_categories' => 'deletePricingCategories'
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -46,6 +47,21 @@ class PricingCategoriesController {
                 'message' => 'Pricing Categories fetched successfully'
             )
         );
+    }
+
+    public function deletePricingCategories() {
+        $pricing_categories_id = Arr::get($_REQUEST, 'id');
+        if (!$pricing_categories_id) {
+            wp_send_json_error('Pricing Categories ID is required');
+        }
+
+        $response = PricingCategories::deletePricingCategories($pricing_categories_id);
+
+        if ($response) {
+            wp_send_json_success('Pricing Categories deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete Pricing Categories');
+        }
     }
 
   

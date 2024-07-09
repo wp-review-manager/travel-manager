@@ -21,7 +21,7 @@
             </template>
             <template #columns>
                 <el-table-column prop="id" label="ID" width="40" />
-                <el-table-column prop="pricing_categories_name" label="Place Name" width="auto" />
+                <el-table-column prop="pricing_categories_name" label=" Name" width="auto" />
                 <el-table-column prop="pricing_categories_slug" label="Slug" width="auto" />
                 <el-table-column prop="pricing_categories_desc" label="Description" width="420" />
                 <el-table-column label="Image" width="auto">
@@ -32,13 +32,13 @@
                 </el-table-column>
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
-                        <el-tooltip class="box-item" effect="dark" content="Click to edit destinations" placement="top-start">
+                        <el-tooltip class="box-item" effect="dark" content="Click to edit pricing categories" placement="top-start">
                             <el-button @click="openUpdateDestinationModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
-                        <el-tooltip class="box-item" effect="dark" content="Click to delete destinations" placement="top-start">
-                            <el-button @click="openDeleteDestinationModal(row)" link type="primary" size="small">
+                        <el-tooltip class="box-item" effect="dark" content="Click to delete pricing categories" placement="top-start">
+                            <el-button @click="openDeletePricingCategoriesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -61,6 +61,34 @@
             </template>
         </AppTable>
         
+        <AppModal
+            :title="'Update Destinations'"
+            :width="800"
+            :showFooter="false"
+            ref="update_destination_modal">
+            <template #body>
+                <AddDestinations :destination_data="destination" />
+            </template>
+        </AppModal>
+
+        <AppModal
+            :title="'Delete Pricing Categories'"
+            :width="400"
+            :showFooter="false"
+            ref="delete_pricing_categories_modal">
+            <template #body>
+                <div class="delete-modal-body">
+                    <h1>Are you sure ?</h1>
+                    <p>You want to delete this pricing categories</p>
+                </div>
+            </template>
+            <template #footer>
+                <div class="tm-modal-footer">
+                    <el-button @click="$refs.delete_pricing_categories_modal.handleClose()" type="default" size="medium">Cancel</el-button>
+                    <el-button @click="deletePricingCategories" type="primary" size="medium">Delete</el-button>
+                </div>
+            </template>
+        </AppModal>
       
     </div>
 </template>
@@ -115,8 +143,28 @@ export default {
                     that.loading = false;
                 })
         },
+        deletePricingCategories() {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_pricing_categories",
+                    route: "delete_pricing_categories",
+                    id: that.active_id,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.getPricingCategories();
+                    that.$refs.delete_pricing_categories_modal.handleClose();
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
+
         openPricingCategoriesAddModal() {
             this.$refs.add_pricing_categories_modal.openModel();
+        },
+        openDeletePricingCategoriesModal(row) {
+            this.active_id = row.id;
+            this.$refs.delete_pricing_categories_modal.openModel();
         },
        
     },

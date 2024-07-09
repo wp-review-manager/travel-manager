@@ -29,7 +29,6 @@ class PricingCategories extends Model
 
     }
 
-
     public function savePricingCategories($data) {
         $id = Arr::get($data, 'id', null);
         if ($id) {
@@ -38,4 +37,9 @@ class PricingCategories extends Model
             return TMDBModel('tm_pricing_categories')->insert($data);
         }
     }
+
+    public static function deletePricingCategories($pricing_categories_id) {
+        return TMDBModel('tm_pricing_categories')->where('id', $pricing_categories_id)->delete();
+    }
+
 }
