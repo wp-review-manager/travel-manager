@@ -7,6 +7,7 @@ import AllDestinations from '@/pages/page_trips/destinations/AllDestinations.vue
 import AllAttributes from '@/pages/page_trips/attributes/AllAttributes.vue';
 import AllCategories from '@/pages/page_trips/categories/AllCategories.vue';
 import AllActivities from '@/pages/page_trips/activities/AllActivities.vue';
+import AllDifficulty from '@/pages/page_trips/difficulty/AllDifficulty.vue';
 
 //Trip edit section 
 import EditTrip from '@/pages/page_trips/trips/trip/EditTripIndex.vue';
@@ -60,8 +61,8 @@ export default [
                 component: AllActivities,
             },
             {
-                path: 'deficulty-levels',
-                component: Dashboard,
+                path: 'difficulty-levels',
+                component: AllDifficulty,
             },
             {
                 path: 'pricing-categories',
