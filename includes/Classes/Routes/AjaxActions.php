@@ -6,6 +6,7 @@ use WPTravelManager\Classes\Controllers\TripsController;
 use WPTravelManager\Classes\Controllers\CategoriesController;
 use WPTravelManager\Classes\Controllers\ActivitiesController;
 use WPTravelManager\Classes\Controllers\DifficultyController;
+use WPTravelManager\Classes\Controllers\PricingCategoriesController;
 
 class AjaxActions {
     public function register () {
@@ -26,6 +27,9 @@ class AjaxActions {
         });
         add_action('wp_ajax_tm_difficulty', function () {
             (new DifficultyController())->registerAjaxRoutes();
+        });
+        add_action('wp_ajax_tm_pricing_categories', function () {
+            (new PricingCategoriesController())->registerAjaxRoutes();
         });
     }
 }
