@@ -3,26 +3,26 @@
         <!-- <h1 class="tm_form_title"></h1> -->
         <div class="input-wrapper">
             <p class="form-label" for="name">Name *</p>
-            <el-input required v-model="destination.place_name" style="width: 100%" placeholder="Please Input" size="large" />
+            <el-input required v-model="activities.trip_activity_name" style="width: 100%" placeholder="Please Input" size="large" />
             <p class="error-message">{{ name_error }}</p>
         </div>
         <div class="input-wrapper">
             <p class="form-label" for="name">Slug *</p>
-            <el-input v-model="destination.place_slug" style="width: 100%" placeholder="Please Input" size="large" />
+            <el-input v-model="activities.trip_activity_slug" style="width: 100%" placeholder="Please Input" size="large" />
             <p class="error-message">{{ slug_error }}</p>
         </div>
         <div class="input-wrapper">
             <p class="form-label" for="name">Description</p>
-            <el-input v-model="destination.place_desc" style="width: 100%" placeholder="Please Input" size="large" type="textarea" />
+            <el-input v-model="activities.trip_activity_desc" style="width: 100%" placeholder="Please Input" size="large" type="textarea" />
         </div>
 
         <div class="input-wrapper">
             <p class="form-label" for="name">Upload Image</p>
-            <ImageUpload :image="destination.images" />
+            <ImageUpload :image="activities.images" />
         </div>
 
-        <div class="input-wrapper" @click="saveDestination()">
-            <el-button size="large" type="primary">Save Destination</el-button>
+        <div class="input-wrapper" @click="saveActivities()">
+            <el-button size="large" type="primary">Save Activities</el-button>
         </div>
 
     </div>
@@ -37,56 +37,42 @@ export default {
     },
     data() {
         return {
-            destination: {
-                place_name: "",
-                place_slug: "",
-                place_desc: "",
+            activities: {
+                trip_activity_name: "",
+                trip_activity_slug: "",
+                trip_activity_desc: "",
                 images: {}
             },
             name_error: "",
             slug_error: ""
         }
     },
-    props: {
-        destination_data: {
-            type: Object,
-            
-        }
-    },
-    watch: {
-        // Its required to watch the destination_data to update the destination object
-        destination_data: {
-            handler: function (val) {
-                this.destination = val;
-            },
-            deep: true
-        }
-    },
+   
     methods: {
-        saveDestination() {
+        saveActivities() {
             this.name_error = "";
             this.slug_error = "";
-            if (this.destination.place_name === "") {
+            if (this.activities.trip_activity_name === "") {
                 this.name_error = "Name is required";
                 return;
             }
-            if (this.destination.place_slug === "") {
+            if (this.activities.trip_activity_slug === "") {
                 this.slug_error = "Slug is required";
                 return;
             }
 
             jQuery
             .post(ajaxurl, {
-                action: "tm_destinations",
-                route: "post_destinations",
+                action: "tm_activities",
+                route: "post_activities",
                 tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
-                data: this.destination
+                data: this.activities
             }).then((response) => {
-                this.$emit("updateDataAfterNewAdd", this.destination);
-                this.destination = {
-                    place_name: "",
-                    place_slug: "",
-                    place_desc: "",
+                this.$emit("updateDataAfterNewAdd", this.activities);
+                this.activities = {
+                    trip_activity_name: "",
+                    trip_activity_slug: "",
+                    trip_activity_desc: "",
                     images: {}
                 };
                 this.$notify({
@@ -99,11 +85,6 @@ export default {
             });
         }
     },
-    mounted() {
-        console.log(this.destination_data);
-        if (this.destination_data) {
-            this.destination = this.destination_data;
-        }
-    }
+  
 }
 </script>
