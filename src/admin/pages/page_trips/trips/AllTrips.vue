@@ -35,6 +35,11 @@
                             <Icon icon="tm-delete" />
                         </el-button>
                     </el-tooltip>
+                    <el-tooltip class="box-item" effect="dark" content="Click to trip preview" placement="top-start">
+                        <el-button @click="redirectPreviewPage(row)" link type="primary" size="small">
+                            <Icon icon="tm-eye" />
+                        </el-button>
+                    </el-tooltip>
                 </template>
             </el-table-column>
         </template>
@@ -121,6 +126,9 @@ export default {
         },
         redirectEditPage(row) {
             this.$router.push(`/trip/${row.ID}/edit/`)
+        },
+        redirectPreviewPage(row) {
+            window.open(row.preview_url, '_blank');
         },
         changeDate(date) {
             this.filter_date = date;

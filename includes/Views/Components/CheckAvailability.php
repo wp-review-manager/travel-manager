@@ -18,7 +18,25 @@ class CheckAvailability
 
                             <div class="tm_tab_content tm_check_availability_content active" id="check_availability">
                                 <div class="tm_section">
-                                    Availability
+                                    <div class="tm_calendar">
+                                        <div class="tm_calendar-header">
+                                            <button id="prev">Prev</button>
+                                            <h2 id="month-year"></h2>
+                                            <button id="next">Next</button>
+                                        </div>
+                                        <div class="tm_calendar-body">
+                                            <div class="tm_calendar_days-names">
+                                                <div>Sun</div>
+                                                <div>Mon</div>
+                                                <div>Tue</div>
+                                                <div>Wed</div>
+                                                <div>Thu</div>
+                                                <div>Fri</div>
+                                                <div>Sat</div>
+                                            </div>
+                                            <div class="tm_calendar_days"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

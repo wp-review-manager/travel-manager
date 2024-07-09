@@ -3,10 +3,8 @@ const galleryRender = ($) => {
     let currentSlide = 'image';
     const images = $(".tm_trip_gallery_item");
     const videos = $(".tm_trip_video_gallery_item");
-    console.log({images}, {videos});
 
     $("#tm_trip_gallery_button").on("click", function() {
-        $("#tm_trip_gallery").show();
         openLightbox(0, 'image');
     });
 
