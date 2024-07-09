@@ -33,7 +33,7 @@
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
                         <el-tooltip class="box-item" effect="dark" content="Click to edit pricing categories" placement="top-start">
-                            <el-button @click="openUpdateDestinationModal(row)" link type="primary" size="small">
+                            <el-button @click="openUpdatePricingCategoriesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
@@ -62,12 +62,12 @@
         </AppTable>
         
         <AppModal
-            :title="'Update Destinations'"
+            :title="'Update Pricing Categories'"
             :width="800"
             :showFooter="false"
-            ref="update_destination_modal">
+            ref="update_pricing_categories_modal">
             <template #body>
-                <AddDestinations :destination_data="destination" />
+                <AddPricingCategories :pricing_categories_data="pricing_category" />
             </template>
         </AppModal>
 
@@ -165,6 +165,14 @@ export default {
         openDeletePricingCategoriesModal(row) {
             this.active_id = row.id;
             this.$refs.delete_pricing_categories_modal.openModel();
+        },
+        openUpdatePricingCategoriesModal(row) {
+            this.pricing_category = row;
+            this.$refs.update_pricing_categories_modal.openModel();
+        },
+        updateDataAfterNewAdd(new_pricing_categories) {
+            this.$refs.add_pricing_categories_modal.handleClose();
+            this.pricing_category.unshift(new_pricing_categories);
         },
        
     },

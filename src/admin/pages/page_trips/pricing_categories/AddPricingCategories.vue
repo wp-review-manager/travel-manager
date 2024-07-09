@@ -47,6 +47,21 @@ export default {
             slug_error: ""
         }
     },
+    props: {
+        pricing_categories_data: {
+            type: Object,
+            
+        }
+    },
+    watch: {
+        // Its required to watch the destination_data to update the destination object
+        pricing_categories_data: {
+            handler: function (val) {
+                this.pricing_categories = val;
+            },
+            deep: true
+        }
+    },
   
     methods: {
         savePricingCategories() {
@@ -85,6 +100,11 @@ export default {
             });
         }
     },
- 
+    mounted() {
+        console.log(this.pricing_categories_data);
+        if (this.pricing_categories_data) {
+            this.pricing_categories = this.pricing_categories_data;
+        }
+    }
 }
 </script>
