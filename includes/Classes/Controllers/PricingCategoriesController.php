@@ -11,6 +11,7 @@ class PricingCategoriesController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_pricing_categories' => 'postPricingCategories',
+            'get_pricing_categories' => 'getPricingCategories'
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -34,6 +35,17 @@ class PricingCategoriesController {
         } else {
             wp_send_json_error('Failed To Updated Pricing Categories');
         }
+    }
+    
+    public function getPricingCategories() {
+        $response = (new PricingCategories())->getPricingCategories();
+
+        wp_send_json_success(
+            array(
+                'data' => $response,
+                'message' => 'Pricing Categories fetched successfully'
+            )
+        );
     }
 
   

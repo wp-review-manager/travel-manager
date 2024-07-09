@@ -10,20 +10,20 @@
             </template>
         </AppModal>
 
-        <AppTable :tableData="destinations" v-loading="loading">
+        <AppTable :tableData="pricing_categories" v-loading="loading">
             <template #header>
                 <h1 class="table-title">All Pricing Categories</h1>
                 <el-button @click="openPricingCategoriesAddModal" size="large" type="primary" icon="Plus">Add New Pricing Categories</el-button>
             </template>
             <template #filter>
-                <el-input @change="getDestinations" class="tm-search-input" v-model="search" style="width: 240px" size="large"
+                <el-input @change="getPricingCategories" class="tm-search-input" v-model="search" style="width: 240px" size="large"
                     placeholder="Please Input" prefix-icon="Search" />
             </template>
             <template #columns>
                 <el-table-column prop="id" label="ID" width="40" />
-                <el-table-column prop="place_name" label="Place Name" width="auto" />
-                <el-table-column prop="place_slug" label="Slug" width="auto" />
-                <el-table-column prop="place_desc" label="Description" width="420" />
+                <el-table-column prop="pricing_categories_name" label="Place Name" width="auto" />
+                <el-table-column prop="pricing_categories_slug" label="Slug" width="auto" />
+                <el-table-column prop="pricing_categories_desc" label="Description" width="420" />
                 <el-table-column label="Image" width="auto">
                     <template #default="{ row }">
                         <img v-if="row.images?.url" :src="row.images?.url" alt="image" style="width: 60px; height: 60px; object-fit: cover;">
@@ -51,12 +51,12 @@
                     v-model:page-size="pageSize"
                     :page-sizes="[10, 20, 30, 40]"
                     large
-                    :disabled="total_destinations <= pageSize"
+                    :disabled="total_pricing_categories <= pageSize"
                     background
                     layout="total, sizes, prev, pager, next"
-                    :total="+total_destinations"
-                    @size-change="getDestinations"
-                    @current-change="getDestinations"
+                    :total="+total_pricing_categories"
+                    @size-change="getPricingCategories"
+                    @current-change="getPricingCategories"
                 />
             </template>
         </AppTable>
@@ -95,11 +95,33 @@ export default {
     },
 
     methods: {
-      
+        getPricingCategories() {
+            this.loading = true;
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_pricing_categories",
+                    route: "get_pricing_categories",
+                    per_page: this.pageSize,
+                    page: this.currentPage,
+                    search: that.search,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.pricing_categories = response?.data?.data?.pricing_categories;
+                    that.total_pricing_categories = response?.data?.data?.total;
+                }).fail((error) => {
+                    console.log(error);
+                }).always(() => {
+                    that.loading = false;
+                })
+        },
         openPricingCategoriesAddModal() {
             this.$refs.add_pricing_categories_modal.openModel();
         },
        
+    },
+    created() {
+        this.getPricingCategories();
     },
    
 }
