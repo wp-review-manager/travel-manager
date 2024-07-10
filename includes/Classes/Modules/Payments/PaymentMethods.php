@@ -46,19 +46,19 @@ class PaymentMethods
                 'title' => 'Offline',
                 'route_name' => 'offline',
                 'available' => true,
-                'svg' => TM_URL .'assets/images/gateways/offline.svg',
+                'svg' => TRM_URL .'assets/images/gateways/offline.svg',
             ),
             'stripe' => array(
                 'title' => 'Stripe',
                 'route_name' => 'stripe',
                 'available' => true,
-                'svg' => TM_URL .'assets/images/gateways/stripe.svg',
+                'svg' => TRM_URL .'assets/images/gateways/stripe.svg',
             ),
             'paypal' => array(
                 'title' => 'PayPal',
                 'route_name' => 'paypal',
                 'available' => false,
-                'svg' => TM_URL .'assets/images/gateways/paypal.svg',
+                'svg' => TRM_URL .'assets/images/gateways/paypal.svg',
                 'route_query' => [],
             ),
         );
@@ -72,7 +72,7 @@ class PaymentMethods
             'paypal' => array(
                 'name' => 'paypal',
                 'slug' => 'paypal-payment-for-travel-manager',
-                'svg' => TM_URL .'assets/images/gateways/paypal.svg',
+                'svg' => TRM_URL .'assets/images/gateways/paypal.svg',
                 'src' => 'travel-manager',
                 'url' => ''
             ),

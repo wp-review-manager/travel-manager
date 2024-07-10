@@ -16,14 +16,14 @@ class Bootstrap {
 
     public function loadClasses()
     {
-        require TM_DIR . 'includes/autoload.php';
+        require TRM_DIR . 'includes/autoload.php';
     }
 
     public function ActivatePlugin()
     {
         //activation deactivation hook
         register_activation_hook(__FILE__, function ($newWorkWide) {
-            require_once(TM_DIR . 'includes/Classes/Activator.php');
+            require_once(TRM_DIR . 'includes/Classes/Activator.php');
             $activator = new \WPTravelManager\Classes\Activator();
             $activator->migrateDatabases($newWorkWide);
         });

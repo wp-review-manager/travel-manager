@@ -55,9 +55,9 @@ class AdminMenuHandler {
 
     public function renderAdminPage()
     {
-        wp_enqueue_script('TM-script-boot', TM_URL . 'assets/admin/js/start.js', array('jquery'), TM_VERSION, false);
-        wp_enqueue_style('TM-global-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
-        wp_enqueue_style('TM-admin-styling', TM_URL . 'assets/css/element.css', array(), TM_VERSION);
+        wp_enqueue_script('TM-script-boot', TRM_URL . 'assets/admin/js/start.js', array('jquery'), TRM_VERSION, false);
+        wp_enqueue_style('TM-global-styling', TRM_URL . 'assets/css/element.css', array(), TRM_VERSION);
+        wp_enqueue_style('TM-admin-styling', TRM_URL . 'assets/css/element.css', array(), TRM_VERSION);
 
         if (function_exists('wp_enqueue_editor')) {
             wp_enqueue_editor();
@@ -72,7 +72,7 @@ class AdminMenuHandler {
 
         $TM = apply_filters('TM/admin_app_vars', array(
             //'image_upload_url' => admin_url('admin-ajax.php?action=wpf_global_settings_handler&route=wpf_upload_image'),
-            'assets_url' => TM_URL . 'assets/',
+            'assets_url' => TRM_URL . 'assets/',
             'ajaxurl' => admin_url('admin-ajax.php'),
             'tm_admin_nonce' => wp_create_nonce('tm_admin_nonce'),
             'nonce' => wp_create_nonce('travel_manager'),
