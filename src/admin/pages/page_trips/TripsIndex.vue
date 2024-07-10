@@ -43,9 +43,9 @@ export default {
                     to: "/trips/activities"
                 },
                 {
-                    label: "Deficulty",
+                    label: "Difficulty",
                     icon: "mdi-settings",
-                    to: "/trips/deficulty-levels"
+                    to: "/trips/difficulty-levels"
                 },
                 {
                     label: "Pricing Categories",
