@@ -3,13 +3,18 @@ const calenderRender = ($) => {
     let month = date.getMonth();
     let year = date.getFullYear();
 
+    let today = date.getDate();
+    let currentMonth = date.getMonth();
+    let currentYear = date.getFullYear();
+    let currentDate = `${currentYear}-${currentMonth + 1}-${today}`;
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
 
     function renderCalendar(month, year) {
-        console.log('renderCalendar', month, year);
+
         const firstDay = (new Date(year, month)).getDay();
         const daysInMonth = 32 - new Date(year, month, 32).getDate();
 
@@ -22,7 +27,13 @@ const calenderRender = ($) => {
 
         for (let i = 1; i <= daysInMonth; i++) {
             let date = `${year}-${month + 1}-${i}`;
-            $('.tm_calendar_days').append(`<div data-tm_date=${date}>${i}</div>`);
+            let dateInMini = new Date(date); dateInMini = dateInMini.getTime(); 
+            let currentDateMini = new Date(currentDate); currentDateMini = currentDateMini.getTime();
+            if(currentDateMini < dateInMini) {
+                $('.tm_calendar_days').append(`<div data-tm_date=${date}>${i}</div>`);
+            } else {
+                $('.tm_calendar_days').append(`<div class="disabled">${i}</div>`);
+            }
         }
 
         $('.tm_calendar_days div').click(function() {

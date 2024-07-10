@@ -39,7 +39,10 @@
         div {
             border: 1px solid #eee;
             cursor: pointer;
-
+            &.disabled {
+                color: #ccc;
+                cursor: not-allowed;
+            }
             &:hover {
                 background-color: #f0f0f0;
             }
