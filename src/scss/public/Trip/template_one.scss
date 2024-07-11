@@ -132,6 +132,49 @@
             }
         }
 
+        .tm_choose_package {
+            &.tm_tab_content {
+                padding: 0px;
+            }
+            .tm_packages {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                flex-wrap: wrap;
+                border-bottom: $tm_border;
+                padding-bottom: 20px;
+                .tm_package_button {
+                    padding: 8px 16px;
+                    border: $tm_border;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    @include text($size: 14px, $weight: 500, $color: $tm-primary-500, $lineHeight: 24px);
+                    &:hover, &.active {
+                        background: $tm-primary-500;
+                        color: #fff;
+                    }
+                }
+            }
+            .tm_package_details {
+                padding: 20px 0px;
+                .tm_package_pricing {
+                    display: flex;
+                    gap: 20px;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    padding: 20px;
+                    border-bottom: $tm_border;
+                    .travelers, .tm_price {
+                        @include text($size: 18px, $weight: 500, $color: $tm-dark-500, $lineHeight: 24px);
+                    }
+                    .tm_old_price, .tm_per_person {
+                        @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
+                    }
+                }
+            }
+        }
+
         .tm_trip_inquiry_form_wrapper {
             .tm_inquiry_title {
                 @include h2-medium;
