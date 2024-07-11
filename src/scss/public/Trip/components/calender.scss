@@ -1,0 +1,54 @@
+.tm_calendar {
+    width: 100%;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+
+    .tm_calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+    }
+
+    .tm_calendar_days-names, .tm_calendar_days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+
+        div {
+            padding: 10px;
+            text-align: center;
+        }
+    }
+
+    .tm_calendar_days {
+        div {
+            border: 1px solid #eee;
+            cursor: pointer;
+            &.disabled {
+                color: #ccc;
+                cursor: not-allowed;
+            }
+            &:hover {
+                background-color: #f0f0f0;
+            }
+            &.active {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+}

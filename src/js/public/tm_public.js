@@ -3,6 +3,7 @@ import { TMtab } from './components/tab.js';
 import { collapseRender } from './components/collapse.js';
 import { galleryRender } from './components/gallery.js';
 import { renderModal } from './components/modal.js';
+import {calenderRender} from './components/calender.js';
 (function ($) {
     $(document).ready(function () {
         sliderRender($)
@@ -10,5 +11,6 @@ import { renderModal } from './components/modal.js';
         collapseRender($)
         galleryRender($)
         renderModal($)
+        calenderRender($)
     });
 })(jQuery);
