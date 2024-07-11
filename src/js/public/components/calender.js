@@ -6,7 +6,8 @@ const calenderRender = ($) => {
     let today = date.getDate();
     let currentMonth = date.getMonth();
     let currentYear = date.getFullYear();
-    let currentDate = `${currentYear}-${currentMonth + 1}-${today}`;
+    let startDate = `${currentYear}-${currentMonth + 1}-${today}`;
+    let endDate = '2024-7-28';
 
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
@@ -28,8 +29,9 @@ const calenderRender = ($) => {
         for (let i = 1; i <= daysInMonth; i++) {
             let date = `${year}-${month + 1}-${i}`;
             let dateInMini = new Date(date); dateInMini = dateInMini.getTime(); 
-            let currentDateMini = new Date(currentDate); currentDateMini = currentDateMini.getTime();
-            if(currentDateMini < dateInMini) {
+            let startDateMini = new Date(startDate); startDateMini = startDateMini.getTime();
+            let endDateMini = new Date(endDate); endDateMini = endDateMini.getTime();
+            if(startDateMini < dateInMini && dateInMini < endDateMini) {
                 $('.tm_calendar_days').append(`<div data-tm_date=${date}>${i}</div>`);
             } else {
                 $('.tm_calendar_days').append(`<div class="disabled">${i}</div>`);

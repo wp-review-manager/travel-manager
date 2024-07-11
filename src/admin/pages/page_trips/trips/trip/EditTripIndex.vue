@@ -9,8 +9,8 @@
                 </router-link>
             </div>
             <div class="header-right">
-                <button class="tm-shortcode" v-clipboard="trip_info.shortcode"
-                    v-clipboard:success="clipboardSuccessHandler">
+                <button class="tm-shortcode"  v-clipboard="trip_info.shortcode"
+                    v-clipboard:success="clipboardSuccessHandler" >
                     {{ trip_info.shortcode }}
                 </button>
                 <el-button @click="redirectPreviewPage(trip_info)" type="default">Preview</el-button>
@@ -216,7 +216,9 @@ export default {
 
         redirectPreviewPage(trip_info) {
             window.open(trip_info.preview_url, '_blank');
-        }
+        },
+
+     
 
     },
 
@@ -275,7 +277,8 @@ export default {
                 to: `/trip/${this.trip_id}/edit/reviews`
             }
         ]
-    }
+    },
+   
 
 }
 </script>

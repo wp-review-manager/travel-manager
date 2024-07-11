@@ -73,6 +73,7 @@ class Trips extends Model {
             's' => $search,
             'date_query'     => $date_query,
         );
+     
         
        $trips = get_posts($args);
 
@@ -80,7 +81,7 @@ class Trips extends Model {
            $trips[$key]->shortcode = '[tm_trip id="' . $trip->ID . '"]';
            $trips[$key]->preview_url = site_url('?wp_tm_trip_preview=' . $trip->ID);
        }
-
+     
        $total = get_posts(array(
             'post_type' => 'tm_trip',
             'post_status' => $status,
@@ -88,11 +89,13 @@ class Trips extends Model {
             's' => $search,
             'date_query'     => $date_query,
         ));
+     
 
         return array(
             'trips' => $trips,
             'total' => count($total)
         );
+        
     }
 
     public function getTripInfo($tripId)
@@ -113,6 +116,7 @@ class Trips extends Model {
             $tripMetaData = substr($tripMeta_data[0], $pos + 1);
         }
       
+
         return array(
             'trip' => $trip,
             'trip_meta' => maybe_unserialize($tripMetaData)

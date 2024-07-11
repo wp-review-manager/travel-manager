@@ -40,9 +40,28 @@ class CheckAvailability
                                 </div>
                             </div>
 
-                            <div class="tm_tab_content tm_package_type_content" id="package_type">
+                            <div class="tm_tab_content tm_choose_package tm_package_type_content" id="package_type">
                                 <div class="tm_section">
-                                    Package Type
+                                    <div class="tm_packages">
+                                        <div class="tm_package_button active">Package 1</div>
+                                        <div class="tm_package_button">Package 2</div>
+                                    </div>
+                                    <div class="tm_package_details">
+                                        <?php for ($i = 0; $i < 4; $i++) : ?>
+                                        <div class="tm_package_pricing">
+                                            <p class="travelers">Adult</p>
+                                            <div>
+                                                <span class="tm_old_price">
+                                                    <del>$150</del>
+                                                </span>
+                                                <span class="tm_price">$100</span>
+                                                <span class="tm_per_person">/</span>
+                                                <span class="tm_per_person">per person</span>
+                                                <input type="number" class="tm_quantity" value="1">
+                                            </div>
+                                        </div>
+                                        <?php endfor; ?>
+                                    </div>
                                 </div>
                             </div>
 

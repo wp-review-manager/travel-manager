@@ -85,10 +85,7 @@
                 <div style="width: 100%" class="input-wrapper">
                     <p class="form-label" for="name">Trip Category *</p>
                     <el-select v-model="meta.general.trip_category" placeholder="Select Trip Type" size="large" style="width: 100%">
-                        <el-option label="Adventure" value="adventure" />
-                        <el-option label="Religious" value="religious" />
-                        <el-option label="Leisure" value="leisure" />
-                        <el-option label="Honeymoon" value="honeymoon" />
+                        <el-option v-for="category in categories" :key="category.value" :label="category.trip_category_name" :value="category.trip_category_name" />
                     </el-select>
                 </div>
 
@@ -238,6 +235,7 @@ export default {
     },
     data() {
         return {
+            categories: [],
             trip_id: null,
         }
     },
@@ -251,8 +249,29 @@ export default {
             default: () => { }
         }
     },
+    methods: {
+        getCategories() {
+            this.loading = true;
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_categories",
+                    route: "get_categories",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.categories = response?.data?.data?.categories;
+                }).fail((error) => {
+                    console.log(error);
+                }).always(() => {
+                    that.loading = false;
+                })
+        },
+    },
     mounted() {
         this.trip_id = this.$route.params.id;
-    }
+    },
+    created() {
+        this.getCategories();
+    },
 }
 </script>
