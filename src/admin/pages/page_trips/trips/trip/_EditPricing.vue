@@ -75,9 +75,8 @@
                     <div class="input-wrapper" style="width: 50%;">
                         <p class="form-label">Price Label *</p>
                         <el-select size="large" placeholder="Select Price Label" v-model="price.label">
-                            <el-option value="old">Old</el-option>
-                            <el-option value="child">Child</el-option>
-                            <el-option value="adult">Adult</el-option>
+                            <el-option v-for="pricing_category in pricing_categories" :key="pricing_category.value" :label="pricing_category.pricing_categories_name" :value="pricing_category.pricing_categories_name" />
+                    
                         </el-select>
                     </div>
                 </div>
@@ -125,6 +124,10 @@ export default {
     },
     props: {
         package_info: {
+            type: Object,
+            default: () => { }
+        },
+        pricing_categories: {
             type: Object,
             default: () => { }
         }
