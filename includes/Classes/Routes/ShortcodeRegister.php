@@ -27,10 +27,11 @@ class ShortcodeRegister {
         }
         $post_meta = get_post_meta( $id, 'trip_meta', true );
         $post_meta = maybe_unserialize( $post_meta );
-
+     
         View::render('Preview/Template1',[
             'id' => $id,
             'title' => $post->post_title,
+            'trip' => $post_meta,
         ]);
     }
         

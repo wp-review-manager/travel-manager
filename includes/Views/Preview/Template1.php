@@ -5,6 +5,11 @@ namespace WPTravelManager\Views\Preview;
 use WPTravelManager\Views\Components\Slider;
 use WPTravelManager\Views\Components\Tab;
 use WPTravelManager\Views\Components\CheckAvailability;
+use WPTravelManager\Classes\ArrayHelper as Arr;
+$durationType = Arr::get($trip, 'general.duration.type', 0);
+$duration = Arr::get($trip, 'general.duration.duration', 0);
+$transportation = Arr::get($trip, 'general.transportation', null);
+
 ?>
 <div class="tm_trip_one_shortcode_preview_wrapper">
     <main class="tm_trip_main">
@@ -12,8 +17,8 @@ use WPTravelManager\Views\Components\CheckAvailability;
             <div class="entry-header">
                 <h1 class="entry-title"><?php echo esc_html($title); ?></h1>
                 <span class="wte-title-duration">
-                    <p class="duration"> 15 </p>
-                    <p class="days"> Days </p>
+                    <p class="duration"> <?php echo esc_html( $duration ) ?> </p>
+                    <p class="days"> <?php echo esc_html( $durationType ) ?> </p>
                 </span>
             </div>
 
@@ -23,15 +28,21 @@ use WPTravelManager\Views\Components\CheckAvailability;
 
             <div class="tm_trip_entry_content">
                 <div class="tm_secondary_trip_info">
-                    <?php foreach (range(1, 10) as $i) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label">
+                                <span class="dashicons dashicons-airplane"></span>
+                                <span class="tm_label">Transportation</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $transportation ?></span>
+                        </div>
+
                         <div class="tm_trip_price">
                             <div class="tm_info_label">
                                 <span class="dashicons dashicons-schedule"></span>
-                                <span class="tm_label">Accomodation</span>
+                                <span class="tm_label">Next</span>
                             </div>
-                            <span class="tm_price_value">All meals during the trek</span>
+                            <span class="tm_price_value">Next</span>
                         </div>
-                    <?php endforeach; ?>
                 </div>
             </div>
 
