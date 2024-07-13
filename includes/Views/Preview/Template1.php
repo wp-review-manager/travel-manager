@@ -9,7 +9,6 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 $durationType = Arr::get($trip, 'general.duration.type', 0);
 $duration = Arr::get($trip, 'general.duration.duration', 0);
 $transportation = Arr::get($trip, 'general.transportation', null);
-
 ?>
 <div class="tm_trip_one_shortcode_preview_wrapper">
     <main class="tm_trip_main">
@@ -28,13 +27,15 @@ $transportation = Arr::get($trip, 'general.transportation', null);
 
             <div class="tm_trip_entry_content">
                 <div class="tm_secondary_trip_info">
+                        <?php if ($transportation) : ?>
                         <div class="tm_trip_price">
-                            <div class="tm_info_label">
+                            <div class="tm_info_label"> 
                                 <span class="dashicons dashicons-airplane"></span>
                                 <span class="tm_label">Transportation</span>
                             </div>
                             <span class="tm_price_value"><?php echo $transportation ?></span>
                         </div>
+                        <?php endif; ?>
 
                         <div class="tm_trip_price">
                             <div class="tm_info_label">
@@ -43,10 +44,11 @@ $transportation = Arr::get($trip, 'general.transportation', null);
                             </div>
                             <span class="tm_price_value">Next</span>
                         </div>
+
                 </div>
             </div>
 
-            <?php echo Tab::RenderTab(); ?>
+            <?php echo Tab::RenderTab($trip); ?>
 
         </article>
     </main>

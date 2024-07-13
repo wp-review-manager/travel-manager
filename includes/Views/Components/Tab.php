@@ -2,12 +2,15 @@
 
 namespace WPTravelManager\Views\Components;
 use WPTravelManager\Views\Components\Collapse;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class Tab
 {
-    public static function RenderTab()
+    public static function RenderTab($trip)
     {
         ob_start();
+        $itenary = Arr::get($trip, 'itinerary.options.0.titlejhgjg', "nitesh");
+        dd($itenary);
         ?>
         <div class="tm_tab_container">
             <ul class="tm_tab_menu">
