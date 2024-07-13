@@ -9,8 +9,8 @@ class Tab
     public static function RenderTab($trip)
     {
         ob_start();
-        $itenary = Arr::get($trip, 'itinerary.options.0.title', "nitesh");
-   
+        $itinerary = Arr::get($trip, 'itinerary', []);
+       
         ?>
         <div class="tm_tab_container">
             <ul class="tm_tab_menu">
@@ -60,7 +60,7 @@ class Tab
             </div>
 
             <div class="tm_tab_content" id="itinerary">
-                <?php echo Collapse::RenderCollapse(); ?>
+                <?php echo Collapse::RenderCollapse($itinerary); ?>
             </div>
 
             <div class="tm_tab_content" id="cost">
