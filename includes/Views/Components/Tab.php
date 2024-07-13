@@ -9,8 +9,8 @@ class Tab
     public static function RenderTab($trip)
     {
         ob_start();
-        $itenary = Arr::get($trip, 'itinerary.options.0.titlejhgjg', "nitesh");
-        dd($itenary);
+        $itenary = Arr::get($trip, 'itinerary.options.0.title', "nitesh");
+   
         ?>
         <div class="tm_tab_container">
             <ul class="tm_tab_menu">

@@ -9,7 +9,18 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 $durationType = Arr::get($trip, 'general.duration.type', 0);
 $duration = Arr::get($trip, 'general.duration.duration', 0);
 $transportation = Arr::get($trip, 'general.transportation', null);
+
+$max_traveler = Arr::get($trip, 'general.max_traveler', null);
+$trip_type = Arr::get($trip, 'general.trip_type', null);
+$trip_status = Arr::get($trip, 'general.trip_status', null);
+$trip_destination = Arr::get($trip, 'general.trip_destination', null);
+$accommodation = Arr::get($trip, 'general.accommodation', null);
+$departure_location = Arr::get($trip, 'general.departure_location', null);
+$max_age = Arr::get($trip, 'general.min_max_age.max_age', null);
+$min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
+
 ?>
+
 <div class="tm_trip_one_shortcode_preview_wrapper">
     <main class="tm_trip_main">
         <article>
@@ -37,13 +48,85 @@ $transportation = Arr::get($trip, 'general.transportation', null);
                         </div>
                         <?php endif; ?>
 
+                        <?php if ($max_traveler) : ?>
                         <div class="tm_trip_price">
-                            <div class="tm_info_label">
-                                <span class="dashicons dashicons-schedule"></span>
-                                <span class="tm_label">Next</span>
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-groups"></span>
+                                <span class="tm_label">Maximum Traveler</span>
                             </div>
-                            <span class="tm_price_value">Next</span>
+                            <span class="tm_price_value"><?php echo $max_traveler ?></span>
                         </div>
+                        <?php endif; ?>
+
+                        <?php if ($trip_type) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-welcome-write-blog"></span>
+                                <span class="tm_label">Tour Type</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $trip_type ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($trip_status) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-admin-page"></span>
+                                <span class="tm_label">Tour Status</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $trip_status ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($trip_destination) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-location"></span>
+                                <span class="tm_label">Destination</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $trip_destination ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($accommodation) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-editor-insertmore"></span>
+                                <span class="tm_label">Accommodation</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $accommodation ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($departure_location) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-car"></span>
+                                <span class="tm_label">Departure from</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $departure_location ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($max_age) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-universal-access"></span>
+                                <span class="tm_label">Maximum Age</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $max_age ?></span>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($min_age) : ?>
+                        <div class="tm_trip_price">
+                            <div class="tm_info_label"> 
+                            <span class="dashicons dashicons-universal-access"></span>
+                                <span class="tm_label">Minimum Age</span>
+                            </div>
+                            <span class="tm_price_value"><?php echo $min_age ?></span>
+                        </div>
+                        <?php endif; ?>
 
                 </div>
             </div>
