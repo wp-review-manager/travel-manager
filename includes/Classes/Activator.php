@@ -46,6 +46,10 @@ class Activator
         $this->migrateActivityTable();
         $this->migrateDefaultyTable();
         $this->migratePricingCategoriesTable();
+        $this->migrateOrderItemsTable();
+        $this->migrateTransactionsTable();
+        $this->migrateBookingsTable();
+        $this->migrateBookingMeta();
     }
 
     public function migrateDestinationTable()
@@ -159,6 +163,99 @@ class Activator
             PRIMARY KEY (id)
             ) $charset_collate;";
 
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateOrderItemsTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'trm_order_items';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            trip_id int(10) NOT NULL,
+            booking_id int(10) NOT NULL,
+            item_name VARCHAR(255) NOT NULL,
+            item_qty int(11),
+            item_price int(11),
+            line_total int(11)
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateTransactionsTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'trm_transactions';
+        $sql = "CREATE TABLE $table_name (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            transaction_hash varchar(255) NULL,
+            payer_name varchar(255) NULL,
+            payer_email varchar(255) NULL,
+            billing_address varchar(255) NULL,
+            shipping_address varchar(255) NULL,
+            trip_id int(11) NOT NULL,
+            booking_id int(11) NULL,
+            user_id int(11) DEFAULT NULL,
+            transaction_type varchar(255) DEFAULT 'onetime',
+            payment_method varchar(255),
+            card_last_4 int(4),
+            card_brand varchar(255),
+            charge_id varchar(255),
+            payment_total int(11) DEFAULT 1,
+            status varchar(255),
+            currency varchar(255),
+            payment_mode varchar(255),
+            payment_note longtext,
+            created_at timestamp NULL,
+            updated_at timestamp NULL,
+            PRIMARY  KEY  (id)
+        ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateBookingsTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'trm_bookings';
+        $sql = "CREATE TABLE $table_name (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            booking_hash varchar(255) NULL,
+            trip_id int(11) NOT NULL,
+            user_id int(11) DEFAULT NULL,
+            booking_total int(11) DEFAULT 0,
+            traveler_name varchar(255) NULL,
+            traveler_email varchar(255) NULL,
+            traveler_phone varchar(255) NULL,
+            traveler_country varchar(255) NULL,
+            traveler_address varchar(255) NULL,
+            booking_date date DEFAULT NULL,
+            booking_status varchar(255) DEFAULT 'pending',
+            booking_note longtext,
+            created_at timestamp NULL,
+            updated_at timestamp NULL,
+            PRIMARY  KEY  (id)
+        ) $charset_collate;";
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateBookingMeta()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'trm_booking_meta';
+        $sql = "CREATE TABLE $table_name (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            booking_id int(11) NOT NULL,
+            meta_key varchar(255) NULL,
+            meta_value longtext,
+            PRIMARY  KEY  (id)
+        ) $charset_collate;";
         $this->runSQL($sql, $table_name);
     }
 
