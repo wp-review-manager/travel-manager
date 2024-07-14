@@ -19,6 +19,8 @@ $departure_location = Arr::get($trip, 'general.departure_location', null);
 $max_age = Arr::get($trip, 'general.min_max_age.max_age', null);
 $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
 
+$trip_gallery = Arr::get($trip, 'trip_gallery', null);
+
 ?>
 
 <div class="tm_trip_one_shortcode_preview_wrapper">
@@ -33,7 +35,7 @@ $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
             </div>
 
             <div class="tm_gallery_wrapper">
-                <?php echo Slider::RenderSlider(); ?>
+                <?php echo Slider::RenderSlider($trip_gallery); ?>
             </div>
 
             <div class="tm_trip_entry_content">
