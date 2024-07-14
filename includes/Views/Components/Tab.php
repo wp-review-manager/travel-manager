@@ -25,7 +25,8 @@ class Tab
         $faqs = Arr::get($trip, 'faqs', []);
 
         $map_title = Arr::get($trip, 'map.title', []);
-        // dd($map);
+        $map_iframe_code = Arr::get($trip, 'map.iframe_code', null);
+
         ?>
         <div class="tm_tab_container">
             <ul class="tm_tab_menu">
@@ -92,7 +93,7 @@ class Tab
 
             <div class="tm_tab_content" id="map">
             <h1 class="tm_section_title"><?php echo esc_html( $map_title ) ?></h1>
-            <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps tracker sport</a></iframe></div>
+            <div style="width: 100%"><iframe width="100%" height="600" frameborder="0"  src="<?php echo htmlspecialchars($map_iframe_code); ?>"gps tracker sport</a></iframe></div>
             </div>
         </div>
         <?php

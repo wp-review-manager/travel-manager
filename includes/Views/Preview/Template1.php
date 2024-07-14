@@ -21,6 +21,8 @@ $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
 
 $trip_gallery = Arr::get($trip, 'trip_gallery', null);
 
+
+
 ?>
 
 <div class="tm_trip_one_shortcode_preview_wrapper">

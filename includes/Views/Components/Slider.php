@@ -60,7 +60,6 @@ class Slider {
                
                 <?php foreach ($trip_gallery_image as $image) : ?>
                         <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>" class="tm_trip_gallery_item">
-                   
                 <?php endforeach; ?>
             </div>
         </div>
