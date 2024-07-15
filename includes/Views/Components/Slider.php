@@ -11,14 +11,20 @@ class Slider {
         <div class="tm_trip_slider">
       
 
-            <div class="tm_trip_slider__container">
+        <div class="tm_trip_slider__container">
+            <?php if (!$trip_gallery_image) : ?>
+                <div class="tm_trip_slider__slide">
+                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image">
+                </div>
+            <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
                 <div class="tm_trip_slider__slide">
-                        <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>">
-                    </div>
-                <?php endforeach; ?>
-            </div>
-         
+                    <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']) . ' ' . htmlspecialchars($image['id']); ?>">
+                </div>
+            <?php endforeach; ?>
+             <?php endif; ?>
+         </div>
+
 
             <div class="tm_trip_slider__controls">
                 <div class="tm_trip_slider__control tm_trip_slider__control--prev" aria-label="Previous slide">
@@ -57,10 +63,15 @@ class Slider {
             </div>
 
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
-               
+            <?php if (!$trip_gallery_image) : ?>
+                <div class="tm_trip_slider__slide">
+                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                </div>
+            <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
                         <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>" class="tm_trip_gallery_item">
                 <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
