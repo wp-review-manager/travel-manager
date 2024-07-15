@@ -18,9 +18,12 @@ class Slider {
                 </div>
             <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
-                <div class="tm_trip_slider__slide">
-                    <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']) . ' ' . htmlspecialchars($image['id']); ?>">
-                </div>
+                <?php if (!empty($image['url'])) : ?>
+                    <div class="tm_trip_slider__slide">
+                        <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']) . ' ' . htmlspecialchars($image['id']); ?>">
+                    </div>
+                <?php endif; ?>
+
             <?php endforeach; ?>
              <?php endif; ?>
          </div>
@@ -69,7 +72,9 @@ class Slider {
                 </div>
             <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
+                <?php if (!empty($image['url'])) : ?>
                         <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>" class="tm_trip_gallery_item">
+                <?php endif; ?>
                 <?php endforeach; ?>
                 <?php endif; ?>
             </div>
