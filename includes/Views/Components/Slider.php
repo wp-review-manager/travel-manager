@@ -14,13 +14,18 @@ class Slider {
         <div class="tm_trip_slider__container">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image">
+                <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                 </div>
+
             <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
                 <?php if (!empty($image['url'])) : ?>
                     <div class="tm_trip_slider__slide">
                         <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']) . ' ' . htmlspecialchars($image['id']); ?>">
+                    </div>
+                    <?php else : ?>
+                    <div class="tm_trip_slider__slide">
+                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                     </div>
                 <?php endif; ?>
 
@@ -68,12 +73,15 @@ class Slider {
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                    <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                 </div>
             <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
+
                 <?php if (!empty($image['url'])) : ?>
                         <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>" class="tm_trip_gallery_item">
+                        <?php else : ?>
+                             <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" >
                 <?php endif; ?>
                 <?php endforeach; ?>
                 <?php endif; ?>
