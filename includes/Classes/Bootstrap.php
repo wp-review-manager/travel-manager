@@ -27,8 +27,6 @@ class Bootstrap {
             $activator = new \WPTravelManager\Classes\Activator();
             $activator->migrateDatabases($newWorkWide);
         });
-        $activator = new \WPTravelManager\Classes\Activator();
-        $activator->migrateDatabases();
      
     }
   
