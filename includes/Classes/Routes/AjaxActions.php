@@ -32,5 +32,12 @@ class AjaxActions {
         add_action('wp_ajax_tm_pricing_categories', function () {
             (new PricingCategoriesController())->registerAjaxRoutes();
         });
+
+        // Public Ajax Actions
+
+        add_action('wp_ajax_tm_inquiry', function () {
+            dd($_REQUEST);
+        });
+
     }
 }

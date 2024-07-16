@@ -178,19 +178,19 @@ $packages = Arr::get($trip, 'packages', null);
         <?php echo CheckAvailability::RenderCheckAvailability(); ?>
         <div class="tm_trip_inquiry_form_wrapper">
             <h3 class="tm_inquiry_title">You can send your enquiry via the form below</h3>
-            <form action="" method="post">
+            <form id="tm_submission-inquiry-form">
                 <div class="tm_inquiry_form">
                     <div class="tm_form_group">
                         <p for="name">Name</p>
-                        <input type="text" name="name" id="name" required>
+                        <input type="text" name="name" id="tm_name" required>
                     </div>
                     <div class="tm_form_group">
                         <p for="email">Email</p>
-                        <input type="email" name="email" id="email" required>
+                        <input type="email" name="email" id="tm_email" required>
                     </div>
                     <div class="tm_form_group">
                         <p for="email">Country</p>
-                        <select name="country" id="country" required>
+                        <select name="country" id="tm_country" required>
                             <option value="Nepal">Nepal</option>
                             <option value="India">India</option>
                             <option value="China">China</option>
@@ -199,29 +199,32 @@ $packages = Arr::get($trip, 'packages', null);
                     </div>
                     <div class="tm_form_group">
                         <p for="phone">Phone</p>
-                        <input type="text" name="phone" id="phone" required>
+                        <input type="text" name="phone" id="tm_phone" required>
                     </div>
                     <div class="tm_form_group">
                         <p for="subject">Subject</p>
-                        <input type="text" name="subject" id="subject" required>
+                        <input type="text" name="subject" id="ym_subject" required>
                     </div>
 
                     <div class="tm_form_group">
                         <p for="subject">Number of Adults</p>
-                        <input type="number" name="number_of_adults" id="number_of_adults" required>
+                        <input type="number" name="tm_number_of_adults" id="number_of_adults" required>
                     </div>
 
                     <div class="tm_form_group">
                         <p for="subject">Number of Children</p>
-                        <input type="number" name="number_of_children" id="number_of_children" required>
+                        <input type="number" name="tm_number_of_children" id="number_of_children" required>
                     </div>
 
                     <div class="tm_form_group">
                         <p for="message">Message</p>
-                        <textarea name="message" id="message" required></textarea>
+                        <textarea name="message" id="tm_message" required></textarea>
                     </div>
                     <div class="tm_form_group">
-                        <button class="tm_button">Send Inquiry</button>
+                        <ul class="tm_error_message"></ul>
+                    </div>
+                    <div class="tm_form_group">
+                        <button class="tm_inquiry_button">Send Inquiry</button>
                     </div>
                 </div>
             </form>

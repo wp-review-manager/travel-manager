@@ -31,7 +31,13 @@ class ProcessPreviewPage {
         add_action('wp_enqueue_scripts', function () {
             wp_enqueue_style('travel_manager_public_css', TM_URL.'assets/css/tm_public.css', [], TM_VERSION);
             wp_enqueue_script( 'travel_manager_public_js', TM_URL.'assets/js/tm_public.js',array('jquery'),TM_VERSION, false );
+
+            wp_localize_script('travel_manager_public_js', 'tm_public', [
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('tm_ajax_nonce'),
+            ]);
         });
+
 
         wp_head();
         View::render('Preview.TripPreview', [

@@ -4,6 +4,7 @@ import { collapseRender } from './components/collapse.js';
 import { galleryRender } from './components/gallery.js';
 import { renderModal } from './components/modal.js';
 import {calenderRender} from './components/calender.js';
+import { submissionInquiry } from './submission_inquiry.js';
 (function ($) {
     $(document).ready(function () {
         sliderRender($)
@@ -12,5 +13,6 @@ import {calenderRender} from './components/calender.js';
         galleryRender($)
         renderModal($)
         calenderRender($)
+        submissionInquiry($)
     });
 })(jQuery);
