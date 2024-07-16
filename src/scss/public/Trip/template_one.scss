@@ -82,7 +82,8 @@
             background-color: $tm_background_color;
             border-radius: 8px;
             .tm_trip_starting_price_list {
-                display: flex;
+                display: grid;
+                grid-template-columns: auto auto;
                 align-items: flex-start;
                 gap: 20px;
                 justify-content: space-between;

@@ -228,3 +228,5 @@ $packages = Arr::get($trip, 'packages', null);
         </div>
     </div>
 </div>
+
+

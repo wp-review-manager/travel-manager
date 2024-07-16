@@ -46,6 +46,7 @@ class Activator
         $this->migrateActivityTable();
         $this->migrateDefaultyTable();
         $this->migratePricingCategoriesTable();
+        $this->migrateInquiryTable();
     }
 
     public function migrateDestinationTable()
@@ -124,7 +125,7 @@ class Activator
         $this->runSQL($sql, $table_name);
     }
 
-    public function migrateDefaultyTable()
+       public function migrateDefaultyTable()
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
@@ -154,6 +155,29 @@ class Activator
             pricing_categories_slug VARCHAR(255) NOT NULL,
             pricing_categories_desc LONGTEXT  NULL,
             images LONGTEXT null,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateInquiryTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_inquiry';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            country VARCHAR(255) NOT NULL,
+            phone INTEGER NOT NULL,
+            subject VARCHAR(255) NOT NULL,
+            number_of_adults VARCHAR(255) NOT NULL,
+            number_of_children VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
             created_at timestamp NULL DEFAULT NULL,
             updated_at timestamp NULL DEFAULT NULL,
             PRIMARY KEY (id)
