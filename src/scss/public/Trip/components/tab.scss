@@ -10,6 +10,9 @@
     padding: 0;
     margin: 0;
     border-bottom: $tm_border;
+    @media (max-width:1090px) {
+        display: block;
+    }
 }
 
 .tm_tab_menu .tab, .tm_availability_tab_menu .tab {

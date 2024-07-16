@@ -13,7 +13,7 @@ class Tab
         $overview_description = Arr::get($trip, 'general.description.description', null);
         $trip_highlights_title = Arr::get($trip, 'general.description.trip_highlights.title', null);
         $trip_highlights = Arr::get($trip, 'general.description.trip_highlights.options', null);
-       
+      
         $itinerary = Arr::get($trip, 'itinerary', []);
 
         $section_title = Arr::get($trip, 'inc_exc.section_title', []);
@@ -49,9 +49,12 @@ class Tab
                 </div>
                 <div class="tm_overview_content">
                 <?php foreach ($trip_highlights as $highlight) : ?>
+                    <?php
+                     $trip_highlights_label = Arr::get($highlight, 'label', null);
+                    ?>
                     <div class="tm_overview_highlights">
                         <span class="dashicons dashicons-saved"></span>
-                        <?php echo htmlspecialchars ($highlight['label']); ?>
+                        <?php echo esc_html($trip_highlights_label) ; ?>
                     </div>
                     <?php endforeach; ?>
                 </div>

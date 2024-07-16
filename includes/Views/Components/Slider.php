@@ -14,14 +14,19 @@ class Slider {
         <div class="tm_trip_slider__container">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                 </div>
 
             <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
-                <?php if (!empty($image['url'])) : ?>
+                <?php
+                    $image_url = Arr::get($image, 'url', null);
+                    $image_id = Arr::get($image, 'id', null);
+                    $image_name = Arr::get($image, 'name', null);
+                ?>
+                <?php if (!empty($image_url)) : ?>
                     <div class="tm_trip_slider__slide">
-                        <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']) . ' ' . htmlspecialchars($image['id']); ?>">
+                        <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>">
                     </div>
                     <?php else : ?>
                     <div class="tm_trip_slider__slide">
@@ -77,12 +82,16 @@ class Slider {
                 </div>
             <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
-
-                <?php if (!empty($image['url'])) : ?>
-                        <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="<?php echo htmlspecialchars($image['name']), htmlspecialchars($image['id']); ?>" class="tm_trip_gallery_item">
-                        <?php else : ?>
-                             <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" >
-                <?php endif; ?>
+                    <?php
+                        $image_url = Arr::get($image, 'url', null);
+                        $image_id = Arr::get($image, 'id', null);
+                        $image_name = Arr::get($image, 'name', null);
+                    ?>
+                      <?php if (!empty($image_url)) : ?>
+                            <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>" class="tm_trip_gallery_item">
+                            <?php else : ?>
+                                <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" >
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <?php endif; ?>
             </div>
@@ -91,7 +100,10 @@ class Slider {
         <div class="tm_video_gallery_wrapper">
             <div id="tm_trip_video_gallery" class="tm_trip_video_gallery" style="display: none;">
                 <?php foreach ($trip_gallery_videos as $index => $videos) : ?>
-                    <video class="tm_trip_video_gallery_item" data-index="<?php echo $index; ?>" data-src="<?php echo htmlspecialchars($videos['video_link']); ?>"></video>
+                    <?php
+                        $video_url = Arr::get($videos, 'video_link', null);
+                    ?>
+                    <video class="tm_trip_video_gallery_item" data-index="<?php echo $index; ?>" data-src="<?php echo esc_html($video_url) ; ?>"></video>
                 <?php endforeach; ?>
             </div>
         </div>
