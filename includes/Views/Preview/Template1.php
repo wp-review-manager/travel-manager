@@ -22,8 +22,6 @@ $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
 $trip_gallery = Arr::get($trip, 'trip_gallery', null);
 
 $packages = Arr::get($trip, 'packages', null);
-
-//dd($packages);
 ?>
 
 <div class="tm_trip_one_shortcode_preview_wrapper">
@@ -143,27 +141,30 @@ $packages = Arr::get($trip, 'packages', null);
     <div class="tm_trip_sidebar">
         <div class="tm_availability_wrapper">
             <div class="tm_trip_starting_price_list">
-                <div class="tm_trip_starting_price">
-                    <div class="tm_regular_price">
-                        <span class="tm_label">From</span>
-                        <span class="tm_price">$800</span>
-                    </div>
-                    <div class="tm_selling_price">
-                        <span class="tm_price">$600</span>
-                        <span class="tm_label"> / Child</span>
-                    </div>
+            <?php foreach ($packages as $packages) : ?>
+                <?php
+                    $packages_pricing= Arr::get($packages, 'pricing', null);
+                ?>
+                <?php foreach ($packages_pricing as $pricing) : ?>
+                    <?php
+                        $pricing_label= Arr::get($pricing, 'label', null);
+                        $pricing_price= Arr::get($pricing, 'price', null);
+                        $selling_price= Arr::get($pricing, 'selling_price', null);
+                    ?>
+                    <div class="tm_trip_starting_price">
+                        <div class="tm_regular_price">
+                            <span class="tm_label">From</span>
+                            <span class="tm_price"><?php echo  esc_html($pricing_price) ;  ?></span>
+                        </div>
+                        <div class="tm_selling_price">
+                            <span class="tm_price"><?php echo  esc_html($selling_price) ;  ?></span>
+                            <span class="tm_label"><?php echo  esc_html($pricing_label) ;  ?></span>
+                        </div>
 
-                </div>
-                <div class="tm_trip_starting_price">
-                    <div class="tm_regular_price">
-                        <span class="tm_label">From</span>
-                        <span class="tm_price">$1000</span>
                     </div>
-                    <div class="tm_selling_price">
-                        <span class="tm_price">$800</span>
-                        <span class="tm_label"> / Adult</span>
-                    </div>
-                </div>
+                    
+                <?php endforeach; ?>
+            <?php endforeach; ?>
             </div>
 
             <div class="tm_check_availability">
