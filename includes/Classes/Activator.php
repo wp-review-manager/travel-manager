@@ -170,6 +170,7 @@ class Activator
         $table_name = $wpdb->prefix . 'tm_inquiry';
         $sql = "CREATE TABLE $table_name (
             id int(10) NOT NULL AUTO_INCREMENT,
+            trip_id INTEGER ,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
             country VARCHAR(255) NOT NULL,
