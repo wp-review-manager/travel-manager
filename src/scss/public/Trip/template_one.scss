@@ -7,6 +7,9 @@
         width: 67%;
         background-color: $tm_background_color;
         border-radius: 8px;
+        @media (max-width:1090px) {
+            width: 100%;
+        }
         .dashicons {
             color: #fff;
             background: $tm-primary-400;
@@ -72,11 +75,15 @@
     .tm_trip_sidebar {
         width: calc(33% - 20px);
         min-width: 300px;
+        @media (max-width:1090px) {
+            width: 100%;
+        }
         .tm_availability_wrapper {
             background-color: $tm_background_color;
             border-radius: 8px;
             .tm_trip_starting_price_list {
-                display: flex;
+                display: grid;
+                grid-template-columns: auto auto;
                 align-items: flex-start;
                 gap: 20px;
                 justify-content: space-between;

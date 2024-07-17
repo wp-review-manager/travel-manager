@@ -4,3 +4,7 @@
 @import '../admin/variable.scss';
 @import '../admin/global_css.scss';
 @import './Trip/index.scss';
+
+.tm_error {
+    @include text($color: $tm-red-500, $size: 14px, $weight: 400);
+}

@@ -39,7 +39,7 @@
             :showFooter="false"
             ref="edit_package_modal">
             <template #body>
-                <EditPricing :package_info="package_info" />
+                <EditPricing :package_info="package_info" :pricing_categories="pricing_categories" />
             </template>
             <template #footer>
                 <div class="pricing-save-btn">
@@ -72,6 +72,7 @@ export default defineComponent({
     },
     data() {
         return {
+            pricing_categories: [],
             enabled: true,
             dragging: false,
             package_info: {}
@@ -139,7 +140,26 @@ export default defineComponent({
         saveTrip(index) {
             this.$emit('saveTrip', index);
             this.$refs.edit_package_modal.handleClose();
-        }
+        },
+        getPricingCategories() {
+            this.loading = true;
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_pricing_categories",
+                    route: "get_pricing_categories",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.pricing_categories = response?.data?.data?.pricing_categories;
+                }).fail((error) => {
+                    console.log(error);
+                }).always(() => {
+                    that.loading = false;
+                })
+        },
+    },
+    created() {
+        this.getPricingCategories();
     },
 })
 </script>

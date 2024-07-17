@@ -1,23 +1,44 @@
 <?php
 namespace WPTravelManager\Views\Components;
-
+use WPTravelManager\Classes\ArrayHelper as Arr;
 class Slider {
-    public static function RenderSlider() {
+    public static function RenderSlider($trip_gallery) {
         ob_start();
+        $trip_gallery_image = Arr::get($trip_gallery, 'images', null);
+        $trip_gallery_videos = Arr::get($trip_gallery, 'videos', null);
         ?>
         <!-- Slider starts here -->
         <div class="tm_trip_slider">
-            <div class="tm_trip_slider__container">
+      
+
+        <div class="tm_trip_slider__container">
+            <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                    <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787954.jpg?t=st=1720375303~exp=1720378903~hmac=0a38180731d0b51233e87b02a98d7a4b39e8bfae5e6b9ed1865caf577619f42c&w=2000" alt="Slide 1">
+                <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                 </div>
-                <div class="tm_trip_slider__slide">
-                    <img src="https://img.freepik.com/free-photo/beautiful-waterfall-landscape_23-2150526212.jpg?t=st=1720375389~exp=1720378989~hmac=3b1f53430870289dc298c8a5045a1ff91c359ee7f5cc222b5c19266fa541eeca&w=2000" alt="Slide 2">
-                </div>
-                <div class="tm_trip_slider__slide">
-                    <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787950.jpg?t=st=1720375435~exp=1720379035~hmac=8b971fe94f51f0bfe4eebd8f319694389eb5ec85f157cdd40dddde4ecb33dda8&w=2000" alt="Slide 3">
-                </div>
-            </div>
+
+            <?php else : ?>
+            <?php foreach ($trip_gallery_image as $image) : ?>
+                <?php
+                    $image_url = Arr::get($image, 'url', null);
+                    $image_id = Arr::get($image, 'id', null);
+                    $image_name = Arr::get($image, 'name', null);
+                ?>
+                <?php if (!empty($image_url)) : ?>
+                    <div class="tm_trip_slider__slide">
+                        <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>">
+                    </div>
+                    <?php else : ?>
+                    <div class="tm_trip_slider__slide">
+                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                    </div>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
+             <?php endif; ?>
+         </div>
+
+
             <div class="tm_trip_slider__controls">
                 <div class="tm_trip_slider__control tm_trip_slider__control--prev" aria-label="Previous slide">
                     <span class="dashicons dashicons-arrow-left-alt2"></span>
@@ -55,17 +76,35 @@ class Slider {
             </div>
 
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
-                <img src="https://img.freepik.com/free-photo/beautiful-natural-waterfall-landscape_23-2150787950.jpg?t=st=1720375435~exp=1720379035~hmac=8b971fe94f51f0bfe4eebd8f319694389eb5ec85f157cdd40dddde4ecb33dda8&w=2000" class="tm_trip_gallery_item" data-index="0">
-                <img src="https://img.freepik.com/free-photo/house-landscape-pool-relaxation-garden_1203-4900.jpg" class="tm_trip_gallery_item" data-index="1">
-                <img src="image3.jpg" class="tm_trip_gallery_item" data-index="2">
+            <?php if (!$trip_gallery_image) : ?>
+                <div class="tm_trip_slider__slide">
+                    <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                </div>
+            <?php else : ?>
+                <?php foreach ($trip_gallery_image as $image) : ?>
+                    <?php
+                        $image_url = Arr::get($image, 'url', null);
+                        $image_id = Arr::get($image, 'id', null);
+                        $image_name = Arr::get($image, 'name', null);
+                    ?>
+                      <?php if (!empty($image_url)) : ?>
+                            <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>" class="tm_trip_gallery_item">
+                            <?php else : ?>
+                                <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" >
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="tm_video_gallery_wrapper">
             <div id="tm_trip_video_gallery" class="tm_trip_video_gallery" style="display: none;">
-                <video class="tm_trip_video_gallery_item" data-index="0" data-src="https://www.youtube.com/embed/tgbNymZ7vqY"></video>
-                <video class="tm_trip_video_gallery_item" data-index="1" data-src="https://youtu.be/PHftxFVicdQ?si=z0gC_eHWuuTqTHtO"></video>
-                <video class="tm_trip_video_gallery_item" data-index="2" data-src="video3.mp4"></video>
+                <?php foreach ($trip_gallery_videos as $index => $videos) : ?>
+                    <?php
+                        $video_url = Arr::get($videos, 'video_link', null);
+                    ?>
+                    <video class="tm_trip_video_gallery_item" data-index="<?php echo $index; ?>" data-src="<?php echo esc_html($video_url) ; ?>"></video>
+                <?php endforeach; ?>
             </div>
         </div>
         <?php

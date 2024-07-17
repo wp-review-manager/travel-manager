@@ -102,8 +102,8 @@
                 <div style="width: 100%" class="input-wrapper">
                     <p class="form-label" for="name">Trip Destinations *</p>
                     <el-select v-model="meta.general.trip_destination" placeholder="Select Booking Status" size="large" style="width: 100%">
-                        <el-option label="Kashmir" value="kashmir" />
-                        <el-option label="Shilong" value="shilong" />
+                        <el-option v-for="destination in destinations" :key="destination.value" :label="destination.place_name" :value="destination.place_name" />
+                    
                     </el-select>
                 </div>
             </div>
@@ -236,6 +236,7 @@ export default {
     data() {
         return {
             categories: [],
+            destinations: [],
             trip_id: null,
         }
     },
@@ -266,12 +267,31 @@ export default {
                     that.loading = false;
                 })
         },
+
+        getDestinations() {
+            this.loading = true;
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_destinations",
+                    route: "get_destinations",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.destinations = response?.data?.data?.destinations;
+                }).fail((error) => {
+                    console.log(error);
+                }).always(() => {
+                    that.loading = false;
+                })
+        },
+
     },
     mounted() {
         this.trip_id = this.$route.params.id;
     },
     created() {
         this.getCategories();
+        this.getDestinations();
     },
 }
 </script>
