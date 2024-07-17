@@ -7,7 +7,17 @@ const calenderRender = ($) => {
     let currentMonth = date.getMonth();
     let currentYear = date.getFullYear();
     let startDate = `${currentYear}-${currentMonth + 1}-${today}`;
-    let endDate = '2024-7-28';
+    let endDate = '2070-7-28';
+
+    let enable_cut_off = $('#tm_openModal').data("enable_cut_off");
+    let cut_of_start_date = $('#tm_openModal').data("cut_of_start_date");
+    let cut_of_end_date = $('#tm_openModal').data("cut_of_end_date");
+console.log('enable_cut_off', enable_cut_off);
+    if(enable_cut_off == 'yes') {
+        console.log('enable_cut_off', );
+        startDate = new Date(cut_of_start_date).getTime() > new Date(startDate).getTime() ? cut_of_start_date : startDate;
+        endDate = cut_of_end_date ? cut_of_end_date : endDate;
+    }
 
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
@@ -32,7 +42,7 @@ const calenderRender = ($) => {
             let startDateMini = new Date(startDate); startDateMini = startDateMini.getTime();
             let endDateMini = new Date(endDate); endDateMini = endDateMini.getTime();
             if(startDateMini < dateInMini && dateInMini < endDateMini) {
-                $('.tm_calendar_days').append(`<div data-tm_date=${date}>${i}</div>`);
+                $('.tm_calendar_days').append(`<div class="tm_calender_date" data-tm_date=${date}>${i}</div>`);
             } else {
                 $('.tm_calendar_days').append(`<div class="disabled">${i}</div>`);
             }

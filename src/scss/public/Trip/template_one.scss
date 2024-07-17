@@ -102,6 +102,7 @@
                     .tm_selling_price {
                         .tm_label {
                             @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
+                            text-transform: capitalize;
                         }
                         .tm_price {
                             @include h2-medium;
@@ -164,6 +165,10 @@
             }
             .tm_package_details {
                 padding: 20px 0px;
+                display: none;
+                &.active {
+                    display: block;
+                }
                 .tm_package_pricing {
                     display: flex;
                     gap: 20px;
@@ -177,6 +182,9 @@
                     }
                     .tm_old_price, .tm_per_person {
                         @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
+                    }
+                    .tm_quantity {
+                        min-width: 100px;
                     }
                 }
             }

@@ -1,9 +1,10 @@
 <?php
 namespace WPTravelManager\Views\Components;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class CheckAvailability
 {
-    public static function RenderCheckAvailability()
+    public static function RenderCheckAvailability($packages)
     {
         ob_start();
         ?>
@@ -13,7 +14,7 @@ class CheckAvailability
                         <div class="tm_tab_container">
                             <ul class="tm_availability_tab_menu">
                                 <li class="tab active" data-tab="check_availability">Check Availability</li>
-                                <li class="tab" data-tab="package_type">Package Type</li>
+                                <li class="tab disabled" data-tab="package_type">Package Type</li>
                             </ul>
 
                             <div class="tm_tab_content tm_check_availability_content active" id="check_availability">
@@ -37,31 +38,48 @@ class CheckAvailability
                                             <div class="tm_calendar_days"></div>
                                         </div>
                                     </div>
+                                    <!-- <div class="tm_footer_section">
+                                        <button data-tab="package_type" class="tm_check_availability_continue_btn disabled">Continue</button>
+                                    </div> -->
                                 </div>
                             </div>
 
                             <div class="tm_tab_content tm_choose_package tm_package_type_content" id="package_type">
                                 <div class="tm_section">
                                     <div class="tm_packages">
-                                        <div class="tm_package_button active">Package 1</div>
-                                        <div class="tm_package_button">Package 2</div>
+                                        <?php foreach ($packages as $key=>$package) :
+                                            $enable_pack = Arr::get($package, 'enable');
+                                            if($enable_pack == "yes"):
+                                        ?>
+                                            <div id="<?php echo 'tm_package_' . $key ?>" class="tm_package_button <?php echo $key == 0 ? 'active' : '' ?>"><?php echo Arr::get($package, 'title') ?></div>
+                                        <?php endif; endforeach; ?>
                                     </div>
-                                    <div class="tm_package_details">
-                                        <?php for ($i = 0; $i < 4; $i++) : ?>
+                                    <?php foreach ($packages as $key=>$package) :
+                                        $pricing = Arr::get($package, 'pricing', []);
+                                        $enable_available_booking_date = Arr::get($package, 'available_booking_date.enable', false);
+                                        $start_booking_date = Arr::get($package, 'available_booking_date.start_date', '');
+                                        $end_booking_date = Arr::get($package, 'available_booking_date.end_date', '');
+                                        $enable_pack = Arr::get($package, 'enable');
+                                    ?>
+                                    <div id="<?php echo 'tm_package_' . $key ?>" class="tm_package_details <?php echo $key == 0 ? 'active' : '' ?>">
+                                        <?php foreach($pricing as $pricing_data) :
+                                            $max_pax = $pricing_data['max_pax'] < 1 ? 999999 : $pricing_data['max_pax'];
+                                        ?>
                                         <div class="tm_package_pricing">
-                                            <p class="travelers">Adult</p>
-                                            <div>
+                                            <p class="travelers"><?php echo $pricing_data['label'] ?></p>
+                                            <div style="display: flex; align-items: center; gap: 8px">
                                                 <span class="tm_old_price">
-                                                    <del>$150</del>
+                                                    <del><?php echo tmFormatPrice($pricing_data['price']) ?></del>
                                                 </span>
-                                                <span class="tm_price">$100</span>
+                                                <span class="tm_price"><?php echo tmFormatPrice($pricing_data['selling_price']) ?></span>
                                                 <span class="tm_per_person">/</span>
-                                                <span class="tm_per_person">per person</span>
-                                                <input type="number" class="tm_quantity" value="1">
+                                                <span class="tm_per_person">per <?php echo $pricing_data['pricing_type'] ?></span>
+                                                <input type="number" max="<?php echo $max_pax ?>" min="<?php echo $pricing_data['min_pax'] ?>" class="tm_quantity" value="<?php echo $pricing_data['min_pax'] ?>">
                                             </div>
                                         </div>
-                                        <?php endfor; ?>
+                                        <?php endforeach; ?>
                                     </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
 

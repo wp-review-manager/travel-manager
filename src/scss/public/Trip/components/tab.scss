@@ -28,6 +28,15 @@
     color: $tm_primary_400;
 }
 
+.tm_availability_tab_menu {
+    .tab {
+        &.disabled {
+            cursor: not-allowed;
+            color: $tm_dark_200;
+        }
+    }
+} 
+
 .tm_tab_content, .tm_availability_tab_content {
     display: none;
     padding: 20px;
@@ -63,5 +72,10 @@
                 color: #fff;
             }
         }
+    }
+}
+.tm_check_availability_content{
+    .tm_footer_section {
+        text-align: center;
     }
 }

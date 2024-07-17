@@ -141,16 +141,14 @@ $packages = Arr::get($trip, 'packages', null);
     <div class="tm_trip_sidebar">
         <div class="tm_availability_wrapper">
             <div class="tm_trip_starting_price_list">
-            <?php foreach ($packages as $packages) : ?>
-                <?php
-                    $packages_pricing= Arr::get($packages, 'pricing', null);
-                ?>
-                <?php foreach ($packages_pricing as $pricing) : ?>
-                    <?php
-                        $pricing_label= Arr::get($pricing, 'label', null);
-                        $pricing_price= Arr::get($pricing, 'price', null);
-                        $selling_price= Arr::get($pricing, 'selling_price', null);
-                    ?>
+            <?php if (count($packages) > 0) :
+                $packages_pricing= Arr::get($packages, '0.pricing', null);
+
+                foreach ($packages_pricing as $pricing) :
+                    $pricing_label= Arr::get($pricing, 'label', null);
+                    $pricing_price= Arr::get($pricing, 'price', null);
+                    $selling_price= Arr::get($pricing, 'selling_price', null);
+            ?>
                     <div class="tm_trip_starting_price">
                         <div class="tm_regular_price">
                             <span class="tm_label">From</span>
@@ -160,22 +158,33 @@ $packages = Arr::get($trip, 'packages', null);
                             <span class="tm_price"><?php echo  esc_html($selling_price) ;  ?></span>
                             <span class="tm_label"><?php echo  esc_html($pricing_label) ;  ?></span>
                         </div>
-
                     </div>
                     
                 <?php endforeach; ?>
-            <?php endforeach; ?>
+            <?php endif; ?>
             </div>
 
             <div class="tm_check_availability">
-                <button id="tm_openModal" class="tm_button tm_openModal">Check Availablity</button>
+                <?php
+                    $cut_time = Arr::get($trip, 'general.cut_time');
+                    $enable_cut_off = Arr::get($cut_time, 'enable');
+                    $cut_of_start_date = Arr::get($cut_time, 'start_of_date');
+                    $cut_of_end_date = Arr::get($cut_time, 'end_of_date');
+                ?>
+                <button
+                    id="tm_openModal"
+                    class="tm_button tm_openModal"
+                    data-enable_cut_off="<?php echo $enable_cut_off; ?>"
+                    data-cut_of_start_date="<?php echo $cut_of_start_date; ?>"
+                    data-cut_of_end_date="<?php echo $cut_of_end_date; ?>"
+                >Check Availability</button>
             </div>
 
             <div class="tm_booking_message">
                 <p>Need help with booking? <a href="#">Contact Us</a></p>
             </div>
         </div>
-        <?php echo CheckAvailability::RenderCheckAvailability(); ?>
+        <?php echo CheckAvailability::RenderCheckAvailability($packages); ?>
         <div class="tm_trip_inquiry_form_wrapper">
             <h3 class="tm_inquiry_title">You can send your enquiry via the form below</h3>
             <form id="tm_submission-inquiry-form">
