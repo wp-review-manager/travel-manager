@@ -7,6 +7,7 @@ use WPTravelManager\Classes\Controllers\CategoriesController;
 use WPTravelManager\Classes\Controllers\ActivitiesController;
 use WPTravelManager\Classes\Controllers\DifficultyController;
 use WPTravelManager\Classes\Controllers\PricingCategoriesController;
+use WPTravelManager\Classes\Controllers\InquiryController;
 
 class AjaxActions {
     public function register () {
@@ -36,7 +37,7 @@ class AjaxActions {
         // Public Ajax Actions
 
         add_action('wp_ajax_tm_inquiry', function () {
-            dd($_REQUEST);
+            (new InquiryController())->registerAjaxRoutes();
         });
 
     }

@@ -40,11 +40,11 @@ class AdminMenuHandler {
             //     'manage_options',
             //     'admin.php?page=travel-manager.php#/customers',
             // );
-            // $submenu['travel-manager.php']['enquiries'] = array(
-            //     'Enquiries',
-            //     'manage_options',
-            //     'admin.php?page=travel-manager.php#/enquiries',
-            // );
+            $submenu['travel-manager.php']['enquiries'] = array(
+                'Enquiries',
+                'manage_options',
+                'admin.php?page=travel-manager.php#/enquiries',
+            );
             $submenu['travel-manager.php']['settings'] = array(
                 'Settings',
                 'manage_options',

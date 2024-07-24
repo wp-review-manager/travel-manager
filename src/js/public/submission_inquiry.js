@@ -6,6 +6,7 @@ const submissionInquiry = ($) => {
         e.preventDefault();
         let formDataArray = $form.serializeArray();
         let formDataObject = {};
+        
         formDataArray.forEach(item => {
             formDataObject[item.name] = item.value;
         });
@@ -15,7 +16,7 @@ const submissionInquiry = ($) => {
             let errors = validateFormData;
             $form.find('.tm_error').remove();
             for (let key in errors) {
-                console.log(key);
+                console.log(key, 'key');
                 $form.find(`[name="${key}"]`).after(`<div class="tm_error">${errors[key]}</div>`);
             }
             return;
@@ -26,19 +27,20 @@ const submissionInquiry = ($) => {
             route: 'submission_inquiry',
             data: formDataObject,
         }).then((response) => {
-            console.log(response);
+            console.log(response, 'response');
             if (response.status === 'success') {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();
                 $form.append('<div class="tm_success">Your inquiry has been submitted successfully</div>');
                 $form.trigger('reset');
+                formDataObject = {};
             } else {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();
                 $form.append('<div class="tm_error">Something went wrong. Please try again later</div>');
             }
         }).catch((error) => {
-            console.log(error);
+            console.log(error, 'error');
             $form.find('.tm_error').remove();
             $form.find('.tm_success').remove();
             $form.append('<div class="tm_error">Something went wrong. Please try again later</div>');

@@ -26,6 +26,9 @@ import SettingsIndex from '@/pages/page_settings/SettingsIndex.vue';
 import GeneralSettings from '@/pages/page_settings/general/GeneralSettings.vue';
 import PaymentSettings from '@/pages/page_settings/payment/PaymentSettings.vue';
 
+// Enquiries section components
+import AllEnquiries from './pages/page_enquiries/AllEnquiries.vue';
+
 export default [
     {
         path: '/',
@@ -137,7 +140,7 @@ export default [
     {
         path: '/enquiries',
         name: 'enquiries',
-        component: Dashboard
+        component: AllEnquiries
     },
     {
         path: '/settings',

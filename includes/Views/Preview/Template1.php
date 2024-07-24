@@ -22,6 +22,7 @@ $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
 $trip_gallery = Arr::get($trip, 'trip_gallery', null);
 
 $packages = Arr::get($trip, 'packages', null);
+
 ?>
 
 <div class="tm_trip_one_shortcode_preview_wrapper">
@@ -180,6 +181,9 @@ $packages = Arr::get($trip, 'packages', null);
             <h3 class="tm_inquiry_title">You can send your enquiry via the form below</h3>
             <form id="tm_submission-inquiry-form">
                 <div class="tm_inquiry_form">
+                <div class="tm_form_group">
+                        <input type="hidden" name="trip_id" id="tm_id" value="<?php echo  esc_html($id) ;  ?>" required>
+                    </div>
                     <div class="tm_form_group">
                         <p for="name">Name</p>
                         <input type="text" name="name" id="tm_name" required>
@@ -208,12 +212,12 @@ $packages = Arr::get($trip, 'packages', null);
 
                     <div class="tm_form_group">
                         <p for="subject">Number of Adults</p>
-                        <input type="number" name="tm_number_of_adults" id="number_of_adults" required>
+                        <input type="number" name="number_of_adults" id="number_of_adults" required>
                     </div>
 
                     <div class="tm_form_group">
                         <p for="subject">Number of Children</p>
-                        <input type="number" name="tm_number_of_children" id="number_of_children" required>
+                        <input type="number" name="number_of_children" id="number_of_children" required>
                     </div>
 
                     <div class="tm_form_group">

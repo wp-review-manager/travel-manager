@@ -14,8 +14,9 @@ class Slider {
         <div class="tm_trip_slider__container">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
-                </div>
+                <!-- <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item"> -->
+                <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+            </div>
 
             <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
@@ -30,7 +31,8 @@ class Slider {
                     </div>
                     <?php else : ?>
                     <div class="tm_trip_slider__slide">
-                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                             <!-- <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item"> -->
+                             <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                     </div>
                 <?php endif; ?>
 
@@ -78,7 +80,8 @@ class Slider {
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                    <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                    <!-- <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item"> -->
+                    <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
                 </div>
             <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
@@ -90,7 +93,7 @@ class Slider {
                       <?php if (!empty($image_url)) : ?>
                             <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>" class="tm_trip_gallery_item">
                             <?php else : ?>
-                                <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" >
+                                <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image">
                     <?php endif; ?>
                 <?php endforeach; ?>
                 <?php endif; ?>
