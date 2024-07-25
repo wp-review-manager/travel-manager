@@ -22,7 +22,7 @@
     justify-content: space-between;
     align-items: flex-start;
     .tm_trip_process_tabs {
-        width: 70%;
+        width: 65%;
         .tm_tab_container {
             box-shadow: none;
             margin: 0px;
@@ -31,9 +31,51 @@
         }
     }
     .tm_trip_process_sidebar {
-        width: 30%;
+        width: 35%;
         .tm_trip_booking_summary {
-            padding: 20px;
+            .tm_trip_booking_summary_title {
+                @include text($size: 14px, $weight: 500, $color: $tm-dark-300);
+                padding: 20px;
+                padding-top: 2px;
+                border-bottom: $tm_border;
+            }
+            .tm_trip_booking_summary_body {
+                padding: 20px;
+                .tm-booking-trip-title {
+                    @include text($size: 16px, $weight: 500,  $lineHeight: 32px);
+                }
+                .tm-booking-starting-date {
+                    @include text($size: 14px, $lineHeight: 28px);
+                }
+                .tm-booking-details-title {
+                    @include text($size: 14px, $lineHeight: 28px, $weight: 500,);
+                    border-bottom: 1px solid $tm-dark-300;
+                }
+                .tm_trip_booking_details{
+                    padding: 20px 0px;
+                    ul {
+                        margin: 0;
+                        padding: 0;
+                        li {
+                            list-style: none;
+                            @include text($size: 14px, $lineHeight: 28px);
+                            display: flex;
+                            align-items: center;
+                            gap: 20px;
+                            justify-content: space-between;
+                            label {
+                                @include text($size: 14px, $lineHeight: 28px);
+                            }
+                        }
+                    }
+                }
+                .tm_trip_booking_total {
+                    padding: 2px 0px;
+                    border-top: $tm_border;
+                    display: flex;
+                    justify-content: end;
+                }
+            }
         }
     }
 }

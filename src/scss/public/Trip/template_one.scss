@@ -183,8 +183,33 @@
                     .tm_old_price, .tm_per_person {
                         @include text($size: 14px, $weight: 400, $color: $tm-dark-400, $lineHeight: 24px);
                     }
+                    .tm_dec_btn, .tm_inc_btn {
+                        font-size: 24px;
+                        font-weight: 500;
+                        border: $tm_border;
+                        border-radius: 8px;
+                        height: 40px;
+                        width: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        &:hover {
+                            background: $tm-dark-50;
+                        }
+                        &.disabled {
+                            cursor: not-allowed;
+                            opacity: 0.4;
+                        }
+                    }
                     .tm_quantity {
-                        min-width: 100px;
+                        border-radius: 8px;
+                        border: $tm_border;
+                        height: 40px;
+                        width: 80px;
+                        padding: 10px;
+                        text-align: center;
+                        font-size: 16px;
                     }
                 }
             }

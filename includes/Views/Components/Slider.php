@@ -6,6 +6,7 @@ class Slider {
         ob_start();
         $trip_gallery_image = Arr::get($trip_gallery, 'images', null);
         $trip_gallery_videos = Arr::get($trip_gallery, 'videos', null);
+        $empty_image = TRM_DIR . '/assets/images/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
         ?>
         <!-- Slider starts here -->
         <div class="tm_trip_slider">
@@ -30,7 +31,7 @@ class Slider {
                     </div>
                     <?php else : ?>
                     <div class="tm_trip_slider__slide">
-                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                             <img src="<?php echo $empty_image ?>" alt="image" class="tm_trip_gallery_item">
                     </div>
                 <?php endif; ?>
 

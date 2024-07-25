@@ -12,7 +12,7 @@ const calenderRender = ($) => {
     let enable_cut_off = $('#tm_openModal').data("enable_cut_off");
     let cut_of_start_date = $('#tm_openModal').data("cut_of_start_date");
     let cut_of_end_date = $('#tm_openModal').data("cut_of_end_date");
-console.log('enable_cut_off', enable_cut_off);
+
     if(enable_cut_off == 'yes') {
         console.log('enable_cut_off', );
         startDate = new Date(cut_of_start_date).getTime() > new Date(startDate).getTime() ? cut_of_start_date : startDate;
@@ -76,6 +76,13 @@ console.log('enable_cut_off', enable_cut_off);
     });
 
     renderCalendar(month, year);
+
+    $('.tm_check_availability_continue_btn').click(function () {
+        $('.tm_check_availability_content').removeClass('active');
+        $('.tm_choose_package').addClass('active');
+        $('[data-tab="check_availability"]').removeClass('active');
+        $('[data-tab="package_type"]').addClass('active')
+    })
 
 }
 

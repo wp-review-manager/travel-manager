@@ -15,14 +15,14 @@
     }
 }
 
-.tm_tab_menu .tab, .tm_availability_tab_menu .tab {
+.tm_tab_menu .tab, .tm_availability_tab_menu .tab_item {
     padding: 10px 30px;
     cursor: pointer;
     border-bottom: none;
     @include text($color: $tm_dark_400, $size: 16px, $weight: 600);
 }
 
-.tm_tab_menu .tab.active, .tm_availability_tab_menu .tab.active {
+.tm_tab_menu .tab.active, .tm_availability_tab_menu .tab_item.active {
     background-color: #fff;
     border-bottom: 2px solid $tm_primary_500;
     color: $tm_primary_400;
@@ -77,5 +77,11 @@
 .tm_check_availability_content{
     .tm_footer_section {
         text-align: center;
+        .tm_check_availability_continue_btn {
+            cursor: pointer;
+            &.disabled {
+                opacity: 0.3;
+            }
+        }
     }
 }
