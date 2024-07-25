@@ -6,66 +6,51 @@ const tripBooking = ($) => {
         if (booking_data.booking_date_selected) {
             $('[data-tab="package_type"]').removeClass('disabled');
         }
-  
-        $('.tm_dec_btn, .tm_inc_btn').click(function() {
-            $(this).parent().find('.tm_dec_btn').removeClass('disabled');
-            $(this).parent().find('.tm_inc_btn').removeClass('disabled');
+    });
 
-            let max =                   parseInt($(this).parent().find('.tm_inc_btn').data('tm_max'));
-            let min =                   parseInt($(this).parent().find('.tm_dec_btn').data('tm_min'));
-            let tm_travelers_number =   parseInt($(this).parent().find('.tm_quantity').val());
-            let package_price_total =   parseInt($(this).parent().find('.tm_quantity').data('tm_package_price'));
-            let package_id =            $(this).parent().find('.tm_quantity').data('tm_travelers_number');
-            let package_type =          $(this).parent().find('.tm_quantity').data('tm_package_type');
-            let package_name =          $(this).parent().find('.tm_quantity').data('tm_package_name');
-            let pricing_label =         $(this).parent().find('.tm_quantity').data('tm_pricing_label');
+    $('.tm_dec_btn, .tm_inc_btn').click(function() {
+        let $parent = $(this).parent();
+        let $quantity = $parent.find('.tm_quantity');
+        let max = parseInt($parent.find('.tm_inc_btn').data('tm_max'));
+        let min = parseInt($parent.find('.tm_dec_btn').data('tm_min'));
+        let tm_travelers_number = parseInt($quantity.val());
+        let package_price_total = parseInt($quantity.data('tm_package_price'));
+        let package_id = $quantity.data('tm_travelers_number');
+        let package_type = $quantity.data('tm_package_type');
+        let package_name = $quantity.data('tm_package_name');
+        let pricing_label = $quantity.data('tm_pricing_label');
 
-            let checkIncOrDec = $(this).hasClass('tm_inc_btn') ? 'inc' : 'dec';
-            if (checkIncOrDec == 'inc') {
-                if (tm_travelers_number < max) {
-                    if (tm_travelers_number < min) {
-                        $(this).parent().find('.tm_quantity').val(min);
-                        tm_travelers_number = min;
-                    } else {
-                        $(this).parent().find('.tm_quantity').val(tm_travelers_number + 1);
-                        tm_travelers_number = tm_travelers_number + 1;
-                    }
-                } else {
-                    $(this).parent().find('.tm_inc_btn').addClass('disabled');
-                }
-            } else {
-                if (tm_travelers_number - 1 < min || tm_travelers_number < 1) {
-                    $(this).parent().find('.tm_quantity').val(0)
-                    $(this).parent().find('.tm_dec_btn').addClass('disabled');
-                    tm_travelers_number = 0;
-                } else  {
-                    $(this).parent().find('.tm_quantity').val(tm_travelers_number - 1);
-                    tm_travelers_number = tm_travelers_number - 1;
-                }
+        let isIncrement = $(this).hasClass('tm_inc_btn');
+
+        if (isIncrement) {
+            if (tm_travelers_number < max) {
+                tm_travelers_number = Math.max(tm_travelers_number + 1, min);
             }
+        } else {
+            tm_travelers_number = Math.max(tm_travelers_number - 1, 0);
+        }
 
-            if (package_type == 'person') {
-                package_price_total = package_price_total * tm_travelers_number;
-            }
+        $quantity.val(tm_travelers_number);
+        $parent.find('.tm_dec_btn').toggleClass('disabled', tm_travelers_number <= min);
+        $parent.find('.tm_inc_btn').toggleClass('disabled', tm_travelers_number >= max);
 
-            booking_data.packages = booking_data.packages ? booking_data.packages : [];
-            // let package_index = booking_data.packages.findIndex((package_data) => package_data.tm_package_name == package_name);
-            // if (package_index > -1) {
-                if (booking_data.packages[package_id] === undefined) {
-                    // Initialize the package at package_id if it doesn't exist
-                    booking_data.packages[package_id] = {};
-                }
-                booking_data.packages[package_id].tm_travelers_number = tm_travelers_number;
-                booking_data.packages[package_id].tm_package_price_total = package_price_total;
-                booking_data.packages[package_id].package_name = package_name;
-                booking_data.packages[package_id].pricing_label = pricing_label;
-            // }
+        if (package_type === 'person') {
+            package_price_total *= tm_travelers_number;
+        }
 
-            console.log({booking_data})
-            // domRenderBookingSummary(packages, $, booking_date_selected)
-        })
+        booking_data.packages = booking_data.packages || [];
+        booking_data.packages[package_id] = booking_data.packages[package_id] || {};
+        booking_data.packages[package_id] = {
+            tm_travelers_number,
+            tm_package_price_total: package_price_total,
+            package_name,
+            pricing_label
+        };
+
+        console.log({ booking_data });
     });
 }
+
 
 // const calculateBookingSummary = (scope, $, packages = []) => {
 //     let package_id = $(scope).data('tm_pricing_id');
