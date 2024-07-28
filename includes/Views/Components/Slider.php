@@ -6,18 +6,19 @@ class Slider {
         ob_start();
         $trip_gallery_image = Arr::get($trip_gallery, 'images', null);
         $trip_gallery_videos = Arr::get($trip_gallery, 'videos', null);
-        $empty_image = TRM_DIR . '/assets/images/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+        $empty_image = TRM_URL . '/assets/images/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+        $hasVideo = count($trip_gallery_videos) > 1;
         ?>
         <!-- Slider starts here -->
         <div class="tm_trip_slider">
       
 
         <div class="tm_trip_slider__container">
-            <?php if (!$trip_gallery_image) : ?>
+            <!-- there is some issue related with frontend , there always has a empty image path if actually has any image there length will be 2 -->
+            <?php if (count($trip_gallery_image) < 2) : ?>
                 <div class="tm_trip_slider__slide">
-                <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                    <img src="<?php echo $empty_image ?>" alt="image" class="tm_trip_gallery_item">
                 </div>
-
             <?php else : ?>
             <?php foreach ($trip_gallery_image as $image) : ?>
                 <?php
@@ -28,10 +29,6 @@ class Slider {
                 <?php if (!empty($image_url)) : ?>
                     <div class="tm_trip_slider__slide">
                         <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>">
-                    </div>
-                    <?php else : ?>
-                    <div class="tm_trip_slider__slide">
-                             <img src="<?php echo $empty_image ?>" alt="image" class="tm_trip_gallery_item">
                     </div>
                 <?php endif; ?>
 
@@ -54,10 +51,12 @@ class Slider {
                     <span class="dashicons dashicons-format-gallery"></span>
                     Gallery
                 </button>
+                <?php if($hasVideo) : ?>
                 <button id="tm_video_gallery_btn">
                     <span class="dashicons dashicons-video-alt3"></span>
                     Video
                 </button>
+                <?php endif ?>
             </div>
 
         </div>
@@ -97,7 +96,7 @@ class Slider {
                 <?php endif; ?>
             </div>
         </div>
-
+        <?php if($hasVideo) : ?>
         <div class="tm_video_gallery_wrapper">
             <div id="tm_trip_video_gallery" class="tm_trip_video_gallery" style="display: none;">
                 <?php foreach ($trip_gallery_videos as $index => $videos) : ?>
@@ -109,6 +108,7 @@ class Slider {
             </div>
         </div>
         <?php
+        endif;
         $slider = ob_get_clean();
 
         return $slider;
