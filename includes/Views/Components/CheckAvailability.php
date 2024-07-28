@@ -4,7 +4,7 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class CheckAvailability
 {
-    public static function RenderCheckAvailability($packages)
+    public static function RenderCheckAvailability($packages, $title = "")
     {
         ob_start();
         ?>
@@ -92,6 +92,7 @@ class CheckAvailability
                                                     data-tm_package_type="<?php echo $pricing_data['pricing_type'] ?>"
                                                     data-tm_package_name="<?php echo $package['title'] ?>"
                                                     data-tm_pricing_label="<?php echo $pricing_data['label'] ?>"
+                                                    data-tm_trip_title="<?php echo $title ?>"
                                                 >
                                                 <span data-tm_max="<?php echo $max_pax ?>" class="tm_inc_btn"> + </span>
                                             </div>

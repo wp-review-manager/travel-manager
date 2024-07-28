@@ -28,8 +28,8 @@ $packages = Arr::get($trip, 'packages', []);
     <main class="tm_trip_main">
         <article>
             <div class="entry-header">
-                <h1 class="entry-title"><?php echo esc_html($title); ?></h1>
-                <span class="wte-title-duration">
+                <h1 class="tm_trip_title"><?php echo esc_html($title); ?></h1>
+                <span class="tm-title-duration">
                     <p class="duration"> <?php echo esc_html( $duration ) ?> </p>
                     <p class="days"> <?php echo esc_html( $durationType ) ?> </p>
                 </span>
@@ -185,7 +185,7 @@ $packages = Arr::get($trip, 'packages', []);
                 <p>Need help with booking? <a href="#">Contact Us</a></p>
             </div>
         </div>
-        <?php echo CheckAvailability::RenderCheckAvailability($packages); ?>
+        <?php echo CheckAvailability::RenderCheckAvailability($packages, $title); ?>
         <div class="tm_trip_inquiry_form_wrapper">
             <h3 class="tm_inquiry_title">You can send your enquiry via the form below</h3>
             <form id="tm_submission-inquiry-form">

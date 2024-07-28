@@ -10,6 +10,7 @@ const tripBooking = ($) => {
 
     $('.tm_dec_btn, .tm_inc_btn').click(function() {
         let $parent = $(this).parent();
+        let $this = $(this);
         let $quantity = $parent.find('.tm_quantity');
         let max = parseInt($parent.find('.tm_inc_btn').data('tm_max'));
         let min = parseInt($parent.find('.tm_dec_btn').data('tm_min'));
@@ -28,87 +29,128 @@ const tripBooking = ($) => {
             }
         } else {
             tm_travelers_number = Math.max(tm_travelers_number - 1, 0);
+            tm_travelers_number = tm_travelers_number < min ? 0 : tm_travelers_number;
         }
-
+        console.log(tm_travelers_number);
         $quantity.val(tm_travelers_number);
-        $parent.find('.tm_dec_btn').toggleClass('disabled', tm_travelers_number <= min);
+        $parent.find('.tm_dec_btn').toggleClass('disabled', tm_travelers_number < min);
         $parent.find('.tm_inc_btn').toggleClass('disabled', tm_travelers_number >= max);
 
         if (package_type === 'person') {
             package_price_total *= tm_travelers_number;
         }
-
+        booking_data.trip_title = $quantity.data('tm_trip_title');
         booking_data.packages = booking_data.packages || [];
         booking_data.packages[package_id] = booking_data.packages[package_id] || {};
         booking_data.packages[package_id] = {
             tm_travelers_number,
             tm_package_price_total: package_price_total,
             package_name,
-            pricing_label
+            pricing_label,
+            package_type
         };
 
-        console.log({ booking_data });
+        renderBookingData(booking_data, $this, $);
+    });
+
+    $(document).on('click', '#tm_trip_booking_btn', function() {
+        makeApiCallForBooking(booking_data);
+    });
+
+    $('.tm_close').click(function() {
+        booking_data = {};
+        resetHtmlDom($);
     });
 }
 
+const renderBookingData = (booking_data = {}, $this, $) => {
+    console.log(booking_data);
+    const { booking_date_selected = "", packages = [], trip_title = "" } = booking_data;
+    let total_price = 0;
+    let total_travelers = 0;
+    let booking_data_html = '';
 
-// const calculateBookingSummary = (scope, $, packages = []) => {
-//     let package_id = $(scope).data('tm_pricing_id');
-//     package_id = package_id ? package_id : $(scope).data('tm_travelers_number');
+    booking_data_html +=
+    `<div class="tm_trip_booking_summary_header">
+        <h3 class="tm_booking_trip_title"> ${trip_title} </h3>
+        <p class="tm_booking_trip_date"> Selected Date ${booking_date_selected} </p>
+    </div>
+    `
+    booking_data_html += `
+    <div class="tm_selected_package_lists">`
+    for (let package_id in packages) {
+        let package_data = packages[package_id];
+        if (!package_data || package_data.tm_travelers_number == 0) {
+            continue;
+        }
+        total_price += package_data.tm_package_price_total;
+        total_travelers += package_data.tm_travelers_number;
+        booking_data_html += `
+        <ul>
+            <li>
+                <span class="bold">${package_data.tm_travelers_number} ${package_data.pricing_label} (${package_data.package_name})</span>
+                <span> Per / ${package_data.package_type} </span>
+                <span class="bold">${package_data.tm_package_price_total}</span>
+            </li>
+        </ul>`
+    }
+    booking_data_html += `</div>`;
+    if(total_price) {
+        booking_data_html +=
+        `<div class="tm_selected_package_list_total">
+            <ul>
+                <li>
+                    <span class="bold">${total_travelers}</span>
+                    <span class="bold">Travelers</span>
+                </li>
+                <li>
+                    <span class="bold">Total</span>
+                    <span class="bold">${total_price}</span>
+                </li>
+        </div>`;
 
-//     const package_checked = $('input[data-tm_pricing_id="' + package_id + '"]:checked')?.length;
+        booking_data_html += `<button id="tm_trip_booking_btn" class="tm_btn tm_btn_primary tm_btn_block">Book Now</button>`;
+    }
 
-//     if (package_checked) {
-//         let tm_travelers_number = $(`input[data-tm_travelers_number=${package_id}]`).val();
-//         let tm_package_price = $(scope).data('tm_package_price');
-//         let tm_package_type = $(scope).data('tm_package_type');
-//         let tm_package_name = $(scope).data('tm_package_name');
-//         let tm_pricing_label = $(scope).data('tm_pricing_label');
-//         let tm_package_price_total = $(scope).data('tm_package_price');
-//         if (tm_package_type == 'person') {
-//             tm_package_price_total = tm_package_price * tm_travelers_number;
-//         }
+    if(total_price == 0) {
+        booking_data_html += `<p class="tm_no_package_selected">No package selected</p>`;
+    }
 
-//         packages.push(
-//             {
-//                 tm_travelers_number,
-//                 tm_package_price,
-//                 tm_package_type,
-//                 tm_package_name,
-//                 tm_pricing_label,
-//                 tm_package_price_total
-//             }
-//         )
-//     }
+    $($this).closest('.tm_modal-content').find('.tm_trip_booking_summary_body').html(booking_data_html);
+    console.log($($this).closest('.tm_modal-content').find('.tm_trip_process_sidebar').attr('class'));
+        
+}
 
-//     return packages;
-// }
+const resetHtmlDom = ($) => {
+         $('.tm_trip_booking_summary_body').html('');
+        $('.tm_trip_booking_summary_header').html('');
+        $('.tm_trip_process_sidebar').find('.tm_trip_process_sidebar_item').removeClass('active');
+        $('[data-tab="date"]').addClass('active');
+        $('[data-tab="package_type"]').addClass('disabled');
+        $('.tm_availability_tab_menu').find('.tab_item').removeClass('active');
+        $('.tm_availability_tab_menu').find('.tab_item').first().addClass('active');
+        $('.tm_tab_content').removeClass('active');
+        $('.tm_check_availability_content').addClass('active');
+}
 
-// const domRenderBookingSummary = (packages = [], $, booking_date_selected) => {
-//     let trip_title = $('.entry-title').text();
-//     $('.tm_trip_booking_summary_body').empty();
-//     $('.tm_trip_booking_summary_body').append(
-//         `<h2 class="tm-booking-trip-title">${trip_title}</h2>
-//         <p class="tm-booking-starting-date"><strong>Starting Date:</strong>${booking_date_selected}</p>
-//         <p class="tm-booking-details-title">Travellers</p>
-//         `
-//     )
-//     let $html = ""
-//     let total_amount = 0;
-//     packages?.map((package_data) => {
-//         console.log(package_data)
-//         total_amount += package_data.tm_package_price_total;
-//         $html = $html + `<li>
-//         <label><strong>${package_data.tm_travelers_number} ${package_data.tm_pricing_label}</strong> <span class="qty">(<span class="wpte-currency-code currency">$</span><strong class="wpte-price amount">${package_data.tm_package_price}</strong>/group) - <strong>Package ${package_data.tm_package_name}</strong></strong></strong></span></label>
-//         <div class="amount-figure"><strong><span class="wpte-currency-code currency">$</span><strong class="wpte-price amount">${package_data.tm_package_price_total}</strong></strong></div>
-//     </li>`
-//     })
+const makeApiCallForBooking = (booking_data) => {
+    console.log(booking_data);
+    let data = {
+        action: 'trip_booking',
+        booking_data
+    };
 
-//     $('.tm_trip_booking_summary_body').append(
-//         `<div class="tm_trip_booking_details"><ul>${$html}</ul></div>`
-//     )
-//     $('.tm_trip_booking_summary_body').append(
-//         `<p class="tm_trip_booking_total">Total: ${total_amount}</li>`
-//     )
-// } 
+    // $.ajax({
+    //     url: tm_trip_booking.ajax_url,
+    //     type: 'POST',
+    //     data,
+    //     success: function(response) {
+    //         console.log(response);
+    //     },
+    //     error: function(error) {
+    //         console.log(error);
+    //     }
+    // });
+}
+
 export { tripBooking };

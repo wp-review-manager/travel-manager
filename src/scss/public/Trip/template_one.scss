@@ -24,10 +24,10 @@
             padding: 20px;
             @include flex($justify: space-between);
             gap: 20px;
-            .entry-title {
+            .tm_trip_title {
                 @include h2-medium;
             }
-            .wte-title-duration {
+            .tm-title-duration {
                background-color: $tm_background_color;
                border-radius: 8px;
                box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 2px rgba(0, 0, 0, .06), 0px 0px 1px rgba(0, 0, 0, .04);

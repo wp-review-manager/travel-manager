@@ -41,18 +41,19 @@
             }
             .tm_trip_booking_summary_body {
                 padding: 20px;
-                .tm-booking-trip-title {
+                .tm_booking_trip_title {
                     @include text($size: 16px, $weight: 500,  $lineHeight: 32px);
                 }
-                .tm-booking-starting-date {
+                .tm_booking_trip_date {
                     @include text($size: 14px, $lineHeight: 28px);
                 }
                 .tm-booking-details-title {
                     @include text($size: 14px, $lineHeight: 28px, $weight: 500,);
                     border-bottom: 1px solid $tm-dark-300;
                 }
-                .tm_trip_booking_details{
+                .tm_selected_package_lists{
                     padding: 20px 0px;
+                    border-bottom: $tm_border;
                     ul {
                         margin: 0;
                         padding: 0;
@@ -66,14 +67,46 @@
                             label {
                                 @include text($size: 14px, $lineHeight: 28px);
                             }
+                            .bold {
+                                @include text($size: 16px, $lineHeight: 28px, $weight: 600);
+                            }
                         }
                     }
                 }
-                .tm_trip_booking_total {
+                .tm_selected_package_list_total {
                     padding: 2px 0px;
                     border-top: $tm_border;
                     display: flex;
                     justify-content: end;
+                    ul {
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        li {
+                            list-style: none;
+                            @include text($size: 14px, $lineHeight: 28px);
+                            display: flex;
+                            align-items: center;
+                            gap: 20px;
+                            justify-content: space-between;
+                            label {
+                                @include text($size: 14px, $lineHeight: 28px);
+                            }
+                            .bold {
+                                @include text($size: 14px, $lineHeight: 28px, $weight: 500);
+                            }
+                        }
+                    }
+                }
+                .tm_btn_primary {
+                    @include tm_btn_primary;
+                    min-width: 200px;
+                    display: flex;
+                    justify-content: center;
+                    margin: 0 auto;
+                    margin-top: 20px;
                 }
             }
         }
