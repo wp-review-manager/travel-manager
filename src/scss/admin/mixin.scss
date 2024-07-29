@@ -16,6 +16,19 @@
     flex-wrap: $wrap;
 }
 
+@mixin tm_btn_primary {
+    @include text($color: #fff, $size: 14px, $weight: 500, $lineHeight: 24px);
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: $tm-primary-500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: $tm-primary-600;
+    }
+}
+
 @mixin h1-medium {
     @include text($color: #2F3448, $size: 36px, $weight: 500, $lineHeight: 46px);
 }

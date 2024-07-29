@@ -72,7 +72,7 @@ class Tab
                         <div class="tm_trip_included_content">
                             <ul>
                                 <?php foreach ($inc_option as $inc_option) : ?>
-                                    <li> <span class="dashicons dashicons-saved"></span><?php echo esc_html( $inc_option ) ?></li>
+                                    <li> <span class="dashicons dashicons-saved"></span><?php echo esc_html( Arr::get($inc_option, 'label', '') ) ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
@@ -81,7 +81,7 @@ class Tab
                         <div class="tm_trip_exclude_content">
                             <ul>
                                 <?php foreach ($exc_option as $exc_option) : ?>
-                                    <li> <span class="dashicons dashicons-no-alt"></span><?php echo esc_html( $exc_option ) ?></li>
+                                    <li> <span class="dashicons dashicons-no-alt"></span><?php echo esc_html( Arr::get($exc_option, 'label', '') ) ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>

@@ -8,13 +8,13 @@
  * Author URI: http://wpulse.com/
  * Version: 1.0.5
  */
-define('TM_URL', plugin_dir_url(__FILE__));
-define('TM_DIR', plugin_dir_path(__FILE__));
+define('TRM_URL', plugin_dir_url(__FILE__));
+define('TRM_DIR', plugin_dir_path(__FILE__));
 
-define('TM_VERSION', '1.0.5');
+define('TRM_VERSION', '1.0.5');
 
 add_action('plugins_loaded', function () {
-    include TM_DIR . 'includes/Classes/Bootstrap.php';
+    include TRM_DIR . 'includes/Classes/Bootstrap.php';
     $bootstrap = new \WPTravelManager\Classes\Bootstrap();
     $bootstrap->Boot();
 });

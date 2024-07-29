@@ -5,7 +5,7 @@ class View
     public static function make($path, $data = [])
     {
         $path = str_replace('.', DIRECTORY_SEPARATOR, $path);
-        $file = TM_DIR.'includes/Views/'.$path.'.php';
+        $file = TRM_DIR.'includes/Views/'.$path.'.php';
         if (!file_exists($file)) {
             return 'View not found: '.$file;
         }

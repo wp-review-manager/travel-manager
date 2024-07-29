@@ -4,7 +4,7 @@
             <div class="tm-trip-edit-pricing-header">
                 <h2>Edit Pricing</h2>
             </div>
-            <div class="enable_booking_date">
+            <!-- <div class="enable_booking_date">
                 <p>Enable Booking Date</p>
                 <el-switch
                     v-model="package_info.available_booking_date.enable"
@@ -12,9 +12,9 @@
                     active-value="yes"
                     inactive-value="no"
                 ></el-switch>
-            </div>
+            </div> -->
 
-            <div v-if="package_info.available_booking_date.enable == 'yes'" class="booking_date">
+            <!-- <div v-if="package_info.available_booking_date.enable == 'yes'" class="booking_date">
                 <div class="input-wrapper">
                     <p class="form-label">Start Date *</p>
                     <el-date-picker
@@ -35,7 +35,7 @@
                         style="width: 100%"
                     ></el-date-picker>
                 </div>
-            </div>
+            </div> -->
 
             <div class="input-wrapper" style="width: 50%; margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px; align-items: center;">

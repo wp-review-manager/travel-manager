@@ -36,3 +36,7 @@ function tmValidateNonce($key = 'tm_admin_nonce')
         wp_send_json($errors['error'], 422);
     }
 }
+
+function tmFormatPrice($price) {
+    return '$ ' . $price;
+}
