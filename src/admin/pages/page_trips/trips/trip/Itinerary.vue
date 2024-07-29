@@ -5,14 +5,14 @@
         <app-card :title="'Itinerary'" :sub_title="' Enable  Tour Itinerary'">
                 <template v-slot:actions>
                     <el-switch
-                        v-model="meta.general.cut_time.enable"
+                        v-model="meta.itinerary.enable"
                         size="large"
                         active-value="yes"
                         inactive-value="no"
                     />
                 </template>
 
-                <template v-slot:body v-if="meta.general.cut_time.enable == 'yes'">
+                <template v-slot:body v-if="meta.itinerary.enable == 'yes'">
                     <div class="tm_form_wrapper">
             <div class="input-wrapper">
                 <p class="form-label">Section Title</p>
