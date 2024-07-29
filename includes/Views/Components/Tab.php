@@ -27,11 +27,13 @@ class Tab
         $map_title = Arr::get($trip, 'map.title', []);
         $map_iframe_code = Arr::get($trip, 'map.iframe_code', null);
 
+        $enableItenary = Arr::get($itinerary, 'enable', "no");
+
         ?>
         <div class="tm_tab_container">
             <ul class="tm_tab_menu">
                 <li class="tab active" data-tab="overview">OverView</li>
-                <li class="tab" data-tab="itinerary">Itinerary</li>
+                <?php if ($enableItenary == 'yes') : ?><li class="tab" data-tab="itinerary">Itinerary</li><?php endif ?>
                 <li class="tab" data-tab="cost">Cost</li>
                 <li class="tab" data-tab="faqs">FAQs</li>
                 <li class="tab" data-tab="map">Map</li>
