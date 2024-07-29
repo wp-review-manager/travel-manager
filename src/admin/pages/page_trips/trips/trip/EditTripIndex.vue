@@ -111,6 +111,7 @@ export default {
                 ],
                 itinerary: {
                     title: "Trip itinerary title",
+                    enable: "yes",
                     options: [
                         {
                             title: "Day 1",
