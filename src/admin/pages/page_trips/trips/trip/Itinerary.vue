@@ -1,7 +1,19 @@
 <template>
     <div class="tm-trip-itinerary">
-        <h2 class="section-title">Itinerary</h2>
-        <div class="tm_form_wrapper">
+        <!-- <h2 class="section-title">Itinerary</h2> -->
+
+        <app-card :title="'Itinerary'" :sub_title="' Enable  Tour Itinerary'">
+                <template v-slot:actions>
+                    <el-switch
+                        v-model="meta.general.cut_time.enable"
+                        size="large"
+                        active-value="yes"
+                        inactive-value="no"
+                    />
+                </template>
+
+                <template v-slot:body v-if="meta.general.cut_time.enable == 'yes'">
+                    <div class="tm_form_wrapper">
             <div class="input-wrapper">
                 <p class="form-label">Section Title</p>
                 <el-input v-model="meta.itinerary.title" style="width: 100%" placeholder="Enter Section Title" size="large" />
@@ -13,6 +25,11 @@
                 <Options :options="meta.itinerary.options"  />
             </template>
         </AppCard>
+                </template>
+                
+            </app-card>
+        <!-- =========================== -->
+
 
     </div>
 </template>
