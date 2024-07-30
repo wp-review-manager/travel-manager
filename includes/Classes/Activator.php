@@ -171,7 +171,7 @@ class Activator
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'trm_order_items';
+        $table_name = $wpdb->prefix . 'tm_order_items';
         $sql = "CREATE TABLE $table_name (
             id int(10) NOT NULL AUTO_INCREMENT,
             trip_id int(10) NOT NULL,
@@ -179,7 +179,8 @@ class Activator
             item_name VARCHAR(255) NOT NULL,
             item_qty int(11),
             item_price int(11),
-            line_total int(11)
+            line_total int(11),
+            PRIMARY KEY (id)
            ) $charset_collate;";
 
         $this->runSQL($sql, $table_name);
@@ -213,7 +214,7 @@ class Activator
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'trm_transactions';
+        $table_name = $wpdb->prefix . 'tm_transactions';
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL AUTO_INCREMENT,
             transaction_hash varchar(255) NULL,
@@ -246,7 +247,7 @@ class Activator
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'trm_bookings';
+        $table_name = $wpdb->prefix . 'tm_bookings';
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL AUTO_INCREMENT,
             booking_hash varchar(255) NULL,
@@ -272,7 +273,7 @@ class Activator
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'trm_booking_meta';
+        $table_name = $wpdb->prefix . 'tm_booking_meta';
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL AUTO_INCREMENT,
             booking_id int(11) NOT NULL,
