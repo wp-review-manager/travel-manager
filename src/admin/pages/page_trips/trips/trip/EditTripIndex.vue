@@ -124,6 +124,7 @@ export default {
                     ]
                 },
                 inc_exc: {
+                    enable: "yes",
                     section_title : "Enter the cost tab section title",
                     includes: {
                         title: "Cost Includes Title",
