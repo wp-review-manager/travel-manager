@@ -1,24 +1,38 @@
 <template>
     <div class="tm-include-exclude-wrapper">
-        <h2 class="section-title">Map</h2>
-        <app-card class="tm_label_card" :title="'Map Image'" >
-            <template v-slot:body >
-                <ImageGallery :image="meta.map?.image "/>
+        <!-- <h2 class="section-title">Map</h2> -->
+
+        <app-card :title="'Map'" :sub_title="' '">
+            <template v-slot:actions>
+                <el-switch v-model="meta.map.enable" size="large" active-value="yes" inactive-value="no" />
             </template>
-        </app-card>
-        
-        <app-card class="tm_label_card" :title="'Map Iframe Code'">
-            <template v-slot:body >
-                <div class="tm_form_wrapper">
-                    <div class="input-wrapper">
-                        <p class="form-label">Enter The Map Iframe Code</p>
-                        <div class="couple-inputs">
-                            <el-input type="textarea" rows="6" v-model="meta.map.iframe_code" style="width: 100% !important" />
+
+            <template v-slot:body v-if="meta.map.enable == 'yes'">
+                <app-card class="tm_label_card" :title="'Map Image'">
+                    <template v-slot:body>
+                        <ImageGallery :image="meta.map?.image" />
+                    </template>
+                </app-card>
+
+                <app-card class="tm_label_card" :title="'Map Iframe Code'">
+                    <template v-slot:body>
+                        <div class="tm_form_wrapper">
+                            <div class="input-wrapper">
+                                <p class="form-label">Enter The Map Iframe Code</p>
+                                <div class="couple-inputs">
+                                    <el-input type="textarea" rows="6" v-model="meta.map.iframe_code"
+                                        style="width: 100% !important" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </template>
+                </app-card>
             </template>
+
         </app-card>
+
+
+
 
     </div>
 </template>
@@ -78,12 +92,12 @@ export default {
             return '';
         },
         validateUrl(url) {
-            var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+                '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
             return !!pattern.test(url);
         }
     }
@@ -95,13 +109,16 @@ export default {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+
     .tm-trip-gallery-thumbnail {
         width: calc(25% - 20px);
         border-radius: 8px;
         position: relative;
+
         img {
             border-radius: 8px;
         }
+
         .delete-btn {
             position: absolute;
             top: 4px;
