@@ -17,6 +17,7 @@ class Tab
         $itinerary = Arr::get($trip, 'itinerary', []);
         $inc_exc = Arr::get($trip, 'inc_exc', []);
         $map = Arr::get($trip, 'map', []);
+        $faqs = Arr::get($trip, 'faqs', []);
 
         $section_title = Arr::get($trip, 'inc_exc.section_title', []);
         $inc_title = Arr::get($trip, 'inc_exc.includes.title', []);
@@ -32,6 +33,7 @@ class Tab
         $enableItinerary = Arr::get($itinerary, 'enable', "no");
         $enableInc_exc = Arr::get($inc_exc, 'enable', "no");
         $enableMap = Arr::get($map, 'enable', "no");
+        $enableFaqs = Arr::get($faqs, 'enable', "no");
 
         ?>
         <div class="tm_tab_container">
@@ -39,7 +41,7 @@ class Tab
                 <li class="tab active" data-tab="overview">OverView</li>
                 <?php if ($enableItinerary == 'yes') : ?><li class="tab" data-tab="itinerary">Itinerary</li><?php endif ?>
                 <?php if ($enableInc_exc == 'yes') : ?><li class="tab" data-tab="cost">Cost</li><?php endif ?>
-                <?php if ($enableInc_exc == 'yes') : ?><li class="tab" data-tab="faqs">FAQs</li><?php endif ?>
+                <?php if ($enableFaqs == 'yes') : ?><li class="tab" data-tab="faqs">FAQs</li><?php endif ?>
                 <?php if ($enableMap == 'yes') : ?><li class="tab" data-tab="map">Map</li><?php endif ?>
             </ul>
 
