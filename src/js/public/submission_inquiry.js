@@ -27,8 +27,8 @@ const submissionInquiry = ($) => {
             route: 'submission_inquiry',
             data: formDataObject,
         }).then((response) => {
-            console.log(response, 'response');
-            if (response.status === 'success') {
+            console.log(response.success , 'response');
+            if (response.success === true ) {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();
                 $form.append('<div class="tm_success">Your inquiry has been submitted successfully</div>');
