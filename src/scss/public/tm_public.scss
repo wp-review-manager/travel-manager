@@ -8,3 +8,6 @@
 .tm_error {
     @include text($color: $tm-red-500, $size: 14px, $weight: 400);
 }
+.tm_success {
+    @include text($color: $tm-success-500, $size: 14px, $weight: 400);
+}

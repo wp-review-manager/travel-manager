@@ -37,7 +37,7 @@ const submissionInquiry = ($) => {
             } else {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();
-                $form.append('<div class="tm_error">Something went wrong. Please try again later</div>');
+                $form.append('<div  class="tm_error">Something went wrong. Please try again later</div>');
             }
         }).catch((error) => {
             console.log(error, 'error');
