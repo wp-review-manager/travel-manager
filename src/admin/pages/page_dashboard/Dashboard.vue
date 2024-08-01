@@ -58,12 +58,17 @@
             <div class="integration">
                 <h1 class="dash-title">Integration</h1>
                 <div class="horizontal"></div>
-
+                <div class="chart">
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+ 
+                </div>
             </div>
             <div class="affiliate">
                 <h1 class="dash-title">Affiliate Statistic</h1>
                 <div class="horizontal"></div>
-
+              
             </div>
         </div>
 
@@ -72,10 +77,37 @@
 
 <script>
 import Icon from "@/components/Icons/AppIcon.vue";
-export default{
-    components:{
-        Icon
-    }
-}
+import { Chart } from 'chart.js';
 
+export default {
+  components: {
+    Icon
+  },
+  mounted() {
+    const ctx = document.getElementById('myChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+}
 </script>
+
+ 
