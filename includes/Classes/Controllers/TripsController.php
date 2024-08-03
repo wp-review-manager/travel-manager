@@ -25,16 +25,16 @@ class TripsController {
     {
         $tripId = sanitize_text_field(Arr::get($_REQUEST, 'trip_id'));
         $tripModal = new Trips();
+        $trip_title = sanitize_text_field(Arr::get($_REQUEST, 'trip_title', 'New Trip Title'));
+        $trip_description = sanitize_text_field(Arr::get($_REQUEST, 'trip_description', '<p>New Trip Description</p>'));
         if ($tripId) {
-    
             $sanitized_trip_meta = (new TripsServices())->sanitizeTripMeta(Arr::get($_REQUEST, 'trip_meta', []));
             $validate_and_serialized = (new TripsServices())->validateTripMeta($sanitized_trip_meta, $tripId, $trip_title, $trip_description);
-            
             $response = $tripModal->updateTrip($tripId, $validate_and_serialized);
         } else {
             $tripData = array(
-                'post_title' => sanitize_text_field(Arr::get($_REQUEST, 'trip_title', 'New Trip Title')),
-                'post_content' => sanitize_text_field(Arr::get($_REQUEST, 'trip_description', '<p>New Trip Description</p>')),
+                'post_title' => $trip_title,
+                'post_content' => $trip_description,
                 'post_status' => sanitize_text_field(Arr::get($_REQUEST, 'trip_status', 'publish')),
                 'post_type' => 'tm_trip',
             );

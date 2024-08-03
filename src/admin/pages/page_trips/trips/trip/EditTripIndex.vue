@@ -72,7 +72,7 @@ export default {
                         max_age: 44
                     },
                     description: {
-                        description: "Trip description",
+                        description: "<p>Trip description</p>",
                         section_title: "Section Title",
                         trip_highlights: {
                             title: "Highlights",

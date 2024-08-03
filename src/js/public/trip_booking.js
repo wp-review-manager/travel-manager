@@ -31,7 +31,6 @@ const tripBooking = ($) => {
             tm_travelers_number = Math.max(tm_travelers_number - 1, 0);
             tm_travelers_number = tm_travelers_number < min ? 0 : tm_travelers_number;
         }
-        console.log(tm_travelers_number);
         $quantity.val(tm_travelers_number);
         $parent.find('.tm_dec_btn').toggleClass('disabled', tm_travelers_number < min);
         $parent.find('.tm_inc_btn').toggleClass('disabled', tm_travelers_number >= max);
@@ -42,6 +41,15 @@ const tripBooking = ($) => {
         booking_data.trip_title = $quantity.data('tm_trip_title');
         booking_data.packages = booking_data.packages || [];
         booking_data.packages[package_id] = booking_data.packages[package_id] || {};
+        
+        let packagesArray = Object.keys(booking_data.packages);
+        
+        packagesArray.forEach((package_id) => {
+            if(booking_data.packages[package_id].package_name != package_name) {
+                delete booking_data.packages[package_id];
+            }
+        });
+
         booking_data.packages[package_id] = {
             tm_travelers_number,
             tm_package_price_total: package_price_total,
@@ -49,6 +57,8 @@ const tripBooking = ($) => {
             pricing_label,
             package_type
         };
+
+        // console.log({booking_data});
 
         renderBookingData(booking_data, $this, $);
     });
@@ -64,7 +74,7 @@ const tripBooking = ($) => {
 }
 
 const renderBookingData = (booking_data = {}, $this, $) => {
-    console.log(booking_data);
+    // console.log(booking_data);
     const { booking_date_selected = "", packages = [], trip_title = "" } = booking_data;
     let total_price = 0;
     let total_travelers = 0;
@@ -116,9 +126,7 @@ const renderBookingData = (booking_data = {}, $this, $) => {
         booking_data_html += `<p class="tm_no_package_selected">No package selected</p>`;
     }
 
-    $($this).closest('.tm_modal-content').find('.tm_trip_booking_summary_body').html(booking_data_html);
-    console.log($($this).closest('.tm_modal-content').find('.tm_trip_process_sidebar').attr('class'));
-        
+    $($this).closest('.tm_modal-content').find('.tm_trip_booking_summary_body').html(booking_data_html);        
 }
 
 const resetHtmlDom = ($) => {
@@ -134,7 +142,6 @@ const resetHtmlDom = ($) => {
 }
 
 const makeApiCallForBooking = (booking_data) => {
-    console.log(booking_data);
     let data = {
         action: 'trip_booking',
         booking_data
