@@ -8,6 +8,8 @@ use WPTravelManager\Classes\Controllers\ActivitiesController;
 use WPTravelManager\Classes\Controllers\DifficultyController;
 use WPTravelManager\Classes\Controllers\PricingCategoriesController;
 use WPTravelManager\Classes\Controllers\InquiryController;
+use WPTravelManager\Classes\Controllers\BookingsController;
+use WPTravelManager\Classes\Controllers\SessionsController;
 
 class AjaxActions {
     public function register () {
@@ -38,6 +40,20 @@ class AjaxActions {
 
         add_action('wp_ajax_tm_inquiry', function () {
             (new InquiryController())->registerAjaxRoutes();
+        });
+
+        add_action('wp_ajax_tm_trip_booking', function() {
+            // (new BookingsController())->registerAjaxRoutes();
+        });
+        add_action('wp_ajax_nopriv_tm_trip_booking', function() {
+            dd($_REQUEST);
+        });
+
+        add_action('wp_ajax_tm_trip_session', function() {
+            (new SessionsController())->registerAjaxRoutes();
+        });
+        add_action('wp_ajax_nopriv_tm_trip_session', function() {
+            (new SessionsController())->registerAjaxRoutes();
         });
 
     }

@@ -247,4 +247,16 @@ class ArrayHelper
 
         return $results;
     }
+
+    public static function first($array, callable $callback, $default = null)
+    {
+        foreach ($array as $key => $value) {
+            if (call_user_func($callback, $value, $key)) {
+                return $value;
+            }
+        }
+
+        return $default instanceof Closure ? $default() : $default;
+    }
+
 }

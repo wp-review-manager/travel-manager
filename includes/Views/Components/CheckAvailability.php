@@ -4,7 +4,7 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class CheckAvailability
 {
-    public static function RenderCheckAvailability($packages, $title = "")
+    public static function RenderCheckAvailability($packages, $title = "", $trip_id="")
     {
         ob_start();
         ?>
@@ -87,14 +87,16 @@ class CheckAvailability
                                                 <input
                                                     data-tm_travelers_number="<?php echo $pricing_id ?>"
                                                     readonly
-                                                    class="tm_quantity" value="<?php echo $pricing_data['min_pax'] ?>"
-                                                    data-tm_package_price=" <?php echo $pricing_data['selling_price'] ?>"
-                                                    data-tm_package_type="<?php echo $pricing_data['pricing_type'] ?>"
-                                                    data-tm_package_name="<?php echo $package['title'] ?>"
-                                                    data-tm_pricing_label="<?php echo $pricing_data['label'] ?>"
-                                                    data-tm_trip_title="<?php echo $title ?>"
+                                                    class="tm_quantity" value="<?php echo esc_html($pricing_data['min_pax']) ?>"
+                                                    data-tm_package_price=" <?php echo esc_html($pricing_data['selling_price']) ?>"
+                                                    data-tm_package_type="<?php echo esc_html($pricing_data['pricing_type']) ?>"
+                                                    data-tm_package_name="<?php echo esc_html($package['title']) ?>"
+                                                    data-tm_pricing_label="<?php echo esc_html($pricing_data['label']) ?>"
+                                                    data-tm_trip_title="<?php echo esc_html($title) ?>"
+                                                    data-tm_trip_id="<?php echo  esc_html($trip_id) ;  ?>"
+                                                    data-tm_pricing_id="<?php echo esc_html($pricing_key) ?>"
                                                 >
-                                                <span data-tm_max="<?php echo $max_pax ?>" class="tm_inc_btn"> + </span>
+                                                <span data-tm_max="<?php echo esc_html($max_pax) ?>" class="tm_inc_btn"> + </span>
                                             </div>
                                         </div>
                                         <?php endforeach; ?>

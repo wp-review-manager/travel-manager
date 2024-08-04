@@ -51,6 +51,26 @@ class Activator
         $this->migrateBookingsTable();
         $this->migrateBookingMeta();
         $this->migrateInquiryTable();
+        $this->migrateSessionsTable();
+    }
+
+    public function migrateSessionsTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_sessions';
+        $sql = "CREATE TABLE $table_name (
+            id int(10) NOT NULL AUTO_INCREMENT,
+            device_id VARCHAR(255) NOT NULL,
+            user_id VARCHAR(255) NULL,
+            trip_id VARCHAR(255) NULL,
+            session_meta LONGTEXT  NULL,
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
+            PRIMARY KEY (id)
+            ) $charset_collate;";
+
+        $this->runSQL($sql, $table_name);
     }
 
     public function migrateDestinationTable()

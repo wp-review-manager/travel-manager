@@ -1,3 +1,5 @@
+import deviceId from '../partials/deviceId.js';
+
 const tripBooking = ($) => {
     let booking_data = {};
 
@@ -16,7 +18,7 @@ const tripBooking = ($) => {
         let min = parseInt($parent.find('.tm_dec_btn').data('tm_min'));
         let tm_travelers_number = parseInt($quantity.val());
         let package_price_total = parseInt($quantity.data('tm_package_price'));
-        let package_id = $quantity.data('tm_travelers_number');
+        let pricing_id = $quantity.data('tm_pricing_id');
         let package_type = $quantity.data('tm_package_type');
         let package_name = $quantity.data('tm_package_name');
         let pricing_label = $quantity.data('tm_pricing_label');
@@ -39,32 +41,31 @@ const tripBooking = ($) => {
             package_price_total *= tm_travelers_number;
         }
         booking_data.trip_title = $quantity.data('tm_trip_title');
+        booking_data.trip_id = $quantity.data('tm_trip_id');
         booking_data.packages = booking_data.packages || [];
-        booking_data.packages[package_id] = booking_data.packages[package_id] || {};
-        
-        let packagesArray = Object.keys(booking_data.packages);
-        
-        packagesArray.forEach((package_id) => {
-            if(booking_data.packages[package_id].package_name != package_name) {
-                delete booking_data.packages[package_id];
-            }
-        });
-
-        booking_data.packages[package_id] = {
-            tm_travelers_number,
-            tm_package_price_total: package_price_total,
-            package_name,
-            pricing_label,
-            package_type
-        };
-
-        // console.log({booking_data});
+        // Remove the packages if the packages sre not same type
+        booking_data.packages = booking_data.packages.filter((package_item) => package_item.package_name == package_name);
+        // Check if the package is already added
+        let duplicatePackage = booking_data.packages.find((package_item) => package_item.pricing_label == pricing_label && package_item.package_type == package_type);
+        if(duplicatePackage) {
+            duplicatePackage.tm_travelers_number = tm_travelers_number;
+            duplicatePackage.tm_package_price_total = package_price_total;
+        } else {
+            booking_data.packages.push({
+                tm_travelers_number,
+                tm_package_price_total: package_price_total,
+                package_name,
+                pricing_label,
+                package_type,
+                pricing_id
+            });
+        }
 
         renderBookingData(booking_data, $this, $);
     });
 
     $(document).on('click', '#tm_trip_booking_btn', function() {
-        makeApiCallForBooking(booking_data);
+        makeApiCallForBooking(booking_data, $);
     });
 
     $('.tm_close').click(function() {
@@ -141,23 +142,25 @@ const resetHtmlDom = ($) => {
         $('.tm_check_availability_content').addClass('active');
 }
 
-const makeApiCallForBooking = (booking_data) => {
+const makeApiCallForBooking = (booking_data, $) => {
     let data = {
-        action: 'trip_booking',
-        booking_data
+        booking_data,
+        deviceId
     };
-
-    // $.ajax({
-    //     url: tm_trip_booking.ajax_url,
-    //     type: 'POST',
-    //     data,
-    //     success: function(response) {
-    //         console.log(response);
-    //     },
-    //     error: function(error) {
-    //         console.log(error);
-    //     }
-    // });
+    $.post(window.tm_public.ajax_url, {
+        tm_public_nonce: tm_public.tm_public_nonce,
+        route: "create_session",
+        action: "tm_trip_session",
+        type: 'POST',
+        data,
+    }).then((response) => {
+        if (response.success) {
+            console.log(response.data);
+            // window.location.href = response.data.redirect_url;
+        } else {
+            console.log(response.data);
+        }
+    });
 }
 
 export { tripBooking };

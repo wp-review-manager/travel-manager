@@ -34,7 +34,7 @@ class ProcessPreviewPage {
 
             wp_localize_script('travel_manager_public_js', 'tm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('tm_ajax_nonce'),
+                'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
             ]);
         });
 

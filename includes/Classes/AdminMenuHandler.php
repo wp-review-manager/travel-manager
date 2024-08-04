@@ -75,7 +75,7 @@ class AdminMenuHandler {
             'assets_url' => TRM_URL . 'assets/',
             'ajaxurl' => admin_url('admin-ajax.php'),
             'tm_admin_nonce' => wp_create_nonce('tm_admin_nonce'),
-            'nonce' => wp_create_nonce('travel_manager'),
+            'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
             'server_time' => current_time('timestamp'),
             'payment_methods' => $payment_methods,
             'payment_routes' => $payment_routes,

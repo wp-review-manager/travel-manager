@@ -27,6 +27,11 @@ class Bootstrap {
             $activator = new \WPTravelManager\Classes\Activator();
             $activator->migrateDatabases($newWorkWide);
         });
+        // Some time require to run the migration
+        
+        // require_once(TRM_DIR . 'includes/Classes/Activator.php');
+        // $activator = new \WPTravelManager\Classes\Activator();
+        // $activator->migrateDatabases(false);
      
     }
   

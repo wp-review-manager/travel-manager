@@ -185,7 +185,7 @@ $packages = Arr::get($trip, 'packages', []);
                 <p>Need help with booking? <a href="#">Contact Us</a></p>
             </div>
         </div>
-        <?php echo CheckAvailability::RenderCheckAvailability($packages, $title); ?>
+        <?php echo CheckAvailability::RenderCheckAvailability($packages, $title, $id); ?>
         <div class="tm_trip_inquiry_form_wrapper">
             <h3 class="tm_inquiry_title">You can send your enquiry via the form below</h3>
             <form id="tm_submission-inquiry-form">
