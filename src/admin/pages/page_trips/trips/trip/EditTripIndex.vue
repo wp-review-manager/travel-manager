@@ -101,7 +101,7 @@ export default {
                                 enable: "yes",
                                 label: "Adult",
                                 price: 500,
-                                pricing_type: "per_person/group",// Should research about group
+                                pricing_type: "per_person",// Should research about group
                                 selling_price: 400,
                                 min_pax: 3,
                                 max_pax: 5,
