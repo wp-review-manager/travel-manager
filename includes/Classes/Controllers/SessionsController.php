@@ -32,7 +32,9 @@ class SessionsController {
         if($response) {
             wp_send_json_success(array(
                 'message' => 'Trip has been saved successfully',
-                'data' => $response
+                'data' => array(
+                    'redirect_url' => home_url('/travel-manager-checkout/?booking_id=' . $response)
+                )
             ));
         } else {
             wp_send_json_error(array(

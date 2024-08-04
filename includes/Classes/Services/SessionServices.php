@@ -95,8 +95,8 @@ class SessionServices {
                         'status' => 400
                     ));
                 }
-
-                $selected_pricing =  floatval($selected_package_price['selling_price'] * $trip_total_travelers);
+                
+                $selected_pricing = Arr::get($package_item, 'package_type') == 'group' ? floatval($selected_package_price['selling_price']) : floatval($selected_package_price['selling_price'] * $trip_total_travelers);
                 $isEquals = $trip_package_total == $selected_pricing;
 
                 if(!$isEquals) {

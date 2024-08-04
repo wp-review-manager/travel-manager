@@ -156,7 +156,7 @@ const makeApiCallForBooking = (booking_data, $) => {
     }).then((response) => {
         if (response.success) {
             console.log(response.data);
-            // window.location.href = response.data.redirect_url;
+            window.location.href = response.data.data.redirect_url;
         } else {
             console.log(response.data);
         }

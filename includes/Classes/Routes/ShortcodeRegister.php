@@ -8,6 +8,7 @@ class ShortcodeRegister {
     public function register()
     {
         add_shortcode( 'tm_trip', array( $this, 'singleTripShortCode' ) );
+        add_shortcode( 'travel_manager_checkout', array( $this, 'checkoutShortCode' ) );
     }
     public function singleTripShortCode( $atts )
     {
@@ -33,6 +34,16 @@ class ShortcodeRegister {
             'title' => $post->post_title,
             'trip' => $post_meta,
         ]);
+    }
+
+    public function checkoutShortCode( $atts )
+    {
+        return "<h1>Checkout Page test</h1>";
+        // $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
+        // if( empty( $booking_id ) ){
+        //     return;
+        // }
+        // $this->preparedCheckoutData( $booking_id );
     }
         
 }
