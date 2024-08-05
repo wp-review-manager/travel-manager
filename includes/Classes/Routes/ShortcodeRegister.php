@@ -38,12 +38,12 @@ class ShortcodeRegister {
 
     public function checkoutShortCode( $atts )
     {
-        return "<h1>Checkout Page test</h1>";
-        // $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
-        // if( empty( $booking_id ) ){
-        //     return;
-        // }
-        // $this->preparedCheckoutData( $booking_id );
+        $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
+        ob_start();
+        View::render('Checkout/CheckoutIndex',[
+            'booking_id' => $booking_id,
+        ]);
+        return ob_get_clean();
     }
         
 }
