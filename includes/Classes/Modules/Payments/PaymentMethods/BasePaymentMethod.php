@@ -16,7 +16,6 @@ abstract class BasePaymentMethod
     {
         $this->key = $key;
         $this->settingsKey = 'trm_payment_settings_'.$key;
-
         add_filter('trm/payment_methods_global_settings', function ($methods) {
             $fields = $this->getGlobalFields();
             if($fields) {
@@ -25,6 +24,23 @@ abstract class BasePaymentMethod
             return $methods;
         });
         add_filter('trm/payment_settings_' . $this->key, array($this, 'getGlobalSettings'));
+    }
+
+    public function mapper($defaults, $settings = [], $get = true) 
+    {
+        foreach ($defaults as $key => $value) {
+            if ($get) {
+                if (isset($settings[$key])) {
+                    $defaults[$key]['value'] = $settings[$key];
+                }
+            } else {
+                if (isset($settings[$key])) {
+                    $defaults[$key] = $settings[$key]['value'];
+                }
+            }
+        }
+
+        return $defaults;
     }
 
     abstract public function getGlobalFields();

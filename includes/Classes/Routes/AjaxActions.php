@@ -8,6 +8,7 @@ use WPTravelManager\Classes\Controllers\ActivitiesController;
 use WPTravelManager\Classes\Controllers\DifficultyController;
 use WPTravelManager\Classes\Controllers\PricingCategoriesController;
 use WPTravelManager\Classes\Controllers\InquiryController;
+use WPTravelManager\Classes\Modules\Payments\PaymentMethods\PaymentSettingsController;
 
 class AjaxActions {
     public function register () {
@@ -32,6 +33,10 @@ class AjaxActions {
         });
         add_action('wp_ajax_tm_pricing_categories', function () {
             (new PricingCategoriesController())->registerAjaxRoutes();
+        });
+
+        add_action( 'wp_ajax_get_payment_settings', function () {
+            (new PaymentSettingsController())->registerAjaxRoutes();
         });
 
         // Public Ajax Actions

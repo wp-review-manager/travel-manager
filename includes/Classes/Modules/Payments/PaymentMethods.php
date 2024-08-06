@@ -34,6 +34,13 @@ class PaymentMethods
                     'title' => 'Stripe' 
                 ]
             ],
+            [
+                'path' => 'sslcommerz',
+                'name' => 'sslcommerz',
+                'meta'=> [
+                    'title' => 'SSLCommerz' 
+                ]
+            ],
         );
         
         return  $default;
@@ -59,6 +66,13 @@ class PaymentMethods
                 'route_name' => 'paypal',
                 'available' => false,
                 'svg' => TRM_URL .'assets/images/gateways/paypal.svg',
+                'route_query' => [],
+            ),
+            'sslcommerz' => array(
+                'title' => 'SSLCommerz',
+                'route_name' => 'sslcommerz',
+                'available' => false,
+                'svg' => TRM_URL .'assets/images/gateways/sslcommerz.svg',
                 'route_query' => [],
             ),
         );

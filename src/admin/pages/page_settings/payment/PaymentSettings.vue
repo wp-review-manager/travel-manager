@@ -1,12 +1,12 @@
 <template>
-    <el-tabs v-model="activeName" class="demo-tabs">
-         <el-tab-pane v-for="route in routes" :label="route.name" :name="route.name" :key="route.name">
-            <div >{{activeName}}</div>
+    <el-tabs v-model="activeName" class="trm_tabs trm_payment_settings_wrapper">
+         <el-tab-pane v-for="route in routes" :label="route.meta.title" :name="route.name" :key="route.name">
+            <GlobalPaymentSettings :route="route" />
         </el-tab-pane>
     </el-tabs>
-    <GlobalPaymentSettings :route_name="activeName" />
 </template>
 <script>
+import { get } from 'lodash';
 import GlobalPaymentSettings from './GlobalPaymentSettings.vue';
 export default {
     components: {
@@ -15,12 +15,33 @@ export default {
     data() {
         return {
             routes: [],
+            ajaxurl: window.wpTravelManager.ajaxurl,
+            nonce: window.wpTravelManager.tm_admin_nonce,
             activeName: 'offline'
         };
     },
     watch: {
         activeName() {
             this.$router.push('/settings/payment/' + this.activeName);
+            this.getPaymentSettings(this.activeName);
+        }
+    },
+    methods: {
+        getPaymentSettings(gateWay) {
+            jQuery.get(ajaxurl, {
+                action: 'get_payment_settings',
+                route: 'getPaymentSettings',
+                gateway: gateWay,
+                tm_admin_nonce: this.nonce
+            }).then((response) => {
+                console.log(response);
+                // this.$store.commit('setPaymentSettings', {
+                //     gateway: gateWay,
+                //     settings: get(response, 'data.data', {})
+                // });
+            }).fail((error) => {
+                console.log(error);
+            });
         }
     },
     mounted() {
