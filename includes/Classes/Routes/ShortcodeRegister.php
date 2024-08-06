@@ -49,10 +49,26 @@ class ShortcodeRegister {
             ]);
         });
 
+        global $wpdb; 
+
         $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
+       
+        $table_name = $wpdb->prefix.'tm_sessions'; // Adjust table prefix if necessary
+        $session_data = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM $table_name WHERE id = %d", // Use %d for integer placeholders
+                $booking_id
+            )
+        );
+       
+            $session = $session_data[0];
+            $booking_meta = $session->session_meta; // Directly access the session_meta field
+            $booking_meta = maybe_unserialize($booking_meta);
+    
         ob_start();
         View::render('Checkout/CheckoutIndex',[
             'booking_id' => $booking_id,
+            'booking' => $booking_meta,
         ]);
         return ob_get_clean();
     }

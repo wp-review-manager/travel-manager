@@ -1,3 +1,12 @@
+<?php
+namespace WPTravelManager\Views\Checkout;
+use WPTravelManager\Classes\ArrayHelper as Arr;
+
+$booking_date = Arr::get($booking, 'booking_date_selected', null);
+
+dd($booking);
+?>
+
 <div class="tm_checkout">
     <h1 class="tm_checkout_title">Checkout</h1>
 
@@ -67,7 +76,7 @@
 
                 <span class="tm_trip_code">Trip Code: <span>WTE-84</span></span>
                 <span class="tm_trip_date">
-                    Starting Date: August 7, 2024
+                    Starting Date: <?php echo $booking_date ?>
                 </span>
             </div>
 
