@@ -5,7 +5,7 @@
     font-size: 1.9em;
     line-height: 1.210em;
     font-weight: 700;
-    color: #010101;
+    color: $tm-dark-700;
     margin: 0 0 10px;
    }
 
@@ -30,7 +30,7 @@
             padding: 40px 24px;
             border-radius: 4px;
             background-color: #fff;
-            box-shadow: 0px 4px 8px rgba(0,0,0,.04),0px 0px 1px rgba(0,0,0,.04);
+            box-shadow: 0px 4px 8px $tm-neutral-100,0px 0px 1px $tm-neutral-50;
             box-sizing: border-box;
             .tm_filed{
                 margin: 0 0 32px;
@@ -39,7 +39,7 @@
                     display: block;
                     font-size: 16px;
                     margin-bottom: 8px;
-                    color: #333333;
+                    color: $tm-dark-700;
                     line-height: 1.6em;
                     font-weight: 400;
                 }
@@ -47,13 +47,13 @@
                     padding: 12px;
                     font-size: 14px;
                     line-height: 1.7;
-                    border: 1px solid rgba(6,22,38,.2);
+                    border: 1px solid $tm-neutral-200;
                     border-radius: 4px;
                     font-family: inherit;
                     vertical-align: top;
                     width: 100%;
                     outline: none;
-                    color: #2b2d31;
+                    color:  $tm-dark-700;
                     font-weight: 400;
                 }
                
@@ -71,7 +71,7 @@
                     outline: none;
                 }
                 label{
-                    font-size: 16px;color: #010101;
+                    font-size: 16px;color: $tm-dark-700;
                 }
             }
 
@@ -83,16 +83,16 @@
                     font-weight: 500;
                     width: auto;
                     border-radius: 8px;
-                    background: #017EF3;
-                    border: 1px solid #017EF3;
+                    background: $tm-primary-500;
+                    border: 1px solid $tm-primary-500;
                     cursor: pointer;
                     color: #fff;
                     transition: all .3s ease;
                 }
                 button:hover{
                     outline: none;
-                    background-color: #79bbff;
-                    border: 1px solid #79bbff;
+                    background-color: $tm-primary-300;
+                    border: 1px solid $tm-primary-300;
                 }
             }
         }
@@ -103,21 +103,20 @@
         border: none;
         padding: 32px 24px !important;
         border-radius: 4px;
-        box-shadow: 0px 4px 8px rgba(0,0,0,.04),0px 0px 1px rgba(0,0,0,.04);
+        box-shadow: 0px 4px 8px $tm-neutral-100,0px 0px 1px $tm-neutral-50;
         background: #fff;
 
         .tm_summary_title{
             font-size: 28px;
             font-weight: normal;
             margin: 0 0 24px;
-            color: rgba(var(--black-color-rgb), 0.8);
+            color:  $tm-dark-700;
             line-height: 1.5;
             font-family: "Lato", sans-serif;
         }
         .tm_trip_details{
             border: none;
             padding: 32px 24px;
-            background-color: rgba(97, 127, 244, 0.08);
             border-radius: 4px;
             margin-bottom: 10px;
             text-align: left;
@@ -128,7 +127,7 @@
         .tm_trip_details{
             border: none;
             padding: 32px 24px;
-            background-color: rgba(97, 127, 244, 0.08);
+            background-color: $tm-secondary-25;
             border-radius: 4px;
             margin-bottom: 10px;
             text-align: left;
@@ -146,7 +145,7 @@
                 padding: 8px 10px;
                 font-size: 13px;
                 line-height: 1;
-                background-color: rgba(6,22,38,.4);
+                background-color: $tm-gray-500;
                 color: #fff;
                 font-weight: 600;
                 border-radius: 40px;
@@ -160,7 +159,7 @@
             }
             .tm_trip_date{
                 font-size: 18px;
-                color: #232323;
+                color: $tm-dark-700;
                 display: block;
                 margin-top: 10px;
                 letter-spacing: 0;
@@ -178,13 +177,13 @@
             overflow: hidden;
             td{
                 padding: 10px 0 !important;
-                  color: #232323;
+                  color: $tm-dark-700;
                   width: 100%;
             }
             tfoot{
-                border-top: 1px solid rgba(0, 0, 0, 0.05);
+                border-top: 1px solid $tm-neutral-200;
                 text-align: right;
-                border-color: rgba(0, 0, 0, 0.1);
+                border-color:$tm-neutral-200;
               
             } 
             .tm_package_name{
@@ -199,7 +198,7 @@
                     font-size: 16px;
                     text-align: left !important;
                     padding-bottom: 20px !important;
-                    color: #232323;
+                    color: $tm-dark-700;
                 }
                 
             }
@@ -207,10 +206,10 @@
         }
 
         .tm_total_price{
-            border-color: rgba(0, 0, 0, 0.1);
+            border-color: $tm-neutral-200;
             padding: 32px 0 0;
             background: none;
-            border-top:1px solid rgba(0, 0, 0, 0.1);
+            border-top:1px solid $tm-neutral-200;
             margin-top: 30px;
             text-align: right;
             font-weight: 400;

@@ -3,8 +3,16 @@ namespace WPTravelManager\Views\Checkout;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
 $booking_date = Arr::get($booking, 'booking_date_selected', null);
+$booking_packages = Arr::get($booking, 'packages', '[]');
 
-dd($booking);
+ 
+?>
+<?php foreach ($booking_packages as $packages): ?>
+    <?php // Debugging and will stop execution
+endforeach; ?>
+<?php
+$booking_packages = Arr::get($packages, 'package_name', '');
+
 ?>
 
 <div class="tm_checkout">
