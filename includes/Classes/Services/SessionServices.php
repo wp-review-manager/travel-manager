@@ -43,7 +43,7 @@ class SessionServices {
 
     }
 
-    public function validatePackageData($packages, $trip_id) {
+    public static function validatePackageData($packages, $trip_id) {
         $tripModal = new Trips();
         $trip = $tripModal->getTripInfo($trip_id);
         $package_name = Arr::get($packages, '0.package_name', '');
