@@ -13,4 +13,17 @@
     padding: 20px;
     border-radius: 8px;
     background: $tm_background_color;
+    .payment_settings_form {
+        .app-card {
+            margin-top: 20px;
+        }
+        .payment_settings_form_group {
+            .form_label {
+                @include text($size: 14px, $weight: 500, $color: $tm-dark-600);
+            }
+            .el-input, .el-radio-group {
+                margin: 10px 0px;
+            }
+        }
+    }
 }

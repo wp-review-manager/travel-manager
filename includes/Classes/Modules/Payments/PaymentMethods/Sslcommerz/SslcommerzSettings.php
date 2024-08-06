@@ -79,7 +79,8 @@ class SslcommerzSettings extends BasePaymentMethod
                 'placeholder' => __('Test Secret Key', 'wp-payment-form')
             ),
             'desc' => array(
-                'value' => '<div> <p style="color: #d48916;">NB: Please add Email, Name and Address field on your form to get payment data correctly.</p> <p>See our <a href="https://paymattic.com/docs/how-to-integrate-sslcommerz-with-paymattic-in-wordpress/" target="_blank" rel="noopener">documentation</a> to get more information about SSLCOMMERZ setup.</p> </div>',
+                'value' => '<div> <p style="color: #d48916;">NB: Please add Email, Name and Address field on your form to get payment data correctly.
+                .</p> <p>See our <a href="https://paymattic.com/docs/how-to-integrate-sslcommerz-with-paymattic-in-wordpress/" target="_blank" rel="noopener">documentation</a> to get more information about SSLCOMMERZ setup.</p> </div>',
                 'label' => __('Payrexx IPN Settings', 'wp-payment-form'),
                 'type' => 'html_attr'
             ),
@@ -98,7 +99,6 @@ class SslcommerzSettings extends BasePaymentMethod
         return array(
             'is_active' => 'no',
             'payment_mode' => 'test',
-            'checkout_type' => 'nitesh',
             'test_store_id' => '',
             'test_store_pass' => '',
             'live_store_id' => '',
@@ -136,25 +136,36 @@ class SslcommerzSettings extends BasePaymentMethod
         );
     }
 
-    // public function validateSettings($errors, $settings)
-    // {
-    //     AccessControl::checkAndPresponseError('set_payment_settings', 'global');
-    //     $mode = Arr::get($settings, 'payment_mode');
+    public function saveSettings($settings)
+    {
+        $this->validateSettings([], $settings);
+        $settings = $this->mapperSettings($settings);
+        update_option('trm_payment_settings_sslcommerz', $settings);
+        return true;
+    }
 
-    //     if ($mode == 'test') {
-    //         if (empty(Arr::get($settings, 'test_store_id')) || empty(Arr::get($settings, 'test_store_pass'))) {
-    //             $errors['test_store_id'] = __('Please provide Test Store Id and Test Store Key', 'wp-payment-form-pro');
-    //         }
-    //     }
+    public function validateSettings($errors, $settings)
+    {
+        $mode = Arr::get($settings, 'payment_mode');
 
-    //     if ($mode == 'live') {
-    //         if (empty(Arr::get($settings, 'live_store_id')) || empty(Arr::get($settings, 'live_store_pass'))) {
-    //             $errors['live_store_id'] = __('Please provide Live Store Id and Live Store Key', 'wp-payment-form-pro');
-    //         }
-    //     }
+        if ($mode == 'test') {
+            if (empty(Arr::get($settings, 'test_store_id')) || empty(Arr::get($settings, 'test_store_pass'))) {
+                $errors['test_store_id'] = __('Please provide Test Store Id and Test Store Key', 'wp-payment-form-pro');
+            }
+        }
 
-    //     return $errors;
-    // }
+        if ($mode == 'live') {
+            if (empty(Arr::get($settings, 'live_store_id')) || empty(Arr::get($settings, 'live_store_pass'))) {
+                $errors['live_store_id'] = __('Please provide Live Store Id and Live Store Key', 'wp-payment-form-pro');
+            }
+        }
+
+        if ($errors) {
+            wp_send_json_error($errors);
+        }
+
+        return true;
+    }
 
     // public static function isLive($formId = false)
     // {

@@ -24,6 +24,7 @@ abstract class BasePaymentMethod
             return $methods;
         });
         add_filter('trm/payment_settings_' . $this->key, array($this, 'getGlobalSettings'));
+        add_action('trm/save_payment_settings_' . $this->key, array($this, 'saveSettings'));
     }
 
     public function mapper($defaults, $settings = [], $get = true) 
@@ -46,5 +47,7 @@ abstract class BasePaymentMethod
     abstract public function getGlobalFields();
 
     abstract public function getGlobalSettings();
+
+    abstract public function saveSettings($settings);
 
 }
