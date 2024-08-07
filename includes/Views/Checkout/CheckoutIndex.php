@@ -5,18 +5,12 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 $booking_date = Arr::get($booking, 'booking_date_selected', null);
 $trip_title = Arr::get($booking, 'trip_title', '[]');
 $booking_packages = Arr::get($booking, 'packages', '[]');
-//dd($booking);
+$package_name = Arr::get($booking, 'packages.0.package_name', '[]');
+//dd($booking_packages);
  
 ?>
-<?php foreach ($booking_packages as $packages): ?>
-    <?php // Debugging and will stop execution
-endforeach; ?>
-<?php
-$package_name = Arr::get($packages, 'package_name', '');
-$pricing_label = Arr::get($packages, 'pricing_label', '');
-$tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
 
-?>
+
 
 <div class="tm_checkout">
     <h1 class="tm_checkout_title">Checkout</h1>
@@ -87,30 +81,39 @@ $tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
 
                 <span class="tm_trip_code">Trip Code: <span>WTE-84</span></span>
                 <span class="tm_trip_date">
-                    Starting Date: <?php echo $booking_date ?>
+                    Booking Date: <?php echo $booking_date ?>
                 </span>
             </div>
 
             <table class="tm_summary_table">
                 <tbody>
+               
                     <tr class="tm_package_name">
                         <td colspan="2">
                             <span class="label">Package:</span><span class="value"><?php echo esc_html($package_name)  ?></span>
                         </td>
                     </tr>
+                    <?php foreach ($booking_packages as $packages): 
+                        $pricing_label = Arr::get($packages, 'pricing_label', '');
+                        $tm_travelers_number = Arr::get($packages, 'tm_travelers_number', '');
+                        $tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
+
+                        $subtotal += $tm_package_price_total;
+                    
+                    ?>
                     <tr class="tm_package_details">
-                        <td><?php echo esc_html($pricing_label)  ?></td>
+                        <td><?php echo esc_html($tm_travelers_number)?>, <?php echo esc_html($pricing_label)  ?></td>
                         <td><span style="text-align: right !important;">$</span> <span class="wpte-price"><?php echo esc_html($tm_package_price_total)  ?></span>
                         </td>
                     </tr>
-
                     <!-- Extra Services -->
+                    <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2" style="text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
                             <span style="padding-right: 10px;">Subtotal :</span>
-                            <span class="tm_currency_code">$</span> <span class="wpte-price">3,000</span>
+                            <span class="tm_currency_code">$</span> <span class="wpte-price"><?php echo esc_html($subtotal)?></span>
                         </td>
                     </tr>
                 </tfoot>
@@ -119,7 +122,7 @@ $tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
                 <span style="color: rgba(35, 35, 35, 0.8); margin-right: 5px;letter-spacing: .5px;" >Total Payable : </span>
                 <span style="  font-size: 24px; font-weight: 500; color: #232323;">
                      <span >$</span>
-                      <span>3,000</span>
+                      <span><?php echo esc_html($subtotal)?></span>
                 </span>
 
             </div>
