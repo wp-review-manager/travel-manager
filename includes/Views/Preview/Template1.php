@@ -22,6 +22,7 @@ $min_age = Arr::get($trip, 'general.min_max_age.min_age', null);
 $trip_gallery = Arr::get($trip, 'trip_gallery', null);
 
 $packages = Arr::get($trip, 'packages', []);
+
 ?>
 
 <div class="tm_trip_one_shortcode_preview_wrapper">
@@ -144,11 +145,12 @@ $packages = Arr::get($trip, 'packages', []);
             <?php
             if (count($packages) > 0) :
                 $packages_pricing= Arr::get($packages, '0.pricing', null);
-
+              
                 foreach ($packages_pricing as $pricing) :
                     $pricing_label= Arr::get($pricing, 'label', null);
                     $pricing_price= Arr::get($pricing, 'price', null);
                     $selling_price= Arr::get($pricing, 'selling_price', null);
+                    
             ?>
                     <div class="tm_trip_starting_price">
                         <div class="tm_regular_price">

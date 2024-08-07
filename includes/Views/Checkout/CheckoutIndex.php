@@ -3,15 +3,18 @@ namespace WPTravelManager\Views\Checkout;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
 $booking_date = Arr::get($booking, 'booking_date_selected', null);
+$trip_title = Arr::get($booking, 'trip_title', '[]');
 $booking_packages = Arr::get($booking, 'packages', '[]');
-
+//dd($booking);
  
 ?>
 <?php foreach ($booking_packages as $packages): ?>
     <?php // Debugging and will stop execution
 endforeach; ?>
 <?php
-$booking_packages = Arr::get($packages, 'package_name', '');
+$package_name = Arr::get($packages, 'package_name', '');
+$pricing_label = Arr::get($packages, 'pricing_label', '');
+$tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
 
 ?>
 
@@ -80,7 +83,7 @@ $booking_packages = Arr::get($packages, 'package_name', '');
             <h1 class="tm_summary_title">Booking Summary</h1>
 
             <div class="tm_trip_details">
-                <div class="tm_trip_name">Motel 6 Conyers GA</div>
+                <div class="tm_trip_name"><?php echo esc_html($trip_title)  ?></div>
 
                 <span class="tm_trip_code">Trip Code: <span>WTE-84</span></span>
                 <span class="tm_trip_date">
@@ -92,12 +95,12 @@ $booking_packages = Arr::get($packages, 'package_name', '');
                 <tbody>
                     <tr class="tm_package_name">
                         <td colspan="2">
-                            <span class="label">Package:</span><span class="value">Budget Friendly</span>
+                            <span class="label">Package:</span><span class="value"><?php echo esc_html($package_name)  ?></span>
                         </td>
                     </tr>
                     <tr class="tm_package_details">
-                        <td>Adult 1</td>
-                        <td><span style="text-align: right !important;">$</span> <span class="wpte-price">3,000</span>
+                        <td><?php echo esc_html($pricing_label)  ?></td>
+                        <td><span style="text-align: right !important;">$</span> <span class="wpte-price"><?php echo esc_html($tm_package_price_total)  ?></span>
                         </td>
                     </tr>
 
