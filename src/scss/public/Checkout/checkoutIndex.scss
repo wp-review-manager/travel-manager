@@ -13,17 +13,24 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    @media (max-width:780px) {
+       display: block;
+    }
 
     .tm_checkout_form{
         width: auto;
         flex: 1;
         padding-right: 30px;
         box-sizing: border-box;
+        @media (max-width:780px) {
+            padding-right: 0px;
+         }
         .tm_title{
             margin-bottom: 30px;
             font-size: 22px;
             font-weight: 500;
             line-height: 1.5;
+            color:  $tm-dark-700;
         }
 
         form{
@@ -64,16 +71,16 @@
                 }
             }
 
-            .tm_filed_checkbox{
-                input{
-                    box-sizing: border-box;
-                    padding: 0;
-                    outline: none;
-                }
-                label{
-                    font-size: 16px;color: $tm-dark-700;
-                }
-            }
+            // .tm_filed_checkbox{
+            //     input{
+            //         box-sizing: border-box;
+            //         padding: 0;
+            //         outline: none;
+            //     }
+            //     label{
+            //         font-size: 16px;color: $tm-dark-700;
+            //     }
+            // }
 
             .tm_submit{
                 margin-top: 40px;
@@ -105,14 +112,19 @@
         border-radius: 4px;
         box-shadow: 0px 4px 8px $tm-neutral-100,0px 0px 1px $tm-neutral-50;
         background: #fff;
-
+        @media (max-width:780px) {
+            width: 100%;
+         }
         .tm_summary_title{
-            font-size: 28px;
-            font-weight: normal;
+            font-size: 22px;
+            font-weight: 500;
             margin: 0 0 24px;
             color:  $tm-dark-700;
             line-height: 1.5;
             font-family: "Lato", sans-serif;
+            @media (max-width:925px) {
+                font-size: 22px;
+             }
         }
         .tm_trip_details{
             border: none;

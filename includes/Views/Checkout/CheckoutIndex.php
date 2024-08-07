@@ -62,10 +62,10 @@ $package_name = Arr::get($booking, 'packages.0.package_name', '[]');
                     </select>
                 </div>
 
-                <div class="tm_filed_checkbox">
+                <!-- <div class="tm_filed_checkbox">
                     <input type="checkbox">
                     <label> Check the box to confirm you've read and agree to our Terms and Conditions and Privacy Policy.</label>
-                </div>
+                </div> -->
 
                 <div class="tm_submit">
                     <button type="submit">Submit</button>
