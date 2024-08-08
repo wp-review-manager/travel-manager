@@ -196,6 +196,7 @@ class Activator
             id int(10) NOT NULL AUTO_INCREMENT,
             trip_id int(10) NOT NULL,
             booking_id int(10) NOT NULL,
+            package_type VARCHAR(255) NOT NULL,
             item_name VARCHAR(255) NOT NULL,
             item_qty int(11),
             item_price int(11),
