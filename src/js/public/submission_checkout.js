@@ -10,7 +10,7 @@ const submissionCheckout = ($) => {
         formDataArray.forEach(item => {
             formDataObject[item.name] = item.value;
         });
-        console.log(formDataArray, 'formdata');
+     
         const validateFormData = validation(formDataObject);
         if (validateFormData !== true) {
             let errors = validateFormData;
@@ -27,7 +27,7 @@ const submissionCheckout = ($) => {
             route: 'submission_checkout',
             data: formDataObject,
         }).then((response) => {
-            console.log(response.success , 'response');
+            console.log(response , 'response');
             if (response.success === true ) {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();

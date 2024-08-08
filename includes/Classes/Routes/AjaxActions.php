@@ -56,7 +56,7 @@ class AjaxActions {
         add_action('wp_ajax_nopriv_tm_trip_session', function() {
             (new SessionsController())->registerAjaxRoutes();
         });
-        add_action('wp_ajax_nopriv_tm_checkout', function() {
+        add_action('wp_ajax_tm_checkout', function() {
             (new CheckoutController())->registerAjaxRoutes();
         });
 
