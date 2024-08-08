@@ -6,9 +6,20 @@ $booking_date = Arr::get($booking, 'booking_date_selected', null);
 $trip_title = Arr::get($booking, 'trip_title', '[]');
 $booking_packages = Arr::get($booking, 'packages', '[]');
 $package_name = Arr::get($booking, 'packages.0.package_name', '[]');
-//dd($booking_packages);
- 
+$trip_id = Arr::get($booking, 'trip_id', null);
+//dd($booking);
+
+foreach ($booking_packages as $packages): 
+    $tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
+    $subtotal += $tm_package_price_total;
+endforeach;
+
+
+
 ?>
+
+
+
 
 
 
@@ -20,35 +31,36 @@ $package_name = Arr::get($booking, 'packages.0.package_name', '[]');
         <div class="tm_checkout_form">
             <h1 class="tm_title">Billing Details</h1>
 
-            <form>
-                <div class="tm_filed">
-                    <label>First Name <span style="color: #ff8b3d;">* </span></label>
-                    <input type="text" placeholder="Please enter your first name">
-                </div>
+            <form id="tm_checkout-form">
+                <input type="hidden" name="trip_id" value="<?php echo esc_html($trip_id)  ?>">
 
+                <input type="hidden" name="booking_total" value="<?php echo esc_html($subtotal)  ?>">
+
+                <input type="hidden" name="booking_date" value="<?php echo esc_html($booking_date)  ?>">
+              
                 <div class="tm_filed">
-                    <label>Last Name <span style="color: #ff8b3d;">* </span></label>
-                    <input type="text" placeholder="Please enter your last name">
+                    <label>Name <span style="color: #ff8b3d;">* </span></label>
+                    <input type="text" name="traveler_name" placeholder="Please enter your name" required>
                 </div>
 
                 <div class="tm_filed">
                     <label>Email <span style="color: #ff8b3d;">* </span></label>
-                    <input type="email" placeholder="Please enter your email">
+                    <input type="email" name="traveler_email" placeholder="Please enter your email" required>
+                </div>
+
+                <div class="tm_filed">
+                    <label>Phone <span style="color: #ff8b3d;">* </span></label>
+                    <input type="number" name="traveler_phone" placeholder="Please enter your number" required>
                 </div>
 
                 <div class="tm_filed">
                     <label> Address <span style="color: #ff8b3d;">* </span></label>
-                    <input type="text" placeholder="Please enter your address">
-                </div>
-
-                <div class="tm_filed">
-                    <label>City <span style="color: #ff8b3d;">* </span></label>
-                    <input type="text" placeholder="Please enter your city">
+                    <input type="text" name="traveler_address" placeholder="Please enter your address" required>
                 </div>
 
                 <div class="tm_filed">
                     <label>Country <span style="color: #ff8b3d;">* </span></label>
-                    <select>
+                    <select name="traveler_country" required>
                         <option selected="">Choose a country*</option>
                         <option>Bangladesh</option>
                         <option>India</option>
@@ -68,7 +80,7 @@ $package_name = Arr::get($booking, 'packages.0.package_name', '[]');
                 </div> -->
 
                 <div class="tm_submit">
-                    <button type="submit">Submit</button>
+                    <button   class="tm_checkout_button">Submit</button>
                 </div>
             </form>
         </div>

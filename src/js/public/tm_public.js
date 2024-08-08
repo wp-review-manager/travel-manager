@@ -6,6 +6,9 @@ import { renderModal } from './components/modal.js';
 import {calenderRender} from './components/calender.js';
 import { submissionInquiry } from './submission_inquiry.js';
 import { tripBooking } from './trip_booking.js';
+import { submissionCheckout } from './submission_checkout.js';
+
+
 (function ($) {
     $(document).ready(function () {
         sliderRender($)
@@ -16,5 +19,6 @@ import { tripBooking } from './trip_booking.js';
         calenderRender($)
         submissionInquiry($)
         tripBooking($)
+        submissionCheckout($)
     });
 })(jQuery);

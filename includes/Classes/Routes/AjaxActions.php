@@ -10,6 +10,7 @@ use WPTravelManager\Classes\Controllers\PricingCategoriesController;
 use WPTravelManager\Classes\Controllers\InquiryController;
 use WPTravelManager\Classes\Controllers\BookingsController;
 use WPTravelManager\Classes\Controllers\SessionsController;
+use WPTravelManager\Classes\Controllers\CheckoutController;
 
 class AjaxActions {
     public function register () {
@@ -54,6 +55,9 @@ class AjaxActions {
         });
         add_action('wp_ajax_nopriv_tm_trip_session', function() {
             (new SessionsController())->registerAjaxRoutes();
+        });
+        add_action('wp_ajax_nopriv_tm_checkout', function() {
+            (new CheckoutController())->registerAjaxRoutes();
         });
 
     }
