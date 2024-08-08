@@ -60,11 +60,12 @@ class ShortcodeRegister {
                 $booking_id
             )
         );
-       
+      
             $session = $session_data[0];
-            $booking_meta = $session->session_meta; // Directly access the session_meta field
-            $booking_meta = maybe_unserialize($booking_meta);
-    
+          
+            $session_meta = $session->session_meta; // Directly access the session_meta field
+            $booking_meta = maybe_unserialize($session_meta);
+       
         ob_start();
         View::render('Checkout/CheckoutIndex',[
             'booking_id' => $booking_id,

@@ -32,6 +32,9 @@ endforeach;
             <h1 class="tm_title">Billing Details</h1>
 
             <form id="tm_checkout-form">
+
+                <input type="hidden" name="booking_id" value="<?php echo esc_html($booking_id)  ?>">
+
                 <input type="hidden" name="trip_id" value="<?php echo esc_html($trip_id)  ?>">
 
                 <input type="hidden" name="booking_total" value="<?php echo esc_html($subtotal)  ?>">

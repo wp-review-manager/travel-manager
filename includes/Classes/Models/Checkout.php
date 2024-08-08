@@ -4,10 +4,10 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class Checkout extends Model
 {
-    protected $model = 'tm_checkout';
-  
+    protected $model = 'tm_bookings';
+
     public function saveCheckout($data) {
-  
+ 
         $id = Arr::get($data, 'id', null);
         
         if ($id) {
@@ -17,5 +17,4 @@ class Checkout extends Model
         }
     }
 
-    
 }
