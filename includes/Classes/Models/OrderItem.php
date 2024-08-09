@@ -50,14 +50,24 @@ class OrderItem extends Model
         ];
     }
 
-    public function saveOrderItem($sanitize_order_item) {
-  
-        $id = Arr::get($sanitize_order_item, 'id', null);
+    public function saveOrderItem($order_item) {
+        $prepared_data = [];
+        $prepared_data['created_at'] = current_time('mysql');
+        $prepared_data['updated_at'] = current_time('mysql');
+        $prepared_data['trip_id'] = Arr::get($order_item, 'trip_id', '');
+        $prepared_data['booking_id'] = Arr::get($order_item, 'booking_id', '');
+        $prepared_data['item_qty'] = Arr::get($order_item, 'tm_travelers_number', '');
+        $prepared_data['package_type'] = Arr::get($order_item, 'package_type', '');
+        $prepared_data['item_name'] = Arr::get($order_item, 'pricing_label', '');
+        $prepared_data['line_total'] = Arr::get($order_item, 'tm_package_price_total', '');
+        $prepared_data['item_price'] = $prepared_data['package_type'] == 'person' ? Arr::get($order_item, 'tm_package_price_total', '') / $prepared_data['item_qty'] : Arr::get($order_item, 'tm_package_price_total', '');
+
+        $id = Arr::get($order_item, 'id', null);
         
         if ($id) {
-            return TMDBModel('tm_order_items')->where('id', $id)->update($sanitize_order_item);
+            return TMDBModel('tm_order_items')->where('id', $id)->update($prepared_data);
         } else {
-            return TMDBModel('tm_order_items')->insert($sanitize_order_item);
+            return TMDBModel('tm_order_items')->insert($prepared_data);
         }
     }
 

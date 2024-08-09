@@ -6,7 +6,7 @@ use WPTravelManager\Classes\Helper;
 class CheckoutServices {
     public static function sanitize($data)
     {
-        $data['booking_hash'] = sanitize_text_field( 'hello booking' );
+        $data['booking_hash'] = $data['booking_hash'] = hash('sha256', Arr::get($data, 'booking_hash'));
         $data['trip_id'] = sanitize_text_field( Arr::get($data, 'trip_id') );
         $data['booking_total'] = sanitize_text_field( Arr::get($data, 'booking_total') );
         $data['traveler_name'] = sanitize_text_field( Arr::get($data, 'traveler_name') );
@@ -56,7 +56,15 @@ class CheckoutServices {
         if (empty($data['booking_date'])) {
             $errors['booking_date'] = 'Booking date is required';
         }
+
+        if (!empty($errors)) {
+            wp_send_json_error($errors);
+        }
+
+        if (isset($data['session_id'])) {
+            unset($data['session_id']);
+        }
       
-        return $errors;
+        return $data;
     }
 }

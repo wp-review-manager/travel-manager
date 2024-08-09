@@ -8,7 +8,7 @@ $booking_packages = Arr::get($booking, 'packages', '[]');
 $package_name = Arr::get($booking, 'packages.0.package_name', '[]');
 $trip_id = Arr::get($booking, 'trip_id', null);
 //dd($booking);
-
+$subtotal = 0;
 foreach ($booking_packages as $packages): 
     $tm_package_price_total = Arr::get($packages, 'tm_package_price_total', '');
     $subtotal += $tm_package_price_total;
@@ -33,7 +33,7 @@ endforeach;
 
             <form id="tm_checkout-form">
 
-                <input type="hidden" name="booking_id" value="<?php echo esc_html($booking_id)  ?>">
+                <input type="hidden" name="session_id" value="<?php echo esc_html($booking_id)  ?>">
 
                 <input type="hidden" name="trip_id" value="<?php echo esc_html($trip_id)  ?>">
 

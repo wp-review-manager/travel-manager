@@ -201,6 +201,8 @@ class Activator
             item_qty int(11),
             item_price int(11),
             line_total int(11),
+            created_at timestamp NULL DEFAULT NULL,
+            updated_at timestamp NULL DEFAULT NULL,
             PRIMARY KEY (id)
            ) $charset_collate;";
 

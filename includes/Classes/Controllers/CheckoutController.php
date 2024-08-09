@@ -22,41 +22,36 @@ class CheckoutController {
     }
 
     public function submissionCheckout() {
-        
         $form_data = Arr::get($_REQUEST, 'data');
-        $booking_id=  Arr::get($form_data, 'booking_id') ;
+        $session_id=  Arr::get($form_data, 'session_id'); ;
         //=====================get session data==========================
 
-        $session_data = (new OrderItem())->getSessionData($booking_id);
-       
-        $session_meta = $session_data['session_meta'];
-        $session_id = $session_data['session_id'];
-       
+        $session_data = (new OrderItem())->getSessionData($session_id);
+
+        $sessionId = Arr::get($session_data, 'session_id', null);
         //========================================================
-        if($booking_id === $session_id){
-            $sanitize_order_item = OrdersItemService::sanitize($form_data, $session_meta);
-          
+        if($sessionId){          
             $sanitize_data = CheckoutServices::sanitize($form_data);
-           
-            $validation = CheckoutServices::validate($sanitize_data);
+            $validateData = CheckoutServices::validate($sanitize_data);
           
-            if (!empty($validation)) {
-                wp_send_json_error($validation);
-            }
-            $response = (new Checkout())->saveCheckout($sanitize_data);
-          
-            $response_order_item = (new OrderItem())->saveOrderItem($sanitize_order_item);
-         
+        
+            $response = (new Checkout())->saveCheckout($validateData);
+                     
             if ($response) {
+                foreach ($session_data['session_meta'] as $order_item) {
+                    $order_item['booking_id'] = $response;
+                    $order_item['trip_id'] = $validateData['trip_id'];
+                    $response_order_item = (new OrderItem())->saveOrderItem($order_item);
+                }
                 wp_send_json_success('checkout Created successfully');
             } else {
                 wp_send_json_error('Failed to updated CheckOut');
             }
-            if ($response_order_item) {
-                wp_send_json_success('order Item Created successfully');
-            } else {
-                wp_send_json_error('Failed to updated Order Item');
-            }
+            // if ($response_order_item) {
+            //     wp_send_json_success('order Item Created successfully');
+            // } else {
+            //     wp_send_json_error('Failed to updated Order Item');
+            // }
         }
         //========================================================
       
