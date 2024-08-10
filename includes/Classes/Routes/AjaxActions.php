@@ -60,5 +60,9 @@ class AjaxActions {
             (new CheckoutController())->registerAjaxRoutes();
         });
 
+        add_action('wp_ajax_tm_bookings', function () {
+            (new BookingsController())->registerAjaxRoutes();
+        });
+
     }
 }

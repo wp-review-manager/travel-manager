@@ -1,7 +1,6 @@
 <?php
 namespace WPTravelManager\Classes\Controllers;
 use WPTravelManager\Classes\Services\CheckoutServices;
-use WPTravelManager\Classes\Services\OrdersItemService;
 use WPTravelManager\Classes\Models\Checkout;
 use WPTravelManager\Classes\Models\OrderItem;
 use WPTravelManager\Classes\ArrayHelper as Arr;

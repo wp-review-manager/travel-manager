@@ -30,11 +30,11 @@ class AdminMenuHandler {
                 'manage_options',
                 'admin.php?page=travel-manager.php#/trips',
             );
-            // $submenu['travel-manager.php']['bookings'] = array(
-            //     'Bookings',
-            //     'manage_options',
-            //     'admin.php?page=travel-manager.php#/bookings',
-            // );
+            $submenu['travel-manager.php']['bookings'] = array(
+                'Bookings',
+                'manage_options',
+                'admin.php?page=travel-manager.php#/bookings',
+            );
             // $submenu['travel-manager.php']['customers'] = array(
             //     'Customers',
             //     'manage_options',
@@ -104,6 +104,9 @@ class AdminMenuHandler {
                 <div class="menu-item">
                     <router-link class="tm-menu-item" to="/trips" >
                         Trips
+                    </router-link>
+                     <router-link class="tm-menu-item" to="/bookings" >
+                        Booking
                     </router-link>
                     <router-link class="tm-menu-item" to="/settings" >
                         Settings

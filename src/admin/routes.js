@@ -29,6 +29,9 @@ import PaymentSettings from '@/pages/page_settings/payment/PaymentSettings.vue';
 // Enquiries section components
 import AllEnquiries from './pages/page_enquiries/AllEnquiries.vue';
 
+//Booking section components
+import AllBooking from './pages/page_booking/AllBooking.vue';
+
 export default [
     {
         path: '/',
@@ -130,7 +133,7 @@ export default [
     {
         path: '/bookings',
         name: 'bookings',
-        component: Dashboard
+        component: AllBooking,
     },
     {
         path: '/customers',
