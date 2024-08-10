@@ -24,13 +24,13 @@
                 <el-table-column prop="traveler_address" label="Address" width="auto" />
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
-                        <el-tooltip class="box-item" effect="dark" content="Click to view" placement="top-start">
+                        <el-tooltip class="box-item" effect="dark" content="Click to view activities" placement="top-start">
                             <el-button @click="openDetailsModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-eye" />
                             </el-button>
                         </el-tooltip>
                         <el-tooltip class="box-item" effect="dark" content="Click to delete activities" placement="top-start">
-                            <el-button @click="openDeleteEnquiriesModal(row)" link type="primary" size="small">
+                            <el-button @click="openDeleteBookingModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -54,20 +54,20 @@
         </AppTable>
 
         <AppModal
-            :title="'Delete Enquiry'"
+            :title="'Delete Booking'"
             :width="400"
             :showFooter="false"
-            ref="delete_enquiries_modal">
+            ref="delete_booking_modal">
             <template #body>
                 <div class="delete-modal-body">
                     <h1>Are you sure ?</h1>
-                    <p>You want to delete this enquiries</p>
+                    <p>You want to delete this booking</p>
                 </div>
             </template>
             <template #footer>
                 <div class="tm-modal-footer">
-                    <el-button @click="$refs.delete_enquiries_modal.handleClose()" type="default" size="medium">Cancel</el-button>
-                    <el-button @click="deleteEnquiries" type="primary" size="medium">Delete</el-button>
+                    <el-button @click="$refs.delete_booking_modal.handleClose()" type="default" size="medium">Cancel</el-button>
+                    <el-button @click="deleteBooking" type="primary" size="medium">Delete</el-button>
                 </div>
             </template>
         </AppModal>
@@ -126,33 +126,28 @@ export default {
                 })
         },
 
-        deleteEnquiries() {
+        deleteBooking() {
             let that = this;
             jQuery
                 .post(ajaxurl, {
-                    action: "tm_inquiry",
-                    route: "delete_enquiries",
+                    action: "tm_bookings",
+                    route: "delete_booking",
                     id: that.active_id,
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 }).then((response) => {
-                    that.getEnquiries();
-                    that.$refs.delete_enquiries_modal.handleClose();
+                    that.getBookings();
+                    that.$refs.delete_booking_modal.handleClose();
                 }).fail((error) => {
                     console.log(error);
                 })
         },
       
     
-        openDeleteEnquiriesModal(row) {
+        openDeleteBookingModal(row) {
             this.active_id = row.id;
-            this.$refs.delete_enquiries_modal.openModel();
+            this.$refs.delete_booking_modal.openModel();
         },
 
-
-        openDetailsModal(row) {
-            this.enquiry = row;
-            this.$refs.update_enquiries_modal.openModel();
-        },
       
     },
     

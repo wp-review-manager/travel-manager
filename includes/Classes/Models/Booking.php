@@ -39,4 +39,8 @@ class Booking extends Model
 
     }
 
+    public static function deleteBooking($booking_id) {
+        return TMDBModel('tm_bookings')->where('id', $booking_id)->delete();
+    }
+
 }
