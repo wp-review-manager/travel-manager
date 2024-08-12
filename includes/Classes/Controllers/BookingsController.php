@@ -33,13 +33,14 @@ class BookingsController {
     }
 
     public function deleteBooking() {
-        $booking_id = Arr::get($_REQUEST, 'id');
+        $booking_id = Arr::get($_REQUEST, 'id', '');
+        $id = sanitize_text_field($booking_id);
         
-        if (!$booking_id) {
+        if (!$id) {
             wp_send_json_error('Booking ID is required');
         }
 
-        $response = Booking::deleteBooking($booking_id);
+        $response = Booking::deleteBooking($id);
 
         if ($response) {
             wp_send_json_success('Booking deleted successfully');

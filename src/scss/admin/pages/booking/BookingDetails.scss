@@ -1,0 +1,204 @@
+.container{
+    padding-left: 20px;
+}
+//===========================
+.tm_head_info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px;
+
+    .tm_entry_title{
+        display: flex;
+        align-items: center;
+        .tm_entries_url{
+            a{text-decoration: none;
+                span{
+                   
+                    @include text($size: 14px);
+                }
+            }
+
+        }
+        .tm_back_icon{
+            padding: 0 8px;
+            color: $tm-neutral-1100;
+        }
+        .tm_payhead_title{
+            color: $tm-neutral-1200;
+            font-family: "Inter", sans-serif;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 16px;
+        
+        }
+    }
+}
+//=================================
+.tm_entry_layout{
+    display: flex;
+
+    //==========================================================
+    .tm_entry_left{
+        width: 75%;
+        .tm_header{
+            background-color: #FFF;
+            border-radius: 8px;
+            .tm_head_top{
+                display: flex;
+                justify-content: space-between;
+                padding: 20px;
+                border-bottom: 1px solid #EAECF0;
+
+                .tm_header_left{
+                    display: flex;
+                    .tm_payment_icon{
+                        background: #FFF;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid #D6DAE1;
+                        border-radius: 8px;
+                        height: 50px;
+                        width: 50px;
+                    }
+                    .payment_amount_detail{
+                        padding: 0 15px;
+                        .head_small_title{
+                            color: #565865;
+                            font-family: "Inter", sans-serif;
+                            font-size: 14px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 20px;
+                            margin: 0;
+                            padding-bottom: 10px;
+                        }
+                        .head_payment_amount{
+                            display: flex;
+                            align-items: center;
+                            .pay_amount{
+                                color: #2F3448;
+                                font-family: "Inter", sans-serif;
+                                font-size: 24px;
+                                font-style: normal;
+                                font-weight: 600;
+                                line-height: 34px;
+                                margin-right: 10px;
+                            
+                            }
+                            .tm_pay_status_pending{
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                                background: #FFF9F3;
+                                color: #DC8006;
+                                text-align: center;
+                                font-family: "Inter", sans-serif;
+                                font-size: 14px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 16px;
+                                padding: 12px 12px;
+                                border-radius: 6px;
+                                width: fit-content;
+                                height: 15px;
+                                
+                            }
+                        }
+                    }
+                }
+
+                .tm_header_right{
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                   .tm_payment_status{
+                        cursor: pointer;
+                        text-decoration-line: underline;
+                    }    
+                    .tm_pay_method_offline{
+                        color: #fff;
+                        font-weight: 700;
+                        background: #cfcfcf;
+                        border-radius: 5px;
+                        border: 2px solid #cfcfcf;
+                    }
+                }
+            }
+
+            .tm_head_bottom{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 50px;
+                padding: 20px;
+                .tm_info_block{
+                    flex-basis: 20%;
+                    .tm_info_header{
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: black;
+                        padding-bottom: 6px;
+                    }
+                    .tm_info_value{
+                        color: #565865;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    //========================================================
+    .tm_entry_right{
+        width: 25%;
+    }
+}
+//========================
+
+.tm_entry_info_box{
+    background: #FFF;
+    margin-top: 20px;
+    border-radius: 8px;
+    padding: 20px;
+    .tm_entry_info_header{
+        border-radius: 8px 8px 0 0;
+        border-bottom: 1px solid #D6DAE1;
+        padding-bottom: 15px;
+        .tm_info_box_header{
+            color: #2F3448;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 22px;
+        }
+    }
+    .tm_entry_info_body{
+        .tm_entry_details{
+            padding-top: 20px;
+            .tm_each_entry{
+                display: grid;
+                grid-template-columns: 200px auto;
+                padding: 8px 0;
+                .tm_entry_label{
+                    color: #565865;
+                    font-family: "Inter", sans-serif;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 20px;
+                }
+                .tm_entry_value{
+                    color: #2F3448;
+                    font-family: "Inter", sans-serif;
+                    font-size: 13px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+}
+

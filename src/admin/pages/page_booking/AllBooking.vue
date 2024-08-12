@@ -25,7 +25,7 @@
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
                         <el-tooltip class="box-item" effect="dark" content="Click to view activities" placement="top-start">
-                            <el-button @click="openDetailsModal(row)" link type="primary" size="small">
+                            <el-button @click="redirectPreviewUrl(row)" link type="primary" size="small">
                                 <Icon icon="tm-eye" />
                             </el-button>
                         </el-tooltip>
@@ -148,7 +148,9 @@ export default {
             this.$refs.delete_booking_modal.openModel();
         },
 
-      
+        redirectPreviewUrl(row) {
+            this.$router.push(`/booking/${row.id}/view/`)
+        },
     },
     
     created() {

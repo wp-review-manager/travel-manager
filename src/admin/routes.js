@@ -31,6 +31,7 @@ import AllEnquiries from './pages/page_enquiries/AllEnquiries.vue';
 
 //Booking section components
 import AllBooking from './pages/page_booking/AllBooking.vue';
+import BookingDetails from './pages/page_booking/BookingDetails.vue';
 
 export default [
     {
@@ -135,6 +136,11 @@ export default [
         name: 'bookings',
         component: AllBooking,
     },
+   {
+    path: '/booking/:id/view/',
+    name: 'view-booking',
+    component: BookingDetails,
+   },
     {
         path: '/customers',
         name: 'customers',

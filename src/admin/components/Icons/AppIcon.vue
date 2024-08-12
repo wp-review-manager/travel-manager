@@ -4,6 +4,8 @@
     <Edit v-if="icon === 'tm-edit'" />
     <Delete v-if="icon === 'tm-delete'" />
     <Eye v-if="icon === 'tm-eye'" />
+    <Money v-if="icon === 'tm-money'" />
+    <Pending v-if="icon === 'tm-pending'" />
 </template>
 
 <script>
@@ -12,6 +14,8 @@ import Cancel from "@/components/Icons/Cancel.vue";
 import Edit from "@/components/Icons/Edit.vue";
 import Delete from "@/components/Icons/Delete.vue";
 import Eye from "./Eye.vue";
+import Money from "./Money.vue";
+import Pending from "./PendingIcon.vue";
 
 export default {
     components: {
@@ -19,7 +23,9 @@ export default {
         Cancel,
         Edit,
         Delete,
-        Eye
+        Eye,
+        Money,
+        Pending
     },
     props: {
         icon: {
