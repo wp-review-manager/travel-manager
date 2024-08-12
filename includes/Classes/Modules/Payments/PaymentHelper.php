@@ -12,6 +12,16 @@ use WPTravelManager\Classes\ArrayHelper;
 class PaymentHelper
 {
 
+    /**
+     * @var int|mixed
+     */
+    private static $checkoutCount = 0;
+
+    public static function getCheckoutDynamicClass()
+    {
+        return 'trm' . '_checkout_' . static::$checkoutCount++;
+    }
+
     public static function getCurrency()
     {
         
@@ -71,7 +81,7 @@ class PaymentHelper
         return self::getPaymentSettings();
     }
 
-    public static function getCustomerEmail($bookingData, $form = false)
+    public static function getCustomerEmail($bookingData)
     {
         $user = get_user_by('ID', get_current_user_id());
 
@@ -101,6 +111,65 @@ class PaymentHelper
         
         $phone = ArrayHelper::get($bookingData, 'traveler_info.phone', '');
         return $phone;
+    }
+
+    /**
+     * Trim a string and append a suffix.
+     *
+     * @param string $string String to trim.
+     * @param integer $chars Amount of characters.
+     *                         Defaults to 200.
+     * @param string $suffix Suffix.
+     *                         Defaults to '...'.
+     * @return string
+     */
+    public static function formatPaymentItemString($string, $chars = 200, $suffix = '...')
+    {
+        $string = wp_strip_all_tags($string);
+        if (strlen($string) > $chars) {
+            if (function_exists('mb_substr')) {
+                $string = mb_substr($string, 0, ($chars - mb_strlen($suffix))) . $suffix;
+            } else {
+                $string = substr($string, 0, ($chars - strlen($suffix))) . $suffix;
+            }
+        }
+
+        return html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
+    }
+
+    /**
+     * Limit length of an arg.
+     *
+     * @param string $string Argument to limit.
+     * @param integer $limit Limit size in characters.
+     * @return string
+     */
+    public static function limitLength($string, $limit = 127)
+    {
+        $str_limit = $limit - 3;
+        if (function_exists('mb_strimwidth')) {
+            if (mb_strlen($string) > $limit) {
+                $string = mb_strimwidth($string, 0, $str_limit) . '...';
+            }
+        } else {
+            if (strlen($string) > $limit) {
+                $string = substr($string, 0, $str_limit) . '...';
+            }
+        }
+        return $string;
+    }
+
+    public static function floatToString($float)
+    {
+        if (!is_float($float)) {
+            return $float;
+        }
+
+        $locale = localeconv();
+        $string = strval($float);
+        $string = str_replace($locale['decimal_point'], '.', $string);
+
+        return $string;
     }
 
     public static function formatMoney($amountInCents, $currency)
@@ -295,6 +364,27 @@ class PaymentHelper
         $currency_symbol = isset($symbols[$currency]) ? $symbols[$currency] : '';
 
         return apply_filters('trm/currency_symbol', $currency_symbol, $currency);
+    }
+
+    /**
+     * This method will set key value pair for dynamic bindings
+     * @return Default values for save Settings
+     */
+    public static function mapper($defaults, $settings = [], $get = true) 
+    {
+        foreach ($defaults as $key => $value) {
+            if ($get) {
+                if (isset($settings[$key])) {
+                    $defaults[$key]['value'] = $settings[$key];
+                }
+            } else {
+                if (isset($settings[$key])) {
+                    $defaults[$key] = $settings[$key]['value'];
+                }
+            }
+        }
+
+        return $defaults;
     }
 
     public static function getCurrencySymbols()

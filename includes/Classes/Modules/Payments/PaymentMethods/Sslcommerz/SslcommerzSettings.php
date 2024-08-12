@@ -2,7 +2,7 @@
 
 namespace WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz;
 
-use WPTravelManager\Classes\Modules\Payments\PaymentMethods\BasePaymentMethod;
+use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
 if (!defined('ABSPATH')) {
@@ -12,29 +12,23 @@ if (!defined('ABSPATH')) {
  * Automatically create global payment settings page
  * @param  String: key, title, routes_query, 'logo')
  */
-class SslcommerzSettings extends BasePaymentMethod
+class SslcommerzSettings
 {
-
-    public function __construct()
-    {
-        parent::__construct(
-            'sslcommerz',
-        );
-    }
     /**
      * @function mapperSettings, To map key => value before store
      * @function validateSettings, To validate before save settings
      */
     public function init()
     {
-        add_filter('trm_payment_method_settings_mapper_'.$this->key, array($this, 'mapperSettings'));
-        add_filter('trm_payment_method_settings_validation_' . $this->key, array($this, 'validateSettings'), 10, 2);
+        add_filter('trm_before_save_sslcommerz', array($this, 'mapperSettings'), 10, 1);
+        add_action('trm_payment_method_settings_validation_sslcommerz', array($this, 'validateSettings'), 10, 1);
     }
 
     /**
      * @return Array of global fields
      */
-    public function getGlobalFields() {
+    public static function globalFields(): array
+    {
         return array (
             'is_active' => array(
                 'value' => 'no',
@@ -91,10 +85,10 @@ class SslcommerzSettings extends BasePaymentMethod
         );
     }
 
-    /**
+     /**
      * @return Array of default fields
      */
-    public static function settingsKeys()
+    public static function settingsKeys() : array
     {
         return array(
             'is_active' => 'no',
@@ -102,50 +96,42 @@ class SslcommerzSettings extends BasePaymentMethod
             'test_store_id' => '',
             'test_store_pass' => '',
             'live_store_id' => '',
-            'live_store_pass' => ''
+            'live_store_pass' => '',
         );
     }
 
-       /**
-     * @return Array of global_payments settings fields
-     */
-    public function getGlobalSettings()
+    public function mapperSettings($settings)
     {
-        $settings = $this->mapper(
-            $this->getGlobalFields(), 
-            static::getSettings()
-        );
-
-        return array(
-            'settings' => $settings,
-            'is_key_defined' => false
-        );
-    }
-
-    public static  function getSettings()
-    {
-        $settings = get_option('trm_payment_settings_sslcommerz', array());
-        return wp_parse_args($settings, static::settingsKeys());
-    }
-
-    public function mapperSettings ($settings) {
-        return $this->mapper(
-            static::settingsKeys(), 
-            $settings, 
+        $settings = PaymentHelper::mapper(
+            self::settingsKeys(),
+            $settings,
             false
         );
+
+        return $settings;
     }
 
-    public function saveSettings($settings)
+    public static function get($key = null)
     {
-        $this->validateSettings([], $settings);
-        $settings = $this->mapperSettings($settings);
-        update_option('trm_payment_settings_sslcommerz', $settings);
-        return true;
+        $settings = get_option('trm_payment_settings_sslcommerz', array());
+
+        $defaults = array(
+            'is_active' => 'no',
+            'payment_mode' => 'test',
+            'test_store_id' => '',
+            'test_store_pass' => '',
+            'live_store_id' => '',
+            'live_store_pass' => '',
+        );
+
+        $data = wp_parse_args($settings, $defaults);
+        return $key && isset($data[$key]) ? $data[$key] : $data;
     }
 
-    public function validateSettings($errors, $settings)
+    public function validateSettings($settings)
     {
+        $errors = array();
+
         $mode = Arr::get($settings, 'payment_mode');
 
         if ($mode == 'test') {
@@ -161,7 +147,13 @@ class SslcommerzSettings extends BasePaymentMethod
         }
 
         if ($errors) {
-            wp_send_json_error($errors);
+            wp_send_json_error(
+                array(
+                    'message' => __('Please fill all required fields', 'wp-payment-form-pro'),
+                    'errors' => $errors
+                ),
+                400
+            );
         }
 
         return true;

@@ -1,7 +1,7 @@
 <?php 
 namespace WPTravelManager\Classes;
 
-use WPTravelManager\Classes\Modules\Payments\PaymentMethods;
+use WPTravelManager\Classes\Modules\Payments\PaymentHandler;
 
 class AdminMenuHandler {
     public function renderMenu()
@@ -66,10 +66,6 @@ class AdminMenuHandler {
             wp_enqueue_media();
         }
 
-        $payment_methods = apply_filters('TM/payment_methods_info', PaymentMethods::getMethods());
-        $payment_routes = apply_filters('TM/payment_methods_routes', PaymentMethods::getRoutes());
-        $paymentAddons = apply_filters('TM/available_payment_addons', PaymentMethods::getPaymentAddons());
-
         $TM = apply_filters('TM/admin_app_vars', array(
             //'image_upload_url' => admin_url('admin-ajax.php?action=wpf_global_settings_handler&route=wpf_upload_image'),
             'assets_url' => TRM_URL . 'assets/',
@@ -77,9 +73,7 @@ class AdminMenuHandler {
             'tm_admin_nonce' => wp_create_nonce('tm_admin_nonce'),
             'nonce' => wp_create_nonce('travel_manager'),
             'server_time' => current_time('timestamp'),
-            'payment_methods' => $payment_methods,
-            'payment_routes' => $payment_routes,
-            'paymentAddons' => $paymentAddons,
+            'payment_routes' => apply_filters('trm/payment_methods_routes', []),
         ));
 
         wp_localize_script('TM-script-boot', 'wpTravelManager', $TM);

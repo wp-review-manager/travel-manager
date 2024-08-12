@@ -6,10 +6,9 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-// use WPTravelManager\Classes\Models/Bookings; 
-// use WPTravelManager\Classes\Models/Orders;
-// use WPTravelManager\Classes\Models/BookingMeta;
-// use WPTravelManager\Classes\Models/Transactions;
+use WPTravelManager\Classes\Models\Booking; 
+use WPTravelManager\Classes\Models\Order;
+use WPTravelManager\Classes\Models\Transaction;
 use WPTravelManager\Classes\ArrayHelper;
 use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
 
@@ -101,20 +100,23 @@ abstract class BaseProcessor
 
     public function getLastTransaction($bookingId)
     {
-        // return Transactions->where('booking_id', $bookingId)
-        //     ->orderBy('id', 'DESC')
-        //     ->first();
+        $transaction = new Transaction();
+        return $transaction->where('booking_id', $bookingId)
+            ->orderBy('id', 'DESC')
+            ->first();
     }
 
     public function changeBookingPaymentStatus($newStatus)
     {
         do_action('trm/before_payment_status_change', $newStatus, $this->getBooking());
 
-        // Bookings->where('id', $this->bookingId)
-        //     ->update([
-        //         'payment_status' => $newStatus,
-        //         'updated_at'     => current_time('mysql')
-        //     ]);
+        $booking = new Booking();
+
+        $booking->where('id', $this->bookingId)
+            ->update([
+                'payment_status' => $newStatus,
+                'updated_at'     => current_time('mysql')
+            ]);
 
         $this->booking = null;
 
@@ -137,6 +139,36 @@ abstract class BaseProcessor
                 $this->getBooking()
             ],
         );
+
+        do_action('trm/after_payment_status_change', $newStatus, $this->getBooking());
+
+        return true;
+    }
+
+    public function changeSubmissionPaymentStatus($newStatus)
+    {
+        do_action('fluentform/before_payment_status_change', $newStatus, $this->getBooking());
+
+        $booking = new Booking();
+        $booking->where('id', $this->bookingId)
+            ->update([
+                'payment_status' => $newStatus,
+                'updated_at'     => current_time('mysql')
+            ]);
+
+        $this->booking = null;
+
+        $logData = [
+            'parent_source_id' => $this->getTrip()->id,
+            'source_type'      => 'submission_item',
+            'source_id'        => $this->bookingId,
+            'component'        => 'Payment',
+            'status'           => 'paid' === $newStatus ? 'success' : $newStatus,
+            'title'            => __('Payment Status changed', 'travel-manager'),
+            'description'      => __('Payment status changed to ', 'travel-manager') . $newStatus
+        ];
+
+        do_action('trm/log_data', $logData);
 
         do_action('trm/after_payment_status_change', $newStatus, $this->getBooking());
 
@@ -256,16 +288,18 @@ abstract class BaseProcessor
 
     public function getOrderItems()
     {
-        // return Orders->where('booking_id', $this->bookingId)
-        //     ->where('type', '!=', 'discount') // type = single, signup_fee
-        //     ->get();
+        $order = new Order();
+        return $order->where('booking_id', $this->bookingId)
+            ->where('type', '!=', 'discount') // type = single, signup_fee
+            ->get();
     }
 
     public function getDiscountItems()
     {
-        // return Order->where('booking_id', $this->bookingId)
-        //     ->where('type', 'discount')
-        //     ->get();
+        $order = new Order();
+        return $order->where('booking_id', $this->bookingId)
+            ->where('type', 'discount')
+            ->get();
     }
 
     public function setMetaData($name, $value)
@@ -502,14 +536,14 @@ abstract class BaseProcessor
         $orderItems = $this->getOrderItems();
 
         $amountTotal = 0;
-        // foreach ($orderItems as $item) {
-        //     $amountTotal += $item->line_total;
-        // }
+        foreach ($orderItems as $item) {
+            $amountTotal += $item->line_total;
+        }
 
-        // $discountItems = $this->getDiscountItems();
-        // foreach ($discountItems as $discountItem) {
-        //     $amountTotal -= $discountItem->line_total;
-        // }
+        $discountItems = $this->getDiscountItems();
+        foreach ($discountItems as $discountItem) {
+            $amountTotal -= $discountItem->line_total;
+        }
 
         return $amountTotal;
     }

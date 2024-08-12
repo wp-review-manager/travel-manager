@@ -1,6 +1,6 @@
 <template>
     <el-tabs v-model="activeName" class="trm_tabs trm_payment_settings_wrapper">
-         <el-tab-pane v-for="route in routes" :label="route.meta.title" :name="route.name" :key="route.name">
+         <el-tab-pane v-for="route in payment_routes" :label="route.meta.title" :name="route.name" :key="route.name">
             <GlobalPaymentSettings v-loading="loading" :route="route" :payment_settings="payment_settings" />
         </el-tab-pane>
     </el-tabs>
@@ -14,9 +14,9 @@ export default {
     },
     data() {
         return {
-            routes: [],
             ajaxurl: window.wpTravelManager.ajaxurl,
             nonce: window.wpTravelManager.tm_admin_nonce,
+            payment_routes: window.wpTravelManager.payment_routes,
             activeName: 'offline',
             payment_settings: {},
             loading: false
@@ -32,7 +32,7 @@ export default {
         getPaymentSettings(gateWay) {
             this.loading = true;
             jQuery.get(ajaxurl, {
-                action: 'get_payment_settings',
+                action: 'trm_payment_settings',
                 route: 'getPaymentSettings',
                 gateway: gateWay,
                 tm_admin_nonce: this.nonce
@@ -46,8 +46,7 @@ export default {
         }
     },
     mounted() {
-        this.routes = window.wpTravelManager.payment_routes;
-        let activeRoute = this.$route.name == 'payment-settings' ? this.routes[0].name : this.$route.name;
+        let activeRoute = this.$route.name == 'payment' ? this.payment_routes[0].path : this.$route.name;
         this.activeName = activeRoute;
         this.$router.push('/settings/payment/' + activeRoute);
     }

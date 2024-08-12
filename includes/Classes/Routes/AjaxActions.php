@@ -35,7 +35,7 @@ class AjaxActions {
             (new PricingCategoriesController())->registerAjaxRoutes();
         });
 
-        add_action( 'wp_ajax_get_payment_settings', function () {
+        add_action( 'wp_ajax_trm_payment_settings', function () {
             (new PaymentSettingsController())->registerAjaxRoutes();
         });
 

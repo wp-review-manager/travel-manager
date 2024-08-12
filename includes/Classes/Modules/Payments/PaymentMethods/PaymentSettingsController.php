@@ -2,12 +2,14 @@
 namespace WPTravelManager\Classes\Modules\Payments\PaymentMethods;
 
 use WPTravelManager\Classes\PaymentSettings;
+use WPTravelManager\Classes\Modules\Payments\PaymentHandler;
 
 class PaymentSettingsController {
     public function registerAjaxRoutes() {
         tmValidateNonce('tm_admin_nonce');
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
+            'gateways' => 'getAllMethods',
             'getPaymentSettings' => 'getPaymentSettings',
             'savePaymentSettings' => 'savePaymentSettings',
         );
@@ -17,22 +19,27 @@ class PaymentSettingsController {
         }
     }
 
+    public function getAllMethods()
+    {
+        $methods = PaymentHandler::getAllMethods();
+        wp_send_json_success($methods, 200);
+    }
+
     public function getPaymentSettings () {
         $gateway = sanitize_text_field($_REQUEST['gateway']);
-        $payment_settings = apply_filters( 'trm/payment_settings_' . $gateway , [] );
-        wp_send_json_success($payment_settings);
+        do_action('trm/get_payment_settings_' . $gateway);
     }
 
     public function savePaymentSettings () {
         $gateway = sanitize_text_field($_REQUEST['gateway']);
         $settings = $_REQUEST['settings'];
         $settings = $this->sanitizePaymentSettingsUpdateData($settings);
+      
         $payment_settings = apply_filters( 'trm/payment_settings_' . $gateway , [] );
         $payment_settings = array_merge($payment_settings, $settings);
-        do_action( 'trm/save_payment_settings_' . $gateway , $payment_settings );
-        wp_send_json_success(array(
-            'message' => __('Settings saved successfully', 'travel-manager')
-        ));
+
+        (new PaymentHandler())->saveSettings($gateway, $payment_settings);
+
     }
 
     public function sanitizePaymentSettingsUpdateData($data) {
