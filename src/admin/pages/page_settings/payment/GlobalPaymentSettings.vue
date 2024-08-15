@@ -74,7 +74,7 @@ export default {
         savePaymentSettings() {
             this.loading = true;
             jQuery.get(ajaxurl, {
-                action: 'get_payment_settings',
+                action: 'trm_payment_settings',
                 route: 'savePaymentSettings',
                 gateway: this.route.name,
                 tm_admin_nonce: this.nonce,
