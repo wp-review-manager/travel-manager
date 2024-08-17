@@ -3,8 +3,11 @@ namespace WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz;
 use WPPayForm\Framework\Support\Arr;
 use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
 use WPTravelManager\Classes\Modules\Payments\PaymentMethods\BasePaymentMethod;
+use WPTravelManager\Classes\Models\Transaction;
 
 class Sslcommerz extends BasePaymentMethod {
+    public $method = 'sslcommerz';
+
     public function __construct()
     {
         (new SslcommerzSettings())->init();
@@ -14,7 +17,8 @@ class Sslcommerz extends BasePaymentMethod {
             'PayPal is the faster, safer way to send money, make an online payment, receive money or set up a merchant account.',
             'sslcommerz.svg'
         );
-        add_action('trm_make_payment_paypal', array($this, 'makePayment'), 10, 3);
+
+        add_action('trm_make_payment_' . $this->method, array($this, 'makePayment'), 10, 4);
         add_action('trm_paypal_action_web_accept', array($this, 'updateStatus'), 10, 2);
         add_action("trm_ipn_endpoint_paypal", array($this, 'verifyIpn'), 10, 2);
         add_filter('trm/transaction_data_paypal', array($this, 'modifyTransaction'), 10, 1);
@@ -95,6 +99,20 @@ class Sslcommerz extends BasePaymentMethod {
         // TODO: Implement isEnabled() method.
         $settings = $this->getSettings();
         return $settings['is_active'] === 'yes';
+    }
+
+    public function makePayment($transactionId, $bookingId, $data, $totalPayable)
+    {
+        $paymentMode = $this->getPaymentMode($this->method);
+        $transactionModel = new Transaction();
+
+        if ($transactionId) {
+            $transactionModel->updateTransaction($transactionId, array(
+                'payment_mode' => $paymentMode
+            ));
+        }
+        $transaction = $transactionModel->getTransaction($transactionId);
+        dd($transaction);
     }
 
 }

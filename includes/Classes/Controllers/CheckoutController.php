@@ -33,18 +33,20 @@ class CheckoutController {
         if($sessionId){          
             $sanitize_data = CheckoutServices::sanitize($form_data);
             $validateData = CheckoutServices::validate($sanitize_data);
-          
+            $totalPayable = Arr::get($validateData, 'booking_total', 0);
         
-            $response = (new Checkout())->saveCheckout($validateData);
+            $bookingId = (new Checkout())->saveCheckout($validateData);
                      
-            if ($response) {
+            if ($bookingId) {
                 foreach ($session_data['session_meta'] as $order_item) {
-                    $order_item['booking_id'] = $response;
+                    $order_item['booking_id'] = $bookingId;
                     $order_item['trip_id'] = $validateData['trip_id'];
                     (new OrderItem())->saveOrderItem($order_item);
                 }
             
-                $transactions = (new Transactions())->saveTransactions($validateData,$response);
+                $transactionId = (new Transactions())->saveTransactions($validateData,$bookingId);
+                $paymentMethod = Arr::get($validateData, 'payment_method', 'sslcommerz');
+                do_action('trm_make_payment_' . $paymentMethod, $transactionId, $bookingId, $validateData, $totalPayable);
                 wp_send_json_success('checkout Created successfully');
             } else {
                 wp_send_json_error('Failed to updated CheckOut');

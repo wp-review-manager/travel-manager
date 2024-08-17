@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 
 abstract class BasePaymentMethod
 {
@@ -95,6 +96,41 @@ abstract class BasePaymentMethod
     public function pushPaymentRoutes($routes)
     {
 
+    }
+
+    public function getPaymentMode($method)
+    {
+        $isLive = self::isLive($method);
+        if ($isLive) {
+            return 'live';
+        }
+        return 'test';
+
+    }
+
+    public static function isLive($method) {
+        $settings = get_option('trm_payment_settings_' .  $method, array());
+        $active = Arr::get($settings, 'is_active', 'no');
+        $paymentMode = Arr::get($settings, 'payment_mode', 'test');
+
+        if(!count($settings)) {
+            wp_send_json_error(
+                array(
+                    'message' => __('Payment settings is not fulfill', 'travel-manager')
+                ),
+                400
+                );
+        }
+        if($active == 'no') {
+            wp_send_json_error(
+                array(
+                    'message' => __('This payment gateway is not active', 'travel-manager')
+                ),
+                400
+                );
+        }
+       
+        return $paymentMode == 'live';
     }
 
     abstract public function render($template);
