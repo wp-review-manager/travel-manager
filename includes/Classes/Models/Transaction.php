@@ -16,4 +16,16 @@ class Transaction extends Model
     {
         parent::__construct($this->table);
     }
+
+    public function getByPaymentId($chargeId, $method = 'paypal')
+    {
+        $payment = $this->where('charge_id', $chargeId)
+            ->where('payment_method', $method)
+            ->first();
+
+        if ($payment) {
+            return $payment->id;
+        }
+        return false;
+    }
 }

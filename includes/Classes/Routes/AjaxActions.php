@@ -11,6 +11,7 @@ use WPTravelManager\Classes\Controllers\InquiryController;
 use WPTravelManager\Classes\Controllers\BookingsController;
 use WPTravelManager\Classes\Controllers\SessionsController;
 use WPTravelManager\Classes\Controllers\CheckoutController;
+use WPTravelManager\Classes\Modules\Payments\PaymentMethods\PaymentSettingsController;
 
 class AjaxActions {
     public function register () {
@@ -35,6 +36,10 @@ class AjaxActions {
         });
         add_action('wp_ajax_tm_pricing_categories', function () {
             (new PricingCategoriesController())->registerAjaxRoutes();
+        });
+
+        add_action( 'wp_ajax_trm_payment_settings', function () {
+            (new PaymentSettingsController())->registerAjaxRoutes();
         });
 
         // Public Ajax Actions

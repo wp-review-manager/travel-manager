@@ -28,6 +28,7 @@ import PaymentSettings from '@/pages/page_settings/payment/PaymentSettings.vue';
 
 // Enquiries section components
 import AllEnquiries from './pages/page_enquiries/AllEnquiries.vue';
+const childPaymentRoutes = window.wpTravelManager.payment_routes;
 
 //Booking section components
 import AllBooking from './pages/page_booking/AllBooking.vue';
@@ -164,7 +165,8 @@ export default [
             {
                 path: 'payment',
                 component: PaymentSettings,
-                name: 'payment-settings',
+                name: 'payment',
+                children: childPaymentRoutes
             },
         ]
     },

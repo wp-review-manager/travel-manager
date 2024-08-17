@@ -19,7 +19,6 @@ class Booking extends Model
         parent::__construct($this->table);
     }
 
-    //====================
     public function getBookings() {
       
         $per_page = sanitize_text_field(Arr::get($_REQUEST, 'per_page', 0));
@@ -41,6 +40,22 @@ class Booking extends Model
 
     public static function deleteBooking($booking_id) {
         return TMDBModel('tm_bookings')->where('id', $booking_id)->delete();
+    }
+
+    public function getBooking($booking_id)
+    {
+        return $this->get($booking_id);
+    }
+
+    // booking meta
+    public static function getBookingMeta($booking_id, $meta_key = null)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'trm_booking_meta';
+
+        $sql = "SELECT * FROM $table_name WHERE booking_id = %d";
+        $wpdb->prepare($sql, $booking_id);
+        return $wpdb->get_results($sql, ARRAY_A);
     }
 
 }

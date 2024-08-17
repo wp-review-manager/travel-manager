@@ -6,29 +6,102 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.  
 }
 
+use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
+
 abstract class BasePaymentMethod
 {
-    protected $key = '';
+    public $title = '';
+    public $method = '';
+    public $description = '';
+    public $image = '';
+   
+    public static $methods = array();
 
-    protected $settingsKey = '';
+    public static $routes = array();
 
-    public function __construct($key)
+    private static $index = 0;
+
+    public $assetUrl = TRM_URL . 'assets/gateways/';
+
+    public function __construct($title, $method, $description, $image)
     {
-        $this->key = $key;
-        $this->settingsKey = 'trm_payment_settings_'.$key;
+        $this->title = $title;
+        $this->method = $method;
+        $this->description = $description;
+        $this->image = $this->assetUrl . $image;
 
-        add_filter('trm/payment_methods_global_settings', function ($methods) {
-            $fields = $this->getGlobalFields();
-            if($fields) {
-                $methods[$this->key] = $fields;
-            }
-            return $methods;
-        });
-        add_filter('trm/payment_settings_' . $this->key, array($this, 'getGlobalSettings'));
+        $this->registerHooks($method);
+
+        add_action('trm/get_payment_settings_' . $this->method, array($this, 'getPaymentSettings'), 10, 1);
+
+        add_filter('trm_before_save_' . $this->method, array($this, 'sanitize'), 15, 2);
+
+        add_filter('trm/get_all_payment_methods', array($this, 'getAllMethods'), 10, 1);
+
+        add_filter('trm/payment_methods_routes', array($this, 'getPaymentRoutes'), 10, 1);
+
+        add_action('wp_ajax_nopriv_trm_payment_confirmation_'. $this->method, array($this, 'paymentConfirmation'));
+        add_action('wp_ajax_trm_payment_confirmation_' . $this->method, array($this, 'paymentConfirmation'));
     }
 
-    abstract public function getGlobalFields();
+    public function getAllMethods()
+    {
+        static::$methods[$this->method] = array(
+            'title' => $this->title,
+            'route' => $this->method,
+            'description' => $this->description,
+            'image' => $this->image,
+            "status" => $this->isEnabled(),
+        );
+        return static::$methods;
+    }
 
-    abstract public function getGlobalSettings();
+    public function getPaymentRoutes()
+    {
+        static::$routes[static::$index++] = array(
+            'path' => $this->method,
+            'name' => $this->method,
+            'meta' => [
+                'title' => $this->title
+            ] 
+        );
 
+        return static::$routes;
+    }
+
+    public function registerHooks($method)
+    {
+        add_action('trm_render_component_' . $method, array($this, 'render'), 10, 1);
+    }
+
+    abstract public function isEnabled();
+
+    public function getMode()
+    {
+        $paymentSettings = $this->getSettings();
+        return ($paymentSettings['payment_mode'] == 'live') ? 'live' : 'test';
+    }
+
+    public function uniqueId($id = '')
+    {
+        return esc_attr(PaymentHelper::getCheckoutDynamicClass() . '_' . $id);
+    }
+
+    public function paymentConfirmation()
+    {
+        //return if no module extend
+    }
+
+    public function pushPaymentRoutes($routes)
+    {
+
+    }
+
+    abstract public function render($template);
+
+    abstract public function getPaymentSettings();
+
+    abstract public function getSettings();
+
+    abstract public function sanitize($settings);
 }
