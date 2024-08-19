@@ -11,8 +11,7 @@ use WPTravelManager\Classes\Models\Model;
 
 class Booking extends Model
 {
-    protected $table = 'trm_bookings';
-    protected $model = 'tm_bookings';
+    protected $table = 'tm_bookings';
 
     public function __construct()
     {
@@ -44,14 +43,14 @@ class Booking extends Model
 
     public function getBooking($booking_id)
     {
-        return $this->get($booking_id);
+        return $this->where('id', $booking_id)->get();
     }
 
     // booking meta
     public static function getBookingMeta($booking_id, $meta_key = null)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'trm_booking_meta';
+        $table_name = $wpdb->prefix . 'tm_booking_meta';
 
         $sql = "SELECT * FROM $table_name WHERE booking_id = %d";
         $wpdb->prepare($sql, $booking_id);

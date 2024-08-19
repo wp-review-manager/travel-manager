@@ -1,9 +1,11 @@
 <?php
 namespace WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz;
-use WPPayForm\Framework\Support\Arr;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
 use WPTravelManager\Classes\Modules\Payments\PaymentMethods\BasePaymentMethod;
 use WPTravelManager\Classes\Models\Transaction;
+use WPTravelManager\Classes\Models\Booking;
+use WPTravelManager\Classes\Models\Trips;
 
 class Sslcommerz extends BasePaymentMethod {
     public $method = 'sslcommerz';
@@ -112,7 +114,101 @@ class Sslcommerz extends BasePaymentMethod {
             ));
         }
         $transaction = $transactionModel->getTransaction($transactionId);
-        dd($transaction);
+        $booking = (new Booking())->getBooking($bookingId);
+        if ($transaction && $booking) {
+            $this->redirect($transaction, $booking, $data, $totalPayable);
+        }
+    }
+
+    public function redirect($transaction, $booking, $data, $totalPayable)
+    {
+        $globalSettings = $this->getApiKeys($this->method);
+        if (!isset($globalSettings['api_key']) || !isset($globalSettings['api_secret'])) {
+            return;
+        }
+
+        $paymentIntent = $this->makePaymentData($transaction, $booking, $data, $totalPayable);
+        
+        if (Arr::get($paymentIntent, 'status') === 'FAILED') {
+            wp_send_json_error(array(
+                'message' => __(Arr::get($paymentIntent, 'failedreason'), 'travel-manager')
+            ), 423);
+        }
+
+        if (is_wp_error($paymentIntent)) {
+            wp_send_json_error(array(
+                'message' => __($paymentIntent->get_error_message(), 'travel-manager')
+            ), 423);
+        }
+        
+    }
+
+    public function makePaymentData($transaction, $booking, $form_data, $totalPayable)
+    {
+        $Api = new API();
+
+        $success_url = TRM_DIR . '/payment-success';
+
+        $webhook_url = add_query_arg([
+            'trm_payment_api_notify' => '1',
+            'payment_method' => 'sslcommerz'
+        ], site_url('index.php'));
+        
+        if ($totalPayable < 1) {
+            return;
+        }
+        $transaction = Arr::get($transaction, '0', null);
+        $trip_id = $transaction->trip_id;
+        $trip = (new Trips())->getTrip($trip_id);
+        if(!$trip) {
+            wp_send_json_error( array(
+                'message' => 'Trip Not Found'
+            ), 400 );
+        }
+
+        $args = [
+            'total_amount' => floatval($totalPayable),
+            'currency' =>  'BDT',
+            'tran_id' => $transaction->id,
+            'product_category' => 'travel_manager',
+            'product_profile' => 'general',
+            'product_name' => $trip->post_title,
+            'cus_name' => Arr::get($form_data, 'traveler_name', "Not collected"),
+            'cus_email' => Arr::get($form_data, 'traveler_email', "Not collected"),
+            'success_url' => $success_url,
+            'fail_url' => Arr::get($form_data, '__wpf_current_url'),
+            'cancel_url' => Arr::get($form_data, '__wpf_current_url'),
+
+            'cus_add1' => Arr::get($form_data, 'traveler_address', 'Not collected'),
+            'cus_city' => Arr::get($form_data, 'traveler_country', 'Not collected'),
+            'cus_country' => Arr::get($form_data, 'traveler_country', 'Not collected'),
+            'cus_phone' => "Not collected",
+            'shipping_method' => 'NO',
+            'ipn_url' => $webhook_url
+        ];
+
+        $keys = $this->getApiKeys($this->method);
+        $keys['api_path'] = $keys['api_path'] . '/gwprocess/v4/api.php';
+        return $Api->makeApiCall($keys, $args, 'POST');
+    }
+
+    public function getApiKeys($method) {
+        $isLive = self::isLive($method);
+        $settings = get_option('trm_payment_settings_' .  $method, array());
+
+        if($isLive) {
+            return array(
+                'api_key' => Arr::get($settings, 'live_store_id'),
+                'api_secret' => Arr::get($settings, 'live_store_pass'),
+                'api_path' => 'https://securepay.sslcommerz.com'
+            );
+        } else {
+            return array(
+                'api_key' => Arr::get($settings, 'test_store_id'),
+                'api_secret' => Arr::get($settings, 'test_store_pass'),
+                'api_path' => 'https://securepay.sslcommerz.com'
+            );
+        }
     }
 
 }

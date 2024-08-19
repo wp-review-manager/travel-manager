@@ -44,8 +44,6 @@ class Transaction extends Model
             ), 400);
         }
 
-        dd($transaction);
-
         return $transaction;
 
     }
