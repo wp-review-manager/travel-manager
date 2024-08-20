@@ -155,8 +155,12 @@ const makeApiCallForBooking = (booking_data, $) => {
         data,
     }).then((response) => {
         if (response.success) {
-            console.log(response.data);
-            window.location.href = response.data.data.redirect_url;
+            if(response.data.data && response.data.data.redirect_url) {
+                // window.location.href = response.data.data.redirect_url;
+                console.log(response.data, response.data.data.redirect_url, 'nitesh');
+                window.location.replace(response.data.data.redirect_url);
+
+            }
         } else {
             console.log(response.data);
         }

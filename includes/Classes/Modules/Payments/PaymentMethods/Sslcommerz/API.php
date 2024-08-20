@@ -13,28 +13,30 @@ class API
 
     public function validation($payId, $mode = 'live')
     {
-        $keys = SslcommerzSettings::getApiKeys();
+        // $keys = SslcommerzSettings::getApiKeys();
 
-        $validationApi = 'https://securepay.sslcommerz.com/validator/api/validationserverAPI.php';
+        // $validationApi = 'https://securepay.sslcommerz.com/validator/api/validationserverAPI.php';
 
-        if ($mode !== 'live') {
-            // API Endpoint (Sandbox/Test Environment):
-            $validationApi = 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php';
-        }
+        // if ($mode !== 'live') {
+        //     // API Endpoint (Sandbox/Test Environment):
+        //     $validationApi = 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php';
+        // }
 
-        $args = [
-            'val_id' => $payId,
-        ];
+        // $args = [
+        //     'val_id' => $payId,
+        // ];
 
-        $keys['api_path'] = $validationApi;
+        // $keys['api_path'] = $validationApi;
 
-        return $this->makeApiCall($keys, $args, 'GET');
+        // return $this->makeApiCall($keys, $args, 'GET');
     }
 
     public function makeApiCall($keys, $args, $method = 'GET')
     {
         $args['store_id'] = $keys['api_key'];
         $args['store_passwd'] = $keys['api_secret'];
+
+                // dd($keys, $args, $method);
 
         if ($method == 'POST') {
             $response = wp_remote_post($keys['api_path'], [

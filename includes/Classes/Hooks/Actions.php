@@ -1,6 +1,7 @@
 <?php 
 namespace WPTravelManager\Classes\Hooks;
 use WPTravelManager\Classes\Modules\ProcessPreviewPage;
+use WPTravelManager\Classes\Modules\Payments\PaymentHandler;
 
 class Actions {
     public function __construct() {
@@ -15,16 +16,7 @@ class Actions {
 
     }
     public function initClasses() {
-        // init payment methods
-        require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/PayPal/PayPal.php';
-        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/Stripe/Stripe.php';
-        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/Offline/Offline.php';
-        require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/SSLCommerz/SSLCommerz.php';
-
-        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
-        // new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Stripe\Stripe();
-        // new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Offline\Offline();
-        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\SSLCommerz\SSLCommerz();
+        (new PaymentHandler())->init();
 
     }
 }

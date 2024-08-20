@@ -2,6 +2,22 @@
 namespace WPTravelManager\Classes\Modules\Payments;
 
 class PaymentHandler {
+
+    public function init() {
+        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/PayPal/PayPal.php';
+        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/SSLCommerz/SSLCommerz.php';
+
+        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
+        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\SSLCommerz\SSLCommerz();
+
+        if (isset($_REQUEST['trm_payment_api_notify'])) {
+            add_action('wp', function () {
+                $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
+                do_action('trm_ipn_endpoint_' . $paymentMethod);
+            });
+        }
+    }
+
     public static function getAllMethods()
     {
         $methods = apply_filters('trm/get_all_payment_methods', []);

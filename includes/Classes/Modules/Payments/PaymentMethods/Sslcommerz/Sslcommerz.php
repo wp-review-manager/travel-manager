@@ -22,8 +22,15 @@ class Sslcommerz extends BasePaymentMethod {
 
         add_action('trm_make_payment_' . $this->method, array($this, 'makePayment'), 10, 4);
         add_action('trm_paypal_action_web_accept', array($this, 'updateStatus'), 10, 2);
-        add_action("trm_ipn_endpoint_paypal", array($this, 'verifyIpn'), 10, 2);
+        add_action('trm_ipn_endpoint_' . $this->method, function () {
+            $this->verifyIPN();
+            exit(200);
+        });
         add_filter('trm/transaction_data_paypal', array($this, 'modifyTransaction'), 10, 1);
+    }
+
+    public function verifyIPN() {
+        error_log('debug', $_POST['id'] );
     }
 
     public function getPaymentSettings()
@@ -140,6 +147,13 @@ class Sslcommerz extends BasePaymentMethod {
                 'message' => __($paymentIntent->get_error_message(), 'travel-manager')
             ), 423);
         }
+
+        if (Arr::get($paymentIntent, 'redirectGatewayURL')) {
+            wp_send_json_success(array(
+                'redirect' => Arr::get($paymentIntent, 'redirectGatewayURL'),
+                'status' => 'success'
+            ), 200);
+        }
         
     }
 
@@ -147,7 +161,7 @@ class Sslcommerz extends BasePaymentMethod {
     {
         $Api = new API();
 
-        $success_url = TRM_DIR . '/payment-success';
+        $success_url = TRM_URL . '/booking_success';
 
         $webhook_url = add_query_arg([
             'trm_payment_api_notify' => '1',
@@ -168,7 +182,7 @@ class Sslcommerz extends BasePaymentMethod {
 
         $args = [
             'total_amount' => floatval($totalPayable),
-            'currency' =>  'BDT',
+            'currency' =>  'USD',
             'tran_id' => $transaction->id,
             'product_category' => 'travel_manager',
             'product_profile' => 'general',
@@ -176,8 +190,8 @@ class Sslcommerz extends BasePaymentMethod {
             'cus_name' => Arr::get($form_data, 'traveler_name', "Not collected"),
             'cus_email' => Arr::get($form_data, 'traveler_email', "Not collected"),
             'success_url' => $success_url,
-            'fail_url' => Arr::get($form_data, '__wpf_current_url'),
-            'cancel_url' => Arr::get($form_data, '__wpf_current_url'),
+            'fail_url' => $success_url,
+            'cancel_url' => $success_url,
 
             'cus_add1' => Arr::get($form_data, 'traveler_address', 'Not collected'),
             'cus_city' => Arr::get($form_data, 'traveler_country', 'Not collected'),
@@ -206,7 +220,7 @@ class Sslcommerz extends BasePaymentMethod {
             return array(
                 'api_key' => Arr::get($settings, 'test_store_id'),
                 'api_secret' => Arr::get($settings, 'test_store_pass'),
-                'api_path' => 'https://securepay.sslcommerz.com'
+                'api_path' => 'https://sandbox.sslcommerz.com'
             );
         }
     }
