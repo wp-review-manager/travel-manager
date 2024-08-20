@@ -112,6 +112,52 @@
 
                 </div>
                 <!-- ================================ -->
+
+                <div class="tm_entry_order_items">
+                    <div class="tm_entry_info_header">
+                        <div class="tm_info_box_header">Payment Items</div>
+                    </div>
+                    <div class="tm_entry_info_body">
+                        <table class="tm_list_table widefat table table-bordered striped">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Item Price</th>
+                                    <th> Meta option data</th>
+                                    <th>Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Payment Item</td>
+                                    <td>1</td>
+                                    <td>$10</td>
+                                    <td></td>
+                                    <td>$10</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Item</td>
+                                    <td>1</td>
+                                    <td>$10</td>
+                                    <td></td>
+                                    <td>$10</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Sub Total:</th>
+                                    <th>$10</th>
+                                </tr> <!---->
+                                <tr>
+                                    <th colspan="4"><span>Total:</span></th>
+                                    <th>$10</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <!-- ================================ -->
                 <div class="tm_entry_transactions">
                     <div class="tm_info_header">
                         <div class="tm_info_box_header">Transaction Details</div>
@@ -155,7 +201,54 @@
             </div>
             <!-- ================================== -->
             <div class="tm_entry_right">
+                <!-- ================== -->
+                <div class="tm_entry_actions">
+                    <div class="tm_entry_header">
+                        <span>Entry Actions</span>
+                    </div>
+                    <div class="tm_entry_body">
+                        <div class="tm_entry_print">
+                            <div class="icon">
+                                <Icon icon="tm-pending" />
+                            </div>
+                            <span> Print This Entry </span>
+                        </div>
+                        <div class="tm_entry_print">
+                            <div class="icon">
+                                <Icon icon="tm-pending" />
+                            </div>
+                            <span> Print This Entry </span>
+                        </div>
+                        <div class="tm_entry_print">
+                            <div class="icon">
+                                <Icon icon="tm-pending" />
+                            </div>
+                            <span> Print This Entry </span>
+                        </div>
 
+                    </div>
+                </div>
+                <!-- ================== -->
+                <div class="tm_meta_info_wrapper">
+                    <div class="tm_entry_info_header">
+                        <div class="tm_info_box_header">Meta Info</div>
+                    </div>
+                    <div class="tm_entry_info_body">
+                        <ul>
+                            <li>User Browser: Chrome</li>
+                            <li>Platform: Windows</li>
+                            <li>IP Address:
+                                <a target="_blank" rel="noopener" href="#">
+                                    ::1
+                                </a>
+                            </li>
+                            <li>User:<a target="_blank" rel="noopener"href="#"> admin </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- ===================== -->
             </div>
 
         </div>
