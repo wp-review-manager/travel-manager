@@ -16,6 +16,14 @@ class PaymentHandler {
                 do_action('trm_ipn_endpoint_' . $paymentMethod);
             });
         }
+
+        if (isset($_REQUEST['trm_payment_success_url'])) {
+            add_action('wp', function () {
+                $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
+                do_action('trm_payment_success_' . $paymentMethod);
+            });
+        }
+
     }
 
     public static function getAllMethods()

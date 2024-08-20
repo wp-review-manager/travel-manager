@@ -21,7 +21,7 @@ class Sslcommerz extends BasePaymentMethod {
         );
 
         add_action('trm_make_payment_' . $this->method, array($this, 'makePayment'), 10, 4);
-        add_action('trm_paypal_action_web_accept', array($this, 'updateStatus'), 10, 2);
+        add_action('trm_payment_success_' . $this->method, array($this, 'updateStatus'), 10, 2);
         add_action('trm_ipn_endpoint_' . $this->method, function () {
             $this->verifyIPN();
             exit(200);
@@ -30,7 +30,17 @@ class Sslcommerz extends BasePaymentMethod {
     }
 
     public function verifyIPN() {
-        error_log('debug', $_POST['id'] );
+        $payId = Arr::get($_POST, 'val_id');
+        $payId = $payId || Arr::get($_REQUEST, 'val_id');
+        $Api = new API();
+        $vendorTransaction = $Api->validation($payId, $this->getPaymentMode($this->method));
+        if (empty($vendorTransaction)) {
+            return;
+        }
+
+        // $reference = Arr::get($vendorTransaction, 'tran_id');
+        // $transaction = (new Transaction())->getTransaction($reference);
+        // $this->handleStatus($transaction, $vendorTransaction);
     }
 
     public function getPaymentSettings()
@@ -161,8 +171,6 @@ class Sslcommerz extends BasePaymentMethod {
     {
         $Api = new API();
 
-        $success_url = TRM_URL . '/booking_success';
-
         $webhook_url = add_query_arg([
             'trm_payment_api_notify' => '1',
             'payment_method' => 'sslcommerz'
@@ -179,7 +187,8 @@ class Sslcommerz extends BasePaymentMethod {
                 'message' => 'Trip Not Found'
             ), 400 );
         }
-
+        $transaction_hash = $transaction->transaction_hash;
+        $success_url = site_url() . '?trm_payment_success_url=1&payment_method=sslcommerz&val_id=' . $transaction_hash;
         $args = [
             'total_amount' => floatval($totalPayable),
             'currency' =>  'USD',
