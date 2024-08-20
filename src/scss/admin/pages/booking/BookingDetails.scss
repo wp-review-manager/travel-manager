@@ -201,4 +201,46 @@
         }
     }
 }
+//==========================
+
+.tm_entry_transactions{
+    background: #FFF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    .tm_info_header{
+        display: flex;
+        align-items: center;
+        padding: 6px 0;
+        .tm_info_box_header{
+            color: #2F3448;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 22px;
+        }
+    }
+    .tm_info_body{
+        .tm_list_items{
+            li:first-child{
+                border-radius: 8px 8px 0 0;
+            }
+            li{
+                
+                border-left: 1px solid #D6DAE1;
+                border-right: 1px solid #D6DAE1;
+                border-top: 1px solid #D6DAE1;
+                display: flex;
+                justify-content: space-between;
+                padding: 12px 20px;
+                margin: 0;
+            }
+            li:last-child{
+                border-bottom: 1px solid #D6DAE1;
+                border-radius: 0 0 8px 8px;
+            }
+        }
+    }
+}
 

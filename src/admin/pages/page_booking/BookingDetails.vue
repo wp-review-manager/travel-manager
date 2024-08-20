@@ -111,7 +111,47 @@
                     </div>
 
                 </div>
-                <!-- ====================== -->
+                <!-- ================================ -->
+                <div class="tm_entry_transactions">
+                    <div class="tm_info_header">
+                        <div class="tm_info_box_header">Transaction Details</div>
+                    </div>
+                    <div class="tm_info_body">
+                        <div class="tm_entry_transaction">
+                            <ul class="tm_list_items">
+                                <li>
+                                    <div class="wpf_list_header">ID</div>
+                                    <div class="wpf_list_value">2</div>
+                                </li>
+
+                                <li>
+                                    <div class="wpf_list_header">Payment Method</div>
+                                    <div class="wpf_list_value"><span>
+                                            offline
+                                        </span></div>
+                                </li> <!---->
+                                <li>
+                                    <div class="wpf_list_header">Payment Total</div>
+                                    <div class="wpf_list_value">$10</div>
+                                </li>
+                                <li>
+                                    <div class="wpf_list_header">Payment Status</div>
+                                    <div class="wpf_list_value wpf_pay_status_pending">
+                                        pending
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="wpf_list_header">Date</div>
+                                    <div class="wpf_list_value">
+                                        Aug 10, 2024 20:08 PM
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ================================ -->
             </div>
             <!-- ================================== -->
             <div class="tm_entry_right">
