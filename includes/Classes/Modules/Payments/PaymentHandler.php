@@ -1,6 +1,14 @@
 <?php
 namespace WPTravelManager\Classes\Modules\Payments;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+use WPTravelManager\Classes\ArrayHelper as Arr;
+use WPTravelManager\Classes\Models\Transaction;
+use WPTravelManager\Classes\Models\Booking;
+
 class PaymentHandler {
 
     public function init() {
@@ -10,6 +18,15 @@ class PaymentHandler {
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\SSLCommerz\SSLCommerz();
 
+        if (isset($_GET['trm_payment']) && isset($_GET['payment_method'])) {
+            $data = $_GET;
+            $this->validateFrameLessPage($data);
+            add_action('wp', function () {
+                $paymentMethod = sanitize_text_field($_GET['payment_method']);
+                do_action('trm_payment_success_' . $paymentMethod);
+            });
+        }
+
         if (isset($_REQUEST['trm_payment_api_notify'])) {
             add_action('wp', function () {
                 $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
@@ -17,13 +34,42 @@ class PaymentHandler {
             });
         }
 
-        if (isset($_REQUEST['trm_payment_success_url'])) {
-            add_action('wp', function () {
-                $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
-                do_action('trm_payment_success_' . $paymentMethod);
-            });
-        }
+    }
 
+    public function validateFrameLessPage($data) {
+       // We should verify the transaction hash from the URL
+       $paymentMethod = sanitize_text_field(Arr::get($data, 'payment_method'));
+       
+       $bookingId = intval(Arr::get($data, 'trm_payment'));
+
+       if (!$bookingId || !$paymentMethod) {
+           die('Validation Failed');
+       }
+
+       if ($bookingId) {
+            $transactionModel = new Transaction();
+
+           $transaction = $transactionModel->where('booking_id', $bookingId)
+               ->where('payment_method', $paymentMethod)
+               ->first();
+           if (!$transaction) {
+               die('Booking or payment method not matched!');
+           }
+       }
+
+       $hash = sanitize_text_field(Arr::get($data, 'booking_hash'));
+      
+       if (!$hash) {
+           die('Validation Failed');
+       } else {
+            $bookingModel = new Booking();
+
+           $booking = $bookingModel->where('booking_hash', $hash)->first();
+           if (!$booking) {
+               die('booking Hash Invalid');
+           }
+       }
+       return true;
     }
 
     public static function getAllMethods()
