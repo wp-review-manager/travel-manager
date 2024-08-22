@@ -57,27 +57,22 @@ endforeach;
                 </div>
 
                 <div class="tm_filed">
-                    <label> Address <span style="color: #ff8b3d;">* </span></label>
                     <div class="tm_address_filed">
                     <div class="tm_filed">
-                        <label>Address Line 1 <span style="color: #ff8b3d;">* </span></label>
-                        <input type="text" name="traveler_address.address_1" placeholder="Please enter your number" required>
-                    </div>
-                    <div class="tm_filed">
-                        <label>Address Line 2 <span style="color: #ff8b3d;">* </span></label>
-                        <input type="text" name="traveler_address" placeholder="Please enter your number" required>
+                        <label>Address <span style="color: #ff8b3d;">* </span></label>
+                        <input type="text" name="address" placeholder="Please enter your number" required>
                     </div>
                     <div class="tm_filed">
                         <label>City <span style="color: #ff8b3d;">* </span></label>
-                        <input type="text" name="traveler_phone" placeholder="Please enter your number" required>
+                        <input type="text" name="city" placeholder="Please enter your number" required>
                     </div>
                     <div class="tm_filed">
                         <label>State <span style="color: #ff8b3d;">* </span></label>
-                        <input type="text" name="traveler_phone" placeholder="Please enter your number" required>
+                        <input type="text" name="state" placeholder="Please enter your number" required>
                     </div>
                     <div class="tm_filed">
                         <label>Zip Code <span style="color: #ff8b3d;">* </span></label>
-                        <input type="text" name="traveler_phone" placeholder="Please enter your number" required>
+                        <input type="text" name="zip_code" placeholder="Please enter your number" required>
                     </div>
                     </div>
                     

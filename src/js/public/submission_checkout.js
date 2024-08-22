@@ -10,7 +10,7 @@ const submissionCheckout = ($) => {
         formDataArray.forEach(item => {
             formDataObject[item.name] = item.value;
         });
-     console.log(formDataArray, 'data');
+  
         const validateFormData = validation(formDataObject);
         if (validateFormData !== true) {
             let errors = validateFormData;
@@ -21,13 +21,12 @@ const submissionCheckout = ($) => {
             }
             return;
         }
-
+        
         $.post(window.tm_public.ajax_url, {
             action: 'tm_checkout',
             route: 'submission_checkout',
             data: formDataObject,
         }).then((response, response_order_item) => {
-            console.log(response , response_order_item, 'response');
             if (response.success === true ) {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();

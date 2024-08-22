@@ -50,8 +50,17 @@ class CheckoutServices {
         if (empty($data['traveler_country'])) {
             $errors['traveler_country'] = 'Message is required';
         }
-        if (empty($data['traveler_address'])) {
+        if (empty($data['address'])) {
             $errors['traveler_address'] = 'Address is required';
+        }
+        if (empty($data['city'])) {
+            $errors['city'] = 'Booking total is required';
+        }
+        if (empty($data['state'])) {
+            $errors['state'] = 'Booking total is required';
+        }
+        if (empty($data['zip_code'])) {
+            $errors['zip_code'] = 'Booking total is required';
         }
         if (empty($data['booking_date'])) {
             $errors['booking_date'] = 'Booking date is required';
@@ -64,6 +73,21 @@ class CheckoutServices {
         if (isset($data['session_id'])) {
             unset($data['session_id']);
         }
+
+        $data['traveler_address'] = array(
+            'address' => $data['address'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip_code' => $data['zip_code'],
+            'country' => $data['traveler_country']
+        );
+
+        unset($data['address']);
+        unset($data['city']);
+        unset($data['state']);
+        unset($data['zip_code']);
+
+        $data['traveler_address'] = maybe_serialize($data['traveler_address']);
       
         return $data;
     }

@@ -112,7 +112,6 @@ class Sslcommerz extends BasePaymentMethod {
             ));
         }
         $transaction = $transactionModel->getTransaction($transactionId);
-        dd($transaction);
     }
 
 }
