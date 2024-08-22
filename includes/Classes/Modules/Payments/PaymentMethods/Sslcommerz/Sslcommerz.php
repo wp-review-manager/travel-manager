@@ -257,7 +257,7 @@ class Sslcommerz extends BasePaymentMethod {
    
         $args = [
             'total_amount' => floatval($transaction->payment_total),
-            'currency' =>  $transaction->currency,
+            'currency' =>  "BDT",
             'tran_id' => $transaction->transaction_hash,
             'product_category' => 'travel_manager',
             'product_profile' => 'general',
