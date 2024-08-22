@@ -43,7 +43,9 @@ class Booking extends Model
 
     public function getBooking($booking_id)
     {
-        return $this->where('id', $booking_id)->get();
+        $booking = $this->where('id', $booking_id)->get();
+        // dd($booking, 'booking');
+        return  $booking ;
     }
 
     // booking meta
@@ -57,35 +59,6 @@ class Booking extends Model
         return $wpdb->get_results($sql, ARRAY_A);
     }
 
-    //================================
-    public function getBookingDetails($bookingId)
-    {
-        global $wpdb;
-        $booking_table = $wpdb->prefix . 'tm_bookings';
-        $transaction_table = $wpdb->prefix . 'tm_transactions'; // Assuming this is the correct table
-        $order_items_table = $wpdb->prefix . 'tm_order_items';
-    
-        // Prepare the SQL statements
-        $sqlBooking = $wpdb->prepare("SELECT * FROM $booking_table WHERE id = %d", $bookingId);
-        $sqlTransactions = $wpdb->prepare("SELECT * FROM $transaction_table WHERE booking_id = %d", $bookingId);
-        $sqlOrderItems = $wpdb->prepare("SELECT * FROM $order_items_table WHERE booking_id = %d", $bookingId);
-    
-        // Execute the queries and get the results
-        $booking = $wpdb->get_row($sqlBooking, ARRAY_A);
-        $transactions = $wpdb->get_results($sqlTransactions, ARRAY_A); // Fetch multiple transactions
-        $orderItems = $wpdb->get_results($sqlOrderItems); // Assuming there might be multiple order items
-    
-        if (!$booking) {
-            wp_send_json_error('Booking not found');
-            return;
-        }
-    
-        return array(
-            'bookings' => $booking,
-            'transactions' => $transactions,
-            'orderItems' => $orderItems, // Now using consistent plural naming
-        );
-    }
     
 
 }

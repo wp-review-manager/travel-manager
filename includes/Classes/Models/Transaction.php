@@ -29,14 +29,14 @@ class Transaction extends Model
         return false;
     }
 
-    public function getTransaction($id) {
+    public function getTransaction($id, $filed = 'id' ) {
         if(!$id) {
             wp_send_json_error(array(
                 'message' => 'Transaction Id Not Found'
             ), 400);
         }
 
-        $transaction = TMDBModel($this->table)->where('id', $id)->get();
+        $transaction = TMDBModel($this->table)->where($filed, $id)->get();
         
         if(!$transaction) {
             wp_send_json_error(array(

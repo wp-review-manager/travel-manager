@@ -1,9 +1,12 @@
 <?php
 namespace WPTravelManager\Classes\Controllers;
 
+use ArrayObject;
 use WPTravelManager\Classes\Services\BookingsServices;
 use WPTravelManager\Classes\Models\Booking;
 use WPTravelManager\Classes\ArrayHelper as Arr;
+use WPTravelManager\Classes\Models\Order;
+use WPTravelManager\Classes\Models\Transaction;
 
 class BookingsController {
     public function registerAjaxRoutes()
@@ -59,9 +62,17 @@ class BookingsController {
         }
         
         $bookingModal = new Booking();
-        $response = $bookingModal->getBookingDetails($bookingId);
-
-        wp_send_json_success($response);
+        $response = $bookingModal->getBooking($bookingId , new ArrayObject());
+        $transactionModal =( new Transaction())->getTransaction($bookingId, 'booking_id');
+        $OrderModal =( new Order())->getOrderItem($bookingId);
+    
+        wp_send_json_success(
+            array(
+                'transactions' => $transactionModal,
+                'bookings' => $response,
+                'orderItems' => $OrderModal,
+            )
+        );
     }
 
 }

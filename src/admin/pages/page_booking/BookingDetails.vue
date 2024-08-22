@@ -256,9 +256,9 @@ export default {
     data() {
         return {
             booking_id: null,
-            bookings: [],
-            transactions: [],
-            orderItem: [],
+            bookings: {},
+            transactions: {},
+            orderItem: {},
         }
     },
     methods: {
@@ -282,7 +282,6 @@ export default {
                     that.bookings = response.data.bookings;
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
-                    console.log(that.transactions.billing_address, 'transactions')
                 }).fail((error) => {
                     console.log(error);
                 })
