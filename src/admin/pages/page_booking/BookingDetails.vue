@@ -51,43 +51,27 @@
                         </div>
 
                     </div>
-                    <div class="tm_head_bottom">
+                    <div class="tm_head_bottom" v-for="(item, index) in transactions" :key="index" >
+
                         <div class="tm_info_block">
                             <div class="tm_info_header">Name</div>
                             <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
+                                <span>{{ item.payer_name }}</span>
                             </div>
                         </div>
                         <div class="tm_info_block">
-                            <div class="tm_info_header">Name</div>
+                            <div class="tm_info_header">Email</div>
                             <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
+                                <span>{{ item.payer_email }}</span>
                             </div>
                         </div>
                         <div class="tm_info_block">
-                            <div class="tm_info_header">Name</div>
+                            <div class="tm_info_header"> Address</div>
                             <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
+                                <span>{{ item.billing_address }}</span>
                             </div>
                         </div>
-                        <div class="tm_info_block">
-                            <div class="tm_info_header">Name</div>
-                            <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
-                            </div>
-                        </div>
-                        <div class="tm_info_block">
-                            <div class="tm_info_header">Name</div>
-                            <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
-                            </div>
-                        </div>
-                        <div class="tm_info_block">
-                            <div class="tm_info_header">Name</div>
-                            <div class="tm_info_value">
-                                <span>tm@gmail.com</span>
-                            </div>
-                        </div>
+                     
 
                     </div>
 
@@ -101,12 +85,25 @@
                         <div class="tm_entry_details">
                             <div class="tm_each_entry">
                                 <div class="tm_entry_label">Name</div>
-                                <div class="tm_entry_value">Nitesh Dash</div>
+                                <div class="tm_entry_value">{{ bookings.traveler_name }}</div>
                             </div>
                             <div class="tm_each_entry">
                                 <div class="tm_entry_label">Email</div>
-                                <div class="tm_entry_value">nitesh@gmail.com</div>
+                                <div class="tm_entry_value">{{ bookings.traveler_email }}</div>
                             </div>
+                            <div class="tm_each_entry">
+                                <div class="tm_entry_label">Phone</div>
+                                <div class="tm_entry_value">{{ bookings.traveler_phone }}</div>
+                            </div>
+                            <div class="tm_each_entry">
+                                <div class="tm_entry_label">Country</div>
+                                <div class="tm_entry_value">{{ bookings.traveler_country }}</div>
+                            </div>
+                            <div class="tm_each_entry">
+                                <div class="tm_entry_label">Address</div>
+                                <div class="tm_entry_value">{{ bookings.traveler_address }}</div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -121,37 +118,31 @@
                         <table class="tm_list_table widefat table table-bordered striped">
                             <thead>
                                 <tr>
+                                    <th>Package Type</th>
                                     <th>Item Name</th>
                                     <th>Quantity</th>
                                     <th>Item Price</th>
-                                    <th> Meta option data</th>
                                     <th>Line Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Payment Item</td>
-                                    <td>1</td>
-                                    <td>$10</td>
-                                    <td></td>
-                                    <td>$10</td>
+                                <tr v-for="(item, index) in orderItem" :key="index">
+                                    <td>{{ item.package_type }}</td>
+                                    <td>{{ item.item_name }}</td>
+                                    <td>{{ item.item_qty }}</td>
+                                    <td>$ {{ item.item_price }}</td>
+                                    <td>$ {{ item.line_total }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Payment Item</td>
-                                    <td>1</td>
-                                    <td>$10</td>
-                                    <td></td>
-                                    <td>$10</td>
-                                </tr>
+
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th colspan="4">Sub Total:</th>
-                                    <th>$10</th>
+                                    <th>$ {{ bookings.booking_total }}</th>
                                 </tr> <!---->
                                 <tr>
                                     <th colspan="4"><span>Total:</span></th>
-                                    <th>$10</th>
+                                    <th>$ {{ bookings.booking_total }}</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -164,32 +155,32 @@
                     </div>
                     <div class="tm_info_body">
                         <div class="tm_entry_transaction">
-                            <ul class="tm_list_items">
+                            <ul class="tm_list_items" v-for="(item, index) in transactions" :key="index">
                                 <li>
                                     <div class="wpf_list_header">ID</div>
-                                    <div class="wpf_list_value">2</div>
+                                    <div class="wpf_list_value">{{ item.id }}</div>
                                 </li>
 
                                 <li>
                                     <div class="wpf_list_header">Payment Method</div>
                                     <div class="wpf_list_value"><span>
-                                            offline
+                                            {{ item.payment_method}}
                                         </span></div>
                                 </li> <!---->
                                 <li>
                                     <div class="wpf_list_header">Payment Total</div>
-                                    <div class="wpf_list_value">$10</div>
+                                    <div class="wpf_list_value">$ {{ item.payment_total }}</div>
                                 </li>
                                 <li>
                                     <div class="wpf_list_header">Payment Status</div>
                                     <div class="wpf_list_value wpf_pay_status_pending">
-                                        pending
+                                        {{ item.status }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="wpf_list_header">Date</div>
                                     <div class="wpf_list_value">
-                                        Aug 10, 2024 20:08 PM
+                                        {{ formatDate(item.created_at) }}
                                     </div>
                                 </li>
 
@@ -242,7 +233,7 @@
                                     ::1
                                 </a>
                             </li>
-                            <li>User:<a target="_blank" rel="noopener"href="#"> admin </a>
+                            <li>User:<a target="_blank" rel="noopener" href="#"> admin </a>
                             </li>
                         </ul>
                     </div>
@@ -262,13 +253,21 @@ export default {
     components: {
         Icon
     },
-    data (){
+    data() {
         return {
             booking_id: null,
             bookings: [],
+            transactions: [],
+            orderItem: [],
         }
     },
     methods: {
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', options);
+        },
+
         getBookingDetails(bookingId) {
             let that = this;
             jQuery
@@ -279,14 +278,17 @@ export default {
                     booking_id: bookingId
 
                 }).then((response) => {
-                 
+                    console.log(response, 'response')
                     that.bookings = response.data.bookings;
+                    that.transactions = response.data.transactions;
+                    that.orderItem = response.data.orderItems;
+                    console.log(that.transactions.billing_address, 'transactions')
                 }).fail((error) => {
                     console.log(error);
                 })
         },
     },
-    
+
     mounted() {
         this.booking_id = this.$route.params.id;
         this.getBookingDetails(this.booking_id);
