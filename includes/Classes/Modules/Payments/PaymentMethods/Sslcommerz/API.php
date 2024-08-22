@@ -11,24 +11,22 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 class API
 {
 
-    public function validation($payId, $mode = 'live')
+    public function validation($keys, $payId, $mode = 'live')
     {
-        // $keys = SslcommerzSettings::getApiKeys();
+        $validationApi = 'https://securepay.sslcommerz.com/validator/api/validationserverAPI.php';
 
-        // $validationApi = 'https://securepay.sslcommerz.com/validator/api/validationserverAPI.php';
+        if ($mode !== 'live') {
+            // API Endpoint (Sandbox/Test Environment):
+            $validationApi = 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php';
+        }
 
-        // if ($mode !== 'live') {
-        //     // API Endpoint (Sandbox/Test Environment):
-        //     $validationApi = 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php';
-        // }
+        $args = [
+            'val_id' => $payId,
+        ];
 
-        // $args = [
-        //     'val_id' => $payId,
-        // ];
+        $keys['api_path'] = $validationApi;
 
-        // $keys['api_path'] = $validationApi;
-
-        // return $this->makeApiCall($keys, $args, 'GET');
+        return $this->makeApiCall($keys, $args, 'GET');
     }
 
     public function makeApiCall($keys, $args, $method = 'GET')
