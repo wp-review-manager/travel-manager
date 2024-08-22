@@ -1,7 +1,6 @@
 <?php 
 namespace WPTravelManager\Classes;
 
-use WPTravelManager\Classes\Modules\Payments\PaymentHandler;
 
 class AdminMenuHandler {
     public function renderMenu()

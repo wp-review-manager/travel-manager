@@ -137,4 +137,8 @@ class Trips extends Model {
         return $tripId;
     }
 
+    public function getTrip($tripId) : Object {
+        return get_post($tripId);
+    }
+
 }

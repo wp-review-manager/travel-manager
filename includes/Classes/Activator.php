@@ -233,7 +233,7 @@ class Activator
         $this->runSQL($sql, $table_name);
     }
 
-    public function migrateTransactionsTable()
+    public function migrateTransactionsTable($force = false)
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
@@ -254,7 +254,7 @@ class Activator
             card_brand varchar(255),
             charge_id varchar(255),
             payment_total int(11) DEFAULT 1,
-            status varchar(255),
+            payment_status varchar(255),
             currency varchar(255),
             payment_mode varchar(255),
             payment_note longtext,
@@ -263,7 +263,11 @@ class Activator
             PRIMARY  KEY  (id)
         ) $charset_collate;";
 
-        $this->runSQL($sql, $table_name);
+        if ($force) {
+            $this->runForceSQL($sql, $table_name);
+        } else {
+            $this->runSQL($sql, $table_name);
+        }
     }
 
     public function migrateBookingsTable()
@@ -314,5 +318,12 @@ class Activator
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
         }
+    }
+
+    protected function runForceSQL($sql, $tableName)
+    {
+        global $wpdb;
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
     }
 }
