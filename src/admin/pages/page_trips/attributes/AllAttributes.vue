@@ -20,7 +20,7 @@
                     placeholder="Please Input" prefix-icon="Search" />
             </template>
             <template #columns>
-                <el-table-column prop="id" label="ID" width="40" />
+                <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="attr_title" label=" Title" width="auto" />
                 <el-table-column prop="attr_slug" label="Slug" width="auto" />
                 <el-table-column prop="attr_desc" label="Description" width="420" />

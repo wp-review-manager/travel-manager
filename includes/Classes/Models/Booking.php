@@ -58,4 +58,27 @@ class Booking extends Model
         return $wpdb->get_results($sql, ARRAY_A);
     }
 
+    //================================
+    public function getBookingDetails($bookingId)
+    {
+      
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'tm_bookings';
+
+        // Prepare the SQL statement
+        $sql = $wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $bookingId);
+
+        // Execute the query and get the results
+        $booking = $wpdb->get_row($sql, ARRAY_A);
+    
+        if (!$booking) {
+            wp_send_json_error('Booking not found');
+            return;
+        }
+
+        return array(
+            'bookings' => $booking,
+        );
+    }
+
 }

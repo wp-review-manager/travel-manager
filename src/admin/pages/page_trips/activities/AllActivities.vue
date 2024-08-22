@@ -23,7 +23,7 @@
             </template>
            
             <template #columns>
-                <el-table-column prop="id" label="ID" width="40" />
+                <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="trip_activity_name" label="activity Name" width="auto" />
                 <el-table-column prop="trip_activity_slug" label="Slug" width="auto" />
                 <el-table-column prop="trip_activity_desc" label="Description" width="420" />

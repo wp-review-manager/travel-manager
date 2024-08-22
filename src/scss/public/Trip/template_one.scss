@@ -234,22 +234,26 @@
                         margin-bottom: 10px;
                     }
                     input {
-                        width: 100%;
+                        width: 90%;
                         border-radius: 8px;
                         border: $tm_border;
                     }
                     select {
-                        width: 100%;
+                        width: 92%;
                         border-radius: 8px;
                         border: $tm_border;
                         height: 50px;
                         padding: 10px;
                         font-size: 16px;
                     }
+                    textarea{
+                        width: 90%;
+                    }
                     .tm_button {
                         width: 100%;
                         border-radius: 8px;
                         background: $tm-primary-500;
+                        cursor: pointer;
                         color: #fff;
                         @include text($size: 16px, $weight: 600, $color: #fff, $lineHeight: 24px);
                         &:hover {

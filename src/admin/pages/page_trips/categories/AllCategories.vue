@@ -21,7 +21,7 @@
                     placeholder="Please Input" prefix-icon="Search" />
             </template>
             <template #columns>
-                <el-table-column prop="id" label="ID" width="40" />
+                <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="trip_category_name" label="Category Name" width="auto" />
                 <el-table-column prop="trip_category_slug" label="Slug" width="auto" />
                 <el-table-column prop="trip_category_desc" label="Description" width="420" />

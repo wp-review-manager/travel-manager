@@ -174,7 +174,7 @@ $packages = Arr::get($trip, 'packages', []);
                     $cut_of_start_date = Arr::get($cut_time, 'start_of_date');
                     $cut_of_end_date = Arr::get($cut_time, 'end_of_date');
                 ?>
-                <button
+                <button style="cursor: pointer;"
                     id="tm_openModal"
                     class="tm_button tm_openModal"
                     data-enable_cut_off="<?php echo $enable_cut_off; ?>"
@@ -239,7 +239,7 @@ $packages = Arr::get($trip, 'packages', []);
                         <ul class="tm_error_message"></ul>
                     </div>
                     <div class="tm_form_group">
-                        <button class="tm_inquiry_button">Send Inquiry</button>
+                        <button style="cursor: pointer;" class="tm_inquiry_button">Send Inquiry</button>
                     </div>
                 </div>
             </form>

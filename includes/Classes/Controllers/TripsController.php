@@ -57,10 +57,11 @@ class TripsController {
         wp_send_json_success($response);
     }
 
+
     public function getTripInfo()
     {
         $tripId = sanitize_text_field(Arr::get($_REQUEST, 'trip_id'));
-
+        
         if (!$tripId) {
             wp_send_json_error('Trip ID is required');
         }

@@ -12,7 +12,8 @@ class BookingsController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'get_bookings' => 'getBookings',
-            'delete_booking' => 'deleteBooking'
+            'delete_booking' => 'deleteBooking',
+            'get_booking_details' => 'getBookingDetails'
           
         );
         if (isset($routeMaps[$route])) {
@@ -47,6 +48,20 @@ class BookingsController {
         } else {
             wp_send_json_error('Failed to delete Booking');
         }
+    }
+
+    public function getBookingDetails()
+    {
+        $bookingId = sanitize_text_field(Arr::get($_REQUEST, 'booking_id'));
+
+        if (!$bookingId) {
+            wp_send_json_error('Booking ID is required');
+        }
+        
+        $bookingModal = new Booking();
+        $response = $bookingModal->getBookingDetails($bookingId);
+
+        wp_send_json_success($response);
     }
 
 }

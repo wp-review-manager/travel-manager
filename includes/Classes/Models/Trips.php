@@ -98,6 +98,7 @@ class Trips extends Model {
         
     }
 
+    
     public function getTripInfo($tripId)
     {
         $trip = get_post($tripId);

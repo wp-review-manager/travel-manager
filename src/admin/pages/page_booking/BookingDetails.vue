@@ -262,6 +262,35 @@ export default {
     components: {
         Icon
     },
+    data (){
+        return {
+            booking_id: null,
+            bookings: [],
+        }
+    },
+    methods: {
+        getBookingDetails(bookingId) {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_bookings",
+                    route: "get_booking_details",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                    booking_id: bookingId
+
+                }).then((response) => {
+                 
+                    that.bookings = response.data.bookings;
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
+    },
+    
+    mounted() {
+        this.booking_id = this.$route.params.id;
+        this.getBookingDetails(this.booking_id);
+    },
 
 }
 </script>

@@ -12,7 +12,7 @@
             </template>
            
             <template #columns>
-                <el-table-column prop="id" label="ID" width="40" />
+                <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="trip_id" label="Trip id" width="auto" />
                 <el-table-column prop="name" label="Name" width="auto" />
                 <el-table-column prop="email" label="Email" width="auto" />

@@ -12,16 +12,13 @@
             </template>
            
             <template #columns>
-                <el-table-column prop="id" label="ID" width="40" />
+                <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="booking_date" label="Booking Date" width="auto" />
                 <el-table-column prop="booking_status" label="Status" width="auto" />
                 <el-table-column prop="booking_total" label="Total" width="auto" />
                 <el-table-column prop="trip_id" label="Trip id" width="auto" />
-                <el-table-column prop="traveler_name" label="Name" width="auto" />
-                <el-table-column prop="traveler_email" label="Email" width="auto" />
-                <el-table-column prop="traveler_phone" label="Phone" width="auto" />
-                <el-table-column prop="traveler_country" label="Country" width="auto" />
-                <el-table-column prop="traveler_address" label="Address" width="auto" />
+                <el-table-column prop="traveler_name" label="Customer Name" width="auto" />
+                <el-table-column prop="traveler_email" label="Customer Email" width="auto" />
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
                         <el-tooltip class="box-item" effect="dark" content="Click to view activities" placement="top-start">
@@ -94,7 +91,7 @@ export default {
         return {
             search: '',
             bookings: [],
-            enquiry: {},
+            // booking: {},
             total_booking: 0,
             loading: false,
             currentPage: 1,
