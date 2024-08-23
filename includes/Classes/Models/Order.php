@@ -20,7 +20,12 @@ class Order extends Model
     public function getOrderItem($booking_id)
     {
         $orderItems = $this->where('booking_id', $booking_id)->get();
-
+        
+        if(!$orderItems) {
+            wp_send_json_error(array(
+                'message' => 'Order Item Not Found'
+            ), 400);
+        }
         return  $orderItems;
     }
 }

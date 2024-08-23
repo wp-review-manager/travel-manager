@@ -25,12 +25,12 @@
                             <div class="payment_amount_detail">
                                 <span class="head_small_title">Payment</span>
                                 <div class="head_payment_amount">
-                                    <span class="pay_amount">$10</span>
+                                    <span class="pay_amount">$ {{ transactions.payment_total }}</span>
                                     <span class="tm_pay_status_pending">
                                         <div class="icon">
                                             <Icon icon="tm-pending" />
                                         </div>
-                                        pending
+                                        {{ transactions.transaction_type }}
                                     </span>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                             <div class="tm_payment_vendor">
                                 <span class="tm_pay_method_offline"
                                     style="text-transform: capitalize; padding: 1px 7px;">
-                                    offline
+                                    {{ transactions.status }}
                                 </span>
                             </div>
 
@@ -68,7 +68,7 @@
                         <div class="tm_info_block">
                             <div class="tm_info_header"> Address</div>
                             <div class="tm_info_value">
-                                <span>{{ billing_address }}Address</span>
+                                <span>{{ transactions.billing_address }}Address</span>
                             </div>
                         </div>
                      
@@ -155,32 +155,32 @@
                     </div>
                     <div class="tm_info_body">
                         <div class="tm_entry_transaction">
-                            <ul class="tm_list_items" v-for="(item, index) in transactions" :key="index">
+                            <ul class="tm_list_items">
                                 <li>
                                     <div class="wpf_list_header">ID</div>
-                                    <div class="wpf_list_value">{{ item.id }}</div>
+                                    <div class="wpf_list_value">{{ transactions.id }}</div>
                                 </li>
 
                                 <li>
                                     <div class="wpf_list_header">Payment Method</div>
                                     <div class="wpf_list_value"><span>
-                                            {{ item.payment_method}}
+                                            {{ transactions.payment_method}}
                                         </span></div>
                                 </li> <!---->
                                 <li>
                                     <div class="wpf_list_header">Payment Total</div>
-                                    <div class="wpf_list_value">$ {{ item.payment_total }}</div>
+                                    <div class="wpf_list_value">$ {{ transactions.payment_total }}</div>
                                 </li>
                                 <li>
                                     <div class="wpf_list_header">Payment Status</div>
                                     <div class="wpf_list_value wpf_pay_status_pending">
-                                        {{ item.status }}
+                                        {{ transactions.transaction_type }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="wpf_list_header">Date</div>
                                     <div class="wpf_list_value">
-                                        {{ formatDate(item.created_at) }}
+                                        {{ formatDate(transactions.created_at) }}
                                     </div>
                                 </li>
 
@@ -243,7 +243,6 @@
             </div>
 
         </div>
-
     </div>
 </template>
 
@@ -257,8 +256,6 @@ export default {
         return {
             booking_id: null,
             bookings: {},
-            booking_address: {},
-            billing_address: {},
             transactions: {},
             orderItem: {},
         }
@@ -280,12 +277,12 @@ export default {
                     booking_id: bookingId
 
                 }).then((response) => {
-                    console.log(response, 'response')
+                   
+
                     that.bookings = response.data.bookings;
-                    that.booking_address = response.data.bookings;
-                    that.billing_address = response.data.bookings;
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
+                    console.log( that.transactions.shipping_address.zip_code, 'response')
                 }).fail((error) => {
                     console.log(error);
                 })

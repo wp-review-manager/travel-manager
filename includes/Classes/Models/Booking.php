@@ -44,8 +44,12 @@ class Booking extends Model
     public function getBooking($booking_id)
     {
         $booking = $this->where('id', $booking_id)->get();
-        // dd($booking, 'booking');
-        
+
+        if(!$booking) {
+            wp_send_json_error(array(
+                'message' => 'Booking is Not Found'
+            ), 400);
+        }
 
         return $booking;
     }
