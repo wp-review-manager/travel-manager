@@ -45,7 +45,9 @@ class Booking extends Model
     {
         $booking = $this->where('id', $booking_id)->get();
         // dd($booking, 'booking');
-        return  $booking ;
+        
+
+        return $booking;
     }
 
     // booking meta

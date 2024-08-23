@@ -37,19 +37,22 @@ class Transaction extends Model
         }
 
         $transaction = TMDBModel($this->table)->where($filed, $id)->get();
-        
+
+       
         if(!$transaction) {
             wp_send_json_error(array(
                 'message' => 'Transaction Not Found'
             ), 400);
         }
-
+       
         return $transaction;
+          
 
     }
 
     public function updateTransaction($id, $data) {
         $update = TMDBModel($this->table)->where('id', $id)->update($data);
+        
         return $update;
     }
 }

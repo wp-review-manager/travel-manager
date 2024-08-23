@@ -62,14 +62,25 @@ class BookingsController {
         }
         
         $bookingModal = new Booking();
-        $response = $bookingModal->getBooking($bookingId , new ArrayObject());
+        $response = $bookingModal->getBooking($bookingId);
+        $bookingData = $response[0];
+        $bookingAddress_data = $bookingData->traveler_address; 
+        $booking_address = maybe_unserialize($bookingAddress_data);
+       
+      
         $transactionModal =( new Transaction())->getTransaction($bookingId, 'booking_id');
+        $transactionData = $transactionModal[0];
+        $billing_address = $transactionData->billing_address; 
+        $billing_address = maybe_unserialize($billing_address);
+
         $OrderModal =( new Order())->getOrderItem($bookingId);
     
         wp_send_json_success(
             array(
-                'transactions' => $transactionModal,
-                'bookings' => $response,
+                'transactions' => $transactionData,
+                'billing_address' => $billing_address,
+                'bookings' => $bookingData,
+                'booking_address' => $booking_address,
                 'orderItems' => $OrderModal,
             )
         );

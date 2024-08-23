@@ -51,24 +51,24 @@
                         </div>
 
                     </div>
-                    <div class="tm_head_bottom" v-for="(item, index) in transactions" :key="index" >
+                    <div class="tm_head_bottom" >
 
                         <div class="tm_info_block">
                             <div class="tm_info_header">Name</div>
                             <div class="tm_info_value">
-                                <span>{{ item.payer_name }}</span>
+                                <span>{{ transactions.payer_name }}</span>
                             </div>
                         </div>
                         <div class="tm_info_block">
                             <div class="tm_info_header">Email</div>
                             <div class="tm_info_value">
-                                <span>{{ item.payer_email }}</span>
+                                <span>{{ transactions.payer_email }}</span>
                             </div>
                         </div>
                         <div class="tm_info_block">
                             <div class="tm_info_header"> Address</div>
                             <div class="tm_info_value">
-                                <span>{{ item.billing_address }}</span>
+                                <span>{{ billing_address }}Address</span>
                             </div>
                         </div>
                      
@@ -257,6 +257,8 @@ export default {
         return {
             booking_id: null,
             bookings: {},
+            booking_address: {},
+            billing_address: {},
             transactions: {},
             orderItem: {},
         }
@@ -280,6 +282,8 @@ export default {
                 }).then((response) => {
                     console.log(response, 'response')
                     that.bookings = response.data.bookings;
+                    that.booking_address = response.data.bookings;
+                    that.billing_address = response.data.bookings;
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
                 }).fail((error) => {
