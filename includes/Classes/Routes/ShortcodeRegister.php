@@ -10,6 +10,7 @@ class ShortcodeRegister {
 
         add_shortcode( 'tm_trip', array( $this, 'singleTripShortCode' ) );
         add_shortcode( 'travel_manager_checkout', array( $this, 'checkoutShortCode' ) );
+        add_shortcode( 'travel_manager_cart', array( $this, 'cartShortCode' ) );
     }
     public function singleTripShortCode( $atts )
     {
@@ -70,6 +71,41 @@ class ShortcodeRegister {
         View::render('Checkout/CheckoutIndex',[
             'booking_id' => $booking_id,
             'booking' => $booking_meta,
+        ]);
+        return ob_get_clean();
+    }
+
+    public function cartShortCode( $atts )
+    {
+        add_action('wp_enqueue_scripts', function () {
+            wp_enqueue_style('travel_manager_public_css', TRM_URL.'assets/css/tm_public.css', [], TRM_VERSION);
+            wp_enqueue_script( 'travel_manager_public_js', TRM_URL.'assets/js/tm_public.js',array('jquery'),TRM_VERSION, false );
+
+            wp_localize_script('travel_manager_public_js', 'tm_public', [
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+            ]);
+        });
+
+        global $wpdb; 
+
+        $device_id = Arr::get( $_REQUEST, 'device_id', '123456789' );
+
+        $table_name = $wpdb->prefix.'tm_sessions'; // Adjust table prefix if necessary
+        $session_data = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM $table_name WHERE device_id = %d", // Use %d for integer placeholders
+                $device_id
+            )
+        );
+
+        foreach ($session_data as $session) {
+            $session->session_meta = maybe_unserialize($session->session_meta);
+        }
+        // dd($session_data);
+        ob_start();
+        View::render('CartItem/CartIndex',[
+            'booking' => $session_data,
         ]);
         return ob_get_clean();
     }
