@@ -61,27 +61,31 @@ class BookingsController {
             wp_send_json_error('Booking ID is required');
         }
         
-        $bookingModal = new Booking();
-        $response = $bookingModal->getBooking($bookingId);
-        $bookingData = $response[0];
-        $bookingAddress_data = $bookingData->traveler_address; 
-        $booking_address = maybe_unserialize($bookingAddress_data);
-       
-      
-        $transactionModal =( new Transaction())->getTransaction($bookingId, 'booking_id');
-        $transactionData = $transactionModal[0];
-        $billing_address = $transactionData->billing_address; 
-        $billing_address = maybe_unserialize($billing_address);
+        $bookingData = (new Booking())->getBooking($bookingId);
+        $bookingData = Arr::get($bookingData, 0, new ArrayObject());
+        
+        if (!$bookingData) {
+            wp_send_json_error('Booking not found');
+        }
 
-        $OrderModal =( new Order())->getOrderItem($bookingId);
+        $transactionData =( new Transaction())->getTransaction($bookingId, 'booking_id');
+        $transactionData = Arr::get($transactionData, 0, new ArrayObject());
+
+        if(!$transactionData) {
+            wp_send_json_error('Transaction not found');
+        }
+
+        $bookingData->traveler_address = maybe_unserialize($bookingData->traveler_address);
+        $transactionData->billing_address = maybe_unserialize($transactionData->billing_address);
+        $transactionData->shipping_address = maybe_unserialize($transactionData->shipping_address);
+
+        $OrderData =( new Order())->getOrderItem($bookingId);
     
         wp_send_json_success(
             array(
                 'transactions' => $transactionData,
-                'billing_address' => $billing_address,
                 'bookings' => $bookingData,
-                'booking_address' => $booking_address,
-                'orderItems' => $OrderModal,
+                'orderItems' => $OrderData,
             )
         );
     }
