@@ -29,6 +29,10 @@ $data = $booking;
    
 ">
                 <?php echo SubmissionCheckout::BookingSummery($package_name, $trip_title, $booking_date, $booking_packages); ?>
+                <!-- <button class="tm_remove_cart_item" data-id="<?php echo $booking->id; ?>">Remove</button> -->
+                <button class="tm_cart_checkout_button">
+                    <a href="<?php echo site_url('/travel-manager-checkout/?booking_id=' . $booking->id); ?>">Checkout</a>
+                </button>
             </div>
         <?php
         endforeach;
