@@ -6,6 +6,7 @@ use WPTravelManager\Classes\Services\BookingsServices;
 use WPTravelManager\Classes\Models\Booking;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Models\Order;
+use WPTravelManager\Classes\Models\Trips;
 use WPTravelManager\Classes\Models\Transaction;
 
 class BookingsController {
@@ -78,6 +79,7 @@ class BookingsController {
         $bookingData->traveler_address = maybe_unserialize($bookingData->traveler_address);
         $transactionData->billing_address = maybe_unserialize($transactionData->billing_address);
         $transactionData->shipping_address = maybe_unserialize($transactionData->shipping_address);
+        $tripData = (new Trips())->getTripInfo($bookingData->trip_id);
 
         $OrderData =( new Order())->getOrderItem($bookingId);
     
@@ -86,6 +88,7 @@ class BookingsController {
                 'transactions' => $transactionData,
                 'bookings' => $bookingData,
                 'orderItems' => $OrderData,
+                'trip' => $tripData,
             )
         );
     }

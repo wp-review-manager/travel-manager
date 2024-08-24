@@ -114,6 +114,26 @@
                 </div>
                 <!-- ================================ -->
 
+                <!--Traveler Info Start-->
+                <AppCard title="Trip Info" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
+                        <el-button type="default" size="mini" @click="viewTrip(trip_info.trip?.preview_url)">
+                            View Trip
+                        </el-button>
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_trip_info_details">
+                            <h5>{{ trip_info.trip?.post_title }}</h5>
+                            <span class="badge">Code : {{ trip_info?.trip_meta?.general?.trip_code }}</span>
+                            <span class="badge">Type : {{ trip_info?.trip_meta?.general?.trip_type }}</span>
+                            <span class="badge">Status : {{ trip_info?.trip_meta?.general?.trip_status }}</span>
+                            <span class="badge">Category : {{ trip_info?.trip_meta?.general?.trip_category }}</span>
+                            <span class="badge">Starting Date : {{ trip_info?.trip_meta?.general?.cut_time?.start_of_date || 'Available Anytime' }}</span>
+                        </div>
+                    </template>
+                </AppCard>
+                <!--Traveler Info End-->
+
                 <div class="tm_entry_order_items">
                     <div class="tm_entry_info_header">
                         <div class="tm_info_box_header">Booking Items</div>
@@ -252,9 +272,11 @@
 
 <script>
 import Icon from "@/components/Icons/AppIcon.vue"
+import AppCard from "@/components/AppCard.vue"
 export default {
     components: {
-        Icon
+        Icon,
+        AppCard
     },
     data() {
         return {
@@ -262,6 +284,7 @@ export default {
             bookings: {},
             transactions: {},
             orderItem: {},
+            trip_info: {},
             loading: false
         }
     },
@@ -290,6 +313,8 @@ export default {
                     that.bookings = response.data.bookings;
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
+                    that.trip_info = response.data.trip;
+                    // console.log(that.trip_info.trip.ID);
                     that.loading = false;
                 }).fail((error) => {
                     console.log(error);
