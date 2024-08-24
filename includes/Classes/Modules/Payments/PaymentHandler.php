@@ -21,9 +21,18 @@ class PaymentHandler {
         if (isset($_GET['trm_payment']) && isset($_GET['payment_method'])) {
             $data = $_GET;
             $this->validateFrameLessPage($data);
-            add_action('wp', function () {
+            add_action('wp', function () use ($data){
                 $paymentMethod = sanitize_text_field($_GET['payment_method']);
-                do_action('trm_payment_success_' . $paymentMethod);
+                if (isset($_GET['payment_status'])) {
+                   if ($_GET['payment_status'] == 'failed') {
+                       do_action('trm_payment_failed_' . $paymentMethod, $data);
+                   } else if ($_GET['payment_status'] == 'success') {
+                       do_action('trm_payment_success_' . $paymentMethod, $data);
+                   } else if ($_GET['payment_status'] == 'cancelled') {
+                       do_action('trm_payment_cancelled_' . $paymentMethod, $data);
+                   }
+                }
+                // do_action('trm_payment_success_' . $paymentMethod);
             });
         }
 

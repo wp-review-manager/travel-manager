@@ -21,7 +21,9 @@ class Sslcommerz extends BasePaymentMethod {
         );
 
         add_action('trm_make_payment_' . $this->method, array($this, 'makePayment'), 10, 4);
-        add_action('trm_payment_success_' . $this->method, array($this, 'updateStatus'), 10, 2);
+        add_action('trm_payment_success_' . $this->method, array($this, 'handlePaymentSuccess'), 10, 1);
+        add_action('trm_payment_failed_' . $this->method, array($this, 'handlePaymentFailed'), 10, 1);
+        add_action('trm_payment_cancelled_' . $this->method, array($this, 'handlePaymentCancelled'), 10, 1);
         add_action('trm_ipn_endpoint_' . $this->method, function () {
             $this->verifyIPN();
             exit(200);
@@ -76,6 +78,13 @@ class Sslcommerz extends BasePaymentMethod {
         }
 
         $this->markAsPaid($status, $updateData, $transaction);
+    }
+
+    public function handlePaymentSuccess($data)
+    {
+        $bookingId = intval(Arr::get($data, 'trm_payment'));
+        $transaction = (new Transaction())->getTransactionByBookingId($bookingId);
+        $this->markAsPaid('paid', $data, $transaction);
     }
 
     public function markAsPaid($status, $updateData, $transaction)
@@ -218,18 +227,36 @@ class Sslcommerz extends BasePaymentMethod {
         }
 
         if (is_wp_error($paymentIntent)) {
+            // do_action('wppayform_log_data', [
+            //     'trip_id' => $booking->trip_id,
+            //     'booking_id' => $booking->id,
+            //     'type' => 'activity',
+            //     'created_by' => 'TRM BOT',
+            //     'title' => 'Sslcommerz Payment Webhook Error',
+            //     'content' => $paymentIntent->get_error_message()
+            // ]);
             wp_send_json_error(array(
                 'message' => __($paymentIntent->get_error_message(), 'travel-manager')
             ), 423);
         }
 
-        // update charge_id of transaction by sessionkey here, then redirect
+        // do_action('wppayform_log_data', [
+            //     'trip_id' => $booking->trip_id,
+            //     'booking_id' => $booking->id,
+            //     'type' => 'activity',
+            //     'created_by' => 'Paymattic BOT',
+            //     'title' => 'Sslcommerz Payment Redirect',
+            //     'content' => 'User redirect to Sslcommerz for completing the payment'
+            // ]);
+
+        // update charge_id of transaction by sessionkey here, then redirect, to query the transaction status any time (if required).
 
         if (Arr::get($paymentIntent, 'GatewayPageURL')) {
-            wp_send_json_success(array(
-                'redirect' => Arr::get($paymentIntent, 'GatewayPageURL'),
-                'status' => 'success'
-            ), 200);
+            wp_send_json_success([
+                'message' => __('You are redirecting to sslcommerz.com to complete the purchase. Please wait while you are redirecting....', 'wp-payment-form-pro'),
+                'call_next_method' => 'normalRedirect',
+                'redirect_url' => Arr::get($paymentIntent, 'GatewayPageURL')
+            ], 200);
         }
         
     }
@@ -254,6 +281,11 @@ class Sslcommerz extends BasePaymentMethod {
                 'message' => 'Trip Not Found'
             ), 400 );
         }
+
+        // get necessary urls
+        $success_url = $this->redirectUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
+        $fail_url = $this->failureUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
+        $cancel_url = $this->cancelUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
    
         $args = [
             'total_amount' => floatval($transaction->payment_total),
@@ -264,9 +296,9 @@ class Sslcommerz extends BasePaymentMethod {
             'product_name' => $trip->post_title,
             'cus_name' => Arr::get($checkoutData, 'traveler_name', "Not collected"),
             'cus_email' => Arr::get($checkoutData, 'traveler_email', "Not collected"),
-            'success_url' => $this->redirectUrl($booking),
-            'fail_url' => Arr::get($checkoutData, '__trm_current_url'), // need to have current url
-            'cancel_url' => Arr::get($checkoutData, '__trm_current_url'),
+            'success_url' => $success_url,
+            'fail_url' => $fail_url,
+            'cancel_url' => $cancel_url,
 
             'cus_add1' => Arr::get($checkoutData, 'traveler_address', 'Not collected'),
             'cus_city' => Arr::get($checkoutData, 'traveler_country', 'Not collected'),
@@ -282,14 +314,47 @@ class Sslcommerz extends BasePaymentMethod {
     }
 
 
-    public function redirectUrl($booking)
+    public function redirectUrl($booking, $currentUrl)
     {
-        // $confirmation = ConfirmationHelper::getFormConfirmation($formId, $booking); get confirmation url
         $confirmation = array(); // temporary
-        if (empty($confirmation['customUrl'])) {
-            $confirmation['customUrl'] = site_url(); // Arr::get($booking, 'form_data_raw.__wpf_current_url')
-        }
-        return $confirmation['customUrl'];
+        // $confirmation = ConfirmationHelper::getFormConfirmation($formId, $booking); get confirmation url
+
+        $confirmation['successUrl'] = Arr::get($confirmation, 'successUrl') ? Arr::get($confirmation, 'successUrl') : $currentUrl;
+        return add_query_arg(array(
+            'payment_status' => 'success',
+            'trm_payment' => $booking->id,
+            'payment_method' => $this->method,
+            'booking_hash' => $booking->booking_hash
+        ), $confirmation['successUrl']);
+ 
+    }
+
+    public function failureUrl($booking, $currentUrl)
+    {
+        $confirmation = array(); // temporary
+        // $confirmation = ConfirmationHelper::getFormConfirmation($formId, $booking); get confirmation url
+        $confirmation['failureUrl'] = Arr::get($confirmation, 'failureUrl') ? Arr::get($confirmation, 'failureUrl') : $currentUrl;
+
+        return add_query_arg(array(
+            'payment_status' => 'failed',
+            'trm_payment' => $booking->id,
+            'payment_method' => $this->method,
+            'booking_hash' => $booking->booking_hash
+        ), $confirmation['failureUrl']);
+    }
+
+    public function cancelUrl($booking, $currentUrl)
+    {
+        $confirmation = array(); // temporary
+        // $confirmation = ConfirmationHelper::getFormConfirmation($formId, $booking); get confirmation url
+        $confirmation['cancelUrl'] = Arr::get($confirmation, 'cancelUrl') ? Arr::get($confirmation, 'cancelUrl') : $currentUrl;
+
+        return add_query_arg(array(
+            'payment_status' => 'cancelled',
+            'trm_payment' => $booking->id,
+            'payment_method' => $this->method,
+            'booking_hash' => $booking->booking_hash
+        ), $confirmation['cancelUrl']);
     }
 
     public function getApiKeys($method) {
@@ -309,6 +374,42 @@ class Sslcommerz extends BasePaymentMethod {
                 'api_path' => 'https://sandbox.sslcommerz.com'
             );
         }
+    }
+
+    public function addTransactionUrl($transactions, $bookingId)
+    {
+        $paymentMode = $this->getPaymentMode($this->method);
+        $transPath = 'https://sandbox.sslcommerz.com/manage/';
+        if ($paymentMode == 'live') {
+            $transPath = 'https://securepay.sslcommerz.com/manage/';
+        };
+
+        foreach ($transactions as $transaction) {
+            if ($transaction->charge_id) {
+                $transaction->transaction_url =  $transPath;
+                $payNote = maybe_unserialize($transaction->payment_note);
+                if (!empty($payNote)) {
+                    $currency = Arr::get($payNote, 'currency', '-');
+                    $converted = [
+                        'Conversion Type' => 'From ' . Arr::get($payNote, 'currency_type', '-') . ' to ' . $currency,
+                        'Rate' => Arr::get($payNote, 'currency_rate') . ' ' . $currency,
+                        'Calculated Total' => Arr::get($payNote, 'amount') . ' ' . $currency,
+                        'Store amount' => '<strong>' . Arr::get($payNote, 'store_amount') . ' ' . $currency . '</strong>',
+                        'Card Issuer' => Arr::get($payNote, 'card_issuer')
+                    ];
+                    $transaction->converted_currency = $converted;
+                }
+            }
+        }
+        return $transactions;
+    }
+
+    public function getLastTransaction($bookingId)
+    {
+        $transactionModel = new Transaction();
+        $transaction = $transactionModel->where('booking_id', $bookingId)
+            ->first();
+        return $transaction;
     }
 
 }

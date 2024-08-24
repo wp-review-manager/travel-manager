@@ -50,6 +50,11 @@ class Transaction extends Model
 
     }
 
+    public function getTransactionBYBookingId($bookingId) {
+        $transaction = TMDBModel($this->table)->where('booking_id', $bookingId)->get();
+        return $transaction;
+    }
+
     public function updateTransaction($id, $data) {
         $update = TMDBModel($this->table)->where('id', $id)->update($data);
         
