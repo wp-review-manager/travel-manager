@@ -1,14 +1,17 @@
 <template>
-    <div class="container">
+    <div class="container" v-loading="loading">
         <!-- ====================== -->
         <div class="tm_head_info">
             <div class="tm_entry_title">
-                <div class="tm_entries_url"><a href="#">
-                        <span>Form Entries</span></a></div>
+                <div class="tm_entries_url">
+                    <router-link to="/bookings">
+                        Bookings
+                    </router-link>
+                </div>
                 <div class="tm_back_icon">
                     <div class="icon"> > </div>
                 </div>
-                <div class="tm_payhead_title"> Blank Form (#68) #2</div>
+                <div class="tm_payhead_title"> #{{ booking_id }}</div>
             </div>
         </div>
         <!-- ====================== -->
@@ -65,10 +68,11 @@
                                 <span>{{ transactions.payer_email }}</span>
                             </div>
                         </div>
-                        <div class="tm_info_block">
+                        <div class="tm_info_block" style="flex-basis: 44%;">
                             <div class="tm_info_header"> Address</div>
                             <div class="tm_info_value">
-                                <span>{{ transactions.billing_address }}Address</span>
+                                <span>{{ getAddress(transactions.shipping_address) }}
+                                </span>
                             </div>
                         </div>
                      
@@ -79,7 +83,7 @@
                 <!-- ====================== -->
                 <div class="tm_entry_info_box">
                     <div class="tm_entry_info_header">
-                        <div class="tm_info_box_header">Form Entry Data</div>
+                        <div class="tm_info_box_header">Traveler Info</div>
                     </div>
                     <div class="tm_entry_info_body">
                         <div class="tm_entry_details">
@@ -101,7 +105,7 @@
                             </div>
                             <div class="tm_each_entry">
                                 <div class="tm_entry_label">Address</div>
-                                <div class="tm_entry_value">{{ bookings.traveler_address }}</div>
+                                <div class="tm_entry_value">{{ getAddress(bookings.traveler_address) }}</div>
                             </div>
 
                         </div>
@@ -110,9 +114,29 @@
                 </div>
                 <!-- ================================ -->
 
+                <!--Traveler Info Start-->
+                <AppCard title="Trip Info" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
+                        <el-button type="default" size="mini" @click="viewTrip(trip_info.trip?.preview_url)">
+                            View Trip
+                        </el-button>
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_trip_info_details">
+                            <h5>{{ trip_info.trip?.post_title }}</h5>
+                            <span class="badge">Code : {{ trip_info?.trip_meta?.general?.trip_code }}</span>
+                            <span class="badge">Type : {{ trip_info?.trip_meta?.general?.trip_type }}</span>
+                            <span class="badge">Status : {{ trip_info?.trip_meta?.general?.trip_status }}</span>
+                            <span class="badge">Category : {{ trip_info?.trip_meta?.general?.trip_category }}</span>
+                            <span class="badge">Starting Date : {{ trip_info?.trip_meta?.general?.cut_time?.start_of_date || 'Available Anytime' }}</span>
+                        </div>
+                    </template>
+                </AppCard>
+                <!--Traveler Info End-->
+
                 <div class="tm_entry_order_items">
                     <div class="tm_entry_info_header">
-                        <div class="tm_info_box_header">Payment Items</div>
+                        <div class="tm_info_box_header">Booking Items</div>
                     </div>
                     <div class="tm_entry_info_body">
                         <table class="tm_list_table widefat table table-bordered striped">
@@ -248,9 +272,11 @@
 
 <script>
 import Icon from "@/components/Icons/AppIcon.vue"
+import AppCard from "@/components/AppCard.vue"
 export default {
     components: {
-        Icon
+        Icon,
+        AppCard
     },
     data() {
         return {
@@ -258,6 +284,8 @@ export default {
             bookings: {},
             transactions: {},
             orderItem: {},
+            trip_info: {},
+            loading: false
         }
     },
     methods: {
@@ -267,24 +295,30 @@ export default {
             return date.toLocaleString('en-US', options);
         },
 
+        getAddress(address) {
+            return `${address?.address}, ${address?.city}, ${address?.state}, ${address?.zip_code}, ${address?.country}`;
+        },
+
         getBookingDetails(bookingId) {
+            this.loading = true;
             let that = this;
             jQuery
                 .post(ajaxurl, {
                     action: "tm_bookings",
                     route: "get_booking_details",
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
-                    booking_id: bookingId
+                    booking_id: bookingId,
 
                 }).then((response) => {
-                   
-
                     that.bookings = response.data.bookings;
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
-                    console.log( that.transactions.shipping_address.zip_code, 'response')
+                    that.trip_info = response.data.trip;
+                    // console.log(that.trip_info.trip.ID);
+                    that.loading = false;
                 }).fail((error) => {
                     console.log(error);
+                    that.loading = false;
                 })
         },
     },

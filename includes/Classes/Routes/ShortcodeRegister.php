@@ -2,6 +2,7 @@
 namespace WPTravelManager\Classes\Routes;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\View;
+use WPTravelManager\Classes\Models\Session;
 
 class ShortcodeRegister {
     
@@ -87,17 +88,13 @@ class ShortcodeRegister {
             ]);
         });
 
-        global $wpdb; 
+        $device_id = Arr::get($_COOKIE, 'TRMdeviceId');
 
-        $device_id = Arr::get( $_REQUEST, 'device_id', '123456789' );
+        if(!$device_id) {
+            return 'There is no cart item';
+        }
 
-        $table_name = $wpdb->prefix.'tm_sessions'; // Adjust table prefix if necessary
-        $session_data = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT * FROM $table_name WHERE device_id = %d", // Use %d for integer placeholders
-                $device_id
-            )
-        );
+        $session_data = (new Session())->getSession($device_id);
 
         foreach ($session_data as $session) {
             $session->session_meta = maybe_unserialize($session->session_meta);

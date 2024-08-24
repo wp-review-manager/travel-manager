@@ -202,6 +202,7 @@
         }
     }
 }
+
 //=============================
 
 .tm_entry_order_items{
@@ -383,6 +384,29 @@
                 margin-bottom: 6px;
             }
         }
+    }
+}
+
+.tm_trip_info_details {
+    padding: 20px 10px;
+    h5 {
+        @include text($size: 14px, $weight: 600, $color: $tm-neutral-1200);
+        margin-bottom: 20px;
+    }
+    .badge {
+        margin: 10px 0;
+        background: #F9FAFB;
+        border-radius: 8px;
+        color: #2F3448;
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        padding: 6px 12px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #D6DAE1;
     }
 }
 
