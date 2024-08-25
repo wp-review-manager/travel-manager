@@ -82,9 +82,31 @@ class Sslcommerz extends BasePaymentMethod {
 
     public function handlePaymentSuccess($data)
     {
+        $bookingModel = new Booking();
+        $transactionModel = new Transaction();
+
         $bookingId = intval(Arr::get($data, 'trm_payment'));
         $transaction = (new Transaction())->getTransactionByBookingId($bookingId);
-        $this->markAsPaid('paid', $data, $transaction);
+        $booking = $bookingModel->getBooking($bookingId);
+
+        $bookingData = array(
+            'booking_status' => 'completed',
+            'updated_at' => current_time('Y-m-d H:i:s')
+        );
+        // right now we don't know what exact data we will get from sslcommerz successUrl beside our given data
+        $transactionData = array(
+            'status' => 'paid',
+            'updated_at' => current_time('Y-m-d H:i:s')
+        );
+
+    
+        $transactionModel->updateTransaction($transaction->id, $transactionData);
+        $bookingModel->where('id', $transaction->booking_id)->update($bookingData);
+
+        do_action('trm/booking_payment_success', $booking, $transaction);
+        do_action('trm/booking_payment_success_sslcommerz', $booking, $transaction);
+        do_action('trm/booking_completed', $booking, $transaction);
+
     }
 
     public function markAsPaid($status, $updateData, $transaction)
@@ -92,7 +114,7 @@ class Sslcommerz extends BasePaymentMethod {
         $bookingModel = new Booking();
         $booking = $bookingModel->getBooking($transaction->booking_id);
         $bookingData = array(
-            'payment_status' => $status,
+            'booking_status' => 'completed',
             'updated_at' => current_time('Y-m-d H:i:s')
         );
 
@@ -111,8 +133,9 @@ class Sslcommerz extends BasePaymentMethod {
         ]);
 
         if ($status === 'paid') {
-            do_action('trm/booking_payment_success_sslcommerz', $booking, $transaction, $transaction->trip__id, $updateData);
-            do_action('trm/booking_payment_success', $booking, $transaction, $transaction->trip_id, $updateData);
+            do_action('trm/booking_payment_success', $booking, $transaction);
+            do_action('trm/booking_payment_success_sslcommerz', $booking, $transaction);
+            do_action('trm/booking_completed', $booking, $transaction);
         }
     }
 
@@ -171,17 +194,20 @@ class Sslcommerz extends BasePaymentMethod {
         return $transaction;
     }
 
-    public function render($template)
+    public function render()
     {
+     
+
         $id = $this->uniqueId('sslcommerz');
 
         ?>
         <label class="trm_sslcommerz_card_label" for="<?php echo esc_attr($id); ?>">
-            <img width="60px" src="<?php echo esc_url($this->assetUrl . 'paypal.svg'); ?>" alt="">
             <input
-                    style="outline: none;"
-                    type="radio" name="trm_payment_method" class="trm_sslcommerz_card" id="<?php echo esc_attr($id); ?>"
-                    value="paypal"/>
+                style="outline: none;"
+                type="radio" name="trm_payment_method" class="trm_sslcommerz_card" id="<?php echo esc_attr($id); ?>"
+                value="sslcommerz"
+            />
+            <img width="72px" src="<?php echo esc_url($this->assetUrl . 'sslcommerz.svg'); ?>" alt="">
         </label>
         <?php
     }
@@ -211,6 +237,55 @@ class Sslcommerz extends BasePaymentMethod {
         }
     }
 
+    public function makeRefund($transactionId, $amount)
+    {
+        $transactionModel = new Transaction();
+        $transaction = $transactionModel->getTransaction($transactionId);
+        $keys = $this->getApiKeys($this->method);
+        $Api = new API();
+
+        $refundArgs = array(
+            'bank_tran_id' => $transaction->bank_tran_id,
+            'refund_amount' => $amount,
+            'refund_ref_id' => $transaction->transaction_hash,
+            'refund_remarks' => 'Refund for ' . $transaction->transaction_hash
+        );
+
+        $refund = $Api->refundApi($keys, $refundArgs, 'refund');
+        if (is_wp_error($refund)) {
+            wp_send_json_error(array(
+                'message' => $refund->get_error_message()
+            ), 423);
+        }
+
+        // query refund status
+        $queryArgs = array(
+            'refund_ref_id' => $refund['refund_ref_id']
+        );
+
+        $refundQueryResponse = $Api->refundApi($keys, $queryArgs, 'query');
+
+        $transactionModel->updateTransaction($transactionId, array(
+            'status' => Arr::get($refundQueryResponse, 'status'),
+            'updated_at' => current_time('Y-m-d H:i:s')
+        ));
+
+        do_action('trm_log_data', [
+            'transaction_id' => $transactionId,
+            'booking_id' => $transaction->booking_id,
+            'type' => 'info',
+            'created_by' => 'TRM Bot',
+            'content' => sprintf(__('Refund status for transaction %s is %s', 'travel-manager'), $transaction->transaction_hash, Arr::get($refundQueryResponse, 'status'))
+        ]);
+
+
+        if (Arr::get($refundQueryResponse, 'status') == 'refunded') {
+           do_action('trm/booking_payment_refunded', $transaction->booking_id, $transactionId, $amount);
+        }
+
+        return $refund;
+    }
+
     public function redirect($transaction, $booking, $data, $totalPayable)
     {
         $globalSettings = $this->getApiKeys($this->method);
@@ -227,29 +302,33 @@ class Sslcommerz extends BasePaymentMethod {
         }
 
         if (is_wp_error($paymentIntent)) {
-            // do_action('wppayform_log_data', [
-            //     'trip_id' => $booking->trip_id,
-            //     'booking_id' => $booking->id,
-            //     'type' => 'activity',
-            //     'created_by' => 'TRM BOT',
-            //     'title' => 'Sslcommerz Payment Webhook Error',
-            //     'content' => $paymentIntent->get_error_message()
-            // ]);
+            do_action('trm_log_data', [
+                'trip_id' => $booking->trip_id,
+                'booking_id' => $booking->id,
+                'type' => 'activity',
+                'created_by' => 'TRM BOT',
+                'title' => 'Sslcommerz Payment Webhook Error',
+                'content' => $paymentIntent->get_error_message()
+            ]);
             wp_send_json_error(array(
                 'message' => __($paymentIntent->get_error_message(), 'travel-manager')
             ), 423);
         }
 
-        // do_action('wppayform_log_data', [
-            //     'trip_id' => $booking->trip_id,
-            //     'booking_id' => $booking->id,
-            //     'type' => 'activity',
-            //     'created_by' => 'Paymattic BOT',
-            //     'title' => 'Sslcommerz Payment Redirect',
-            //     'content' => 'User redirect to Sslcommerz for completing the payment'
-            // ]);
-
         // update charge_id of transaction by sessionkey here, then redirect, to query the transaction status any time (if required).
+        // we may add another column in transaction table to store the sessionkey, so that we can query the transaction status any time.
+        $transactionModel = new Transaction();
+        $transactionModel->updateTransaction($transaction->id, array(
+            'session_key' => Arr::get($paymentIntent, 'sessionkey')
+        ));
+
+        do_action('trm_log_data', [
+            'transaction_id' => $transaction->id,
+            'booking_id' => $transaction->booking_id,
+            'type' => 'info',
+            'created_by' => 'TRM Bot',
+            'content' => sprintf(__('User redirect to Sslcommerz for completing the payment. Session Key: %s', 'travel-manager'), Arr::get($paymentIntent, 'sessionkey'))
+        ]);
 
         if (Arr::get($paymentIntent, 'GatewayPageURL')) {
             wp_send_json_success([
@@ -266,7 +345,7 @@ class Sslcommerz extends BasePaymentMethod {
         $Api = new API();
 
         $webhook_url = add_query_arg([
-            'trm_payment_api_notify' => '1',
+            'trm_ipn_listener' => '1',
             'payment_method' => 'sslcommerz'
         ], site_url('index.php'));
         
@@ -365,13 +444,15 @@ class Sslcommerz extends BasePaymentMethod {
             return array(
                 'api_key' => Arr::get($settings, 'live_store_id'),
                 'api_secret' => Arr::get($settings, 'live_store_pass'),
-                'api_path' => 'https://securepay.sslcommerz.com'
+                'api_path' => 'https://securepay.sslcommerz.com',
+                'payment_mode' => 'live'
             );
         } else {
             return array(
                 'api_key' => Arr::get($settings, 'test_store_id'),
                 'api_secret' => Arr::get($settings, 'test_store_pass'),
-                'api_path' => 'https://sandbox.sslcommerz.com'
+                'api_path' => 'https://sandbox.sslcommerz.com',
+                'payment_mode' => 'test'
             );
         }
     }

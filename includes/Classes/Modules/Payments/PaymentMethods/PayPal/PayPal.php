@@ -325,18 +325,19 @@ class PayPal extends BasePaymentMethod
 
     }
 
-    public function render($template)
+    public function render()
     {
         $this->maybeLoadModalScript();
         $id = $this->uniqueId('paypal_card');
 
         ?>
         <label class="trm_paypal_card_label" for="<?php echo esc_attr($id); ?>">
-            <img width="60px" src="<?php echo esc_url($this->assetUrl . 'paypal.svg'); ?>" alt="">
             <input
-                    style="outline: none;"
-                    type="radio" name="trm_payment_method" class="trm_paypal_card" id="<?php echo esc_attr($id); ?>"
-                    value="paypal"/>
+                style="outline: none;"
+                type="radio" name="trm_payment_method" class="trm_paypal_card" id="<?php echo esc_attr($id); ?>"
+                value="paypal"
+            />
+            <img width="72px" src="<?php echo esc_url($this->assetUrl . 'paypal.svg'); ?>" alt="Paypal">
         </label>
         <?php
     }

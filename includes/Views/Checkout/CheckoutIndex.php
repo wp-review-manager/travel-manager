@@ -21,15 +21,12 @@ endforeach;
 
 
 
-
-
-
 <div class="tm_checkout">
     <h1 class="tm_checkout_title">Checkout</h1>
 
-    <div class="tm_content">
+    <div class="tm_content" style="display: flex; align-items: center; gap: 20px">
 
-        <div class="tm_checkout_form">
+        <div class="tm_checkout_form" style="width: 45%; padding: 20px">
             <h1 class="tm_title">Billing Details</h1>
 
             <form id="tm_checkout-form">
@@ -94,20 +91,20 @@ endforeach;
                         <option value="Antarctica">Antarctica</option>
                     </select>
                 </div>
-
+                <?php do_action('trm/render_payment_options') ?>
                 <!-- <div class="tm_filed_checkbox">
                     <input type="checkbox">
                     <label> Check the box to confirm you've read and agree to our Terms and Conditions and Privacy Policy.</label>
                 </div> -->
 
                 <div class="tm_submit">
-                    <button   class="tm_checkout_button">Submit</button>
+                    <button  class="tm_checkout_button">Submit</button>
                 </div>
             </form>
         </div>
         
-        <div class="tm_book_summary">
-            <?php echo SubmissionCheckout::BookingSummery($package_name,$trip_title,$booking_date,$booking_packages); ?>
+        <div class="tm_book_summary" style="width: 50%; padding: 20px;">
+            <?php do_action('trm/render_checkout_summary', $booking) ?>
         </div>
     </div>
 </div>

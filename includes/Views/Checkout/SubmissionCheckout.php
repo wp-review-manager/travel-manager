@@ -6,6 +6,19 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class SubmissionCheckout {
 
+    public function init() {
+        add_action('trm/render_checkout_summary', array($this, 'renderCheckoutSummary'), 10, 1);
+        add_action('trm/render_payment_options', array($this, 'renderPaymentOptions'), 10);
+    }
+
+    public function renderCheckoutSummary($data) {
+        $package_name = Arr::get($data, 'package_name', '');
+        $trip_title = Arr::get($data, 'trip_title', '');
+        $booking_date = Arr::get($data, 'booking_date', '');
+        $booking_packages = Arr::get($data, 'packages', '');
+        echo self::BookingSummery($package_name,$trip_title,$booking_date,$booking_packages);
+    }
+
     public static function BookingSummery($package_name,$trip_title,$booking_date,$booking_packages)
     {
         ob_start();
@@ -65,10 +78,33 @@ class SubmissionCheckout {
                 </span>
 
             </div>
-
-
         <?php
         return ob_get_clean();  
+    }
+
+    public function renderPaymentOptions() {
+        $paymentMethods = apply_filters('trm/get_all_active_payment_methods', array());
+
+        ob_start();
+
+        ?>
+        <div class="tm_payment_options">
+            <p class="tm_payment_title">Payment Options</p>
+                  
+            <ul class="tm_payment_methods" style="padding: 0px; display: flex; flex-direction: column; gap: 8px">
+                <?php foreach ($paymentMethods as $method): ?>
+                    
+                    <li class="tm_payment_method" style="display:flex; align-items: center; gap: 4px">
+
+                        <?php do_action('trm/render_payment_method_'. $method['name'])?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+        </div>
+        <?php
+
+        echo ob_get_clean();
     }
         
 }

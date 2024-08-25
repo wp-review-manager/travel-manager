@@ -45,7 +45,7 @@ class CheckoutController {
                 }
             
                 $transactionId = (new Transactions())->saveTransactions($validateData,$bookingId);
-                $paymentMethod = Arr::get($validateData, 'payment_method', 'sslcommerz');
+                $paymentMethod = Arr::get($validateData, 'trm_payment_method', 'sslcommerz');
                 do_action('trm_make_payment_' . $paymentMethod, $transactionId, $bookingId, $validateData, $totalPayable);
                 wp_send_json_success('checkout Created successfully');
             } else {

@@ -36,7 +36,7 @@ class PaymentHandler {
             });
         }
 
-        if (isset($_REQUEST['trm_payment_api_notify'])) {
+        if (isset($_REQUEST['trm_ipn_listener']) && isset($_REQUEST['payment_method']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             add_action('wp', function () {
                 $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
                 do_action('trm_ipn_endpoint_' . $paymentMethod);
