@@ -18,7 +18,10 @@
         <div class="tm_entry_layout">
             <!-- ================= -->
             <div class="tm_entry_left">
+                <!-- ======================== -->
+                <!--Payment Start-->
                 <div class="tm_header">
+
                     <div class="tm_head_top">
                         <!-- ================= -->
                         <div class="tm_header_left">
@@ -54,7 +57,8 @@
                         </div>
 
                     </div>
-                    <div class="tm_head_bottom" >
+
+                    <div class="tm_head_bottom">
 
                         <div class="tm_info_block">
                             <div class="tm_info_header">Name</div>
@@ -75,46 +79,51 @@
                                 </span>
                             </div>
                         </div>
-                     
+
 
                     </div>
 
                 </div>
+                <!--Payment End-->
                 <!-- ====================== -->
-                <div class="tm_entry_info_box">
-                    <div class="tm_entry_info_header">
-                        <div class="tm_info_box_header">Traveler Info</div>
-                    </div>
-                    <div class="tm_entry_info_body">
-                        <div class="tm_entry_details">
-                            <div class="tm_each_entry">
-                                <div class="tm_entry_label">Name</div>
-                                <div class="tm_entry_value">{{ bookings.traveler_name }}</div>
-                            </div>
-                            <div class="tm_each_entry">
-                                <div class="tm_entry_label">Email</div>
-                                <div class="tm_entry_value">{{ bookings.traveler_email }}</div>
-                            </div>
-                            <div class="tm_each_entry">
-                                <div class="tm_entry_label">Phone</div>
-                                <div class="tm_entry_value">{{ bookings.traveler_phone }}</div>
-                            </div>
-                            <div class="tm_each_entry">
-                                <div class="tm_entry_label">Country</div>
-                                <div class="tm_entry_value">{{ bookings.traveler_country }}</div>
-                            </div>
-                            <div class="tm_each_entry">
-                                <div class="tm_entry_label">Address</div>
-                                <div class="tm_entry_value">{{ getAddress(bookings.traveler_address) }}</div>
-                            </div>
+                <!--Traveler Info Start-->
+                <AppCard title="Traveler Info" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
 
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_traveler_info_body">
+                            <div class="tm_entry_details">
+                                <div class="tm_each_entry">
+                                    <div class="tm_entry_label">Name</div>
+                                    <div class="tm_entry_value">{{ bookings.traveler_name }}</div>
+                                </div>
+                                <div class="tm_each_entry">
+                                    <div class="tm_entry_label">Email</div>
+                                    <div class="tm_entry_value">{{ bookings.traveler_email }}</div>
+                                </div>
+                                <div class="tm_each_entry">
+                                    <div class="tm_entry_label">Phone</div>
+                                    <div class="tm_entry_value">{{ bookings.traveler_phone }}</div>
+                                </div>
+                                <div class="tm_each_entry">
+                                    <div class="tm_entry_label">Country</div>
+                                    <div class="tm_entry_value">{{ bookings.traveler_country }}</div>
+                                </div>
+                                <div class="tm_each_entry">
+                                    <div class="tm_entry_label">Address</div>
+                                    <div class="tm_entry_value">{{ getAddress(bookings.traveler_address) }}</div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
+                    </template>
+                </AppCard>
+                <!--Traveler Info End-->
 
-                </div>
                 <!-- ================================ -->
 
-                <!--Traveler Info Start-->
+                <!--Trip Info Start-->
                 <AppCard title="Trip Info" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
                     <template v-slot:actions>
                         <el-button type="default" size="mini" @click="viewTrip(trip_info.trip?.preview_url)">
@@ -128,90 +137,100 @@
                             <span class="badge">Type : {{ trip_info?.trip_meta?.general?.trip_type }}</span>
                             <span class="badge">Status : {{ trip_info?.trip_meta?.general?.trip_status }}</span>
                             <span class="badge">Category : {{ trip_info?.trip_meta?.general?.trip_category }}</span>
-                            <span class="badge">Starting Date : {{ trip_info?.trip_meta?.general?.cut_time?.start_of_date || 'Available Anytime' }}</span>
+                            <span class="badge">Starting Date : {{
+                                trip_info?.trip_meta?.general?.cut_time?.start_of_date || 'Available Anytime' }}</span>
                         </div>
                     </template>
                 </AppCard>
-                <!--Traveler Info End-->
+                <!--Trip Info End-->
+                <!-- =================== -->
+                <!--Booking Items Start-->
+                <AppCard title="Booking Items" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
 
-                <div class="tm_entry_order_items">
-                    <div class="tm_entry_info_header">
-                        <div class="tm_info_box_header">Booking Items</div>
-                    </div>
-                    <div class="tm_entry_info_body">
-                        <table class="tm_list_table widefat table table-bordered striped">
-                            <thead>
-                                <tr>
-                                    <th>Package Type</th>
-                                    <th>Item Name</th>
-                                    <th>Quantity</th>
-                                    <th>Item Price</th>
-                                    <th>Line Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, index) in orderItem" :key="index">
-                                    <td>{{ item.package_type }}</td>
-                                    <td>{{ item.item_name }}</td>
-                                    <td>{{ item.item_qty }}</td>
-                                    <td>$ {{ item.item_price }}</td>
-                                    <td>$ {{ item.line_total }}</td>
-                                </tr>
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_booking_info_body">
+                            <table class="tm_list_table widefat table table-bordered striped">
+                                <thead>
+                                    <tr>
+                                        <th>Package Type</th>
+                                        <th>Item Name</th>
+                                        <th>Quantity</th>
+                                        <th>Item Price</th>
+                                        <th>Line Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in orderItem" :key="index">
+                                        <td>{{ item.package_type }}</td>
+                                        <td>{{ item.item_name }}</td>
+                                        <td>{{ item.item_qty }}</td>
+                                        <td>$ {{ item.item_price }}</td>
+                                        <td>$ {{ item.line_total }}</td>
+                                    </tr>
 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="4">Sub Total:</th>
-                                    <th>$ {{ bookings.booking_total }}</th>
-                                </tr> <!---->
-                                <tr>
-                                    <th colspan="4"><span>Total:</span></th>
-                                    <th>$ {{ bookings.booking_total }}</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-                <!-- ================================ -->
-                <div class="tm_entry_transactions">
-                    <div class="tm_info_header">
-                        <div class="tm_info_box_header">Transaction Details</div>
-                    </div>
-                    <div class="tm_info_body">
-                        <div class="tm_entry_transaction">
-                            <ul class="tm_list_items">
-                                <li>
-                                    <div class="wpf_list_header">ID</div>
-                                    <div class="wpf_list_value">{{ transactions.id }}</div>
-                                </li>
-
-                                <li>
-                                    <div class="wpf_list_header">Payment Method</div>
-                                    <div class="wpf_list_value"><span>
-                                            {{ transactions.payment_method}}
-                                        </span></div>
-                                </li> <!---->
-                                <li>
-                                    <div class="wpf_list_header">Payment Total</div>
-                                    <div class="wpf_list_value">$ {{ transactions.payment_total }}</div>
-                                </li>
-                                <li>
-                                    <div class="wpf_list_header">Payment Status</div>
-                                    <div class="wpf_list_value wpf_pay_status_pending">
-                                        {{ transactions.transaction_type }}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="wpf_list_header">Date</div>
-                                    <div class="wpf_list_value">
-                                        {{ formatDate(transactions.created_at) }}
-                                    </div>
-                                </li>
-
-                            </ul>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">Sub Total:</th>
+                                        <th>$ {{ bookings.booking_total }}</th>
+                                    </tr> <!---->
+                                    <tr>
+                                        <th colspan="4"><span>Total:</span></th>
+                                        <th>$ {{ bookings.booking_total }}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
-                    </div>
-                </div>
+                    </template>
+                </AppCard>
+                <!--Booking Items End-->
+                <!-- ================================ -->
+                <!--Transaction Details Start-->
+                <AppCard title="Transaction Details" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
+
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_info_body">
+                            <div class="tm_entry_transaction">
+                                <ul class="tm_list_items">
+                                    <li>
+                                        <div class="wpf_list_header">ID</div>
+                                        <div class="wpf_list_value">{{ transactions.id }}</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="wpf_list_header">Payment Method</div>
+                                        <div class="wpf_list_value"><span>
+                                                {{ transactions.payment_method }}
+                                            </span></div>
+                                    </li> <!---->
+                                    <li>
+                                        <div class="wpf_list_header">Payment Total</div>
+                                        <div class="wpf_list_value">$ {{ transactions.payment_total }}</div>
+                                    </li>
+                                    <li>
+                                        <div class="wpf_list_header">Payment Status</div>
+                                        <div class="wpf_list_value wpf_pay_status_pending">
+                                            {{ transactions.transaction_type }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="wpf_list_header">Date</div>
+                                        <div class="wpf_list_value">
+                                            {{ formatDate(transactions.created_at) }}
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </template>
+                </AppCard>
+                <!--Transaction Details End-->
+
                 <!-- ================================ -->
             </div>
             <!-- ================================== -->
