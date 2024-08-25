@@ -23,6 +23,7 @@ class Sslcommerz extends BasePaymentMethod {
         add_action('trm_make_payment_' . $this->method, array($this, 'makePayment'), 10, 4);
         add_action('trm_payment_success_' . $this->method, array($this, 'handlePaymentSuccess'), 10, 1);
         add_action('trm_payment_failed_' . $this->method, array($this, 'handlePaymentFailed'), 10, 1);
+        add_action('trm_make_payment_refund' . $this->method, array($this, 'makeRefund'), 10, 2);
         add_action('trm_payment_cancelled_' . $this->method, array($this, 'handlePaymentCancelled'), 10, 1);
         add_action('trm_ipn_endpoint_' . $this->method, function () {
             $this->verifyIPN();
