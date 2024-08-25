@@ -33,6 +33,8 @@ const childPaymentRoutes = window.wpTravelManager.payment_routes;
 //Booking section components
 import AllBooking from './pages/page_booking/AllBooking.vue';
 import BookingDetails from './pages/page_booking/BookingDetails.vue';
+//Coupon section components
+import AllCoupon from './pages/page_coupons/AllCoupon.vue';
 
 export default [
     {
@@ -151,6 +153,11 @@ export default [
         path: '/enquiries',
         name: 'enquiries',
         component: AllEnquiries
+    },
+    {
+        path: '/coupons',
+        name: 'coupons',
+        component: AllCoupon,
     },
     {
         path: '/settings',

@@ -329,7 +329,7 @@ class Activator
         dbDelta($sql);
     }
 
-    protected function migrateCouponTable($sql, $tableName)
+    protected function migrateCouponTable()
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();

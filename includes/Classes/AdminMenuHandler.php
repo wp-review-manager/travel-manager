@@ -44,6 +44,11 @@ class AdminMenuHandler {
                 'manage_options',
                 'admin.php?page=travel-manager.php#/enquiries',
             );
+            $submenu['travel-manager.php']['coupons'] = array(
+                'Coupons',
+                'manage_options',
+                'admin.php?page=travel-manager.php#/coupons',
+            );
             $submenu['travel-manager.php']['settings'] = array(
                 'Settings',
                 'manage_options',
