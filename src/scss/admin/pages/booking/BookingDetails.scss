@@ -50,7 +50,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 20px;
-                border-bottom: 1px solid #EAECF0;
+                border-bottom: 1px solid $tm-gray-100;
 
                 .tm_header_left{
                     display: flex;
@@ -59,7 +59,7 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        border: 1px solid #D6DAE1;
+                        border: 1px solid $tm-gray-100;
                         border-radius: 8px;
                         height: 50px;
                         width: 50px;
@@ -67,7 +67,7 @@
                     .payment_amount_detail{
                         padding: 0 15px;
                         .head_small_title{
-                            color: #565865;
+                            color: $tm-dark-300;
                             font-family: "Inter", sans-serif;
                             font-size: 14px;
                             font-style: normal;
@@ -80,7 +80,7 @@
                             display: flex;
                             align-items: center;
                             .pay_amount{
-                                color: #2F3448;
+                                color: $tm-dark-600;
                                 font-family: "Inter", sans-serif;
                                 font-size: 24px;
                                 font-style: normal;
@@ -93,8 +93,8 @@
                                 display: flex;
                                 align-items: center;
                                 gap: 5px;
-                                background: #FFF9F3;
-                                color: #DC8006;
+                                background: $tm-gray-50;
+                                color: $tm-warning-500;
                                 text-align: center;
                                 font-family: "Inter", sans-serif;
                                 font-size: 14px;
@@ -122,9 +122,9 @@
                     .tm_pay_method_offline{
                         color: #fff;
                         font-weight: 700;
-                        background: #cfcfcf;
+                        background: $tm-dark-200;
                         border-radius: 5px;
-                        border: 2px solid #cfcfcf;
+                        border: 2px solid $tm-gray-100;
                     }
                 }
             }
@@ -139,11 +139,11 @@
                     .tm_info_header{
                         font-size: 16px;
                         font-weight: 500;
-                        color: black;
+                        color: $tm-dark-700;
                         padding-bottom: 6px;
                     }
                     .tm_info_value{
-                        color: #565865;
+                        color: $tm-dark-300;
                         font-size: 14px;
                     }
                 }
@@ -157,47 +157,28 @@
 }
 //========================
 
-.tm_entry_info_box{
-    background: #FFF;
-    margin-top: 20px;
-    border-radius: 8px;
-    padding: 20px;
-    .tm_entry_info_header{
-        border-radius: 8px 8px 0 0;
-        border-bottom: 1px solid #D6DAE1;
-        padding-bottom: 15px;
-        .tm_info_box_header{
-            color: #2F3448;
-            font-family: "Inter", sans-serif;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 22px;
-        }
-    }
-    .tm_entry_info_body{
-        .tm_entry_details{
-            padding-top: 20px;
-            .tm_each_entry{
-                display: grid;
-                grid-template-columns: 200px auto;
-                padding: 8px 0;
-                .tm_entry_label{
-                    color: #565865;
-                    font-family: "Inter", sans-serif;
-                    font-size: 16px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 20px;
-                }
-                .tm_entry_value{
-                    color: #2F3448;
-                    font-family: "Inter", sans-serif;
-                    font-size: 13px;
-                    font-style: normal;
-                    font-weight: 400;
-                    line-height: 20px;
-                }
+.tm_traveler_info_body{
+    .tm_entry_details{
+        padding: 16px;
+        .tm_each_entry{
+            display: grid;
+            grid-template-columns: 200px auto;
+            padding: 8px 0;
+            .tm_entry_label{
+                color: $tm-dark-300;
+                font-family: "Inter", sans-serif;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+            }
+            .tm_entry_value{
+                color: $tm-dark-400;
+                font-family: "Inter", sans-serif;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
             }
         }
     }
@@ -205,105 +186,69 @@
 
 //=============================
 
-.tm_entry_order_items{
-    background: #FFF;
-    margin-top: 20px;
-    border-radius: 8px;
-    padding: 20px;
-    .tm_entry_info_header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 20px;
-        .tm_info_box_header{
-            color: #2F3448;
-            font-family: "Inter", sans-serif;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 22px;
+.tm_booking_info_body{
+    padding: 16px 10px;
+    table.tm_list_table{
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+        border: 1px solid $tm-gray-100 !important;
+        border-radius: 8px;
+        font-size: 14px;
+        
+         thead th{
+            color: $tm-dark-400;
+            font-size: 15px;
+            border-bottom: 1px solid $tm-gray-100;
+            background: $tm-gray-50;
+            padding: 14px 20px;
+         }
+         tbody td{
+             border-bottom: 1px solid $tm-gray-100;
+             padding: 14px 20px;
+             color: $tm-dark-300;
+             font-size: 14px;
+             line-height: 1.5em;
         }
-    }
-
-    .tm_entry_info_body{
-        table.tm_list_table{
-            background: #fff;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-            border: 1px solid #D6DAE1 !important;
-            border-radius: 8px;
-            font-size: 14px;
-            
-             thead th{
-                color: #2c3338;
-                border-bottom: 1px solid #D6DAE1;
-                background: #F5F6F7;
+         tbody > :nth-child(2n+1) {
+            background-color: #FFF !important;
+        }
+        tbody>:nth-child(odd) {
+            background-color: $tm-gray-50;
+        }
+        tfoot tr {
+            background: $tm-gray-50;
+            th{
+                color: $tm-dark-400;
                 padding: 14px 20px;
-             }
-             tbody td{
-                 border-bottom: 1px solid #D6DAE1;
-                 padding: 14px 20px;
-                 color: #50575e;
-                 font-size: 14px;
-                 line-height: 1.5em;
-            }
-             tbody > :nth-child(2n+1) {
-                background-color: #FFF !important;
-            }
-            tbody>:nth-child(odd) {
-                background-color: #f6f7f7;
-            }
-            tfoot tr {
-                background: #F9FAFB;
-                th{
-                    color: #2c3338;
-                    padding: 14px 20px;
-                    border-top: none !important;
-                    border-bottom: none !important;
-                }
+                border-top: none !important;
+                border-bottom: none !important;
             }
         }
     }
-
 }
 //==========================
 
-.tm_entry_transactions{
-    background: #FFF;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
-    .tm_info_header{
-        display: flex;
-        align-items: center;
-        padding: 6px 0;
-        .tm_info_box_header{
-            color: #2F3448;
-            font-family: "Inter", sans-serif;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 22px;
+.tm_info_body{
+    padding: 16px 10px;
+    .tm_list_items{
+        li:first-child{
+            border-radius: 8px 8px 0 0;
         }
-    }
-    .tm_info_body{
-        .tm_list_items{
-            li:first-child{
-                border-radius: 8px 8px 0 0;
-            }
-            li{
-                
-                border-left: 1px solid #D6DAE1;
-                border-right: 1px solid #D6DAE1;
-                border-top: 1px solid #D6DAE1;
-                display: flex;
-                justify-content: space-between;
-                padding: 12px 20px;
-                margin: 0;
-            }
-            li:last-child{
-                border-bottom: 1px solid #D6DAE1;
-                border-radius: 0 0 8px 8px;
-            }
+        li{
+            
+            border-left: 1px solid $tm-gray-100;
+            border-right: 1px solid $tm-gray-100;
+            border-top: 1px solid $tm-gray-100;
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px;
+            margin: 0;
+            font-size: 15px;
+            color: $tm-dark-400;
+        }
+        li:last-child{
+            border-bottom: 1px solid $tm-gray-100;
+            border-radius: 0 0 8px 8px;
         }
     }
 }
@@ -315,18 +260,18 @@
     padding: 20px;
     border-radius: 8px;
     .tm_entry_header{
-        color:  #2F3448;
+        color:  $tm-dark-400;
         font-size: 14px;
         font-style: normal;
         font-weight: 600;
         line-height: 20px;
         padding-bottom: 14px;
-        border-bottom: 1px solid #D6DAE1;
+        border-bottom: 1px solid $tm-gray-100;
     
     }
     .tm_entry_body{
         padding-top: 14px;
-        color: #323DA5;
+        color: $tm-primary-500;
         font-family: Inter;
         font-size: 14px;
         font-style: normal;
@@ -360,10 +305,10 @@
         align-items: center;
         padding: 15px 20px;
         gap: 10px;
-        border-bottom: 1px solid #EAECF0;
+        border-bottom: 1px solid $tm-gray-100;
         background: #FFF;
         .tm_info_box_header{
-            color: #2F3448;
+            color: $tm-dark-400;
             font-family: "Inter", sans-serif;
             font-size: 14px;
             font-style: normal;
@@ -395,9 +340,9 @@
     }
     .badge {
         margin: 10px 0;
-        background: #F9FAFB;
+        background: $tm-gray-50;
         border-radius: 8px;
-        color: #2F3448;
+        color: $tm-dark-400;
         font-family: "Inter", sans-serif;
         font-size: 12px;
         font-style: normal;
@@ -406,7 +351,7 @@
         padding: 6px 12px;
         margin-right: 10px;
         margin-bottom: 10px;
-        border: 1px solid #D6DAE1;
+        border: 1px solid $tm-gray-100;
     }
 }
 

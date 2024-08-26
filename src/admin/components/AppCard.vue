@@ -15,6 +15,7 @@
         </div>
         <div class="app-card-body">
             <slot name="body"></slot>
+            
         </div>
     </div>
 </template>

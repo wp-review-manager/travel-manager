@@ -1,4 +1,5 @@
 <?php
+
 namespace WPTravelManager\Classes;
 
 if (!defined('ABSPATH')) {
@@ -52,6 +53,7 @@ class Activator
         $this->migrateBookingMeta();
         $this->migrateInquiryTable();
         $this->migrateSessionsTable();
+        $this->migrateCouponTable();
     }
 
     public function migrateSessionsTable()
@@ -149,7 +151,7 @@ class Activator
         $this->runSQL($sql, $table_name);
     }
 
-       public function migrateDefaultyTable()
+    public function migrateDefaultyTable()
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
@@ -325,5 +327,33 @@ class Activator
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+    }
+
+    protected function migrateCouponTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_coupon';
+        $sql = "CREATE TABLE $table_name (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            amount int(11) NOT NULL,
+            coupon_type varchar(255) NULL,
+            created_by varchar(255) NULL,
+            max_use int(11) NULL,
+            min_amount int(11)  NULL,
+            settings varchar(255) NULL,
+            allowed_trip_ids int(11) NOT NULL,
+            user_ids int(11) NOT NULL,
+            stackable varchar(255) NULL,
+            start_date varchar(255) NULL,
+            coupon_status varchar(255) NULL,
+            title varchar(255) NULL,
+            meta_value longtext,
+            created_at timestamp NULL,
+            updated_at timestamp NULL,
+            PRIMARY  KEY  (id)
+
+        ) $charset_collate;";
+        $this->runSQL($sql, $table_name);
     }
 }
