@@ -41,6 +41,10 @@ class ShortcodeRegister {
 
     public function checkoutShortCode( $atts )
     {
+        $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
+        if( empty( $booking_id ) ){
+            return;
+        }
         add_action('wp_enqueue_scripts', function () {
             wp_enqueue_style('travel_manager_public_css', TRM_URL.'assets/css/tm_public.css', [], TRM_VERSION);
             wp_enqueue_script( 'travel_manager_public_js', TRM_URL.'assets/js/tm_public.js',array('jquery'),TRM_VERSION, false );
@@ -52,8 +56,6 @@ class ShortcodeRegister {
         });
 
         global $wpdb; 
-
-        $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
        
         $table_name = $wpdb->prefix.'tm_sessions'; // Adjust table prefix if necessary
         $session_data = $wpdb->get_results(
@@ -62,6 +64,10 @@ class ShortcodeRegister {
                 $booking_id
             )
         );
+
+            if (empty($session_data)) {
+                return '<h3 style="text-align: center">No booking found</h3>';
+            }
       
             $session = $session_data[0];
           

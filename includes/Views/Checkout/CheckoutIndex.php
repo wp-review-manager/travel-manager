@@ -51,7 +51,8 @@ endforeach;
 
                 <div class="tm_filed">
                     <label>Phone <span style="color: #ff8b3d;">* </span></label>
-                    <input type="number" name="traveler_phone" placeholder="Please enter your number" required>
+                    <!-- <input type="phone" name="traveler_phone" placeholder="Please enter your number" required> -->
+                    <input type="tel" id="phone" name="traveler_phone" placeholder="01X-XXXX-XXXX" pattern="01[3-9][0-9]{8}" required>
                 </div>
 
                 <div class="tm_filed">
@@ -79,7 +80,7 @@ endforeach;
                 <div class="tm_filed">
                     <label>Country <span style="color: #ff8b3d;">* </span></label>
                     <select name="traveler_country" required>
-                        <option selected="">Choose a country*</option>
+                        <option selected value="">Choose a country*</option>
                         <option>Bangladesh</option>
                         <option>India</option>
                         <option value="Japan">Japan</option>

@@ -63,6 +63,7 @@ class Activator
         $table_name = $wpdb->prefix . 'tm_sessions';
         $sql = "CREATE TABLE $table_name (
             id int(10) NOT NULL AUTO_INCREMENT,
+            session_hash VARCHAR(255) NULL,
             device_id VARCHAR(255) NOT NULL,
             user_id VARCHAR(255) NULL,
             trip_id VARCHAR(255) NULL,
