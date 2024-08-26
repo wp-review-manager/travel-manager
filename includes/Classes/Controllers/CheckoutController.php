@@ -39,8 +39,6 @@ class CheckoutController {
             $bookingId = (new Checkout())->saveCheckout($validateData);
                      
             if ($bookingId) {
-                // Delete Session item
-               (new Session())->deleteSessionItem($sessionId);
                 
                // Create Order Item
                 foreach ($session_data['session_meta'] as $order_item) {
@@ -56,6 +54,8 @@ class CheckoutController {
                 // Make Payment
                 $paymentMethod = Arr::get($validateData, 'trm_payment_method', 'sslcommerz');
                 do_action('trm_make_payment_' . $paymentMethod, $transactionId, $bookingId, $validateData, $totalPayable);
+                // Delete Session item
+               (new Session())->deleteSessionItem($sessionId);
                 wp_send_json_success('checkout Created successfully');
             } else {
                 wp_send_json_error('Failed to updated CheckOut');

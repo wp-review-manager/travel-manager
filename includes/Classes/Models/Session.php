@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use WP;
 use WPTravelManager\Classes\Models\Model;
 
 class Session extends Model
