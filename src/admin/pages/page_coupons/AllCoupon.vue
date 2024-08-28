@@ -1,42 +1,41 @@
 <template>
     <div class="tm_destinations_wrapper">
 
-        <AppModal
-            :title="'Add New Coupon'"
-            :width="1000"
-            :showFooter="false"
-            ref="add_coupon_modal">
+        <AppModal :title="'Add New Coupon'" :width="1000" :showFooter="false" ref="add_coupon_modal">
             <template #body>
                 <AddCoupon />
             </template>
         </AppModal>
 
-        <AppTable :tableData="activities" v-loading="loading">
+        <AppTable :tableData="coupons" v-loading="loading">
             <template #header>
                 <h1 class="table-title">Available Coupons</h1>
-                <el-button @click="openCouponAddModal" size="large" type="primary" icon="Plus">Add New Coupon</el-button>
+                <el-button @click="openCouponAddModal" size="large" type="primary" icon="Plus">Add New
+                    Coupon</el-button>
             </template>
 
-             <template #filter>
-                <el-input @change="getActivities" class="tm-search-input" v-model="search" style="width: 240px" size="large"
-                    placeholder="Please Input" prefix-icon="Search" />
+            <template #filter>
+                <el-input @change="getCoupons" class="tm-search-input" v-model="search" style="width: 240px"
+                    size="large" placeholder="Please Input" prefix-icon="Search" />
             </template>
-           
+
             <template #columns>
                 <el-table-column prop="id" label="ID" width="60" />
-                <el-table-column prop="trip_activity_name" label="Title" width="auto" />
-                <el-table-column prop="trip_activity_slug" label="Code" width="auto" />
-                <el-table-column prop="trip_activity_desc" label="Expire Date" width="auto" />
-                <el-table-column prop="trip_activity_desc" label="Status" width="auto" />
-               
+                <el-table-column prop="title" label="Title" width="auto" />
+                <el-table-column prop="coupon_code" label="Code" width="auto" />
+                <el-table-column prop="max_use" label="Use Limit" width="auto" />
+                <el-table-column prop="amount" label="Amount" width="auto" />
+                <el-table-column prop="formattedEndDate" label="Expire Date" width="auto" />
+                <el-table-column prop="coupon_status" label="Status" width="auto" />
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
-                        <el-tooltip class="box-item" effect="dark" content="Click to edit activities" placement="top-start">
+                        <el-tooltip class="box-item" effect="dark" content="Click to edit coupon" placement="top-start">
                             <el-button @click="openUpdateActivitiesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
-                        <el-tooltip class="box-item" effect="dark" content="Click to delete activities" placement="top-start">
+                        <el-tooltip class="box-item" effect="dark" content="Click to delete coupon"
+                            placement="top-start">
                             <el-button @click="openDeleteActivitiesModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
@@ -46,47 +45,32 @@
             </template>
 
             <template #footer>
-                <el-pagination
-                    v-model:current-page="currentPage"
-                    v-model:page-size="pageSize"
-                    :page-sizes="[10, 20, 30, 40]"
-                    large
-                    :disabled="total_activities <= pageSize"
-                    background
-                    layout="total, sizes, prev, pager, next"
-                    :total="+total_activities"
-                    @size-change="getActivities"
-                    @current-change="getActivities"
-                />
+                <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+                    :page-sizes="[10, 20, 30, 40]" large :disabled="total_coupons <= pageSize" background
+                    layout="total, sizes, prev, pager, next" :total="+total_coupons" @size-change="getCoupons"
+                    @current-change="getCoupons" />
             </template>
 
         </AppTable>
 
-        <AppModal
-            :title="'Update Activities'"
-            :width="1000"
-            :showFooter="false"
-            ref="update_activities_modal">
+        <AppModal :title="'Update Activities'" :width="1000" :showFooter="false" ref="update_coupons_modal">
             <template #body>
-                <AddActivities :activities_data="activity" />
+                <AddActivities :coupons_data="coupon" />
             </template>
         </AppModal>
 
-        <AppModal
-            :title="'Delete Activities'"
-            :width="400"
-            :showFooter="false"
-            ref="delete_activities_modal">
+        <AppModal :title="'Delete Activities'" :width="400" :showFooter="false" ref="delete_coupons_modal">
             <template #body>
                 <div class="delete-modal-body">
                     <h1>Are you sure ?</h1>
-                    <p>You want to delete this activities</p>
+                    <p>You want to delete this coupon</p>
                 </div>
             </template>
             <template #footer>
                 <div class="tm-modal-footer">
-                    <el-button @click="$refs.delete_activities_modal.handleClose()" type="default" size="medium">Cancel</el-button>
-                    <el-button @click="deleteActivities" type="primary" size="medium">Delete</el-button>
+                    <el-button @click="$refs.delete_coupons_modal.handleClose()" type="default"
+                        size="medium">Cancel</el-button>
+                    <el-button @click="deleteCoupon" type="primary" size="medium">Delete</el-button>
                 </div>
             </template>
         </AppModal>
@@ -112,9 +96,9 @@ export default {
     data() {
         return {
             search: '',
-            activities: [],
+            coupons: [],
             activity: {},
-            total_activities: 0,
+            total_coupons: 0,
             loading: false,
             add_coupon_modal: true,
             currentPage: 1,
@@ -124,62 +108,57 @@ export default {
     },
 
     methods: {
-        getActivities() {
+        formatDate(dateString) {
+            const date = new Date(dateString);
+
+            const day = date.getDate();
+            const month = date.getMonth() + 1; // JavaScript months are 0-based, so add 1
+            const year = date.getFullYear();
+
+            // Format the date as "day-month-year"
+            return `${day}-${month}-${year}`;
+        },
+
+        getCoupons() {
             this.loading = true;
             let that = this;
             jQuery
                 .post(ajaxurl, {
-                    action: "tm_activities",
-                    route: "get_activities",
+                    action: "tm_coupon",
+                    route: "get_coupons",
                     per_page: this.pageSize,
                     page: this.currentPage,
                     search: that.search,
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 }).then((response) => {
-                    that.activities = response?.data?.data?.activities;
-                    that.total_activities = response?.data?.data?.total;
+                    console.log(response);
+                    // that.coupons = response?.data?.data?.coupons;
+                    that.coupons = response?.data?.data?.coupons.map(coupon => {
+                        return {
+                            ...coupon,
+                            formattedEndDate: that.formatDate(coupon.end_date) // Format each coupon's end date
+                        };
+                    });
+                    that.total_coupons = response?.data?.data?.total;
                 }).fail((error) => {
                     console.log(error);
                 }).always(() => {
                     that.loading = false;
                 })
         },
-        deleteActivities() {
-            let that = this;
-            jQuery
-                .post(ajaxurl, {
-                    action: "tm_activities",
-                    route: "delete_activities",
-                    id: that.active_id,
-                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
-                }).then((response) => {
-                    that.getActivities();
-                    that.$refs.delete_activities_modal.handleClose();
-                }).fail((error) => {
-                    console.log(error);
-                })
-        },
-      
+
+
         openCouponAddModal() {
             this.$refs.add_coupon_modal.openModel();
         },
-       
-        openDeleteActivitiesModal(row) {
-            this.active_id = row.id;
-            this.$refs.delete_activities_modal.openModel();
-        },
-        openUpdateActivitiesModal(row) {
-            this.activity = row;
-            this.$refs.update_activities_modal.openModel();
-        },
-        updateDataAfterNewAdd(new_activities) {
-            this.$refs.add_coupon_modal.handleClose();
-            this.activities.unshift(new_activities);
-        },
+
     },
-       created() {
-        this.getActivities();
+
+    created() {
+        this.getCoupons();
+
     },
-  
+
+
 }
 </script>

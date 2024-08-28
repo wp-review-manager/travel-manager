@@ -11,6 +11,7 @@ use WPTravelManager\Classes\Controllers\InquiryController;
 use WPTravelManager\Classes\Controllers\BookingsController;
 use WPTravelManager\Classes\Controllers\SessionsController;
 use WPTravelManager\Classes\Controllers\CheckoutController;
+use WPTravelManager\Classes\Controllers\CouponController;
 use WPTravelManager\Classes\Modules\Payments\PaymentMethods\PaymentSettingsController;
 
 class AjaxActions {
@@ -68,6 +69,11 @@ class AjaxActions {
         add_action('wp_ajax_tm_bookings', function () {
             (new BookingsController())->registerAjaxRoutes();
         });
+
+        add_action('wp_ajax_tm_coupon', function () {
+            (new CouponController())->registerAjaxRoutes();
+        });
+
 
     }
 }
