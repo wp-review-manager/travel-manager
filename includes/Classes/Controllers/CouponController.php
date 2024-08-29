@@ -13,7 +13,8 @@ class CouponController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'post_coupon' => 'postCoupon',
-            'get_coupons' => 'getCoupons'
+            'get_coupons' => 'getCoupons',
+            'delete_coupon' => 'deleteCoupon'
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -25,6 +26,7 @@ class CouponController {
 
     public function postCoupon() {
         $form_data = Arr::get($_REQUEST, 'data');
+
         $sanitize_data = CouponServices::sanitize($form_data);
       
         $validation = CouponServices::validate($sanitize_data);
@@ -53,5 +55,20 @@ class CouponController {
         );
     }
 
+    public function deleteCoupon() {
+        $coupon_id = Arr::get($_REQUEST, 'id');
+      
+        if (!$coupon_id) {
+            wp_send_json_error('Activities ID is required');
+        }
+       
+        $response = Coupon::deleteCoupon($coupon_id);
+       
+        if ($response) {
+            wp_send_json_success('Coupon deleted successfully');
+        } else {
+            wp_send_json_error('Failed to delete Coupon');
+        }
+    }
 
 }

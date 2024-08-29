@@ -27,11 +27,18 @@ class Coupon extends Model
         $query = $this->table($this->model)->select('*')->where('title', 'LIKE', '%'.$search.'%');
         $total = $query->getCount();
         $response = $query->orderBy($orderby, $order)->limit($per_page)->offset($offset)->get();
-
+      
+        // foreach ($response as  $data) {
+        //     $data['allowed_trip_ids'] = maybe_unserialize($data['allowed_trip_ids']);
+        // }
+        // dd($response);
         $data['total'] = $total;
         $data['coupons'] = $response;
 
         return $data;
 
+    }
+    public static function deleteCoupon($coupon_id) {
+        return TMDBModel('tm_coupon')->where('id', $coupon_id)->delete();
     }
 }

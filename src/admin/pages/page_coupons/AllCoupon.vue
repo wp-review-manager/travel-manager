@@ -3,7 +3,7 @@
 
         <AppModal :title="'Add New Coupon'" :width="1000" :showFooter="false" ref="add_coupon_modal">
             <template #body>
-                <AddCoupon />
+                <AddCoupon @updateDataAfterNewAdd="updateDataAfterNewAdd"/>
             </template>
         </AppModal>
 
@@ -30,13 +30,13 @@
                 <el-table-column label="Operations" width="120">
                     <template #default="{ row }">
                         <el-tooltip class="box-item" effect="dark" content="Click to edit coupon" placement="top-start">
-                            <el-button @click="openUpdateActivitiesModal(row)" link type="primary" size="small">
+                            <el-button @click="openUpdateCouponsModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-edit" />
                             </el-button>
                         </el-tooltip>
                         <el-tooltip class="box-item" effect="dark" content="Click to delete coupon"
                             placement="top-start">
-                            <el-button @click="openDeleteActivitiesModal(row)" link type="primary" size="small">
+                            <el-button @click="openDeleteCouponModal(row)" link type="primary" size="small">
                                 <Icon icon="tm-delete" />
                             </el-button>
                         </el-tooltip>
@@ -53,13 +53,13 @@
 
         </AppTable>
 
-        <AppModal :title="'Update Activities'" :width="1000" :showFooter="false" ref="update_coupons_modal">
+        <AppModal :title="'Update Coupon'" :width="1000" :showFooter="false" ref="update_coupon_modal">
             <template #body>
-                <AddActivities :coupons_data="coupon" />
+                <AddCoupon :coupons_data="coupon" />
             </template>
         </AppModal>
 
-        <AppModal :title="'Delete Activities'" :width="400" :showFooter="false" ref="delete_coupons_modal">
+        <AppModal :title="'Delete Coupons'" :width="400" :showFooter="false" ref="delete_coupons_modal">
             <template #body>
                 <div class="delete-modal-body">
                     <h1>Are you sure ?</h1>
@@ -85,6 +85,7 @@ import AppDatePicker from "@/components/element/AppDatePicker.vue"
 import AddCoupon from "./AddCoupon.vue";
 import Icon from "@/components/Icons/AppIcon.vue"
 
+
 export default {
     components: {
         AppTable,
@@ -97,13 +98,13 @@ export default {
         return {
             search: '',
             coupons: [],
-            activity: {},
+            coupon: {},
             total_coupons: 0,
             loading: false,
-            add_coupon_modal: true,
+            add_coupon_modal: false,
             currentPage: 1,
             pageSize: 10,
-            active_id: null
+            coupon_id: null
         }
     },
 
@@ -147,9 +148,37 @@ export default {
                 })
         },
 
+        deleteCoupon() {
+            let that = this;
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_coupon",
+                    route: "delete_coupon",
+                    id: that.coupon_id,
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                }).then((response) => {
+                    that.getCoupons();
+                    that.$refs.delete_coupons_modal.handleClose();
+                }).fail((error) => {
+                    console.log(error);
+                })
+        },
+
 
         openCouponAddModal() {
             this.$refs.add_coupon_modal.openModel();
+        },
+        openUpdateCouponsModal(row) {
+            this.coupon = row;
+            this.$refs.update_coupon_modal.openModel();
+        },
+        updateDataAfterNewAdd(new_coupons) {
+            this.$refs.add_coupon_modal.handleClose();
+            this.coupons.unshift(new_coupons);
+        },
+        openDeleteCouponModal(row) {
+            this.coupon_id = row.id;
+            this.$refs.delete_coupons_modal.openModel();
         },
 
     },

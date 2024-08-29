@@ -343,7 +343,7 @@ class Activator
             max_use int(11) NULL,
             min_amount int(11)  NULL,
             settings varchar(255) NULL,
-            allowed_trip_ids int(11) NOT NULL,
+            allowed_trip_ids varchar(255) NOT NULL,
             user_ids int(11) NOT NULL,
             stackable varchar(255) NULL,
             start_date varchar(255) NULL,

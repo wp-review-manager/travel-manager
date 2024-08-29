@@ -171,16 +171,16 @@ export default {
         }
     },
     props: {
-        destination_data: {
+        coupons_data: {
             type: Object,
 
         }
     },
     watch: {
         // Its required to watch the destination_data to update the destination object
-        destination_data: {
+        coupons_data: {
             handler: function (val) {
-                this.destination = val;
+                this.coupons = val;
             },
             deep: true
         }
@@ -208,7 +208,8 @@ export default {
                     action: "tm_coupon",
                     route: "post_coupon",
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
-                    data: this.coupons
+                    data: this.coupons,
+                   
                 }).then((response) => {
                     this.$emit("updateDataAfterNewAdd", this.coupons);
                     this.coupons = {
@@ -246,9 +247,9 @@ export default {
     mounted() {
         this.getAllTrips();
 
-        console.log(this.destination_data);
-        if (this.destination_data) {
-            this.destination = this.destination_data;
+        console.log(this.coupons_data);
+        if (this.coupons_data) {
+            this.coupons = this.coupons_data;
         }
     }
 }
