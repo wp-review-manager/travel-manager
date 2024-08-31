@@ -165,9 +165,7 @@ export default {
             },
             title : "",
             coupon_code : "",
-            amount : ""
-
-
+            amount : "",
         }
     },
     props: {
@@ -186,6 +184,8 @@ export default {
         }
     },
     methods: {
+
+        //==========================
         saveCoupons() {
             this.title = "";
             this.coupon_code = "";

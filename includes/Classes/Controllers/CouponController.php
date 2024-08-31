@@ -1,4 +1,5 @@
 <?php
+
 namespace WPTravelManager\Classes\Controllers;
 
 use WPPayFormPro\Classes\Coupons\Coupon as CouponsCoupon;
@@ -6,7 +7,8 @@ use WPTravelManager\Classes\Services\CouponServices;
 use WPTravelManager\Classes\Models\Coupon;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
-class CouponController {
+class CouponController
+{
     public function registerAjaxRoutes()
     {
         tmValidateNonce('tm_admin_nonce');
@@ -14,7 +16,7 @@ class CouponController {
         $routeMaps = array(
             'post_coupon' => 'postCoupon',
             'get_coupons' => 'getCoupons',
-            'delete_coupon' => 'deleteCoupon'
+            'delete_coupon' => 'deleteCoupon',
         );
         if (isset($routeMaps[$route])) {
             $this->{$routeMaps[$route]}();
@@ -22,29 +24,40 @@ class CouponController {
         }
     }
 
-   
+
 
     public function postCoupon() {
-        $form_data = Arr::get($_REQUEST, 'data');
-
-        $sanitize_data = CouponServices::sanitize($form_data);
-      
-        $validation = CouponServices::validate($sanitize_data);
-
-        if (!empty($validation)) {
-            wp_send_json_error($validation);
-        }
+        $form_data = $_REQUEST['data'];
+  
+        $coupon_code = $form_data['coupon_code'];
+    
+        $get_coupon_code = (new Coupon())->getCouponCode('coupon_code', $coupon_code);
         
-        $response = (new Coupon())->saveCoupon($sanitize_data);
-
-        if ($response) {
-            wp_send_json_success('Coupon updated successfully');
+        if (!empty($get_coupon_code)) {
+           return wp_send_json_error('Please enter a unique coupon code');
         } else {
-            wp_send_json_error('Coupon to updated destination');
+        
+            $sanitize_data = CouponServices::sanitize($form_data);
+           
+            $validation = CouponServices::validate($sanitize_data);
+    
+            if (!empty($validation)) {
+                wp_send_json_error($validation);
+            }
+            
+            $response = (new Coupon())->saveCoupon($sanitize_data);
+    
+            if ($response) {
+                wp_send_json_success('Coupon updated successfully');
+            } else {
+                wp_send_json_error('Coupon failed to update');
+            }
         }
     }
+    
 
-    public function getCoupons() {
+    public function getCoupons()
+    {
         $response = (new Coupon())->getCoupons();
 
         wp_send_json_success(
@@ -55,20 +68,22 @@ class CouponController {
         );
     }
 
-    public function deleteCoupon() {
+
+
+    public function deleteCoupon()
+    {
         $coupon_id = Arr::get($_REQUEST, 'id');
-      
+
         if (!$coupon_id) {
             wp_send_json_error('Activities ID is required');
         }
-       
+
         $response = Coupon::deleteCoupon($coupon_id);
-       
+
         if ($response) {
             wp_send_json_success('Coupon deleted successfully');
         } else {
             wp_send_json_error('Failed to delete Coupon');
         }
     }
-
 }

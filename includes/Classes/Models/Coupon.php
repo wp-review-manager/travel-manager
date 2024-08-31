@@ -6,7 +6,12 @@ class Coupon extends Model
 {
     protected $model = 'tm_coupon';
     
-  
+    public function getCouponCode($key= 'id', $val){
+        if(!$key){
+          return;
+        }
+        return TMDBModel('tm_coupon')->where($key, $val)->get();
+    }
 
     public function saveCoupon($data) {
         $id = Arr::get($data, 'id', null);
@@ -38,6 +43,7 @@ class Coupon extends Model
         return $data;
 
     }
+   
     public static function deleteCoupon($coupon_id) {
         return TMDBModel('tm_coupon')->where('id', $coupon_id)->delete();
     }

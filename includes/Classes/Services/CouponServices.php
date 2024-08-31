@@ -5,37 +5,39 @@ use WPTravelManager\Classes\Helper;
 class CouponServices {
     public static function sanitize($data)
     {
-
-        $data['amount'] = sanitize_text_field( Arr::get($data, 'amount') );
-        $data['coupon_type'] = sanitize_text_field( Arr::get($data, 'coupon_type') );
-        $data['coupon_code'] = sanitize_text_field( Arr::get($data, 'coupon_code') );
+        $data['amount'] = sanitize_text_field(Arr::get($data, 'amount'));
+        $data['coupon_type'] = sanitize_text_field(Arr::get($data, 'coupon_type'));
+        $data['coupon_code'] = sanitize_text_field(Arr::get($data, 'coupon_code'));
         $data['created_by'] = "8-29-2024";
-        $data['max_use'] = sanitize_text_field( Arr::get($data, 'max_use') );
-        $data['min_amount'] = sanitize_text_field( Arr::get($data, 'min_amount') );
+        $data['max_use'] = sanitize_text_field(Arr::get($data, 'max_use'));
+        $data['min_amount'] = sanitize_text_field(Arr::get($data, 'min_amount'));
         $data['settings'] = "setting data";
-        $data['allowed_trip_ids'] = serialize(sanitize_text_field(Arr::get($data, 'allowed_trip_ids')));
-        $data['stackable'] = sanitize_text_field( Arr::get($data, 'stackable') );
-        $data['end_date'] = sanitize_text_field( Arr::get($data, 'end_date') );
-        $data['start_date'] = sanitize_text_field( Arr::get($data, 'start_date') );
-        $data['coupon_status'] = sanitize_text_field( Arr::get($data, 'coupon_status') );
-        $data['title'] = sanitize_text_field( Arr::get($data, 'title') );
+        $data['allowed_trip_ids'] = sanitize_text_field(serialize(Arr::get($data, 'allowed_trip_ids')));
+        $data['stackable'] = sanitize_text_field(Arr::get($data, 'stackable'));
+        $data['end_date'] = sanitize_text_field(Arr::get($data, 'end_date'));
+        $data['start_date'] = sanitize_text_field(Arr::get($data, 'start_date'));
+        $data['coupon_status'] = sanitize_text_field(Arr::get($data, 'coupon_status'));
+        $data['title'] = sanitize_text_field(Arr::get($data, 'title'));
         $data['meta_value'] = "meta value";
 
         $currentUser = Helper::getUserLoginInfo();
-        if($currentUser) {
+        if ($currentUser) {
             $data['user_ids'] = $currentUser->ID;
         }
 
         $id = Arr::get($data, 'id', null);
-        if($id !== null) {
+        if ($id !== null) {
             $data['id'] = absint($data['id']);
         }
-        
-        $data['created_at'] = $id ? $data['created_at']  : current_time('mysql');
+
+        $data['created_at'] = $id ? $data['created_at'] : current_time('mysql');
         $data['updated_at'] = current_time('mysql');
+
+     
 
         return $data;
     }
+
 
     public static function validate($data)
     {
