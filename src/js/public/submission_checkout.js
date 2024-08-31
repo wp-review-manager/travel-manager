@@ -132,7 +132,6 @@ const applyCoupon = ($) => {
 };
 
 
-export {submissionCheckout,applyCoupon
-};
+export {submissionCheckout,applyCoupon};
 
 // export {applyCoupon};

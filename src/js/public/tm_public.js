@@ -6,7 +6,7 @@ import { renderModal } from './components/modal.js';
 import {calenderRender} from './components/calender.js';
 import { submissionInquiry } from './submission_inquiry.js';
 import { tripBooking } from './trip_booking.js';
-import { submissionCheckout } from './submission_checkout.js';
+import { submissionCheckout, applyCoupon } from './submission_checkout.js';
 
 
 (function ($) {
@@ -20,5 +20,6 @@ import { submissionCheckout } from './submission_checkout.js';
         submissionInquiry($)
         tripBooking($)
         submissionCheckout($)
+        applyCoupon($)
     });
 })(jQuery);
