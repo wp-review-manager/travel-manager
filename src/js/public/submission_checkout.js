@@ -22,7 +22,7 @@ const submissionCheckout = ($) => {
             return;
         }
         
-        $.post(window.tm_public.ajax_url, {
+        $.post(window.trm_public.ajax_url, {
             action: 'tm_checkout',
             route: 'submission_checkout',
             data: formDataObject,

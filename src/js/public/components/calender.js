@@ -41,7 +41,8 @@ const calenderRender = ($) => {
             let dateInMini = new Date(date); dateInMini = dateInMini.getTime(); 
             let startDateMini = new Date(startDate); startDateMini = startDateMini.getTime();
             let endDateMini = new Date(endDate); endDateMini = endDateMini.getTime();
-            if(startDateMini < dateInMini && dateInMini < endDateMini) {
+
+            if(startDateMini <= dateInMini && dateInMini <= endDateMini) {
                 $('.tm_calendar_days').append(`<div class="tm_calender_date" data-tm_date=${date}>${i}</div>`);
             } else {
                 $('.tm_calendar_days').append(`<div class="disabled">${i}</div>`);
