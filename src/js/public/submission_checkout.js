@@ -87,48 +87,42 @@ const validation = (formData) => {
 const applyCoupon = ($) => {
     const $input = $('#coupon_input');
     const $submit = $('.tm_voucher_button');
-    $submit.on('click', function (e){
-        console.log('hello');
-    })
 
-    // $submit.on('click', function(e) {
-    //     e.preventDefault();
+    $submit.on('click', function(e) {
+        e.preventDefault();
 
-    //     let couponCode = $input.val();
-    //     console.log($input.val(), "hello");
-    //     // You can add validation for the input value here
-    //     if (!couponCode) {
-    //         $input.after('<div class="tm_error">Please enter a coupon code.</div>');
-    //         return;
-    //     }
+        let couponCode = $input.val();
 
-    //     // Clear previous errors
-    //     $input.siblings('.tm_error').remove();
+        if (!couponCode) {
+            $input.after('<div class="tm_error">Please enter a coupon code.</div>');
+            return;
+        }
 
-    //     // Send the single coupon code in the AJAX request
-    //     $.post(window.tm_public.ajax_url, {
-    //         action: 'tm_checkout',
-    //         route: 'submission_coupon_code',
-    //         coupon_code: couponCode, // Pass the single data here
-    //     }).then((response) => {
-    //         if (response.success === true ) {
-    //             $input.siblings('.tm_error').remove();
-    //             $input.siblings('.tm_success').remove();
-    //             $input.after('<div class="tm_success">Coupon Code use successfully</div>');
-    //             $input.val(''); // Clear the input field
-    //             window.location.replace(response.data.redirect);
-    //         } else {
-    //             $input.siblings('.tm_error').remove();
-    //             $input.siblings('.tm_success').remove();
-    //             $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
-    //         }
-    //     }).catch((error) => {
-    //         console.log(error, 'error');
-    //         $input.siblings('.tm_error').remove();
-    //         $input.siblings('.tm_success').remove();
-    //         $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
-    //     });
-    // });
+        $input.siblings('.tm_error').remove();
+
+        $.post(window.trm_public.ajax_url, {
+            action: 'tm_checkout',
+            route: 'submission_coupon_code',
+            coupon_code: couponCode, // Pass the single data here
+        }).then((response) => {
+            if (response.success === true ) {
+                $input.siblings('.tm_error').remove();
+                $input.siblings('.tm_success').remove();
+                $input.after('<div class="tm_success">Coupon Code use successfully</div>');
+                $input.val(''); // Clear the input field
+                window.location.replace(response.data.redirect);
+            } else {
+                $input.siblings('.tm_error').remove();
+                $input.siblings('.tm_success').remove();
+                $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
+            }
+        }).catch((error) => {
+            console.log(error, 'error');
+            $input.siblings('.tm_error').remove();
+            $input.siblings('.tm_success').remove();
+            $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
+        });
+    });
 };
 
 

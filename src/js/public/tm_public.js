@@ -9,6 +9,7 @@ import { tripBooking } from './trip_booking.js';
 import { submissionCheckout, applyCoupon } from './submission_checkout.js';
 
 
+
 (function ($) {
     $(document).ready(function () {
         sliderRender($)

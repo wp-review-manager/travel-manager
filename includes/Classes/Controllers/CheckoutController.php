@@ -4,6 +4,7 @@ use WPTravelManager\Classes\Services\CheckoutServices;
 use WPTravelManager\Classes\Models\Checkout;
 use WPTravelManager\Classes\Models\OrderItem;
 use WPTravelManager\Classes\Models\Transactions;
+use WPTravelManager\Classes\Models\Coupon;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 
 class CheckoutController {
@@ -62,10 +63,20 @@ class CheckoutController {
       
     }
 
-    public function submissionCouponCode(){
-        dd('hello');
-        $input = Arr::get($_REQUEST, 'data');
-        dd(Arr::get($_REQUEST, 'data'));
+    public function submissionCouponCode() {
+        $input = isset($_REQUEST['coupon_code']) ? sanitize_text_field($_REQUEST['coupon_code']) : '';
+    
+        if (!$input) {
+            return wp_send_json_error(array('message' => 'Please enter a coupon code'));
+        }
+    
+        $coupon = (new Coupon())->getCoupon('coupon_code', $input);
+    
+        if (!$coupon) {
+            return wp_send_json_error(array('message' => 'Invalid coupon code.'));
+        }
+    
+        return wp_send_json_success(array('message' => 'Coupon code used successfully'));
     }
 
    
