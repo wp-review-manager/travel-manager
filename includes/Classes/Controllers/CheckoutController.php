@@ -13,6 +13,7 @@ class CheckoutController {
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'submission_checkout' => 'submissionCheckout',
+            'submission_coupon_code' => 'submissionCouponCode'
           
         );
         if (isset($routeMaps[$route])) {
@@ -59,6 +60,12 @@ class CheckoutController {
         }
         //========================================================
       
+    }
+
+    public function submissionCouponCode(){
+        dd('hello');
+        $input = Arr::get($_REQUEST, 'data');
+        dd(Arr::get($_REQUEST, 'data'));
     }
 
    

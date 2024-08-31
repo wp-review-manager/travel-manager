@@ -57,7 +57,7 @@ class SubmissionCheckout {
                     </tr>
                     <tr>
                         <td colspan="2" style="  text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
-                            <input type="text" placeholder="Enter Voucher Code" class="tm_voucher_input">
+                            <input type="text" id="coupon_input" placeholder="Enter Voucher Code" class="tm_voucher_input">
                            <button class="tm_voucher_button">Apply</button>
                         </td>
                     </tr>
