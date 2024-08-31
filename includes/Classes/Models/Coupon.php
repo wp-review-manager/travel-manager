@@ -5,8 +5,8 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 class Coupon extends Model
 {
     protected $model = 'tm_coupon';
-    
-    public function getCouponCode($key= 'id', $val){
+
+    public function getCoupon($key= 'id', $val){
         if(!$key){
           return;
         }
@@ -15,12 +15,14 @@ class Coupon extends Model
 
     public function saveCoupon($data) {
         $id = Arr::get($data, 'id', null);
+
         if ($id) {
             return TMDBModel('tm_coupon')->where('id', $id)->update($data);
         } else {
             return TMDBModel('tm_coupon')->insert($data);
         }
     }
+
     public function getCoupons() {
         $per_page = sanitize_text_field(Arr::get($_REQUEST, 'per_page', 0));
         $page = sanitize_text_field(Arr::get($_REQUEST, 'page', 1));
@@ -41,7 +43,6 @@ class Coupon extends Model
         $data['coupons'] = $response;
 
         return $data;
-
     }
    
     public static function deleteCoupon($coupon_id) {

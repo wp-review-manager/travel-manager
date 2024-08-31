@@ -31,7 +31,7 @@ class CouponController
   
         $coupon_code = $form_data['coupon_code'];
     
-        $get_coupon_code = (new Coupon())->getCouponCode('coupon_code', $coupon_code);
+        $get_coupon_code = (new Coupon())->getCoupon('coupon_code', $coupon_code);
         
         if (!empty($get_coupon_code)) {
            return wp_send_json_error('Please enter a unique coupon code');
