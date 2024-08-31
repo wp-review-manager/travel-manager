@@ -76,7 +76,7 @@ class Trips extends Model {
      
         
        $trips = get_posts($args);
-
+       
        foreach ($trips as $key => $trip) {
            $trips[$key]->shortcode = '[tm_trip id="' . $trip->ID . '"]';
            $trips[$key]->preview_url = site_url('?wp_tm_trip_preview=' . $trip->ID);
@@ -89,11 +89,21 @@ class Trips extends Model {
             's' => $search,
             'date_query'     => $date_query,
         ));
+       
+        $args = array(
+            'post_type' => 'tm_trip',
+            'post_status' => $status,
+            'posts_per_page' => -1,  // Get all posts
+            'date_query' => $date_query,
+        );
+    
+        $all_trips = get_posts($args);
      
 
         return array(
             'trips' => $trips,
-            'total' => count($total)
+            'total' => count($total),
+            'all_trips' => $all_trips,
         );
         
     }

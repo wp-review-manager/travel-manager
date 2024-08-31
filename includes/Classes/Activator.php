@@ -338,23 +338,25 @@ class Activator
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL AUTO_INCREMENT,
             amount int(11) NOT NULL,
-            coupon_type varchar(255) NULL,
+            coupon_type varchar(255) NOT NULL,
+            coupon_code varchar(255) NOT NULL,  /* Fixed the syntax error here */
             created_by varchar(255) NULL,
             max_use int(11) NULL,
             min_amount int(11)  NULL,
             settings varchar(255) NULL,
-            allowed_trip_ids int(11) NOT NULL,
+            allowed_trip_ids text  NULL,
             user_ids int(11) NOT NULL,
             stackable varchar(255) NULL,
             start_date varchar(255) NULL,
+            end_date varchar(255) NULL,
             coupon_status varchar(255) NULL,
-            title varchar(255) NULL,
+            title varchar(255) NOT NULL,
             meta_value longtext,
             created_at timestamp NULL,
             updated_at timestamp NULL,
             PRIMARY  KEY  (id)
-
         ) $charset_collate;";
         $this->runSQL($sql, $table_name);
     }
+    
 }

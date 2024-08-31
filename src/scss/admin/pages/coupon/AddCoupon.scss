@@ -1,0 +1,100 @@
+.tm_coupon_container{
+//=====================
+.tm_coupon_header{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    .tm_coupon_right{
+        flex-basis: 48%;
+      
+    }
+    .tm_coupon_left{
+        flex-basis: 48%;
+    }
+}
+//=====================
+
+
+//input box start=======================
+.tm_coupon_abel{
+    font-weight: 500;
+    line-height: 100%;
+    text-align: left;
+    color: $tm-dark-400;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    padding: 0 0 10px 0;
+}
+.tm_coupon_input{
+    border: 1px solid $tm-dark-50;
+    border-radius: 8px;
+    height: 40px;
+    width: 100%;
+    padding: 0 8px;
+    &:focus{
+        outline: none;
+        border: 1px solid $tm-primary-400;
+        box-shadow: none; 
+    }
+    &:focus-visible{
+        outline: none;
+        border: 1px solid $tm-primary-400;
+    }
+}
+.tm_coupon_msg{
+    padding-left: 0;
+    margin-top: 6px;
+    color:  $tm-dark-400;
+    font-size: 12px;
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+//input box end===============coupon title========
+.tm_coupon_title{
+    background: $tm-gray-25;
+    padding: 14px 20px;
+    color: $tm-dark-300;
+    margin: 0;
+    border: 1px solid $tm-dark-50;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 6px;
+    margin: 0px 20px;
+
+}
+//coupon_footer=====================
+.coupon_footer{
+    padding: 0 20px 10px 0;
+    border-radius: 0 0 8px 8px;
+    background: #FFF !important;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .tm_coupon_button{
+        border-radius: 8px;
+        border: 1px solid #D6DAE1;
+        background: #FFF;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+        font-size: 15px;
+        padding: 10px 18px;
+    }
+    .tm_save{
+        color: #FFF;
+        background-color: $tm-primary-500;
+        border: 1px solid $tm-primary-500;
+        transition: all .2s;
+        &:hover{
+            border: 1px solid $tm-primary-400;
+            background-color: $tm-primary-400;
+        }
+    }
+   
+}
+
+}

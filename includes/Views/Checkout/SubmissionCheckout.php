@@ -68,6 +68,12 @@ class SubmissionCheckout {
                             <span class="tm_currency_code">$</span> <span class="wpte-price"><?php echo esc_html($subtotalPrice)?></span>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2" style="  text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
+                            <input type="text" placeholder="Enter Voucher Code" class="tm_voucher_input">
+                           <button class="tm_voucher_button">Apply</button>
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
             <div class="tm_total_price">

@@ -22,7 +22,7 @@ const submissionInquiry = ($) => {
             return;
         }
 
-        $.post(window.tm_public.ajax_url, {
+        $.post(window.trm_public.ajax_url, {
             action: 'tm_inquiry',
             route: 'submission_inquiry',
             data: formDataObject,

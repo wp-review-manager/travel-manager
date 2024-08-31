@@ -32,7 +32,7 @@ class ProcessPreviewPage {
             wp_enqueue_style('travel_manager_public_css', TRM_URL.'assets/css/tm_public.css', [], TRM_VERSION);
             wp_enqueue_script( 'travel_manager_public_js', TRM_URL.'assets/js/tm_public.js',array('jquery'),TRM_VERSION, false );
 
-            wp_localize_script('travel_manager_public_js', 'tm_public', [
+            wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
             ]);

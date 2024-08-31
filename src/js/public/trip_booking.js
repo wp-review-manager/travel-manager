@@ -147,8 +147,8 @@ const makeApiCallForBooking = (booking_data, $) => {
         booking_data,
         deviceId
     };
-    $.post(window.tm_public.ajax_url, {
-        tm_public_nonce: tm_public.tm_public_nonce,
+    $.post(window.trm_public.ajax_url, {
+        tm_public_nonce: trm_public.tm_public_nonce,
         route: "create_session",
         action: "tm_trip_session",
         type: 'POST',
