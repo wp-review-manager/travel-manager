@@ -6,11 +6,16 @@ class Coupon extends Model
 {
     protected $model = 'tm_coupon';
 
+    public function getTotalUser() {
+        return TMDBModel('tm_coupon')->getCount('user_ids');
+    }
+
+
     public function getCoupon($key= 'id', $val){
         if(!$key){
           return;
         }
-        return TMDBModel('tm_coupon')->where($key, $val)->get();
+        return TMDBModel('tm_coupon')->where($key, $val)->first();
     }
 
     public function saveCoupon($data) {
