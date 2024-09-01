@@ -33,8 +33,9 @@ const submissionCheckout = ($) => {
                 $form.append('<div class="tm_success">Your checkout has been submitted successfully</div>');
                 $form.trigger('reset');
                 formDataObject = {};
-                console.log({ response}, {response_order_item});
-                window.location.replace(response.data.redirect);
+                if (response?.data?.redirect_url) {
+                    window.location.replace(response.data.redirect_url);
+                }
             } else {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();

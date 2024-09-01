@@ -295,7 +295,7 @@ class Sslcommerz extends BasePaymentMethod {
         }
 
         $paymentIntent = $this->makePaymentData($transaction, $booking, $data, $totalPayable);
-        
+       
         if (Arr::get($paymentIntent, 'status') === 'FAILED') {
             wp_send_json_error(array(
                 'message' => __(Arr::get($paymentIntent, 'failedreason'), 'travel-manager')
@@ -366,10 +366,10 @@ class Sslcommerz extends BasePaymentMethod {
         $success_url = $this->redirectUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
         $fail_url = $this->failureUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
         $cancel_url = $this->cancelUrl($booking, Arr::get($checkoutData, '__trm_current_url'));
-   
+        
         $args = [
             'total_amount' => floatval($transaction->payment_total),
-            'currency' =>  "BDT",
+            'currency' =>  $transaction->currency,
             'tran_id' => $transaction->transaction_hash,
             'product_category' => 'travel_manager',
             'product_profile' => 'general',
