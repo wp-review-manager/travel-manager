@@ -105,16 +105,17 @@ const applyCoupon = ($) => {
             route: 'submission_coupon_code',
             coupon_code: couponCode, // Pass the single data here
         }).then((response) => {
+            console.log(response, 'response');
             if (response.success === true ) {
                 $input.siblings('.tm_error').remove();
                 $input.siblings('.tm_success').remove();
-                $input.after('<div class="tm_success">Coupon Code use successfully</div>');
+                $input.after(`<div class="tm_success">${response.data.message}</div>`);
                 $input.val(''); // Clear the input field
                 window.location.replace(response.data.redirect);
             } else {
                 $input.siblings('.tm_error').remove();
                 $input.siblings('.tm_success').remove();
-                $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
+                $input.after(`<div class="tm_error">${response.data.message}</div>`);
             }
         }).catch((error) => {
             console.log(error, 'error');
