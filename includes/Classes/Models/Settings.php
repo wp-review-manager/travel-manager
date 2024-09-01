@@ -19,11 +19,13 @@ class Settings extends Model
 
     public function getSettings($option_key)
     {
+        // currency settings key = 'trm_currency_settings'
         return get_option( $option_key );
     }
 
     public function updateSettings($data, $option_key)
     {
+        // currency settings key = 'trm_currency_settings'
         return update_option( $option_key , $data );
     }
 }

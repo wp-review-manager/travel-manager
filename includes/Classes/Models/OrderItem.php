@@ -16,7 +16,6 @@ class OrderItem extends Model
 
         $sql = $wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $booking_id);
         $session_data = $wpdb->get_results($sql, ARRAY_A);
-       
         // Process reviews
         $session_meta = static::processReviewData($session_data);
 
@@ -25,6 +24,7 @@ class OrderItem extends Model
         return [
             'session_meta' => $session_meta['packages_data'],
             'session_id' => $session_meta['session_id'],
+            'currency' => Arr::get($session_data, '0.currency', []),
         ];
 
     }

@@ -1,5 +1,7 @@
 <?php 
 namespace WPTravelManager\Classes;
+use WPTravelManager\Classes\Models\Settings;
+use WPTravelManager\Classes\Services\GeneralSettings;
 
 
 class AdminMenuHandler {
@@ -78,6 +80,8 @@ class AdminMenuHandler {
             'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
             'server_time' => current_time('timestamp'),
             'payment_routes' => apply_filters('trm/payment_methods_routes', []),
+            'currencies' => GeneralSettings::getCurrencies(),
+            'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
         ));
 
         wp_localize_script('TM-script-boot', 'wpTravelManager', $TM);

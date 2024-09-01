@@ -68,6 +68,7 @@ class Activator
             user_id VARCHAR(255) NULL,
             trip_id VARCHAR(255) NULL,
             session_meta LONGTEXT  NULL,
+            currency VARCHAR(22) DEFAULT 'USD',
             created_at timestamp NULL DEFAULT NULL,
             updated_at timestamp NULL DEFAULT NULL,
             PRIMARY KEY (id)
@@ -284,6 +285,10 @@ class Activator
             trip_id int(11) NOT NULL,
             user_id int(11) DEFAULT NULL,
             booking_total int(11) DEFAULT 0,
+            payment_method varchar(255) NULL,
+            payment_status varchar(255) DEFAULT 'pending',
+            payment_mode varchar(255) NULL,
+            currency varchar(22) DEFAULT 'USD',
             traveler_name varchar(255) NULL,
             traveler_email varchar(255) NULL,
             traveler_phone varchar(255) NULL,

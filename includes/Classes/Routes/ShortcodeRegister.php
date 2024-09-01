@@ -3,6 +3,7 @@ namespace WPTravelManager\Classes\Routes;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\View;
 use WPTravelManager\Classes\Models\Session;
+use WPTravelManager\Classes\Models\Settings;
 
 class ShortcodeRegister {
     
@@ -15,6 +16,7 @@ class ShortcodeRegister {
             wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+                'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
             ]);
         });
 

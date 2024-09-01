@@ -5,6 +5,7 @@
                 <template #body>
                     <div class="input-wrapper">
                         <div class="tooltip-label">
+                            {{ currency_settings }}
                             <p class="form-label" for="name">Currency *</p>
                             <el-tooltip effect="dark"
                                 content="You can globally mange your currency from here" placement="top">
@@ -14,7 +15,7 @@
                             </el-tooltip>
                         </div>
                         <el-select size="large" name="currency" id="currency" v-model="currency_settings.currency">
-                            <el-option v-for="currency in currencies" :label="currency.name" :value="currency.name">{{ currency.name }}</el-option>
+                            <el-option v-for="(currency_key, currency_label) in currencies" :label="currency_key" :value="currency_label"></el-option>
                         </el-select>
                     </div>
 
@@ -66,124 +67,7 @@ export default {
     },
     data() {
         return {
-            currencies: [
-                {
-                    id: 1,
-                    name: 'USD'
-                },
-                {
-                    id: 2,
-                    name: 'EUR'
-                },
-                {
-                    id: 3,
-                    name: 'GBP'
-                },
-                {
-                    id: 4,
-                    name: 'INR'
-                },
-                {
-                    id: 5,
-                    name: 'AUD'
-                },
-                {
-                    id: 6,
-                    name: 'CAD'
-                },
-                {
-                    id: 7,
-                    name: 'SGD'
-                },
-                {
-                    id: 8,
-                    name: 'JPY'
-                },
-                {
-                    id: 9,
-                    name: 'CNY'
-                },
-                {
-                    id: 10,
-                    name: 'HKD'
-                },
-                {
-                    id: 11,
-                    name: 'NZD'
-                },
-                {
-                    id: 12,
-                    name: 'SEK'
-                },
-                {
-                    id: 13,
-                    name: 'KRW'
-                },
-                {
-                    id: 14,
-                    name: 'NOK'
-                },
-                {
-                    id: 15,
-                    name: 'TRY'
-                },
-                {
-                    id: 16,
-                    name: 'RUB'
-                },
-                {
-                    id: 17,
-                    name: 'BRL'
-                },
-                {
-                    id: 18,
-                    name: 'ZAR'
-                },
-                {
-                    id: 19,
-                    name: 'AED'
-                },
-                {
-                    id: 20,
-                    name: 'SAR'
-                },
-                {
-                    id: 21,
-                    name: 'QAR'
-                },
-                {
-                    id: 22,
-                    name: 'KWD'
-                },
-                {
-                    id: 23,
-                    name: 'OMR'
-                },
-                {
-                    id: 24,
-                    name: 'BHD'
-                },
-                {
-                    id: 25,
-                    name: 'MYR'
-                },
-                {
-                    id: 26,
-                    name: 'IDR'
-                },
-                {
-                    id: 27,
-                    name: 'PHP'
-                },
-                {
-                    id: 28,
-                    name: 'THB'
-                },
-                {
-                    id: 29,
-                    name: 'VND'
-                }
-            ],
+            currencies: window.wpTravelManager.currencies,
             loading: false,
             currency_settings: {
                 currency: 'USD',

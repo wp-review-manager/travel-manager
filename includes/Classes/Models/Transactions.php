@@ -17,13 +17,13 @@ class Transactions extends Model
         $preparedData['booking_id'] = sanitize_text_field( $booking_id );
         $preparedData['user_id'] = Arr::get($data, 'user_id', '');
         $preparedData['transaction_type'] =  sanitize_text_field( 'padding' );
-        $preparedData['payment_method'] =  sanitize_text_field( 'bkash' );
+        $preparedData['payment_method'] =  Arr::get($data, 'trm_payment_method', '');
         $preparedData['card_last_4'] =  sanitize_text_field( '1234' );
         $preparedData['card_brand'] =  sanitize_text_field( '' );
         $preparedData['charge_id'] =  sanitize_text_field( '' );
         $preparedData['payment_total'] = Arr::get($data, 'booking_total', '');
         $preparedData['status'] =  sanitize_text_field( 'padding' );
-        $preparedData['currency'] =  sanitize_text_field( 'usd' );
+        $preparedData['currency'] =  Arr::get($data, 'currency', '');
         $preparedData['payment_mode'] = sanitize_text_field( 'test' );
         $preparedData['payment_note'] =  sanitize_text_field( '' );
 

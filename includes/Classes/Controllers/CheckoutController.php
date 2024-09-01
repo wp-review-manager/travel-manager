@@ -34,6 +34,7 @@ class CheckoutController {
         if($sessionId){          
             $sanitize_data = CheckoutServices::sanitize($form_data);
             $validateData = CheckoutServices::validate($sanitize_data);
+            $validateData['currency'] = Arr::get($session_data, 'currency', 'USD');
             $totalPayable = Arr::get($validateData, 'booking_total', 0);
             // Booking create
             $bookingId = (new Checkout())->saveCheckout($validateData);
