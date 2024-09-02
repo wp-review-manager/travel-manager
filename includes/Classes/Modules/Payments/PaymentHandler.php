@@ -13,10 +13,10 @@ class PaymentHandler {
 
     public function init() {
         // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/PayPal/PayPal.php';
-        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/SSLCommerz/SSLCommerz.php';
+        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/Sslcommerz/SSLCommerz.php';
 
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
-        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\SSLCommerz\SSLCommerz();
+        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz\Sslcommerz();
 
         if (isset($_GET['trm_payment']) && isset($_GET['payment_method'])) {
             $data = $_GET;
