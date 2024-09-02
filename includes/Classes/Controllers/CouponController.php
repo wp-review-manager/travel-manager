@@ -28,12 +28,13 @@ class CouponController
 
     public function postCoupon() {
         $form_data = $_REQUEST['data'];
+        $id = Arr::get($form_data, 'id');
   
         $coupon_code = $form_data['coupon_code'];
     
         $get_coupon_code = (new Coupon())->getCoupon('coupon_code', $coupon_code);
         
-        if (!empty($get_coupon_code)) {
+        if (!empty($get_coupon_code) && $get_coupon_code->id != $id) {
            return wp_send_json_error('Please enter a unique coupon code');
         } else {
         

@@ -111,12 +111,29 @@ class CheckoutController
         //         'message' => __('The provided coupon is not applicable with this amount', 'wp-payment-form-pro')
         //     ], 423);
         // }
-        //=======================================
-        $count_user_id = (new Coupon())->getTotalUser();
-        $max_use = $coupon->max_use;
-        //======================================
+
+        //Check if the coupon has usage limit
+        $customer_email = isset($_REQUEST['customer_email']) ? sanitize_text_field($_REQUEST['customer_email']) : '';
+ 
+        if ($coupon->max_use > 0) {
+
+            if(!$customer_email){
+                wp_send_json_error(array('message' => __('The coupon has usage limit, please provide an email for validation.', 'travel-manager')));
+            }
+
+            if($this->getCouponUsageCount($customer_email, $code) >= $coupon->max_use){
+                wp_send_json([
+                    'message' => __('You have crossed this coupon use limit.', 'wp-payment-form-pro')
+                ], 423);
+            }
+        }
 
 
         return wp_send_json_success(array('message' => 'Coupon code used successfully'));
+    }
+
+    public function getCouponUsageCount($customer_email, $coupon_code)
+    {
+        return (new Coupon())->getCouponUsageCount($customer_email, $coupon_code);
     }
 }

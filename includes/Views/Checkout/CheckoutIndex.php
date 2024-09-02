@@ -49,7 +49,7 @@ endforeach;
 
                 <div class="tm_filed">
                     <label>Email <span style="color: #ff8b3d;">* </span></label>
-                    <input type="email" name="traveler_email" placeholder="Please enter your email" required>
+                    <input type="email" id="traveler_email" name="traveler_email" placeholder="Please enter your email" required>
                 </div>
 
                 <div class="tm_filed">

@@ -85,11 +85,16 @@ const validation = (formData) => {
 
 //======================================================
 const applyCoupon = ($) => {
-    const $input = $('#coupon_input');
+   
     const $submit = $('.tm_voucher_button');
+
 
     $submit.on('click', function(e) {
         e.preventDefault();
+
+        const $input = $('#coupon_input');
+        const customer_email = $('#traveler_email').val();
+
 
         let couponCode = $input.val();
 
@@ -104,6 +109,7 @@ const applyCoupon = ($) => {
             action: 'tm_checkout',
             route: 'submission_coupon_code',
             coupon_code: couponCode, // Pass the single data here
+            customer_email: customer_email
         }).then((response) => {
             console.log(response, 'response');
             if (response.success === true ) {
@@ -111,7 +117,6 @@ const applyCoupon = ($) => {
                 $input.siblings('.tm_success').remove();
                 $input.after(`<div class="tm_success">${response.data.message}</div>`);
                 $input.val(''); // Clear the input field
-                window.location.replace(response.data.redirect);
             } else {
                 $input.siblings('.tm_error').remove();
                 $input.siblings('.tm_success').remove();

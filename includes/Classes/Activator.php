@@ -54,6 +54,7 @@ class Activator
         $this->migrateInquiryTable();
         $this->migrateSessionsTable();
         $this->migrateCouponTable();
+        $this->migrateApplyCouponTable();
     }
 
     public function migrateSessionsTable()
@@ -344,13 +345,37 @@ class Activator
             min_amount int(11)  NULL,
             settings varchar(255) NULL,
             allowed_trip_ids text  NULL,
-            user_ids int(11) NOT NULL,
+            user_ids text NULL,
             stackable varchar(255) NULL,
             start_date varchar(255) NULL,
             end_date varchar(255) NULL,
             coupon_status varchar(255) NULL,
             title varchar(255) NOT NULL,
             meta_value longtext,
+            created_at timestamp NULL,
+            updated_at timestamp NULL,
+            PRIMARY  KEY  (id)
+        ) $charset_collate;";
+        $this->runSQL($sql, $table_name);
+    }
+
+    public function migrateApplyCouponTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'tm_apply_coupon';
+        $sql = "CREATE TABLE $table_name (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            booking_id int(11) NOT NULL,
+            coupon_id int(11) NOT NULL,
+            trip_id int(11) NOT NULL,
+            customer_email varchar(255)  NULL,
+            discount_amount int(11) NOT NULL,
+            coupon_type varchar(255) NOT NULL,
+            coupon_code varchar(255) NOT NULL,  /* Fixed the syntax error here */
+            user_id int(11)  NULL,
+            stackable varchar(255) NULL,
+            title varchar(255) NOT NULL,
             created_at timestamp NULL,
             updated_at timestamp NULL,
             PRIMARY  KEY  (id)

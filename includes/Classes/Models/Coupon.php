@@ -20,7 +20,6 @@ class Coupon extends Model
 
     public function saveCoupon($data) {
         $id = Arr::get($data, 'id', null);
-
         if ($id) {
             return TMDBModel('tm_coupon')->where('id', $id)->update($data);
         } else {
@@ -52,5 +51,9 @@ class Coupon extends Model
    
     public static function deleteCoupon($coupon_id) {
         return TMDBModel('tm_coupon')->where('id', $coupon_id)->delete();
+    }
+
+    public function getCouponUsageCount($customer_email, $coupon_code) {
+        return TMDBModel('tm_apply_coupon')->where('customer_email', $customer_email)->where('coupon_code', $coupon_code)->getCount();
     }
 }
