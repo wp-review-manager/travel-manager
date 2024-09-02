@@ -35,6 +35,7 @@ class SessionServices {
             'device_id' => Arr::get($data, 'deviceId', ''),
             'trip_id' => Arr::get($booking_data, 'trip_id', 0),
             'session_meta' => maybe_serialize( $booking_data ),
+            'currency' => Arr::get($data, 'currency', 'USD'),
             'created_at' => current_time('mysql'),
             'updated_at' => current_time('mysql'),
         );

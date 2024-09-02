@@ -17,6 +17,7 @@ class CheckoutServices {
         $data['booking_date'] = sanitize_text_field( Arr::get($data, 'booking_date') );
         $data['booking_status'] = sanitize_text_field( 'padding' );
         $data['booking_note'] = sanitize_textarea_field( 'hello booking status' );
+        $data['payment_method'] = sanitize_text_field( Arr::get($data, 'trm_payment_method') );
 
         $id = Arr::get($data, 'id', null);
         if($id !== null) {
@@ -64,6 +65,10 @@ class CheckoutServices {
         }
         if (empty($data['booking_date'])) {
             $errors['booking_date'] = 'Booking date is required';
+        }
+
+        if (empty($data['trm_payment_method'])) {
+            $errors['payment_method'] = 'Payment method is required';
         }
 
         if (!empty($errors)) {

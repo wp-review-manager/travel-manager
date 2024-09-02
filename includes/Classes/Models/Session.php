@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use WP;
 use WPTravelManager\Classes\Models\Model;
 
 class Session extends Model
@@ -27,6 +26,13 @@ class Session extends Model
     public function getSession($id)
     {
         $response = $this->where('device_id', $id)->get();
+        return $response;
+    }
+
+    public function deleteSessionItem($id)
+    {
+        $id = sanitize_text_field($id);
+        $response = $this->where('id', $id)->delete();
         return $response;
     }
 }

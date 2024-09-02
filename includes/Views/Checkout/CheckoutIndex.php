@@ -21,15 +21,12 @@ endforeach;
 
 
 
-
-
-
 <div class="tm_checkout">
     <h1 class="tm_checkout_title">Checkout</h1>
 
-    <div class="tm_content">
+    <div class="tm_content" style="display: flex; align-items: center; gap: 20px">
 
-        <div class="tm_checkout_form">
+        <div class="tm_checkout_form" style="width: 45%; padding: 20px">
             <h1 class="tm_title">Billing Details</h1>
 
             <form id="tm_checkout-form">
@@ -54,7 +51,8 @@ endforeach;
 
                 <div class="tm_filed">
                     <label>Phone <span style="color: #ff8b3d;">* </span></label>
-                    <input type="number" name="traveler_phone" placeholder="Please enter your number" required>
+                    <!-- <input type="phone" name="traveler_phone" placeholder="Please enter your number" required> -->
+                    <input type="tel" id="phone" name="traveler_phone" placeholder="01X-XXXX-XXXX" pattern="01[3-9][0-9]{8}" required>
                 </div>
 
                 <div class="tm_filed">
@@ -82,7 +80,7 @@ endforeach;
                 <div class="tm_filed">
                     <label>Country <span style="color: #ff8b3d;">* </span></label>
                     <select name="traveler_country" required>
-                        <option selected="">Choose a country*</option>
+                        <option selected value="">Choose a country*</option>
                         <option>Bangladesh</option>
                         <option>India</option>
                         <option value="Japan">Japan</option>
@@ -94,20 +92,20 @@ endforeach;
                         <option value="Antarctica">Antarctica</option>
                     </select>
                 </div>
-
+                <?php do_action('trm/render_payment_options') ?>
                 <!-- <div class="tm_filed_checkbox">
                     <input type="checkbox">
                     <label> Check the box to confirm you've read and agree to our Terms and Conditions and Privacy Policy.</label>
                 </div> -->
 
                 <div class="tm_submit">
-                    <button   class="tm_checkout_button">Submit</button>
+                    <button  class="tm_checkout_button">Submit</button>
                 </div>
             </form>
         </div>
         
-        <div class="tm_book_summary">
-            <?php echo SubmissionCheckout::BookingSummery($package_name,$trip_title,$booking_date,$booking_packages); ?>
+        <div class="tm_book_summary" style="width: 50%; padding: 20px;">
+            <?php do_action('trm/render_checkout_summary', $booking) ?>
         </div>
     </div>
 </div>

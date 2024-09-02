@@ -145,6 +145,7 @@ const resetHtmlDom = ($) => {
 const makeApiCallForBooking = (booking_data, $) => {
     let data = {
         booking_data,
+        currency: window?.trm_public?.currency_settings?.currency,
         deviceId
     };
     $.post(window.trm_public.ajax_url, {

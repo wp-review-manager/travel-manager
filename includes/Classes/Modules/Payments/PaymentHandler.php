@@ -13,21 +13,30 @@ class PaymentHandler {
 
     public function init() {
         // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/PayPal/PayPal.php';
-        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/SSLCommerz/SSLCommerz.php';
+        // require TRM_DIR . 'includes/Classes/Modules/Payments/PaymentMethods/Sslcommerz/SSLCommerz.php';
 
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
-        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\SSLCommerz\SSLCommerz();
+        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz\Sslcommerz();
 
         if (isset($_GET['trm_payment']) && isset($_GET['payment_method'])) {
             $data = $_GET;
             $this->validateFrameLessPage($data);
-            add_action('wp', function () {
+            add_action('wp', function () use ($data){
                 $paymentMethod = sanitize_text_field($_GET['payment_method']);
-                do_action('trm_payment_success_' . $paymentMethod);
+                if (isset($_GET['payment_status'])) {
+                   if ($_GET['payment_status'] == 'failed') {
+                       do_action('trm_payment_failed_' . $paymentMethod, $data);
+                   } else if ($_GET['payment_status'] == 'success') {
+                       do_action('trm_payment_success_' . $paymentMethod, $data);
+                   } else if ($_GET['payment_status'] == 'cancelled') {
+                       do_action('trm_payment_cancelled_' . $paymentMethod, $data);
+                   }
+                }
+                // do_action('trm_payment_success_' . $paymentMethod);
             });
         }
 
-        if (isset($_REQUEST['trm_payment_api_notify'])) {
+        if (isset($_REQUEST['trm_ipn_listener']) && isset($_REQUEST['payment_method']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             add_action('wp', function () {
                 $paymentMethod = sanitize_text_field($_REQUEST['payment_method']);
                 do_action('trm_ipn_endpoint_' . $paymentMethod);

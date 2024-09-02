@@ -3,6 +3,7 @@ namespace WPTravelManager\Classes\Routes;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\View;
 use WPTravelManager\Classes\Models\Session;
+use WPTravelManager\Classes\Models\Settings;
 
 class ShortcodeRegister {
     
@@ -15,6 +16,7 @@ class ShortcodeRegister {
             wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+                'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
             ]);
         });
 
@@ -50,10 +52,12 @@ class ShortcodeRegister {
 
     public function checkoutShortCode( $atts )
     {
+        $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
+        if( empty( $booking_id ) ){
+            return;
+        }
 
         global $wpdb; 
-
-        $booking_id = Arr::get( $_REQUEST, 'booking_id', 0 );
        
         $table_name = $wpdb->prefix.'tm_sessions'; // Adjust table prefix if necessary
         $session_data = $wpdb->get_results(
@@ -62,6 +66,10 @@ class ShortcodeRegister {
                 $booking_id
             )
         );
+
+            if (empty($session_data)) {
+                return '<h3 style="text-align: center">No booking found</h3>';
+            }
       
             $session = $session_data[0];
           

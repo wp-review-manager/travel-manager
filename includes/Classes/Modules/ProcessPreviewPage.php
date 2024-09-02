@@ -3,7 +3,7 @@ namespace WPTravelManager\Classes\Modules;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Services\AccessControl;
 use WPTravelManager\Classes\View;
-
+use WPTravelManager\Classes\Models\Settings;
 class ProcessPreviewPage {
     public function handleExteriorPages()
     {
@@ -35,6 +35,7 @@ class ProcessPreviewPage {
             wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+                'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
             ]);
         });
 

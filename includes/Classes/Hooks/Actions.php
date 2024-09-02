@@ -2,6 +2,7 @@
 namespace WPTravelManager\Classes\Hooks;
 use WPTravelManager\Classes\Modules\ProcessPreviewPage;
 use WPTravelManager\Classes\Modules\Payments\PaymentHandler;
+use WPTravelManager\Views\Checkout\SubmissionCheckout;
 
 class Actions {
     public function __construct() {
@@ -17,6 +18,7 @@ class Actions {
     }
     public function initClasses() {
         (new PaymentHandler())->init();
+        (new SubmissionCheckout())->init();
 
     }
 }

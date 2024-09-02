@@ -22,7 +22,7 @@ abstract class BasePaymentMethod
 
     private static $index = 0;
 
-    public $assetUrl = TRM_URL . 'assets/gateways/';
+    public $assetUrl = TRM_URL . 'assets/images/gateways/';
 
     public function __construct($title, $method, $description, $image)
     {
@@ -39,6 +39,8 @@ abstract class BasePaymentMethod
 
         add_filter('trm/get_all_payment_methods', array($this, 'getAllMethods'), 10, 1);
 
+        add_filter('trm/get_all_active_payment_methods', array($this, 'getAllActiveMethods'), 10, 1);
+
         add_filter('trm/payment_methods_routes', array($this, 'getPaymentRoutes'), 10, 1);
 
         add_action('wp_ajax_nopriv_trm_payment_confirmation_'. $this->method, array($this, 'paymentConfirmation'));
@@ -50,6 +52,7 @@ abstract class BasePaymentMethod
         static::$methods[$this->method] = array(
             'title' => $this->title,
             'route' => $this->method,
+            'name' => $this->method,
             'description' => $this->description,
             'image' => $this->image,
             "status" => $this->isEnabled(),
@@ -70,9 +73,24 @@ abstract class BasePaymentMethod
         return static::$routes;
     }
 
-    public function registerHooks($method)
+    public function getAllActiveMethods($methods)
     {
-        add_action('trm_render_component_' . $method, array($this, 'render'), 10, 1);
+        if ($this->isEnabled()) {
+            $methods[$this->method] = array(
+                'title' => $this->title,
+                'route' => $this->method,
+                'name' => $this->method,
+                'description' => $this->description,
+                'image' => $this->image,
+                "status" => $this->isEnabled(),
+            );
+        }
+        return $methods;
+    }
+
+    public function registerHooks()
+    {
+        add_action('trm/render_payment_method_' . $this->method, array($this, 'render'), 10);
     }
 
     abstract public function isEnabled();
@@ -133,7 +151,7 @@ abstract class BasePaymentMethod
         return $paymentMode == 'live';
     }
 
-    abstract public function render($template);
+    abstract public function render();
 
     abstract public function getPaymentSettings();
 

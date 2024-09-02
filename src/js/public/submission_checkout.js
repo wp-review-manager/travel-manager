@@ -33,8 +33,9 @@ const submissionCheckout = ($) => {
                 $form.append('<div class="tm_success">Your checkout has been submitted successfully</div>');
                 $form.trigger('reset');
                 formDataObject = {};
-                console.log({ response}, {response_order_item});
-                window.location.replace(response.data.redirect);
+                if (response?.data?.redirect_url) {
+                    window.location.replace(response.data.redirect_url);
+                }
             } else {
                 $form.find('.tm_error').remove();
                 $form.find('.tm_success').remove();
@@ -51,36 +52,36 @@ const submissionCheckout = ($) => {
 };
 
 const validation = (formData) => {
-    let errors = {};
-    if (formData.traveler_name === '') {
-        errors.traveler_name = 'Name is required';
-    }
-    if (formData.traveler_email === '') {
-        errors.traveler_email = 'Email is required';
-    }
-    if (formData.traveler_phone === '') {
-        errors.traveler_phone = 'Phone is required';
-    }
-    if (formData.traveler_address === '') {
-        errors.traveler_address = 'Address is required';
-    }
-    if (formData.traveler_country === '') {
-        errors.traveler_country = 'Country is required';
-    }
+    const errors = {};
 
-    if (formData.traveler_email !== '') {
-        let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    // Helper function to check if a field is empty and assign an error message
+    const validateField = (field, fieldName, message) => {
+        if (!formData[field]) {
+            errors[field] = message;
+        }
+    };
+
+    // Check required fields
+    validateField('traveler_name', 'traveler_name', 'Name is required');
+    validateField('traveler_email', 'traveler_email', 'Email is required');
+    validateField('traveler_phone', 'traveler_phone', 'Phone is required');
+    validateField('address', 'address', 'Address is required');
+    validateField('traveler_country', 'traveler_country', 'Country is required');
+    validateField('city', 'city', 'City is required');
+    validateField('zip_code', 'zip_code', 'Zip is required');
+    validateField('state', 'state', 'State is required'); // Assuming there's a 'state' field to check
+    validateField('trm_payment_method', 'trm_payment_method', 'Payment method is required');
+
+    // Email format validation
+    if (formData.traveler_email) {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!emailPattern.test(formData.traveler_email)) {
             errors.traveler_email = 'Invalid email format';
         }
     }
 
-    if (Object.keys(errors).length > 0) {
-        return errors;
-    }
-
-    return true;
-}
+    return Object.keys(errors).length > 0 ? errors : true;
+};
 
 
 //======================================================
@@ -133,5 +134,3 @@ const applyCoupon = ($) => {
 
 
 export {submissionCheckout,applyCoupon};
-
-// export {applyCoupon};
