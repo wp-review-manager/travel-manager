@@ -95,7 +95,7 @@ const applyCoupon = ($) => {
 
         const $input = $('#coupon_input');
         const customer_email = $('#traveler_email').val();
-
+        const subtotal = $('#trm_subtotal').data('subtotal');
 
         let couponCode = $input.val();
 
@@ -110,13 +110,18 @@ const applyCoupon = ($) => {
             action: 'tm_checkout',
             route: 'submission_coupon_code',
             coupon_code: couponCode, // Pass the single data here
-            customer_email: customer_email
+            customer_email: customer_email,
+            subtotal: subtotal
         }).then((response) => {
             console.log(response, 'response');
             if (response.success === true ) {
                 $input.siblings('.tm_error').remove();
                 $input.siblings('.tm_success').remove();
-                $input.after(`<div class="tm_success">${response.data.message}</div>`);
+                $submit.after(`<div class="tm_success">${response.data.message} & coupon code "${response.data.coupon_code}"</div>`);
+                $('#subtotal').after(`<tr></tr><td colspan="2" style="text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
+                            <span style="padding-right: 10px;">Discount :</span>
+                            <span class="tm_currency_code">$</span> <span >${response.data.discount}</span>
+                        </td></tr>`);
                 $input.val(''); // Clear the input field
             } else {
                 $input.siblings('.tm_error').remove();

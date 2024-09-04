@@ -75,6 +75,7 @@ class CheckoutController
 
     public function submissionCouponCode()
     {
+
         $code = isset($_REQUEST['coupon_code']) ? sanitize_text_field($_REQUEST['coupon_code']) : '';
 
         if (!$code) {
@@ -82,6 +83,7 @@ class CheckoutController
         }
 
         $coupon = (new Coupon())->getCoupon('coupon_code', $code);
+    
         //==================================
         if (!$coupon) {
             return wp_send_json_error(array('message' => 'Invalid coupon code.'));
@@ -112,7 +114,8 @@ class CheckoutController
         }
 
         //======================================
-        // if ($coupon->min_amount && ($coupon->amount) < intval($coupon->min_amount * 100)) {
+       
+        // if ($coupon->min_amount && ($subtotal) < intval($coupon->min_amount * 100)) {
         //     wp_send_json([
         //         'message' => __('The provided coupon is not applicable with this amount', 'wp-payment-form-pro')
         //     ], 423);
@@ -123,9 +126,9 @@ class CheckoutController
  
         if ($coupon->max_use > 0) {
 
-            if(!$customer_email){
-                wp_send_json_error(array('message' => __('The coupon has usage limit, please provide an email for validation.', 'travel-manager')));
-            }
+            // if(!$customer_email){
+            //     wp_send_json_error(array('message' => __('The coupon has usage limit, please provide an email for validation.', 'travel-manager')));
+            // }
 
             if($this->getCouponUsageCount($customer_email, $code) >= $coupon->max_use){
                 wp_send_json([
@@ -133,9 +136,19 @@ class CheckoutController
                 ], 423);
             }
         }
+        $subtotal = isset($_REQUEST['subtotal']) ? sanitize_text_field($_REQUEST['subtotal']) : '';
+        if($coupon->coupon_type == "Fixed"){
+            $discount =  $coupon->amount;
+        }else{
+            $discount = ($coupon->amount / $subtotal) * 100;
+        }
+        
 
-
-        return wp_send_json_success(array('message' => 'Coupon code used successfully'));
+        return wp_send_json_success(array(
+            'message' => 'Coupon code used successfully',
+            'discount' => $discount,
+            'coupon_code' =>  $code,
+        ));
     }
 
     public function getCouponUsageCount($customer_email, $coupon_code)
