@@ -76,11 +76,11 @@ class SubmissionCheckout {
                     </tr>
                 </tfoot>
             </table>
-            <div class="tm_total_price">
+            <div data-trm_booking_total="<?php echo esc_html($subtotalPrice)?>" class="tm_total_price">
                 <span style="color: rgba(35, 35, 35, 0.8); margin-right: 5px;letter-spacing: .5px;" >Total Payable : </span>
                 <span style="  font-size: 24px; font-weight: 500; color: #232323;">
                      <span >$</span>
-                      <span><?php echo esc_html($subtotalPrice)?></span>
+                      <span class="sub_total"><?php echo esc_html($subtotalPrice)?></span>
                 </span>
 
             </div>

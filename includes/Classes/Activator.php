@@ -253,6 +253,7 @@ class Activator
             trip_id int(11) NOT NULL,
             booking_id int(11) NULL,
             user_id int(11) DEFAULT NULL,
+            session_key varchar(255) NULL,
             transaction_type varchar(255) DEFAULT 'onetime',
             payment_method varchar(255),
             card_last_4 int(4),

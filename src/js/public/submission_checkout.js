@@ -98,14 +98,17 @@ const applyCoupon = ($) => {
 
         // Clear any previous error/success messages
         $input.siblings('.tm_error, .tm_success').remove();
-
+        $submit.text('Applying...').attr('disabled', true);
+        $('#trm_apply_coupon').remove();
+        $('.tm_success_wrap').remove();
+        
         if (!couponCode) {
             $input.after('<div class="tm_error">Please enter a coupon code.</div>');
             return;
         }
-
-        $submit.text('Applying...').attr('disabled', true);
-        $('#trm_apply_coupon').remove();
+        // Set initial total price
+        const total_price = $('.tm_total_price').data('trm_booking_total');
+        $('.tm_total_price .sub_total').text(total_price);
 
         $.post(window.trm_public.ajax_url, {
             action: 'tm_checkout',
@@ -131,6 +134,7 @@ const applyCoupon = ($) => {
                         </td>
                     </tr>
                 `);
+                $('.tm_total_price .sub_total').text(total_price - response?.data?.discount);
                 $input.val(''); // Clear input after applying coupon
             } else {
                 // Handle failure response

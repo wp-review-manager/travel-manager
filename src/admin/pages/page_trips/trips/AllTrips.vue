@@ -15,7 +15,7 @@
             <el-table-column prop="shortcode" label="Shortcode" width="220">
                 <template #default="{ row }">
                     <el-tooltip class="box-item" effect="dark" content="Click to copy shortcode" placement="top-start">
-                        <button class="tm-shortcode" v-clipboard="'dhjfjhgdshjfgjsdgf'" v-clipboard:success="clipboardSuccessHandler">
+                        <button class="tm-shortcode" v-clipboard="row.shortcode" v-clipboard:success="clipboardSuccessHandler">
                             {{ row.shortcode }}
                         </button>
                     </el-tooltip>

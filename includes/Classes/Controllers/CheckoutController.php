@@ -93,7 +93,7 @@ class CheckoutController
         return wp_send_json_success(array(
             'message' => 'Coupon code used successfully',
             'discount' => $couponData['discount'],
-            'coupon_code' =>  $couponData['code'],
+            'coupon_code' =>  $couponData['coupon_code'],
         ));
     }
 

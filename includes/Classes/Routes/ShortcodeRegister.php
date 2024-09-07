@@ -31,7 +31,6 @@ class ShortcodeRegister {
             return;
         }
         $this->preparedRenderData( $id );
-        
     }
 
     public function preparedRenderData( $id )
@@ -42,12 +41,14 @@ class ShortcodeRegister {
         }
         $post_meta = get_post_meta( $id, 'trip_meta', true );
         $post_meta = maybe_unserialize( $post_meta );
-     
+    //  dd($post_meta);
+        ob_start();
         View::render('Preview/Template1',[
             'id' => $id,
             'title' => $post->post_title,
             'trip' => $post_meta,
         ]);
+        echo ob_get_clean();
     }
 
     public function checkoutShortCode( $atts )
