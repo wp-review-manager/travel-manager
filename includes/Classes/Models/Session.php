@@ -19,6 +19,7 @@ class Session extends Model
 
     public function create($data)
     {
+        unset($data['currency']);
         $response = $this->insert($data);
         return $response;
     }

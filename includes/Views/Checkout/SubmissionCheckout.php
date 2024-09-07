@@ -65,7 +65,7 @@ class SubmissionCheckout {
                     <tr id="subtotal">
                         <td colspan="2" style="text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
                             <span style="padding-right: 10px;">Subtotal :</span>
-                            <span class="tm_currency_code">$</span> <span id="trm_subtotal"  data-subtotal="<?php echo esc_attr($subtotalPrice); ?>" ><?php echo esc_html($subtotalPrice)?></span>
+                            <span class="tm_currency_code">$</span> <span class="trm-price" data-trm_subtotal=<?php echo esc_html($subtotalPrice)?>><?php echo esc_html($subtotalPrice)?></span>
                         </td>
                     </tr>
                     <tr>
