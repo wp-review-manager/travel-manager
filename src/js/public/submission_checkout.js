@@ -26,6 +26,7 @@ const submissionCheckout = ($) => {
             action: 'tm_checkout',
             route: 'submission_checkout',
             data: formDataObject,
+            couponCode: $('#trm_apply_coupon td').data('coupon_code')
         }).then((response, response_order_item) => {
             if (response.success === true ) {
                 $form.find('.tm_error').remove();
@@ -86,56 +87,76 @@ const validation = (formData) => {
 
 //======================================================
 const applyCoupon = ($) => {
-   
     const $submit = $('.tm_voucher_button');
-
-
-    $submit.on('click', function(e) {
+    $submit.on('click', function (e) {
         e.preventDefault();
 
         const $input = $('#coupon_input');
-        const customer_email = $('#traveler_email').val();
+        const customerEmail = $('#traveler_email').val();
         const subtotal = $('#trm_subtotal').data('subtotal');
+        const couponCode = $input.val().trim();
 
-        let couponCode = $input.val();
+        // Clear any previous error/success messages
+        $input.siblings('.tm_error, .tm_success').remove();
 
         if (!couponCode) {
             $input.after('<div class="tm_error">Please enter a coupon code.</div>');
             return;
         }
 
-        $input.siblings('.tm_error').remove();
+        $submit.text('Applying...').attr('disabled', true);
+        $('#trm_apply_coupon').remove();
 
         $.post(window.trm_public.ajax_url, {
             action: 'tm_checkout',
             route: 'submission_coupon_code',
-            coupon_code: couponCode, // Pass the single data here
-            customer_email: customer_email,
+            coupon_code: couponCode,
+            customer_email: customerEmail,
             subtotal: subtotal
-        }).then((response) => {
-            console.log(response, 'response');
-            if (response.success === true ) {
-                $input.siblings('.tm_error').remove();
-                $input.siblings('.tm_success').remove();
-                $submit.after(`<div class="tm_success">${response.data.message} & coupon code "${response.data.coupon_code}"</div>`);
-                $('#subtotal').after(`<tr></tr><td colspan="2" style="text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
+        })
+        .done(response => {
+            // Handle success response
+            if (response.success) {
+                $submit.after(`
+                    <div class="tm_success_wrap">
+                        <p class="tm_success">Apply coupon "${response.data.coupon_code}" successfully</p>
+                        <button class="tm_remove_coupon">Remove</button>
+                    </div>
+                `);
+                $('#subtotal').after(`
+                    <tr id="trm_apply_coupon">
+                        <td data-coupon_code="${response.data.coupon_code}" colspan="2" style="text-align: right; padding-top:20px !important; font-size: 20px; color: #232323; font-weight: 500;">
                             <span style="padding-right: 10px;">Discount :</span>
-                            <span class="tm_currency_code">$</span> <span >${response.data.discount}</span>
-                        </td></tr>`);
-                $input.val(''); // Clear the input field
+                            <span class="tm_currency_code">$</span> <span>${response.data.discount}</span>
+                        </td>
+                    </tr>
+                `);
+                $input.val(''); // Clear input after applying coupon
             } else {
-                $input.siblings('.tm_error').remove();
-                $input.siblings('.tm_success').remove();
+                // Handle failure response
                 $input.after(`<div class="tm_error">${response.data.message}</div>`);
             }
-        }).catch((error) => {
-            console.log(error, 'error');
-            $input.siblings('.tm_error').remove();
-            $input.siblings('.tm_success').remove();
-            $input.after('<div class="tm_error">Something went wrong. Please try again later</div>');
+        })
+        .fail(error => {
+            console.error('Error:', error);
+            $input.after('<div class="tm_error">Something went wrong. Please try again later.</div>');
+        })
+        .always(() => {
+            // Reset button state
+            $submit.text('Apply').attr('disabled', false);
         });
     });
 };
 
+const deleteCoupon = ($) => {
+    $(document).on('click', '.tm_remove_coupon', function () {
+        $('#trm_apply_coupon').remove();
+        $('.tm_success_wrap').remove();
+    });
+}
 
-export {submissionCheckout,applyCoupon};
+
+
+
+
+export {submissionCheckout,applyCoupon, deleteCoupon};

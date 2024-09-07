@@ -24,8 +24,6 @@ class CouponController
         }
     }
 
-
-
     public function postCoupon() {
         $form_data = $_REQUEST['data'];
         $id = Arr::get($form_data, 'id');
@@ -55,7 +53,6 @@ class CouponController
             }
         }
     }
-    
 
     public function getCoupons()
     {
@@ -68,8 +65,6 @@ class CouponController
             )
         );
     }
-
-
 
     public function deleteCoupon()
     {

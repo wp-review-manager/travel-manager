@@ -23,7 +23,7 @@ class Transactions extends Model
         $preparedData['card_brand'] =  sanitize_text_field( '' );
         $preparedData['charge_id'] =  sanitize_text_field( '' );
         $preparedData['payment_total'] = Arr::get($data, 'booking_total', '');
-        $preparedData['status'] =  sanitize_text_field( 'pending' );
+        $preparedData['payment_status'] =  sanitize_text_field( 'pending' );
         $preparedData['currency'] =  Arr::get($data, 'currency', '');
         $preparedData['payment_mode'] = sanitize_text_field( 'test' );
         $preparedData['payment_note'] =  sanitize_text_field( '' );

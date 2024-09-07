@@ -1,5 +1,4 @@
 <?php
-
 namespace WPTravelManager\Classes\Controllers;
 
 use WPTravelManager\Classes\Services\CheckoutServices;
@@ -30,24 +29,34 @@ class CheckoutController
     public function submissionCheckout()
     {
         $form_data = Arr::get($_REQUEST, 'data');
-        $session_id =  Arr::get($form_data, 'session_id');;
+        $session_id =  Arr::get($form_data, 'session_id');
+        if (!$session_id) {
+            wp_send_json_error('Session id not found');
+        }
+        $couponCode = Arr::get($_REQUEST, 'couponCode');
         //=====================get session data==========================
 
         $session_data = (new OrderItem())->getSessionData($session_id);
-
         $sessionId = Arr::get($session_data, 'session_id', null);
-        //========================================================
+        //If session data not found then return error
         if ($sessionId) {
             $sanitize_data = CheckoutServices::sanitize($form_data);
             $validateData = CheckoutServices::validate($sanitize_data);
+            if ($couponCode) {
+                $couponData = $this->validateCouponCode($couponCode, $validateData['booking_total'], $sanitize_data['traveler_email']);
+            }
             $validateData['currency'] = Arr::get($session_data, 'currency', 'USD');
             $totalPayable = Arr::get($validateData, 'booking_total', 0);
 
             // Booking create
             $bookingId = (new Checkout())->saveCheckout($validateData);
-
             if ($bookingId) {
-                
+                // Apply Coupon
+                if ($couponData['discount'] > 0) {
+                    $validateData['booking_total'] = $validateData['booking_total'] - $couponData['discount'];
+                    Coupon::applyCouponSubmit($sanitize_data, $couponData, $bookingId);
+                }
+
                // Create Order Item
                 foreach ($session_data['session_meta'] as $order_item) {
                     $order_item['booking_id'] = $bookingId;
@@ -55,7 +64,6 @@ class CheckoutController
                     (new OrderItem())->saveOrderItem($order_item);
                 }
 
-                $transactionId = (new Transactions())->saveTransactions($validateData, $bookingId);
                 // Create Transaction
                 $transactionId = (new Transactions())->saveTransactions($validateData,$bookingId);
                 if(!$transactionId){
@@ -77,7 +85,20 @@ class CheckoutController
     {
 
         $code = isset($_REQUEST['coupon_code']) ? sanitize_text_field($_REQUEST['coupon_code']) : '';
+        $customer_email = isset($_REQUEST['customer_email']) ? sanitize_text_field($_REQUEST['customer_email']) : '';
+        $subtotal = isset($_REQUEST['subtotal']) ? sanitize_text_field($_REQUEST['subtotal']) : '';
+        
+        $couponData = $this->validateCouponCode($code, $subtotal, $customer_email);
 
+        return wp_send_json_success(array(
+            'message' => 'Coupon code used successfully',
+            'discount' => $couponData['discount'],
+            'coupon_code' =>  $couponData['code'],
+        ));
+    }
+
+    public function validateCouponCode ($code, $subtotal = '', $customer_email = '')
+    {
         if (!$code) {
             return wp_send_json_error(array('message' => 'Please enter a coupon code'));
         }
@@ -122,13 +143,12 @@ class CheckoutController
         // }
 
         //Check if the coupon has usage limit
-        $customer_email = isset($_REQUEST['customer_email']) ? sanitize_text_field($_REQUEST['customer_email']) : '';
  
         if ($coupon->max_use > 0) {
 
-            // if(!$customer_email){
-            //     wp_send_json_error(array('message' => __('The coupon has usage limit, please provide an email for validation.', 'travel-manager')));
-            // }
+            if(!$customer_email){
+                wp_send_json_error(array('message' => __('The coupon has usage limit, please provide an email for validation.', 'travel-manager')));
+            }
 
             if($this->getCouponUsageCount($customer_email, $code) >= $coupon->max_use){
                 wp_send_json([
@@ -136,19 +156,18 @@ class CheckoutController
                 ], 423);
             }
         }
-        $subtotal = isset($_REQUEST['subtotal']) ? sanitize_text_field($_REQUEST['subtotal']) : '';
+
         if($coupon->coupon_type == "Fixed"){
             $discount =  $coupon->amount;
         }else{
             $discount = ($coupon->amount / $subtotal) * 100;
         }
-        
 
-        return wp_send_json_success(array(
-            'message' => 'Coupon code used successfully',
+        return array (
             'discount' => $discount,
             'coupon_code' =>  $code,
-        ));
+            'coupon' => $coupon
+        );
     }
 
     public function getCouponUsageCount($customer_email, $coupon_code)

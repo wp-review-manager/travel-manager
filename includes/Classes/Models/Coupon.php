@@ -56,4 +56,27 @@ class Coupon extends Model
     public function getCouponUsageCount($customer_email, $coupon_code) {
         return TMDBModel('tm_apply_coupon')->where('customer_email', $customer_email)->where('coupon_code', $coupon_code)->getCount();
     }
+
+    public static function applyCouponSubmit($form_data, $couponData, $bookingId) {
+        $coupon = $couponData['coupon'];
+        $data = array(
+            'booking_id' => $bookingId,
+            'coupon_id' => $coupon->id,
+            'customer_email' => $form_data['traveler_email'],
+            'coupon_code' => $couponData['coupon_code'],
+            'discount_amount' => $couponData['discount'],
+            'trip_id' => $form_data['trip_id'],
+            'coupon_type' => $coupon->coupon_type,
+            'stackable' => $coupon->stackable,
+            'title' => $coupon->title,
+            'created_at' => current_time('mysql'),
+            'updated_at' => current_time('mysql'),
+        );
+
+        try {
+            TMDBModel('tm_apply_coupon')->insert($data);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
