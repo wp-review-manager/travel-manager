@@ -1,53 +1,83 @@
 <?php
-use WPTravelManager\Classes\Modules\Payments\PaymentMethods\BasePaymentMethod;
+
+namespace WPTravelManager\Classes\Modules\Payments\PaymentMethods\Offline;
+
+use WPTravelManager\Classes\Modules\Payments\PaymentHelper;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
-
-class OfflineSettings extends BasePaymentMethod
+ /**
+ * Automatically create global payment settings page
+ * @param  String: key, title, routes_query, 'logo')
+ */
+class OfflineSettings
 {
-    public function __construct()
-    {
-        parent::__construct('offline');
-    }
-
+    /**
+     * @function mapperSettings, To map key => value before store
+     * @function validateSettings, To validate before save settings
+     */
     public function init()
     {
-        add_action('trm/offline_payment_settings', [$this, 'renderSettings']);
+        add_filter('trm_before_save_offline', array($this, 'mapperSettings'), 10, 1);
     }
 
-    public function getGlobalFields()
+    /**
+     * @return Array of global fields
+     */
+    public static function globalFields(): array
     {
-        return [
-            'offline' => [
-                'title' => __('Offline Payment', 'travel-manager'),
-                'fields' => [
-                    'offline_instructions' => [
-                        'type' => 'textarea',
-                        'label' => __('Instructions', 'travel-manager'),
-                        'placeholder' => __('Instructions for offline payment', 'travel-manager'),
-                        'value' => '',
-                        'help' => __('Provide instructions for offline payment', 'travel-manager'),
-                    ],
-                ],
-            ],
-        ];
+        return array (
+            'is_active' => array(
+                'value' => 'no',
+                'label' => __('Enable/Disable', 'wp-payment-form'),
+            ),
+            'payment_mode' => array(
+                'value' => 'test',
+                'label' => __('Payment Mode', 'wp-payment-form'),
+                'options' => array(
+                    'test' => __('Test Mode', 'wp-payment-form'),
+                    'live' => __('Live Mode', 'wp-payment-form')
+                ),
+                'type' => 'payment_mode'
+            )
+        );
     }
 
-    public function getGlobalSettings()
+     /**
+     * @return Array of default fields
+     */
+    public static function settingsKeys() : array
     {
-        $defaults = [
-            'offline_instructions' => '',
-        ];
-
-        $settings = get_option($this->settingsKey, []);
-
-        return $this->mapper($defaults, $settings);
+        return array(
+            'is_active' => 'no',
+            'payment_mode' => 'test'
+        );
     }
 
-    public function saveSettings($settings)
+    public function mapperSettings($settings)
     {
-        update_option($this->settingsKey, $settings);
+        $settings = PaymentHelper::mapper(
+            self::settingsKeys(),
+            $settings,
+            false
+        );
+
+        return $settings;
     }
+
+    public static function get($key = null)
+    {
+        $settings = get_option('trm_payment_settings_offline', array());
+
+        $defaults = array(
+            'is_active' => 'no',
+            'payment_mode' => 'test',
+        );
+
+        $data = wp_parse_args($settings, $defaults);
+        return $key && isset($data[$key]) ? $data[$key] : $data;
+    }
+
 }

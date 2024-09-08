@@ -5,7 +5,6 @@
                 <template #body>
                     <div class="input-wrapper">
                         <div class="tooltip-label">
-                            {{ currency_settings }}
                             <p class="form-label" for="name">Currency *</p>
                             <el-tooltip effect="dark"
                                 content="You can globally mange your currency from here" placement="top">
@@ -74,7 +73,6 @@ export default {
                 currency_position: 'right_space',
                 currency_separator: 'none',
             },
-            positions: [],
             currency_separators: [
                 { label: 'None (10000.00)', value: 'none' },
                 { label: 'Comma (10,000.00)', value: 'comma' },
@@ -105,8 +103,7 @@ export default {
                     option_key: 'trm_currency_settings',
                     tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
                 }).then((response) => {
-                    console.log(response.data.settings, 'response data');
-                    that.currency_settings = response?.data?.settings;
+                    that.currency_settings = response?.data?.settings || that.currency_settings;
                 }).fail((error) => {
                     console.log(error);
                 }).always(() => {

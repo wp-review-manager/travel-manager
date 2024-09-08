@@ -1,5 +1,5 @@
 <template>
-    <el-tabs v-model="activeName" class="trm_tabs trm_payment_settings_wrapper">
+    <el-tabs v-model="activeName" class="trm_tabs trm_payment_settings_wrapper" v-loading="loading">
          <el-tab-pane v-for="route in payment_routes" :label="route.meta.title" :name="route.name" :key="route.name">
             <GlobalPaymentSettings v-loading="loading" :route="route" :payment_settings="payment_settings" />
         </el-tab-pane>
@@ -17,13 +17,14 @@ export default {
             ajaxurl: window.wpTravelManager.ajaxurl,
             nonce: window.wpTravelManager.tm_admin_nonce,
             payment_routes: window.wpTravelManager.payment_routes,
-            activeName: 'offline',
+            activeName: '',
             payment_settings: {},
             loading: false
         };
     },
     watch: {
         activeName() {
+            console.log('wdqw watch');
             this.$router.push('/settings/payment/' + this.activeName);
             this.getPaymentSettings(this.activeName);
         }
