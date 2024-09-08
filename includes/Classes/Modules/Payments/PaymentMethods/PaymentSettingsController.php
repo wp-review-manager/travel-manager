@@ -37,7 +37,7 @@ class PaymentSettingsController {
       
         $payment_settings = apply_filters( 'trm/payment_settings_' . $gateway , [] );
         $payment_settings = array_merge($payment_settings, $settings);
-
+        
         (new PaymentHandler())->saveSettings($gateway, $payment_settings);
 
     }

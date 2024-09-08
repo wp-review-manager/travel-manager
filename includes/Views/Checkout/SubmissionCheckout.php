@@ -99,9 +99,7 @@ class SubmissionCheckout {
                   
             <ul class="tm_payment_methods" style="padding: 0px; display: flex; flex-direction: column; gap: 8px">
                 <?php foreach ($paymentMethods as $method): ?>
-                    
                     <li class="tm_payment_method" style="display:flex; align-items: center; gap: 4px">
-
                         <?php do_action('trm/render_payment_method_'. $method['name'])?>
                     </li>
                 <?php endforeach; ?>

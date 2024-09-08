@@ -1,5 +1,4 @@
 import Dashboard from '@pages/page_dashboard/Dashboard.vue';
-import GlobalSettings from './pages/page_global_settings/GlobalSettings.vue';
 // Trip section components
 import TripIndex from '@/pages/page_trips/TripsIndex.vue';
 import AllTrips from '@/pages/page_trips/trips/AllTrips.vue';

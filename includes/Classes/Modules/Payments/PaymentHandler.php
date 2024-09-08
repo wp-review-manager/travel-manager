@@ -17,6 +17,7 @@ class PaymentHandler {
 
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\PayPal\PayPal();
         new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Sslcommerz\Sslcommerz();
+        new \WPTravelManager\Classes\Modules\Payments\PaymentMethods\Offline\Offline();
 
         if (isset($_GET['trm_payment']) && isset($_GET['payment_method'])) {
             $data = $_GET;
@@ -98,9 +99,9 @@ class PaymentHandler {
         $settings = apply_filters('trm_before_save_' . $method, $settings);
 
         do_action('trm_payment_method_settings_validation_' . $method, $settings);
-
+    
         update_option('trm_payment_settings_' . $method, $settings, false);
-       
+  
         do_action('trm_after_save_' . $method, $settings);
 
         wp_send_json_success(array(

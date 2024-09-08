@@ -80,7 +80,12 @@ export default {
                 tm_admin_nonce: this.nonce,
                 settings: this.payment_settings
             }).then((response) => {
-                console.log(response);
+                this.$notify({
+                    title: 'Success',
+                    message: response?.data?.message || 'Settings saved successfully',
+                    type: 'success',
+                    position: 'bottom-right',
+                })
                 // this.payment_settings = response?.data?.settings || {};
                 // this.loading = false;
             }).fail((error) => {
