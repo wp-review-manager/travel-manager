@@ -87,24 +87,27 @@ class CheckoutController
         $code = isset($_REQUEST['coupon_code']) ? sanitize_text_field($_REQUEST['coupon_code']) : '';
         $customer_email = isset($_REQUEST['customer_email']) ? sanitize_text_field($_REQUEST['customer_email']) : '';
         $subtotal = isset($_REQUEST['subtotal']) ? sanitize_text_field($_REQUEST['subtotal']) : '';
-        
+     
         $couponData = $this->validateCouponCode($code, $subtotal, $customer_email);
-
+      
         return wp_send_json_success(array(
             'message' => 'Coupon code used successfully',
             'discount' => $couponData['discount'],
             'coupon_code' =>  $couponData['coupon_code'],
         ));
+ 
     }
+   
 
     public function validateCouponCode ($code, $subtotal = '', $customer_email = '')
     {
+      
         if (!$code) {
             return wp_send_json_error(array('message' => 'Please enter a coupon code'));
         }
-
+       
         $coupon = (new Coupon())->getCoupon('coupon_code', $code);
-    
+        
         //==================================
         if (!$coupon) {
             return wp_send_json_error(array('message' => 'Invalid coupon code.'));
@@ -133,7 +136,7 @@ class CheckoutController
                 'message' => __('The provided coupon is outdated')
             ], 423);
         }
-
+   
         //======================================
        
         // if ($coupon->min_amount && ($subtotal) < intval($coupon->min_amount * 100)) {
@@ -156,13 +159,14 @@ class CheckoutController
                 ], 423);
             }
         }
-
-        if($coupon->coupon_type == "Fixed"){
-            $discount =  $coupon->amount;
-        }else{
+        
+        if (!$coupon->coupon_type == "Fixed") {
+           
             $discount = ($coupon->amount / $subtotal) * 100;
+        } else {
+            $discount = $coupon->amount;
         }
-
+     
         return array (
             'discount' => $discount,
             'coupon_code' =>  $code,

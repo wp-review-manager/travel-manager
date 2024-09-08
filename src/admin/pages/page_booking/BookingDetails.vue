@@ -36,7 +36,7 @@
                                         <div class="icon">
                                             <Icon icon="tm-pending" />
                                         </div>
-                                        {{ transactions.transaction_type }}
+                                        {{ transactions.payment_status }}
                                     </span>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@
                                     <li>
                                         <div class="wpf_list_header">Payment Status</div>
                                         <div class="wpf_list_value wpf_pay_status_pending">
-                                            {{ transactions.transaction_type }}
+                                            {{ transactions.payment_status }}
                                         </div>
                                     </li>
                                     <li>
