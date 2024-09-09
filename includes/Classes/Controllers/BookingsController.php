@@ -85,13 +85,10 @@ class BookingsController {
       
         $OrderData =( new Order())->getOrderItem($bookingId);
 
-        $applyCoupon =( new Coupon())->getApplyCoupon($bookingId, 'booking_id');
-        $applyCoupon = Arr::get($applyCoupon, 0, new ArrayObject());
-      
-        if(!$applyCoupon) {
-            wp_send_json_error('Apply Coupon data not found');
-        }
-
+        $discounts =( new Coupon())->getDiscounts($bookingId, 'booking_id');
+      foreach($discounts as $discount){
+       $totalDiscount =+ $discount->discount_amount;
+      }
 
         wp_send_json_success(
             array(
@@ -99,7 +96,8 @@ class BookingsController {
                 'bookings' => $bookingData,
                 'orderItems' => $OrderData,
                 'trip' => $tripData,
-                'applyCoupon' => $applyCoupon,
+                'discounts' => $discounts,
+                'totalDiscount' => $totalDiscount,
             )
         );
     }
@@ -107,7 +105,7 @@ class BookingsController {
     public function updatePaymentStatus(){
         $form_data = Arr::get($_REQUEST, 'data');
         $id = Arr::get($form_data, 'id', null);
-        
+
         $paymentStatus =( new Transaction())->updateTransaction($id, $form_data);
     
         if ($paymentStatus) {

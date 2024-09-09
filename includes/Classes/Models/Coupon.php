@@ -80,22 +80,19 @@ class Coupon extends Model
         }
     }
 
-    public function getApplyCoupon($id, $filed = 'id' ) {
+    public function getDiscounts($id, $filed = 'id' ) {
         if(!$id) {
             wp_send_json_error(array(
-                'message' => 'Apply Coupon Id Not Found'
+                'message' => 'Discount Id Not Found'
             ), 400);
         }
-        $applyCoupon = TMDBModel('tm_apply_coupon')->where($filed, $id)->get();
+        $discounts = TMDBModel('tm_apply_coupon')->where($filed, $id)->get();
        
-        if(!$applyCoupon) {
+        if(!$discounts) {
             return;
-            // wp_send_json_error(array(
-            //     'message' => 'Apply Coupon Not Found'
-            // ), 400);
         }
        
-        return $applyCoupon;
+        return $discounts;
           
 
     }

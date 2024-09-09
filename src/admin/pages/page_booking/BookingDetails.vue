@@ -209,7 +209,7 @@
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr> <!---->
                                     <tr>
-                                        <th colspan="4"><span>Total <span style="color: rgb(19 181 19);">(After
+                                        <th colspan="4"><span>Total <span style="color: rgb(19 181 19);"  v-if="discounts !== null" >(After
                                                     discount) :</span></span></th>
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr>
@@ -222,8 +222,8 @@
                 <!-- ================================ -->
                 <!-- =================== -->
                 <!--discount Items Start-->
-                <AppCard title="Discount Based On Coupon Code" :icon="'tm-traveler'"
-                    style="background: #fff; margin-top: 20px;">
+                <AppCard v-if="discounts !== null"  title="Discount Based On Coupon Code" :icon="'tm-traveler'"
+                style="background: #fff; margin-top: 20px;">
                     <template v-slot:actions>
 
                     </template>
@@ -237,26 +237,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="(item, index) in discounts" :key="index">
                                         <td style="color: rgb(19, 181, 19);">Discount (Est ea labrum)</td>
-                                        <td class="tm_align_right" v-if="!applyCoupon">$ {{ applyCoupon.discount_amount
-                                            }}</td>
-                                        <td class="tm_align_right" v-else> No Discount</td>
-
+                                        <td class="tm_align_right" >$ {{ item.discount_amount}}</td>
                                     </tr>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th colspan="1">Total Discounts:</th>
-                                        <th class="tm_align_right">$ {{ bookings.booking_total }}</th>
+                                        <th class="tm_align_right" >$ {{ totalDiscount }} </th>
                                     </tr> <!---->
                                 </tfoot>
                             </table>
                         </div>
                     </template>
                 </AppCard>
-                <!--discount Items End-->
+                <div v-else></div>               <!--discount Items End-->
                 <!-- ================================ -->
                 <!--Transaction Details Start-->
                 <AppCard title="Transaction Details" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
@@ -376,7 +373,8 @@ export default {
             bookings: {},
             transactions: {},
             orderItem: {},
-            applyCoupon: {},
+            discounts: {},
+            totalDiscount: '',
             trip_info: {},
             loading: false
         }
@@ -407,7 +405,8 @@ export default {
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
                     that.trip_info = response.data.trip;
-                    that.applyCoupon = response.data.applyCoupon;
+                    that.discounts = response.data.discounts;
+                    that.totalDiscount = response.data.totalDiscount;
                     console.log(response.data);
                     that.loading = false;
                 }).fail((error) => {
