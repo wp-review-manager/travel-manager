@@ -1,6 +1,39 @@
 <template>
     <div class="container" v-loading="loading">
         <!-- ====================== -->
+        <AppModal :title="'Edit payment status'" :width="800" :showFooter="false" ref="update_status_modal">
+            <template #body>
+                <div class="trm_status_body">
+                    <p class="tm_status">Current Payment Status: <span>{{ transactions.payment_status }}</span></p>
+
+                    <form class="tm_status_form">
+                        <div class="tm_form_item">
+                            <label class="tm_status name">New Payment Status :</label>
+                            <el-radio-group v-model="transactions.payment_status">
+                                <el-radio value="paid" size="large">Paid </el-radio>
+                                <el-radio value="processing" size="large">Processing</el-radio>
+                                <el-radio value="pending" size="large">Pending </el-radio>
+                                <el-radio value="failed" size="large">Failed </el-radio>
+                                <el-radio value="refunded" size="large">Refunded </el-radio>
+                            </el-radio-group>
+                        </div>
+
+                        <div class="tm_form_item">
+                            <label class="tm_status name" style="padding-right: 100px;" >Payment Note :</label>
+                            <el-input v-model="transactions.payment_note" style="width: 73%" :rows="2" type="textarea"
+                                placeholder="You may add a note for this status change (optional)" />
+                        </div>
+
+                    </form>
+                </div>
+            </template>
+            <template #footer>
+                <div class="tm-modal-footer">
+                    <el-button @click="updatePaymentStatus()"  type="primary" size="medium">Confirm</el-button>
+                </div>
+            </template>
+        </AppModal>
+        <!-- ====================== -->
         <div class="tm_head_info">
             <div class="tm_entry_title">
                 <div class="tm_entries_url">
@@ -43,7 +76,7 @@
                         </div>
                         <!-- ================= -->
                         <div class="tm_header_right">
-                            <div class="tm_payment_status"><span>
+                            <div @click="openUpdateStatusModal(booking_id)" class="tm_payment_status"><span>
                                     Change Payment Status
                                 </span>
                             </div> <!---->
@@ -176,7 +209,8 @@
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr> <!---->
                                     <tr>
-                                        <th colspan="4"><span>Total <span style="color: rgb(19 181 19);">(After discount) :</span></span></th>
+                                        <th colspan="4"><span>Total <span style="color: rgb(19 181 19);">(After
+                                                    discount) :</span></span></th>
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr>
                                 </tfoot>
@@ -186,9 +220,10 @@
                 </AppCard>
                 <!--Booking Items End-->
                 <!-- ================================ -->
-                   <!-- =================== -->
-                <!--Booking Items Start-->
-                <AppCard title="Discount Based On Coupon Code" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                <!-- =================== -->
+                <!--discount Items Start-->
+                <AppCard title="Discount Based On Coupon Code" :icon="'tm-traveler'"
+                    style="background: #fff; margin-top: 20px;">
                     <template v-slot:actions>
 
                     </template>
@@ -202,16 +237,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr >
+                                    <tr>
                                         <td style="color: rgb(19, 181, 19);">Discount (Est ea labrum)</td>
-                                        <td class="tm_align_right" v-if="!applyCoupon">No Discount</td>
-                                        <td class="tm_align_right" v-else>$ {{ applyCoupon.discount_amount }}</td>
+                                        <td class="tm_align_right" v-if="!applyCoupon">$ {{ applyCoupon.discount_amount
+                                            }}</td>
+                                        <td class="tm_align_right" v-else> No Discount</td>
+
                                     </tr>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="1" >Total Discounts:</th>
+                                        <th colspan="1">Total Discounts:</th>
                                         <th class="tm_align_right">$ {{ bookings.booking_total }}</th>
                                     </tr> <!---->
                                 </tfoot>
@@ -219,7 +256,7 @@
                         </div>
                     </template>
                 </AppCard>
-                <!--Booking Items End-->
+                <!--discount Items End-->
                 <!-- ================================ -->
                 <!--Transaction Details Start-->
                 <AppCard title="Transaction Details" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
@@ -324,12 +361,14 @@
 </template>
 
 <script>
-import Icon from "@/components/Icons/AppIcon.vue"
-import AppCard from "@/components/AppCard.vue"
+import Icon from "@/components/Icons/AppIcon.vue";
+import AppCard from "@/components/AppCard.vue";
+import AppModal from "@/components/AppModal.vue";
 export default {
     components: {
         Icon,
-        AppCard
+        AppCard,
+        AppModal
     },
     data() {
         return {
@@ -369,12 +408,38 @@ export default {
                     that.orderItem = response.data.orderItems;
                     that.trip_info = response.data.trip;
                     that.applyCoupon = response.data.applyCoupon;
-                    // console.log(response.data);
+                    console.log(response.data);
                     that.loading = false;
                 }).fail((error) => {
                     console.log(error);
                     that.loading = false;
                 })
+        },
+
+        updatePaymentStatus() {
+            jQuery
+                .post(ajaxurl, {
+                    action: "tm_bookings",
+                    route: "update_payment_status",
+                    tm_admin_nonce: window.wpTravelManager.tm_admin_nonce,
+                    data: this.transactions,
+                   
+                }).then((response) => {
+                    that.getBookings();
+                    that.$refs.update_status_modal.handleClose();
+                    this.$notify({
+                        title: 'Success',
+                        message: response.data,
+                        type: 'success',
+                        position: 'bottom-right',
+                    })
+
+                });
+        },
+
+        openUpdateStatusModal(booking_id) {
+            this.booking_id = booking_id;
+            this.$refs.update_status_modal.openModel();
         },
     },
 

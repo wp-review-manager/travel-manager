@@ -18,7 +18,8 @@ class BookingsController {
         $routeMaps = array(
             'get_bookings' => 'getBookings',
             'delete_booking' => 'deleteBooking',
-            'get_booking_details' => 'getBookingDetails'
+            'get_booking_details' => 'getBookingDetails',
+            'update_payment_status' => 'updatePaymentStatus'
           
         );
         if (isset($routeMaps[$route])) {
@@ -76,21 +77,22 @@ class BookingsController {
         if(!$transactionData) {
             wp_send_json_error('Transaction not found');
         }
-
+       
         $bookingData->traveler_address = maybe_unserialize($bookingData->traveler_address);
         $transactionData->billing_address = maybe_unserialize($transactionData->billing_address);
         $transactionData->shipping_address = maybe_unserialize($transactionData->shipping_address);
         $tripData = (new Trips())->getTripInfo($bookingData->trip_id);
-
+      
         $OrderData =( new Order())->getOrderItem($bookingId);
 
         $applyCoupon =( new Coupon())->getApplyCoupon($bookingId, 'booking_id');
         $applyCoupon = Arr::get($applyCoupon, 0, new ArrayObject());
+      
         if(!$applyCoupon) {
             wp_send_json_error('Apply Coupon data not found');
         }
 
-    
+
         wp_send_json_success(
             array(
                 'transactions' => $transactionData,
@@ -100,6 +102,19 @@ class BookingsController {
                 'applyCoupon' => $applyCoupon,
             )
         );
+    }
+
+    public function updatePaymentStatus(){
+        $form_data = Arr::get($_REQUEST, 'data');
+        $id = Arr::get($form_data, 'id', null);
+        
+        $paymentStatus =( new Transaction())->updateTransaction($id, $form_data);
+    
+        if ($paymentStatus) {
+            wp_send_json_success('Payment Status updated successfully');
+        } else {
+            wp_send_json_error('Failed to updated Payment Status');
+        }
     }
 
 }

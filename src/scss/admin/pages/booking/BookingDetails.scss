@@ -36,6 +36,29 @@
         }
     }
 }
+//==================================
+.trm_status_body{
+    .tm_status{
+        color: $tm-neutral-1200;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding-bottom: 20px;
+        span{
+            padding-left: 43px;
+        }
+    }
+    .tm_status_form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .tm_form_item{
+            .name{
+            padding-right: 62px;
+          }
+        }
+    }
+}
 //=================================
 .tm_entry_layout{
     display: flex;
