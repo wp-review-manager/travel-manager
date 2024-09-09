@@ -7,6 +7,7 @@ class CustomPageRegister
     public function registerPage()
     {
        $this->registerCustomCartPage();
+       $this->registerTravelPage();
        $this->create_travel_manager_checkout_page();
     }
 
@@ -23,6 +24,27 @@ class CustomPageRegister
             $page = array(
                 'post_title'    => $page_title,
                 'post_content'  => '[travel_manager_cart]',
+                'post_status'   => 'publish',
+                'post_author'   => 1,
+                'post_type'     => 'page',
+                'post_name'     => $page_slug, // Ensure the slug is set
+            );
+            $new_page_id = wp_insert_post($page);
+        }
+    }
+
+    public function registerTravelPage()
+    {
+        $page_title = 'Travel Manager Trips';
+        $page_slug = 'travel-manager-trip';
+        // Check if a page with the slug exists
+        $existing_page = get_page_by_path($page_slug);
+        
+        if (!$existing_page) {
+            // Create the page since it doesn't exist
+            $page = array(
+                'post_title'    => $page_title,
+                'post_content'  => '[tm_trip_search]',
                 'post_status'   => 'publish',
                 'post_author'   => 1,
                 'post_type'     => 'page',

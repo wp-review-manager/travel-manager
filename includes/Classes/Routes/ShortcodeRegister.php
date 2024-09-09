@@ -23,6 +23,7 @@ class ShortcodeRegister {
         add_shortcode( 'tm_trip', array( $this, 'singleTripShortCode' ) );
         add_shortcode( 'travel_manager_checkout', array( $this, 'checkoutShortCode' ) );
         add_shortcode( 'travel_manager_cart', array( $this, 'cartShortCode' ) );
+        add_shortcode( 'tm_trip_search', array( $this, 'tripSearchShortCode' ) );
     }
     public function singleTripShortCode( $atts )
     {
@@ -105,6 +106,14 @@ class ShortcodeRegister {
             'booking' => $session_data,
         ]);
         return ob_get_clean();
+    }
+
+    public function tripSearchShortCode( $atts )
+    {
+        // ob_start();
+        // View::render('Search/SearchIndex');
+        // return ob_get_clean();
+        return "<h1>Search Page</h1>";
     }
         
 }
