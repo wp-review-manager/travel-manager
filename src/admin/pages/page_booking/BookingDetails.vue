@@ -48,9 +48,8 @@
                                 </span>
                             </div> <!---->
                             <div class="tm_payment_vendor">
-                                <span class="tm_pay_method_offline"
-                                    style="text-transform: capitalize; padding: 1px 7px;">
-                                    {{ transactions.status }}
+                                <span class="tm_pay_method_offline">
+                                    {{ transactions.payment_status }}
                                 </span>
                             </div>
 
@@ -177,9 +176,44 @@
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr> <!---->
                                     <tr>
-                                        <th colspan="4"><span>Total:</span></th>
+                                        <th colspan="4"><span>Total <span style="color: rgb(19 181 19);">(After discount) :</span></span></th>
                                         <th>$ {{ bookings.booking_total }}</th>
                                     </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </template>
+                </AppCard>
+                <!--Booking Items End-->
+                <!-- ================================ -->
+                   <!-- =================== -->
+                <!--Booking Items Start-->
+                <AppCard title="Discount Based On Coupon Code" :icon="'tm-traveler'" style="background: #fff; margin-top: 20px;">
+                    <template v-slot:actions>
+
+                    </template>
+                    <template v-slot:body>
+                        <div class="tm_booking_info_body">
+                            <table class="tm_list_table widefat table table-bordered striped">
+                                <thead>
+                                    <tr>
+                                        <th>Discount</th>
+                                        <th class="tm_align_right">Total Discount Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <td style="color: rgb(19, 181, 19);">Discount (Est ea labrum)</td>
+                                        <td class="tm_align_right" v-if="!applyCoupon">No Discount</td>
+                                        <td class="tm_align_right" v-else>$ {{ applyCoupon.discount_amount }}</td>
+                                    </tr>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="1" >Total Discounts:</th>
+                                        <th class="tm_align_right">$ {{ bookings.booking_total }}</th>
+                                    </tr> <!---->
                                 </tfoot>
                             </table>
                         </div>
@@ -303,6 +337,7 @@ export default {
             bookings: {},
             transactions: {},
             orderItem: {},
+            applyCoupon: {},
             trip_info: {},
             loading: false
         }
@@ -333,7 +368,8 @@ export default {
                     that.transactions = response.data.transactions;
                     that.orderItem = response.data.orderItems;
                     that.trip_info = response.data.trip;
-                    // console.log(that.trip_info.trip.ID);
+                    that.applyCoupon = response.data.applyCoupon;
+                    // console.log(response.data);
                     that.loading = false;
                 }).fail((error) => {
                     console.log(error);

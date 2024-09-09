@@ -79,4 +79,25 @@ class Coupon extends Model
             return false;
         }
     }
+
+    public function getApplyCoupon($id, $filed = 'id' ) {
+        if(!$id) {
+            wp_send_json_error(array(
+                'message' => 'Transaction Id Not Found'
+            ), 400);
+        }
+
+        $transaction = TMDBModel('tm_apply_coupon')->where($filed, $id)->get();
+
+       
+        if(!$transaction) {
+            wp_send_json_error(array(
+                'message' => 'Transaction Not Found'
+            ), 400);
+        }
+       
+        return $transaction;
+          
+
+    }
 }

@@ -124,7 +124,8 @@
                         font-weight: 700;
                         background: $tm-dark-200;
                         border-radius: 5px;
-                        border: 2px solid $tm-gray-100;
+                        border: 1px solid $tm-gray-100;
+                        text-transform: capitalize; padding: 2px 7px;
                     }
                 }
             }
@@ -194,7 +195,9 @@
         border: 1px solid $tm-gray-100 !important;
         border-radius: 8px;
         font-size: 14px;
-        
+        .tm_align_right{
+            padding-left: 15%;
+        }
          thead th{
             color: $tm-dark-400;
             font-size: 15px;

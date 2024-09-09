@@ -8,6 +8,7 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Models\Order;
 use WPTravelManager\Classes\Models\Trips;
 use WPTravelManager\Classes\Models\Transaction;
+use WPTravelManager\Classes\Models\Coupon;
 
 class BookingsController {
     public function registerAjaxRoutes()
@@ -82,6 +83,13 @@ class BookingsController {
         $tripData = (new Trips())->getTripInfo($bookingData->trip_id);
 
         $OrderData =( new Order())->getOrderItem($bookingId);
+
+        $applyCoupon =( new Coupon())->getApplyCoupon($bookingId, 'booking_id');
+        $applyCoupon = Arr::get($applyCoupon, 0, new ArrayObject());
+        if(!$applyCoupon) {
+            wp_send_json_error('Apply Coupon data not found');
+        }
+
     
         wp_send_json_success(
             array(
@@ -89,6 +97,7 @@ class BookingsController {
                 'bookings' => $bookingData,
                 'orderItems' => $OrderData,
                 'trip' => $tripData,
+                'applyCoupon' => $applyCoupon,
             )
         );
     }
