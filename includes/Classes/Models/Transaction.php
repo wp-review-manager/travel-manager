@@ -56,8 +56,9 @@ class Transaction extends Model
     }
 
     public function updateTransaction($id, $data) {
-       
+        
         $update = TMDBModel('tm_transactions')->where('id', $id)->update($data);
+      
         return $update;
     }
 }

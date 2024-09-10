@@ -104,10 +104,11 @@ class BookingsController {
 
     public function updatePaymentStatus(){
         $form_data = Arr::get($_REQUEST, 'data');
+
         $id = Arr::get($form_data, 'id', null);
 
         $paymentStatus =( new Transaction())->updateTransaction($id, $form_data);
-    
+   
         if ($paymentStatus) {
             wp_send_json_success('Payment Status updated successfully');
         } else {

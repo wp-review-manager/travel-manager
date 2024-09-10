@@ -424,7 +424,7 @@ export default {
                     data: this.transactions,
                    
                 }).then((response) => {
-                    that.getBookings();
+                    that.getBookingDetails();
                     that.$refs.update_status_modal.handleClose();
                     this.$notify({
                         title: 'Success',

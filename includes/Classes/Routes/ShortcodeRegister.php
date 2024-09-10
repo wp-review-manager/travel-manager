@@ -110,10 +110,10 @@ class ShortcodeRegister {
 
     public function tripSearchShortCode( $atts )
     {
-        // ob_start();
-        // View::render('Search/SearchIndex');
-        // return ob_get_clean();
-        return "<h1>Search Page</h1>";
+        ob_start();
+        View::render('Search/SearchIndex');
+        return ob_get_clean();
+     
     }
         
 }
