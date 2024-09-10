@@ -110,8 +110,11 @@ class ShortcodeRegister {
 
     public function tripSearchShortCode( $atts )
     {
+        wp_enqueue_style('travel_manager_all_trips_css', TRM_URL.'assets/css/all_trips.css', [], TRM_VERSION);
+        wp_enqueue_script( 'travel_manager_all_trips_js', TRM_URL.'assets/js/all_trips.js',array('jquery'),TRM_VERSION, false );
+
         ob_start();
-        View::render('Search/SearchIndex');
+        View::render('Trips/TripsIndex');
         return ob_get_clean();
      
     }
