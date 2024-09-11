@@ -44,7 +44,7 @@
                             <div class="tm-trip-gallery-thumbnail" v-for="(thumbnail, index) in meta.trip_gallery.videos">
                                 <img :src="thumbnail?.thumbnail" :alt="thumbnail?.alt"/>
                                 <div @click="deleteVideo(index)" class="delete-btn">
-                                    <Icon icon="tm-delete" />
+                                    <Icon icon="tm-delete"/>
                                 </div>
                             </div>
                         </div>

@@ -6,7 +6,7 @@ class Slider {
         ob_start();
         $trip_gallery_image = Arr::get($trip_gallery, 'images', null);
         $trip_gallery_videos = Arr::get($trip_gallery, 'videos', null);
-        $empty_image = TRM_URL . '/assets/images/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+        $empty_image = TRM_URL . '/assets/image/images.jpg';
         $hasVideo = count($trip_gallery_videos) > 1;
         ?>
         <!-- Slider starts here -->
@@ -78,8 +78,7 @@ class Slider {
             <div style="display: none" id="tm_trip_gallery" class="tm_trip_gallery">
             <?php if (!$trip_gallery_image) : ?>
                 <div class="tm_trip_slider__slide">
-                    <!-- <img src="../.././../src/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item"> -->
-                    <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image" class="tm_trip_gallery_item">
+                    <img src="../../../assets/image/flower.jpg">
                 </div>
             <?php else : ?>
                 <?php foreach ($trip_gallery_image as $image) : ?>
@@ -91,7 +90,7 @@ class Slider {
                       <?php if (!empty($image_url)) : ?>
                             <img src="<?php echo esc_html($image_url); ?>" alt="<?php echo esc_html($image_name) . ' ' . esc_html($image_id) ; ?>" class="tm_trip_gallery_item">
                             <?php else : ?>
-                                <img src="../../../assets/img/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="image">
+                                <img src="../../../assets/image/sunflower.jpg" alt="image">
                     <?php endif; ?>
                 <?php endforeach; ?>
                 <?php endif; ?>
