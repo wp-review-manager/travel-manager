@@ -1,5 +1,6 @@
 <?php
 namespace WPTravelManager\Views\Trips;
+$demoImage = TRM_URL . 'assets/images/girl.jpeg';
 ?>
 <div class="trm_container">
    <div class="trm_content">
@@ -40,7 +41,7 @@ namespace WPTravelManager\Views\Trips;
                 <div class="trm_trips_details">
                     <div class="trm_trips_image">
                         <a href="#">
-                            <img src="https://wptravelenginedemo.com/travel-booking/wp-content/uploads/sites/2/2022/03/pexels-photo-789555-1-990x490.jpeg">
+                            <img src="<?php echo $demoImage ?>">
                         </a>
                     </div>
                 </div>
