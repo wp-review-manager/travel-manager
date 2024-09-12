@@ -62,7 +62,15 @@
                 }
             }
             .trm_view_modes{
-                padding-left: 20px;
+                padding-left: 15px;
+                a{
+                    text-decoration: none;
+                }
+                .menu{
+                    color:$tm-neutral-1100;
+                    font-size: 25px;
+                    margin-left: 5px;
+                }
             }
         
         }
@@ -80,6 +88,134 @@
                 height: 100%;
                 &:hover{
                     box-shadow: 0 10px 15px rgba(0, 0, 0, .1);
+                }
+                .trm_trips_image{
+                    flex: 0 0 40%;
+                    max-width: 40%;
+                    height: 250px;
+                    overflow: hidden;
+                    border-radius: 4px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        transition: all 1s ease; 
+                        &:hover{
+                            transform: scale(1.1);
+                        }               
+                    }
+                }
+                .trm_category_trip_content{
+                    flex: 0 0 60%;
+                    max-width: 60%;
+                    padding-left: 24px;
+                    padding-top: 0;
+                    .trm_category_title{
+                        margin-top: 0;
+                        padding: 0 20px;
+                        align-items: flex-start;
+                        h2{
+                            font-size: 22px;
+                            font-weight: 600;
+                            margin: 20px 0 12px;
+                            a{
+                                text-decoration: none;
+                                color:$tm-dark-600 ;
+                                transition: all ease .3s;
+                                &:hover{
+                                    color: $tm-primary-500;
+                                }
+                            }
+                        }
+                    }
+                    .trm_category_trip_detail{
+                        padding: 0 20px 25px;
+                        .trm_trip_category_price{
+                            display: flex;
+                            padding: 10px 0px;
+                            .trm_trip_desti{
+                                margin-bottom: 8px;
+                                flex-basis: 50%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                .trm_trip_loc{
+                                    margin-bottom: 12px;
+                                }
+                                    .icon{
+                                        color: $tm-primary-500;
+                                        font-size: 18px;
+                                        font-weight: 400;
+                                        line-height: 1.5;
+                                    
+                                    }
+                                    .trm_name{
+                                        font-size: 18px;
+                                        line-height: 1.5;
+                                        color:$tm-dark-300 ;
+                                        font-weight: 400;
+                                    }
+                                
+                            }
+                            .trm_trip_budget{
+                                 flex-basis: 50%;
+                                border-left: 1px solid $tm-neutral-800;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                padding-left: 48px;
+                                max-width: 40%;
+                                .trm_trip_discount{
+                                    display: inline-block;
+                                    font-size: .72em;
+                                    font-weight: 600;
+                                    line-height: 1;
+                                    padding: 5px 10px;
+                                    border-radius: 14px;
+                                    background-color: #ea7810;
+                                    color: #fff;
+                                    margin-bottom: 16px;
+                                    vertical-align: top;
+                                    white-space: nowrap;
+                                    span{
+                                        color: #fff;
+                                        display: flex;
+                                        font-size: 1.3em;
+                                        justify-content: center;                                    
+                                        font-weight: 600;
+                                        line-height: 1;                                    
+                                    }
+                                }
+                                .trm_price_holder{
+                                    display: inline-flex;
+                                    flex-wrap: wrap;
+                                    align-items: flex-end;
+                                    .trm_actual_price{
+                                        font-size: 32px;
+                                        line-height: 1;
+                                        font-weight: 600;
+                                        color: $tm-dark-600;
+                                    }
+                                    .trm_striked_price{
+                                        text-decoration: line-through;
+                                        font-size: 18px;
+                                        opacity: .4;
+                                        margin-top: 5px;
+                                        margin-left: 8px;
+                                        color:$tm-dark-600;
+                                    }
+                                }
+    
+                            }
+                        }
+                        .trm_trip_desc{
+                            line-height: 1.5;
+                            font-size: 20px;
+                            margin-top: 24px;
+                            color: $tm-dark-700;
+                        }
+                    }
                 }
             }
         }
