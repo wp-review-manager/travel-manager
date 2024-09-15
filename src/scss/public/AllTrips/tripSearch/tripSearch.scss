@@ -17,25 +17,265 @@
         //========================================
         .trm_page_body{
             padding: 0 15px;
-            width: 100%;
             gap: 30px;
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
+            
         }
         //=========================================
     }
     //=============================================
     .trm_trip_details{
-        flex-basis: 30%;
-        padding: 24px 16px;
+        flex-basis: 27%;
         border-radius: 6px;
-        background-color: $tm_background_color;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 2px rgba(0, 0, 0, .06), 0px 0px 1px rgba(0, 0, 0, .04);
+        @media only screen and (max-width: 1120px) {
+            flex-basis: 100%;
+        }
+        .trm_sidebar{
+            padding: 24px 16px;
+            background-color: $tm_background_color;
+            .trm_search_header{
+                margin-bottom: 24px;
+                padding-bottom: 24px;
+                border-bottom: 1px solid  $tm-neutral-800;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                h2{
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin: 0;
+                    color: $tm-neutral-1200;
+                }
+                .trm_clear_search{
+                    padding: 0;
+                    border: none;
+                    background: none !important;
+                    color: $tm-neutral-1100!important;
+                    text-decoration: underline;
+                    text-transform: inherit;
+                    font-size: 14px;
+                    text-underline-offset: 1px;
+                    transition: all .2s ease;
+                    cursor: pointer;
+                    &:hover{
+                        color: $tm-primary-500 !important;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .trm_search_type{
+                padding-bottom: 24px;
+                margin-bottom: 24px;
+                border-bottom: 1px solid  $tm-neutral-800;
+                .trm_filter_section_title{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    h3{
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: $tm-neutral-1200;
+                        cursor: pointer;
+                    }
+                    span{
+                        cursor: pointer;
+                        color:$tm-neutral-1000 ;
+                        font-weight: normal;
+                        font-size: 18px;
+                    }
+                }
+                .trm_filter_section_content{
+                    margin-top: 15px;
+                    .trm_search_terms_list{
+                        margin: 0;
+                        padding: 0;
+                        list-style: none;
+                        li{
+                            margin-bottom: 20px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            span{
+                                font-size: 14px;
+                                color: $tm-dark-300;
+                            }
+                            //==================checkbox==========================
+                            .container {
+                                display: inline-block;
+                                position: relative;
+                                padding-left: 30px;
+                                font-size: 13px;
+                                line-height: 1.6;
+                                color: $tm-dark-300;
+                                margin-bottom: 12px;
+                                cursor: pointer;
+                                 /* Hide the browser's default checkbox */
+                                 input {
+                                    position: absolute;
+                                    opacity: 0;
+                                    cursor: pointer;
+                                }
+                                                            /* Create a custom checkbox */
+                                .checkmark {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    height: 20px;
+                                    width: 20px;
+                                    border-radius: 4px;
+                                    border: 1px solid $tm-neutral-800;
+                                    /* Create the checkmark/indicator (hidden when not checked) */
+                                    &:after {
+                                        content: "";
+                                        position: absolute;
+                                        display: none;
+                                    }
+                                     /* Style the checkmark/indicator */
+                                     &:after {
+                                        left: 6px;
+                                        top: 3px;
+                                        width: 6px;
+                                        height: 10px;
+                                        border:  solid $tm-gray-600;
+                                        border-width: 0 3px 3px 0;
+                                        transform: rotate(45deg);
+                                    }
+                                }
+                                /* When the checkbox is checked, add a blue background */
+                                & input:checked ~ .checkmark {
+                                    background-color: $tm_background_color;
+                                    border: 1px solid $tm-primary-500;
+                                }
+                                /* Show the checkmark when checked */
+                                & input:checked ~ .checkmark:after {
+                                    display: block;
+                                }
+
+                            }
+                            //===============================
+                            .trm_show_less, .trm_icon{
+                                padding:  0;
+                                margin: 0;
+                                background: none !important;
+                                border: none;
+                                cursor: pointer;
+                                color: $tm-primary-500 !important;
+                                text-decoration: underline;
+                                text-transform: inherit;
+                                font-size: 13px;
+                                font-weight: normal;
+                                text-underline-offset: 1px;
+                                transition: all .2s ease;
+                                &:hover{
+                                    text-decoration: none;
+                                }
+                            }
+                            .trm_icon{
+                                line-height: 1.4;
+                                text-decoration: none;
+                                margin-left: 3px;
+                            }
+                        }
+                    }
+                }
+                .trm_price_filter{
+                    margin-top: 15px;
+                    .trm_cost_slider_range{
+                        border: none;
+                        height: 2px;
+                        background: $tm-primary-100;
+                        margin-top: 45px;
+                        margin-left: 9px;
+                        margin-right: 9px;
+                        position: relative;
+                        border-radius: 4px;
+                        .trm_ui_slider_range{
+                            height: 2px;
+                            border: none;
+                            background: $tm-primary-500;
+                            position: absolute;
+                            z-index: 1;
+                            font-size: .7em;
+                            display: block;
+                            top: 0;
+                        }
+                        .trm_ui_slider_handle{
+                            border: none;
+                            height: 16px;
+                            width: 16px;
+                            border-radius: 50%;
+                            background: var(--primary-color);
+                            margin-left: 0;
+                            top: 1px;
+                            transform: translate(-50%, -50%);
+                            position: absolute;
+
+                            &::before{
+                                content:  attr(data-value);;
+                                font-size: 10px;
+                                margin-bottom: 12px;
+                                letter-spacing: 1.5px;
+                                line-height: 1;
+                                color: #fff;
+                                background-color: $tm-primary-500;
+                                padding: 3px 8px;
+                                border-radius: 4px;
+                                position: absolute;
+                                bottom: 100%;
+                                margin-bottom: 10px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                visibility: hidden;
+                                opacity: 0;
+                                transition: all .2s ease;
+                                white-space: nowrap;
+                            }
+                            &[data-value]::before{
+                                visibility: visible;
+                                opacity: 1;
+                            }
+                            &[data-value]::after{
+                                visibility: visible;
+                                opacity: 1;
+                            }
+                            &::after{
+                                content: "";
+                                margin-bottom: 1px;
+                                border: 4px solid rgba(0, 0, 0, 0);
+                                border-top: 7px solid $tm-primary-500;
+                                position: absolute;
+                                left: 50%;
+                                bottom: 100%;
+                                margin-bottom: -2px;
+                                transform: translateX(-50%);
+                                visibility: hidden;
+                                opacity: 0;
+                                transition: all .2s ease;
+                            }
+                        }
+                    }
+                    .trm_cost_slider_value{
+                        display: flex;
+                        justify-content: space-between;
+                        margin: 10px 0;
+                        padding: 6px 0px;
+                        font-size: 13px;
+                        color: $tm-neutral-1000;
+                    }
+                }
+
+            }
+        }
     }
     //===============================================
     .trm_trip_card{
         flex-basis: 67%;
+        @media only screen and (max-width: 1120px) {
+            flex-basis: 100%;
+        }
         .trm_travel_toolbar{
             padding: 24px 0;
             display: flex;
@@ -44,21 +284,34 @@
             justify-content: flex-end;
             width: 100%;
             margin-bottom: 0;
+            
+            .trm_filter_foundposts{
+                margin-right: auto;
+                h2{
+                    font-size: 14px;
+                    text-transform: capitalize;
+                    color: $tm-gray-800;
+                    font-weight: 400;
+                }
+            }
             .trm_dropdown{
               
                 padding: 4px 20px 4px 8px;
                 border-right: 2px solid $tm-neutral-800;
+                @media only screen and (max-width: 575px) {
+                    border-right: 0;
+                }
                 label{
                     color:$tm-neutral-900 ;
-                    font-size: 16px;
+                    font-size: 14px;
                     font-weight: normal;
                 }
                 select{
                     outline: none;
                     border: none;
                     padding: 0;
-                    font-size: 16px;
-                    color: $tm-neutral-1100;
+                    font-size: 14px;
+                    color: $tm-dark-600;
                 }
             }
             .trm_view_modes{
@@ -90,11 +343,16 @@
                     box-shadow: 0 10px 15px rgba(0, 0, 0, .1);
                 }
                 .trm_trips_image{
-                    flex: 0 0 40%;
+                    flex-basis: 40%;
                     max-width: 40%;
                     height: 220px;
                     overflow: hidden;
                     border-radius: 4px;
+                    @media only screen and (max-width: 831px) {
+                        flex-basis: 100%;
+                        max-width: 100%;
+                        height: 220px;
+                    }
                     img{
                         width: 100%;
                         height: 100%;
@@ -111,10 +369,18 @@
                     max-width: 60%;
                     padding-left: 24px;
                     padding-top: 0;
+                    @media only screen and (max-width: 831px) {
+                        flex-basis: 100%;
+                        max-width: 100%;
+                        padding-left: 0px;
+                    }
                     .trm_category_title{
                         margin-top: 0;
                         padding: 0 20px;
                         align-items: flex-start;
+                        @media only screen and (max-width: 831px) {
+                            padding: 0 0px;
+                        }
                         h2{
                             font-size: 22px;
                             font-weight: 600;
@@ -131,8 +397,12 @@
                     }
                     .trm_category_trip_detail{
                         padding: 0 20px 25px;
+                        @media only screen and (max-width: 831px) {
+                            padding: 0 0px 25px;
+                        }
                         .trm_trip_category_price{
                             display: flex;
+                            flex-wrap: wrap;
                             padding: 10px 0px;
                             .trm_trip_desti{
                                 margin-bottom: 8px;
@@ -151,7 +421,7 @@
                                     
                                     }
                                     .trm_name{
-                                        font-size: 18px;
+                                        font-size: 16px;
                                         line-height: 1.5;
                                         color:$tm-dark-300 ;
                                         font-weight: 400;
@@ -159,19 +429,26 @@
                                 
                             }
                             .trm_trip_budget{
-                                 flex-basis: 50%;
+                                flex-basis: 50%;
                                 border-left: 1px solid $tm-neutral-800;
                                 display: flex;
                                 flex-direction: column;
                                 justify-content: center;
                                 padding-left: 48px;
                                 max-width: 40%;
+                                @media only screen and (max-width: 1220px) {
+                                    padding-left: 24px;
+                                }
+                                @media only screen and (max-width: 575px) {
+                                    max-width: none;
+                                    padding-left: 10px;
+                                }
                                 .trm_trip_discount{
                                     display: inline-block;
                                     font-size: .72em;
                                     font-weight: 600;
                                     line-height: 1;
-                                    padding: 5px 10px;
+                                    padding: 5px 44px;
                                     border-radius: 14px;
                                     background-color: #ea7810;
                                     color: #fff;
@@ -211,7 +488,7 @@
                         }
                         .trm_trip_desc{
                             line-height: 1.5;
-                            font-size: 20px;
+                            font-size: 18px;
                             margin-top: 24px;
                             color: $tm-dark-700;
                         }
@@ -242,6 +519,7 @@
                         }
                         ul{
                             display: flex;
+                            flex-wrap: wrap;
                             list-style: none;
                             padding: 0;
                             li{
@@ -257,7 +535,7 @@
                         padding: 13px 25px;
                         border-radius: 35px;
                         color: $tm_text_light;
-                        font-size: 16px;
+                        font-size: 14px;
                         font-weight: 600;
                         text-transform: uppercase;   
                         text-decoration: none;     

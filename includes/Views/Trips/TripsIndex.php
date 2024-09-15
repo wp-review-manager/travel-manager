@@ -13,14 +13,149 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
         <div class="trm_page_body">
             <!-- ======================================== -->
             <div class="trm_trip_details">
-                <p>Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12
-                    Database client version: libmysql - mysqlnd 8.2.12
-                    PHP extension: mysqli Documentation curl Documentation mbstring Documentation
-                    PHP version: 8.2.12</p>
+                <div class="trm_sidebar">
+                    <div class="trm_search_header">
+                        <h2>Criteria</h2>
+                        <button class="trm_clear_search">Clear all</button>
+                    </div>
+                    <!-- ===========Destination================= -->
+                    <div class="trm_search_type">
+                        <div class="trm_filter_section_title">
+                            <h3>Destination</h3>
+                            <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="trm_filter_section_content">
+                            <ul class="trm_search_terms_list">
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li>
+                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- ===========Price================= -->
+                    <div class="trm_search_type">
+                        <div class="trm_filter_section_title">
+                            <h3>Price</h3>
+                            <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="trm_price_filter">
+                            <input type="hidden">
+                            <input type="hidden">
+                            <div class="trm_cost_slider_range">
+                                <div class="trm_ui_slider_range"></div>
+                                <span tabindex="0" class="trm_ui_slider_handle"></span>
+                                <span tabindex="0" class="trm_ui_slider_handle"></span>
+                            </div>
+                            <div class="trm_cost_slider_value">
+                                <span class="trm_min_cost">$3000</span>
+                                <span class="trm_max_cost">$3000</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ===========Duration=================== -->
+                    <div class="trm_search_type">
+                        <div class="trm_filter_section_title">
+                            <h3>Duration</h3>
+                            <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="trm_price_filter">
+                            <input type="hidden">
+                            <input type="hidden">
+                            <div class="trm_cost_slider_range">
+                                <div class="trm_ui_slider_range" style="left: 0%; width: 100%;"></div>
+                                <span tabindex="0" class="trm_ui_slider_handle" style="left: 0px;" data-value="0 Days"></span>
+                                <span tabindex="0" class="trm_ui_slider_handle" style="left: 100%; " data-value="12 Days"></span>
+                            </div>
+                            <div class="trm_cost_slider_value">
+                                <span class="trm_min_cost">0 Days</span>
+                                <span class="trm_max_cost">12 Days</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ===========Activities================= -->
+                    <div class="trm_search_type">
+                        <div class="trm_filter_section_title">
+                            <h3>Activities</h3>
+                            <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="trm_filter_section_content">
+                            <ul class="trm_search_terms_list">
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li>
+                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- ===========Trip Types================= -->
+                    <div class="trm_search_type">
+                        <div class="trm_filter_section_title">
+                            <h3>Trip Types</h3>
+                            <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="trm_filter_section_content">
+                            <ul class="trm_search_terms_list">
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li class="">
+                                    <label class="container">Bhutan
+                                        <input type="checkbox" value="bhutan">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="count">2</span>
+                                </li>
+                                <li>
+                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- ======================================= -->
+                </div>
             </div>
             <!-- ======================================= -->
             <div class="trm_trip_card">
                 <div class="trm_travel_toolbar">
+                    <div class="trm_filter_foundposts">
+                        <h2><strong>2</strong> Trips found</h2>
+                    </div>
                     <div class="trm_dropdown">
                         <form>
                             <label>Sort :</label>
@@ -43,11 +178,11 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                 </div>
                 <div class="trm_category_trips">
                     <div class="trm_trips_details">
-                        <div class="trm_trips_image">
+                        <figure class="trm_trips_image">
                             <a href="#">
                                 <img src="<?php echo $demoImage ?>">
                             </a>
-                        </div>
+                        </figure>
                         <div class="trm_category_trip_content">
                             <div class="trm_category_title">
                                 <h2>
@@ -103,7 +238,7 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- =================================== -->
                 <div class="trm_category_trips">
                     <div class="trm_trips_details">
@@ -115,7 +250,7 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                         <div class="trm_category_trip_content">
                             <div class="trm_category_title">
                                 <h2>
-                                    <a  href="#">Motel 6 Conyers GA</a>
+                                    <a href="#">Motel 6 Conyers GA</a>
                                 </h2>
                             </div>
                             <div class="trm_category_trip_detail">
@@ -170,7 +305,7 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
 
             </div>
             <!-- ======================================== -->
-             
+
 
         </div>
     </div>
