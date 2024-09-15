@@ -4,6 +4,7 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\View;
 use WPTravelManager\Classes\Models\Session;
 use WPTravelManager\Classes\Models\Settings;
+use WPTravelManager\Classes\Models\Trips;
 
 class ShortcodeRegister {
     
@@ -42,7 +43,7 @@ class ShortcodeRegister {
         }
         $post_meta = get_post_meta( $id, 'trip_meta', true );
         $post_meta = maybe_unserialize( $post_meta );
-    //  dd($post_meta);
+   
         ob_start();
         View::render('Preview/Template1',[
             'id' => $id,
@@ -112,8 +113,10 @@ class ShortcodeRegister {
     {
         wp_enqueue_style('travel_manager_all_trips_css', TRM_URL.'assets/css/all_trips.css', [], TRM_VERSION);
         wp_enqueue_script( 'travel_manager_all_trips_js', TRM_URL.'assets/js/all_trips.js',array('jquery'),TRM_VERSION, false );
-
-        ob_start();
+        // $all_trip = (new Trips())->getTrips();
+      
+        $post = get_post();
+    
         View::render('Trips/TripsIndex');
         return ob_get_clean();
      
