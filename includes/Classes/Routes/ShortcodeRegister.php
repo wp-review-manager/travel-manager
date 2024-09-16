@@ -113,22 +113,21 @@ class ShortcodeRegister {
     {
         wp_enqueue_style('travel_manager_all_trips_css', TRM_URL.'assets/css/all_trips.css', [], TRM_VERSION);
         wp_enqueue_script( 'travel_manager_all_trips_js', TRM_URL.'assets/js/all_trips.js',array('jquery'),TRM_VERSION, false );
-      
+   
         $trips =(new Trips())->getTrips();
         if ( is_array($trips) && isset($trips['all_trips']) ) {
-              $all_trips = $trips['all_trips'];
-            } else {
-               return;
-            }
+            $all_trips = $trips['all_trips'];
+        } else {
+            return;
+        }
         
         foreach($all_trips as $trip){
             $id = ($trip->ID);
 
              $post_meta = get_post_meta( $id, 'trip_meta', true );
-             $post_meta = maybe_unserialize( $post_meta );
+             $trip->post_meta = maybe_unserialize( $post_meta );
         }
-    
-       
+        
         View::render('Trips/TripsIndex',[
             'trips' => $post_meta,
         ]);
