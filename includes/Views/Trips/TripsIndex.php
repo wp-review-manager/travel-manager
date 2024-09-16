@@ -2,6 +2,7 @@
 
 namespace WPTravelManager\Views\Trips;
 
+
 $demoImage = TRM_URL . 'assets/images/girl.jpeg';
 $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
 ?>
