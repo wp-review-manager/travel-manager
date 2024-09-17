@@ -121,15 +121,16 @@ class ShortcodeRegister {
             return;
         }
         
-        foreach($all_trips as $trip){
-            $id = ($trip->ID);
+        // foreach($all_trips as $trip){
+        //     $id = ($trip->ID);
 
-             $post_meta = get_post_meta( $id, 'trip_meta', true );
-             $trip->post_meta = maybe_unserialize( $post_meta );
-        }
+        //      $post_meta = get_post_meta( $id, 'trip_meta', true );
+        //      $trip->post_meta = maybe_unserialize( $post_meta );
+        // }
         
         View::render('Trips/TripsIndex',[
-            'trips' => $trip,
+            // 'trips' => $trip,
+            'all_trip' => $all_trips
         ]);
         return ob_get_clean();
      
