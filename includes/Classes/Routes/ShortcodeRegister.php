@@ -129,7 +129,7 @@ class ShortcodeRegister {
         }
         
         View::render('Trips/TripsIndex',[
-            'trips' => $post_meta,
+            'trips' => $trip,
         ]);
         return ob_get_clean();
      

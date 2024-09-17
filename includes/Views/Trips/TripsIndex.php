@@ -1,6 +1,10 @@
 <?php
-
 namespace WPTravelManager\Views\Trips;
+use WPTravelManager\Classes\ArrayHelper as Arr;
+
+$transportation = Arr::get($trips, 'general.transportation', null);
+dd($transportation);
+
 
 
 $demoImage = TRM_URL . 'assets/images/girl.jpeg';
