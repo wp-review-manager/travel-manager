@@ -24,6 +24,36 @@
             
         }
         //=========================================
+        .trm_pagination{
+            text-align: center;
+            padding-top: 20px;
+            a{
+                text-decoration: none;
+                padding: 6px 16px;
+                border-radius: 6px;
+                background:   $tm-gray-50;
+                margin-right: 6px;
+                border: 1px solid $tm-gray-50;
+                color: $tm-dark-300;
+                font-size: 16px;
+                span{
+                    font-size: 16px;
+                    padding: 5px 0px 0px 0px;
+                }
+                &:hover{
+                    color: $tm-primary-500;
+                }
+
+            }
+            .active{
+                color: #fff;
+                background: $tm-primary-500;
+                border: 1px solid $tm-primary-500;
+                &:hover{
+                    color: #fff;
+                }
+            }
+        }
     }
     //=============================================
     .trm_trip_details{
@@ -550,4 +580,6 @@
         }
         
     }
+    //==================================================
+
 }
