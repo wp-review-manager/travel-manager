@@ -7,7 +7,7 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 class SessionsController {
     public function registerAjaxRoutes()
     {
-        tmValidateNonce('tm_public_nonce');
+        tmValidateNonce('tm_admin_nonce');
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'create_session' => 'createSession',

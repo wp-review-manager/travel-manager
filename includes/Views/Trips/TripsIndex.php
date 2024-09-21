@@ -2,11 +2,9 @@
 
 namespace WPTravelManager\Views\Trips;
 
-use WPTravelManager\Classes\ArrayHelper as Arr;
-
 $demoImage = TRM_URL . 'assets/images/girl.jpeg';
 $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
-
+// dd(isset($_GET['page']));
 ?>
 <div class="trm_container">
     <div class="trm_content">
@@ -159,7 +157,7 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
             <div class="trm_trip_card">
                 <div class="trm_travel_toolbar">
                     <div class="trm_filter_foundposts">
-                        <h2><strong>2</strong> Trips found</h2>
+                        <h2><strong><?php echo $total ?></strong> Trips found</h2>
                     </div>
                     <div class="trm_dropdown">
                         <form>
@@ -182,114 +180,20 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                     </div>
                 </div>
                 <!-- ================================== -->
-                <?php
-
-                foreach ($all_trip as $trip) :
-                    $id = ($trip->ID);
-
-                    $post_meta = get_post_meta($id, 'trip_meta', true);
-                    $trip->post_meta = maybe_unserialize($post_meta);
-
-                    $trip_title = $trip->post_title;
-                    $trip_details = ($trip->post_meta);
-
-                    $trips_destination = Arr::get($trip_details, 'general.trip_destination', null);
-                    $duration = Arr::get($trip_details, 'general.duration.duration', 0);
-                    $description = Arr::get($trip_details, 'general.description.description', 0);
-                    $packages = Arr::get($trip_details, 'packages', []);
-                    $packages_price = Arr::get($packages, '0.pricing.0.price', null);
-                    $packages_selling_price = Arr::get($packages, '0.pricing.0.selling_price', null);
-
-                    $image = Arr::get($trip_details, 'trip_gallery.images.1.url', null);
-                    $empty_image = TRM_URL . 'assets/images/images.jpg';
-
-                ?>
-
-                    <div class="trm_category_trips">
-                        <div class="trm_trips_details">
-                            <figure class="trm_trips_image">
-                                <?php if (!$image) : ?>
-                                    <a href="#">
-                                        <img src="<?php echo $empty_image ?>">
-                                    </a>
-                                  
-                                <?php else : ?>
-                                    <a href="#">
-                                        <img src="<?php echo $image ?>">
-                                    </a>
-                                <?php endif; ?>
-                               
-                            </figure>
-                            <div class="trm_category_trip_content">
-                                <div class="trm_category_title">
-                                    <h2>
-                                        <a itemprop="url" href="#"><?php echo esc_html($trip_title) ?></a>
-                                    </h2>
-                                </div>
-                                <div class="trm_category_trip_detail">
-                                    <div class="trm_trip_category_price">
-                                        <div class="trm_trip_desti">
-                                            <div class="trm_trip_loc">
-                                                <span class="icon dashicons dashicons-location"></span>
-                                                <span class="trm_name"><?php echo esc_html($trips_destination) ?></span>
-                                            </div>
-                                            <div class="trm_trip_dur">
-                                                <span class="icon dashicons dashicons-clock"></span>
-                                                <span class="trm_name"><?php echo esc_html($duration) ?> Day</span>
-                                            </div>
-                                        </div>
-                                        <div class="trm_trip_budget">
-                                            <div class="trm_trip_discount">
-                                                <span>14% Off</span>
-                                            </div>
-                                            <div class="trm_price_holder">
-                                                <span class="trm_actual_price">$<?php echo esc_html($packages_selling_price) ?></span>
-                                                <span class="trm_striked_price">$<?php echo esc_html($packages_price) ?></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="trm_trip_desc">
-                                        <?php echo esc_html($description) ?>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="trm_trip_aval_time">
-                                <div class="trm_category_trip_inner">
-                                    <span class="category-available-trip-text">Available through out the year:</span>
-                                    <ul class="category-available-months">
-                                        <li>Jan</li>
-                                        <li>Feb</li>
-                                        <li>Mar</li>
-                                        <li>Apr</li>
-                                        <li>May</li>
-                                        <li>Jun</li>
-                                        <li>Jul</li>
-                                        <li>Aug</li>
-                                        <li>Sep</li>
-                                        <li>Oct</li>
-                                        <li>Nov</li>
-                                        <li>Dec</li>
-                                    </ul>
-                                </div>
-                                <a href="#" class="trm_view_btn">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                 <div class="trm_category_trips_wrapper">
+                    <?php echo (new TripsCard)->render($all_trip) ?>
+                </div>
                 <!-- =================================== -->
-              
+                <div class="trm_pagination">
+                    <p data-trm_page_no="prev" class="trm_all_trips_pag trm_pag_prev trm_pag_disabled"><span class="dashicons dashicons-arrow-left-alt2"></span></p>
+                    <?php for ($i = 1; $i <= $total_page; $i++) : ?>
+                        <p class="trm_all_trips_pag <?php echo  $i == 1 ? 'trm_pag_active' : '' ?>" data-trm_page_no="<?php echo $i; ?>"><?php echo $i ?></p>
+                    <?php endfor; ?>
+                    <p data-trm_page_no="next" class="trm_all_trips_pag trm_pag_next"><span class="dashicons dashicons-arrow-right-alt2"></span></p>
+                </div>
 
             </div>
             <!-- ======================================== -->
-        </div>
-
-        <div class="trm_pagination">
-        <a href="#"><span class="dashicons dashicons-arrow-left-alt2"></span></a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#"><span class="dashicons dashicons-arrow-right-alt2"></span></a>
         </div>
 
     </div>

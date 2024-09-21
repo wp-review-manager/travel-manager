@@ -77,7 +77,7 @@ class AdminMenuHandler {
             'assets_url' => TRM_URL . 'assets/',
             'ajaxurl' => admin_url('admin-ajax.php'),
             'tm_admin_nonce' => wp_create_nonce('tm_admin_nonce'),
-            'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+            'tm_public_nonce' => wp_create_nonce('tm_admin_nonce'),
             'server_time' => current_time('timestamp'),
             'payment_routes' => apply_filters('trm/payment_methods_routes', []),
             'currencies' => GeneralSettings::getCurrencies(),

@@ -7,7 +7,6 @@ use WPTravelManager\Classes\ArrayHelper as Arr;
 class TripsController {
     public function registerAjaxRoutes()
     {
-        tmValidateNonce('tm_admin_nonce');
         $route = sanitize_text_field($_REQUEST['route']);
         $routeMaps = array(
             'create_or_update_trip' => 'createOrUpdateTrip',

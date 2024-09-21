@@ -2,6 +2,7 @@
 namespace WPTravelManager\Classes\Models;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Services\TripsServices;
+use WPTravelManager\Views\Trips\TripsCard;
 
 class Trips extends Model {
     protected $model = 'posts';
@@ -41,15 +42,16 @@ class Trips extends Model {
         return $tripId;
     }
 
-    public function getTrips()
+    public function getTrips($per_page =0)
     {
+        // dd($_REQUEST);
         $page = sanitize_text_field( Arr::get($_REQUEST, 'page', 1) );
-        $limit = sanitize_text_field( Arr::get($_REQUEST, 'per_page', 0) );
+        $limit = sanitize_text_field( Arr::get($_REQUEST, 'per_page', $per_page) );
         $offset = ($page - 1) * $limit;
         $search = sanitize_text_field( Arr::get($_REQUEST, 'search', '') );
         $status = sanitize_text_field( Arr::get($_REQUEST, 'status', 'publish') );
         $filter_date = Arr::get($_REQUEST, 'filter_date', '');
-
+        $response_type = Arr::get($_REQUEST, 'response_type');
         // Initialize date_query array
         $date_query = array();
 
@@ -74,7 +76,6 @@ class Trips extends Model {
             'date_query'     => $date_query,
         );
      
-        
        $trips = get_posts($args);
        
        foreach ($trips as $key => $trip) {
@@ -89,21 +90,17 @@ class Trips extends Model {
             's' => $search,
             'date_query'     => $date_query,
         ));
-       
-        $args = array(
-            'post_type' => 'tm_trip',
-            'post_status' => $status,
-            'posts_per_page' => -1,  // Get all posts
-            'date_query' => $date_query,
-        );
-    
-        $all_trips = get_posts($args);
-     
+
+        if ($response_type == 'json') {
+            ob_start();
+            (new TripsCard())->render($trips);
+            return ob_get_clean();
+        }
 
         return array(
             'trips' => $trips,
             'total' => count($total),
-            'all_trips' => $all_trips,
+            'all_trips' => $trips,
         );
         
     }

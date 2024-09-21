@@ -34,7 +34,7 @@ class ProcessPreviewPage {
 
             wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+                'tm_public_nonce' => wp_create_nonce('tm_admin_nonce'),
                 'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
             ]);
         });

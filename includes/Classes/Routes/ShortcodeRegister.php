@@ -16,7 +16,7 @@ class ShortcodeRegister {
 
             wp_localize_script('travel_manager_public_js', 'trm_public', [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'tm_public_nonce' => wp_create_nonce('tm_public_nonce'),
+                'tm_public_nonce' => wp_create_nonce('tm_admin_nonce'),
                 'currency_settings' => (new Settings())->getSettings('trm_currency_settings'),
             ]);
         });
@@ -28,11 +28,12 @@ class ShortcodeRegister {
     }
     public function singleTripShortCode( $atts )
     {
-        $id = Arr::get( $atts, 'id', 0 );
+        // Get the trip ID from the shortcode attribute or URL parameter
+        $id = Arr::get($atts, 'id', isset($_GET['id']) ? intval($_GET['id']) : '');
         if( empty( $id ) ){
             return;
         }
-        $this->preparedRenderData( $id );
+        return $this->preparedRenderData( $id );
     }
 
     public function preparedRenderData( $id )
@@ -50,7 +51,7 @@ class ShortcodeRegister {
             'title' => $post->post_title,
             'trip' => $post_meta,
         ]);
-        echo ob_get_clean();
+        return ob_get_clean();
     }
 
     public function checkoutShortCode( $atts )
@@ -114,23 +115,18 @@ class ShortcodeRegister {
         wp_enqueue_style('travel_manager_all_trips_css', TRM_URL.'assets/css/all_trips.css', [], TRM_VERSION);
         wp_enqueue_script( 'travel_manager_all_trips_js', TRM_URL.'assets/js/all_trips.js',array('jquery'),TRM_VERSION, false );
    
-        $trips =(new Trips())->getTrips();
+        $trips =(new Trips())->getTrips(2);
         if ( is_array($trips) && isset($trips['all_trips']) ) {
             $all_trips = $trips['all_trips'];
         } else {
             return;
         }
         
-        // foreach($all_trips as $trip){
-        //     $id = ($trip->ID);
-
-        //      $post_meta = get_post_meta( $id, 'trip_meta', true );
-        //      $trip->post_meta = maybe_unserialize( $post_meta );
-        // }
-        
+        ob_start();
         View::render('Trips/TripsIndex',[
-            // 'trips' => $trip,
-            'all_trip' => $all_trips
+            'all_trip' => $all_trips,
+            'total' => $trips['total'],
+            'total_page' => ceil($trips['total'] / 2),
         ]);
         return ob_get_clean();
      

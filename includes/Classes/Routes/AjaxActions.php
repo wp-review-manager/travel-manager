@@ -18,6 +18,12 @@ use WPTravelManager\Classes\Modules\Payments\PaymentMethods\PaymentSettingsContr
 class AjaxActions {
     public function register () {
         add_action('wp_ajax_tm_trips', function () {
+            tmValidateNonce('tm_admin_nonce');
+            (new TripsController())->registerAjaxRoutes();
+        });
+
+        add_action('wp_ajax_nopriv_tm_trips', function () {
+            tmValidateNonce('tm_admin_nonce');
             (new TripsController())->registerAjaxRoutes();
         });
 
