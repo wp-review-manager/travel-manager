@@ -11,6 +11,7 @@ class TripsController {
         $routeMaps = array(
             'create_or_update_trip' => 'createOrUpdateTrip',
             'get_trips' => 'getTrips',
+            'get_trips_with_details' => 'getTripsWithDetails',
             'get_trip_info' => 'getTripInfo',
             'delete_trip' => 'deleteTrip',
         );
@@ -81,6 +82,14 @@ class TripsController {
         
         $tripModal = new Trips();
         $response = $tripModal->deleteTrip($tripId);
+
+        wp_send_json_success($response);
+    }
+
+    public function getTripsWithDetails()
+    {
+        $tripModal = new Trips();
+        $response = $tripModal->getTripsWithDetails();
 
         wp_send_json_success($response);
     }

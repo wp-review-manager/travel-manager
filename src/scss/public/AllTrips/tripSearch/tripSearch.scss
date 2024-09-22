@@ -1,5 +1,9 @@
+.alignwide {
+    &.wp-block-template-part {
+        max-width: 100% !important;
+    }
+}
 .trm_container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
     .trm_content{

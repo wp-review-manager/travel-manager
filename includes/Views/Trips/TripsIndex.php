@@ -161,16 +161,14 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                     </div>
                     <div class="trm_dropdown">
                         <form>
-                            <label>Sort :</label>
-                            <select>
-                                <option value="latest" selected>Latest</option>
-                                <option>Most Reviewed</option>
-                                <option>Departure Dates</option>
-                                <option>Price</option>
-                                <option>Low to High</option>
-                                <option>High to Low</option>
-                                <option>A to Z</option>
-                                <option>Z to A</option>
+                            <label><?php echo __('Sort By', 'travel-manager') ?> :</label>
+                            <select id="trip_sort_by">
+                                <option value="latest" selected><?php echo __('Latest', 'travel-manager') ?></option>
+                                <option value="departure_dates"><?php echo __('Departure Dates', 'travel-manager') ?></option>
+                                <option value="price_asc"><?php echo __('Price Low to High', 'travel-manager') ?></option>
+                                <option value="price_desc"><?php echo __('Price High to Low', 'travel-manager') ?></option>
+                                <option value="name_asc"><?php echo __('A to Z', 'travel-manager') ?></option>
+                                <option value="name_desc"><?php echo __('Z to A', 'travel-manager') ?></option>
                             </select>
                         </form>
                     </div>
