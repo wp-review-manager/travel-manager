@@ -20,7 +20,7 @@ class Activities extends Model
         }
     }
 
-    public function getActivities() {
+    public function getActivities($select = ['*']) {
         $per_page = sanitize_text_field(Arr::get($_REQUEST, 'per_page', 0));
         $page = sanitize_text_field(Arr::get($_REQUEST, 'page', 1));
         $search = sanitize_text_field(Arr::get($_REQUEST, 'search', ''));
@@ -28,12 +28,14 @@ class Activities extends Model
         $order = sanitize_text_field(Arr::get($_REQUEST, 'order', 'DESC'));
         $offset = ($page - 1) * $per_page;
 
-        $query = $this->table('tm_trip_activity')->select('*')->where('trip_activity_name', 'LIKE', '%'.$search.'%');
+        $query = $this->table('tm_trip_activity')->select($select)->where('trip_activity_name', 'LIKE', '%'.$search.'%');
         $total = $query->getCount();
         $response = $query->orderBy($orderby, $order)->limit($per_page)->offset($offset)->get();
 
-        foreach ($response as $key => $value) {
-            $response[$key]->images = maybe_unserialize($value->images);
+        if ($select == '*' || (is_array($select) && in_array('images', $select))) {
+            foreach ($response as $key => $value) {
+                $response[$key]->images = maybe_unserialize($value->images);
+            }
         }
 
         $data['total'] = $total;

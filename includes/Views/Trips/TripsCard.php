@@ -30,6 +30,7 @@ class TripsCard
             $trip_details_page = get_option('wp_travel_manager_trip_details_page');
             $discount = round(($packages_price - $packages_selling_price) / $packages_price * 100);
         ?>
+            <div class="trm_loader"></div>
             <div class="trm_category_trips">
                 <div class="trm_trips_details">
                     <figure class="trm_trips_image">

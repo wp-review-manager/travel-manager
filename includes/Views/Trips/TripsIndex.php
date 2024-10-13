@@ -1,10 +1,10 @@
 <?php
 
 namespace WPTravelManager\Views\Trips;
+use WPTravelManager\Classes\ArrayHelper as Arr;
 
 $demoImage = TRM_URL . 'assets/images/girl.jpeg';
 $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
-// dd(isset($_GET['page']));
 ?>
 <div class="trm_container">
     <div class="trm_content">
@@ -22,34 +22,28 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                         <button class="trm_clear_search">Clear all</button>
                     </div>
                     <!-- ===========Destination================= -->
-                    <div class="trm_search_type">
-                        <div class="trm_filter_section_title">
-                            <h3>Destination</h3>
-                            <span class="dashicons dashicons-arrow-down-alt2"></span>
-                        </div>
-                        <div class="trm_filter_section_content">
-                            <ul class="trm_search_terms_list">
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li>
-                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
-                                </li>
-                            </ul>
-                        </div>
+                     <?php if ($total_destinations > 0) : ?>
+                        <div class="trm_search_type">
+                            <div class="trm_filter_section_title">
+                                <h3><?php echo __('Destination', 'travel-manager') ?></h3>
+                                <span class="dashicons dashicons-arrow-down-alt2"></span>
+                            </div>
+                            <div class="trm_filter_section_content">
+                                <ul class="trm_search_terms_list">
+                                    <?php foreach ($destinations as $destination) : ?>
+                                        <li class="">
+                                            <label class="container"><?php echo $destination->place_name ?>
+                                                <input name="destinations" class="trm_trip_filter_input" type="checkbox" value="<?php echo $destination->place_slug ?>">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <!-- <span class="count"><?php echo $destination->count ?></span> -->
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
 
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <!-- ===========Price================= -->
                     <div class="trm_search_type">
                         <div class="trm_filter_section_title">
@@ -57,18 +51,11 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                             <span class="dashicons dashicons-arrow-down-alt2"></span>
                         </div>
                         <div class="trm_price_filter">
-                            <input type="hidden">
-                            <input type="hidden">
-                            <div class="trm_cost_slider_range">
-                                <div class="trm_ui_slider_range"></div>
-                                <span tabindex="0" class="trm_ui_slider_handle"></span>
-                                <span tabindex="0" class="trm_ui_slider_handle"></span>
-                            </div>
+                            <div class="trm_cost_slider_range" id="trm_price-slider"></div>
                             <div class="trm_cost_slider_value">
-                                <span class="trm_min_cost">$3000</span>
-                                <span class="trm_max_cost">$3000</span>
+                                <span class="trm_min_cost">$<span id="trm_price-min"><?php echo $min_price ?></span></span>
+                                <span class="trm_max_cost">$<span id="trm_price-max"><?php echo $max_price ?></span></span>
                             </div>
-
                         </div>
                     </div>
                     <!-- ===========Duration=================== -->
@@ -78,78 +65,62 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                             <span class="dashicons dashicons-arrow-down-alt2"></span>
                         </div>
                         <div class="trm_price_filter">
-                            <input type="hidden">
-                            <input type="hidden">
-                            <div class="trm_cost_slider_range">
-                                <div class="trm_ui_slider_range" style="left: 0%; width: 100%;"></div>
-                                <span tabindex="0" class="trm_ui_slider_handle" style="left: 0px;" data-value="0 Days"></span>
-                                <span tabindex="0" class="trm_ui_slider_handle" style="left: 100%; " data-value="12 Days"></span>
-                            </div>
+                            <div class="trm_cost_slider_range" id="trm_duration-slider"></div>
                             <div class="trm_cost_slider_value">
-                                <span class="trm_min_cost">0 Days</span>
-                                <span class="trm_max_cost">12 Days</span>
+                                <span class="trm_min_cost"><span id="trm_duration-min"><?php echo $min_duration ?></span> Days</span>
+                                <span class="trm_max_cost"><span id="trm_duration-max"><?php echo $max_duration ?></span> Days</span>
                             </div>
-
                         </div>
                     </div>
                     <!-- ===========Activities================= -->
-                    <div class="trm_search_type">
-                        <div class="trm_filter_section_title">
-                            <h3>Activities</h3>
-                            <span class="dashicons dashicons-arrow-down-alt2"></span>
-                        </div>
-                        <div class="trm_filter_section_content">
-                            <ul class="trm_search_terms_list">
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li>
-                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
-                                </li>
-                            </ul>
-                        </div>
+                     <?php if ($total_activities > 0) : ?>
+                        <div class="trm_search_type">
+                            <div class="trm_filter_section_title">
+                                <h3><?php echo __('Activities', 'travel-manager') ?></h3>
+                                <span class="dashicons dashicons-arrow-down-alt2"></span>
+                            </div>
+                            <div class="trm_filter_section_content">
+                                <ul class="trm_search_terms_list">
+                                    <?php foreach ($activities as $activity) : ?>
+                                        <li class="">
+                                            <label class="container"><?php echo $activity->trip_activity_name ?>
+                                                <input name="activities" class="trm_trip_filter_input" type="checkbox" value="<?php echo $activity->trip_activity_slug ?>">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <!-- <span class="count"><?php echo $activity->count ?></span> -->
+                                        </li>
+                                    <?php endforeach; ?>
+                                    <li>
+                                        <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
+                                    </li>
+                                </ul>
+                            </div>
 
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <!-- ===========Trip Types================= -->
-                    <div class="trm_search_type">
-                        <div class="trm_filter_section_title">
-                            <h3>Trip Types</h3>
-                            <span class="dashicons dashicons-arrow-down-alt2"></span>
-                        </div>
-                        <div class="trm_filter_section_content">
-                            <ul class="trm_search_terms_list">
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li class="">
-                                    <label class="container">Bhutan
-                                        <input type="checkbox" value="bhutan">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="count">2</span>
-                                </li>
-                                <li>
-                                    <button class="trm_show_less">Show less <span class="trm_icon dashicons dashicons-arrow-up-alt2"></span></button>
-                                </li>
-                            </ul>
-                        </div>
+                     <?php if ($total_trip_types > 0) : ?>
+                        <div class="trm_search_type">
+                            <div class="trm_filter_section_title">
+                                <h3><?php echo __('Trip Types', 'travel-manger') ?></h3>
+                                <span class="dashicons dashicons-arrow-down-alt2"></span>
+                            </div>
+                            <div class="trm_filter_section_content">
+                                <ul class="trm_search_terms_list">
+                                    <?php foreach ($trip_types as $trip_type) : ?>
+                                        <li class="">
+                                            <label class="container"><?php echo $trip_type->trip_category_name ?>
+                                                <input name="categories" class="trm_trip_filter_input" type="checkbox" value="<?php echo $trip_type->trip_category_slug ?>">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <!-- <span class="count">5</span> -->
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
 
-                    </div>
+                        </div>
+                    <?php endif; ?>
                     <!-- ======================================= -->
                 </div>
             </div>
@@ -164,9 +135,11 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                             <label><?php echo __('Sort By', 'travel-manager') ?> :</label>
                             <select id="trip_sort_by">
                                 <option value="latest" selected><?php echo __('Latest', 'travel-manager') ?></option>
+                                <?php /*
                                 <option value="departure_dates"><?php echo __('Departure Dates', 'travel-manager') ?></option>
                                 <option value="price_asc"><?php echo __('Price Low to High', 'travel-manager') ?></option>
                                 <option value="price_desc"><?php echo __('Price High to Low', 'travel-manager') ?></option>
+                                */ ?>
                                 <option value="name_asc"><?php echo __('A to Z', 'travel-manager') ?></option>
                                 <option value="name_desc"><?php echo __('Z to A', 'travel-manager') ?></option>
                             </select>
@@ -174,7 +147,7 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                     </div>
                     <div class="trm_view_modes">
                         <a href="#"> <span class="menu dashicons  dashicons-menu-alt"></"></span></a>
-                        <a href="#"><span class="menu dashicons  dashicons-screenoptions"></span></a>
+                        <!-- <a href="#"><span class="menu dashicons  dashicons-screenoptions"></span></a> -->
                     </div>
                 </div>
                 <!-- ================================== -->
@@ -182,14 +155,9 @@ $demoImage2 = TRM_URL . 'assets/images/sunflower.jpg';
                     <?php echo (new TripsCard)->render($all_trip) ?>
                 </div>
                 <!-- =================================== -->
-                <div class="trm_pagination">
-                    <p data-trm_page_no="prev" class="trm_all_trips_pag trm_pag_prev trm_pag_disabled"><span class="dashicons dashicons-arrow-left-alt2"></span></p>
-                    <?php for ($i = 1; $i <= $total_page; $i++) : ?>
-                        <p class="trm_all_trips_pag <?php echo  $i == 1 ? 'trm_pag_active' : '' ?>" data-trm_page_no="<?php echo $i; ?>"><?php echo $i ?></p>
-                    <?php endfor; ?>
-                    <p data-trm_page_no="next" class="trm_all_trips_pag trm_pag_next"><span class="dashicons dashicons-arrow-right-alt2"></span></p>
+                <div class="trm_pagination trm_trips_page_pagination">
+                    <?php echo (new Pagination)->render($total_page) ?>
                 </div>
-
             </div>
             <!-- ======================================== -->
         </div>

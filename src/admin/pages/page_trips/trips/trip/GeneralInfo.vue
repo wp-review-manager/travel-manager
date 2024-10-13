@@ -102,7 +102,7 @@
                 <div style="width: 100%" class="input-wrapper">
                     <p class="form-label" for="name">Trip Destinations *</p>
                     <el-select v-model="meta.general.trip_destination" placeholder="Select Booking Status" size="large" style="width: 100%">
-                        <el-option v-for="destination in destinations" :key="destination.value" :label="destination.place_name" :value="destination.place_name" />
+                        <el-option v-for="destination in destinations" :key="destination.value" :label="destination.place_slug" :value="destination.place_slug" />
                     
                     </el-select>
                 </div>

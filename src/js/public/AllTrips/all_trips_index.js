@@ -1,13 +1,17 @@
 (function ($) {
     'use strict';
+
     let selected_page = 1;
+    let filterData = {};
     let sortData = {
         sortBy: 'post_modified',
         order: 'DESC'
-    }
+    };
+
+    // Sorting data
     $(document).ready(function () {
         $('.trm_all_trips_pag').on('click', handlePagination);
-        
+
         $('#trip_sort_by').on('change', function () {
             const sortByFormData = $(this).val();
             if (sortByFormData === 'latest') return;
@@ -21,16 +25,92 @@
             };
             const { sortBy = 'post_modified', order = 'DESC' } = sortByMapping[sortByFormData] || {};
             sortData = { sortBy, order };
-            getAllTripsAjax(selected_page, sortData);
+            getAllTripsAjax(selected_page, sortData, filterData);
         });
     });
-    
+
+    // Filter data
+    $(document).on('change', '.trm_trip_filter_input', function () {
+        handleFilter();
+    });
+
+    // Slider Duration and Price
+    $(document).ready(function($) {
+        // Price Slider
+        let minPrice = +$("#trm_price-min").text();
+        let maxPrice = +$("#trm_price-max").text();
+
+        $("#trm_price-slider").slider({
+            range: true,
+            min: minPrice,
+            max: maxPrice,
+            values: [minPrice, maxPrice],
+            slide: function(event, ui) {
+                $("#trm_price-min").text(ui.values[0]);
+                $("#trm_price-max").text(ui.values[1]);
+            },
+            change: function(event, ui) {
+                handleFilter();  // Call handleFilter when the price slider changes
+            }
+        });
+
+        // Set initial price values
+        $("#trm_price-min").text($("#trm_price-slider").slider("values", 0));
+        $("#trm_price-max").text($("#trm_price-slider").slider("values", 1));
+
+        // Duration Slider
+        let minDuration = +$("#trm_duration-min").text();
+        let maxDuration = +$("#trm_duration-max").text();
+
+        $("#trm_duration-slider").slider({
+            range: true,
+            min: minDuration,
+            max: maxDuration,
+            values: [minDuration, maxDuration],
+            slide: function(event, ui) {
+                $("#trm_duration-min").text(ui.values[0]);
+                $("#trm_duration-max").text(ui.values[1]);
+            },
+            change: function(event, ui) {
+                handleFilter();  // Call handleFilter when the duration slider changes
+            }
+        });
+
+        // Set initial duration values
+        $("#trm_duration-min").text($("#trm_duration-slider").slider("values", 0));
+        $("#trm_duration-max").text($("#trm_duration-slider").slider("values", 1));
+    });
+
+    // Function to handle filtering
+    function handleFilter() {
+        let destinations = $('input[name="destinations"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+        
+        let activities = $('input[name="activities"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        let categories = $('input[name="categories"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        filterData = {
+            price: $('#trm_price-slider').slider('values'),
+            duration: $('#trm_duration-slider').slider('values'),
+            trip_types: categories,
+            destinations,
+            activities,
+        };
+        
+        getAllTripsAjax(selected_page, sortData, filterData);
+    }
 
     function handlePagination() {
         if ($(this).hasClass('trm_pag_disabled')) return;
 
         selected_page = paginate($(this));
-        if (selected_page) getAllTripsAjax(selected_page, sortData);
+        if (selected_page) getAllTripsAjax(selected_page, sortData, filterData);
     }
 
     function paginate($this) {
@@ -58,11 +138,13 @@
         return page;
     }
 
-    function getAllTripsAjax(page, sortData) {
+    function getAllTripsAjax(page, sortData, filterData) {
+        $('.trm_category_trips_wrapper').addClass('trm_loading');
         $.post(window.trm_public.ajax_url, {
             action: 'tm_trips',
             page: page,
             sortData: sortData,
+            filterData: filterData || {},
             per_page: 2,
             route: 'get_trips_with_details',
             response_type: 'json',
@@ -70,12 +152,14 @@
         })
         .done(response => {
             if (response.success) {
-                $('.trm_category_trips_wrapper').empty().html(response.data);
+                $('.trm_category_trips_wrapper').empty().html(response?.data?.tripsHtml);
+                // $('.trm_trips_page_pagination').empty().html(response?.data?.paginationHtml);
             } else {
                 console.error('Error:', response.data.message);
             }
         })
-        .fail(error => console.error('Error:', error));
+        .fail(error => console.error('Error:', error))
+        .always(() => $('.trm_category_trips_wrapper').removeClass('trm_loading'));
     }
 
 })(jQuery);

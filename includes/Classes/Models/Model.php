@@ -206,6 +206,13 @@ class Model
         return $this->db->get_results($query);
     }
 
+    public function getQuery()
+    {
+        $query = "SELECT {$this->getSelects()} FROM {$this->model} {$this->getWhereStatement()} {$this->getOtherStatements()}";
+        $this->reset();
+        return $query;
+    }
+
     public function insert($data)
     {
         try {

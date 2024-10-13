@@ -112,6 +112,8 @@ class ShortcodeRegister {
 
     public function tripSearchShortCode( $atts )
     {
+        wp_enqueue_script('jquery-ui-slider');
+        wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
         wp_enqueue_style('travel_manager_all_trips_css', TRM_URL.'assets/css/all_trips.css', [], TRM_VERSION);
         wp_enqueue_script( 'travel_manager_all_trips_js', TRM_URL.'assets/js/all_trips.js',array('jquery'),TRM_VERSION, false );
    
@@ -121,12 +123,21 @@ class ShortcodeRegister {
         } else {
             return;
         }
-        
         ob_start();
         View::render('Trips/TripsIndex',[
             'all_trip' => $all_trips,
             'total' => $trips['total'],
             'total_page' => ceil($trips['total'] / 2),
+            'activities' => Arr::get($trips, 'activities.activities', []),
+            'destinations' => Arr::get($trips, 'destinations.destinations', []),
+            'total_destinations' => Arr::get($trips, 'destinations.total', 0),
+            'total_activities' => Arr::get($trips, 'activities.total', 0),
+            'min_price' => Arr::get($trips, 'min_price', 0),
+            'max_price' => Arr::get($trips, 'max_price', 0),
+            'min_duration' => Arr::get($trips, 'min_duration', 0),
+            'max_duration' => Arr::get($trips, 'max_duration', 0),
+            'trip_types' => Arr::get($trips, 'trip_types.categories', []),
+            'total_trip_types' => Arr::get($trips, 'trip_types.total', 0),
         ]);
         return ob_get_clean();
      

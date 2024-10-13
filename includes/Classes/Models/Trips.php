@@ -2,9 +2,14 @@
 
 namespace WPTravelManager\Classes\Models;
 
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use WPTravelManager\Classes\ArrayHelper as Arr;
 use WPTravelManager\Classes\Services\TripsServices;
+use WPTravelManager\Classes\Models\Destination;
+use WPTravelManager\Classes\Models\Activities;
+use WPTravelManager\Classes\Models\Categories;
 use WPTravelManager\Views\Trips\TripsCard;
+use WPTravelManager\Views\Trips\Pagination;
 
 class Trips extends Model
 {
@@ -112,10 +117,15 @@ class Trips extends Model
         $sortBy = Arr::get($sortData, 'sortBy', 'post_modified');
         $sortOrder = Arr::get($sortData, 'order', 'DESC');
 
+        // Filter data
+        $filterData = Arr::get($_REQUEST, 'filterData', []);
+        // dd($filterData, Arr::get($filterData, 'destinations', []));
         $filters = array(
-            'destinations' => ['Kathmandu', 'Pokhara'],
-            'price' => ['min' => 100, 'max' => 450],
-            'duration' => ['min' => 2, 'max' => 10]
+            'destinations' => Arr::get($filterData, 'destinations', []),
+            'price' => Arr::get($filterData, 'price', []),
+            'duration' => Arr::get($filterData, 'duration', []),
+            'activities' => Arr::get($filterData, 'activities', []),
+            'trip_types' => Arr::get($filterData, 'trip_types', []),
         );
 
         // Filter by date if start and end dates are provided
@@ -134,29 +144,70 @@ class Trips extends Model
             $query->where('post_title', 'LIKE', "%$search%");
         }
 
+        $min_price = PHP_INT_MAX;
+        $max_price = 0;
+        $min_duration = PHP_INT_MAX; 
+        $max_duration = 0;
         $trips = $query->get();
-
         foreach ($trips as $key => $trip) {
             $post_meta = maybe_unserialize(get_post_meta($trip->ID, 'trip_meta', true));
             $trip->post_meta = $post_meta;
             $trip->shortcode = '[tm_trip id="' . $trip->ID . '"]';
             $trip->preview_url = site_url('?wp_tm_trip_preview=' . $trip->ID);
+
+            // Assume price and duration are stored as 'price' and 'duration' keys in post_meta
+            if (isset($post_meta['packages'][0]['pricing'][0]['selling_price'])) {
+                $trip_price = (float) $post_meta['packages'][0]['pricing'][0]['selling_price']; // Cast to float in case it's stored as string
+
+                // Update min and max prices
+                $min_price = min($min_price, $trip_price);
+                $max_price = max($max_price, $trip_price);
+            }
+
+            if (isset($post_meta['general']['duration'])) {
+                $trip_duration = (int) Arr::get($post_meta, 'general.duration.duration', 0);
+
+                // Update min and max durations
+                $min_duration = min($min_duration, $trip_duration);
+                $max_duration = max($max_duration, $trip_duration);
+            }
         }
+
+        if ($min_price === PHP_INT_MAX) $min_price = 0; // Fallback to 0 if no price was found
+        if ($min_duration === PHP_INT_MAX) $min_duration = 0; // Fallback to 0 if no duration was found
+        // Now you have $min_price, $max_price, $min_duration, and $max_duration
         // Filter/sort trips based on meta like price, duration, etc.
         $filter_trips = $this->filterAndSortTripsByMeta($trips, $filters, $sortBy, $sortOrder, $limit, $offset);
-
-        // Total trips count
-        $total = TMDBModel('posts')->where('post_type', 'tm_trip')->getCount();
 
         if ($response_type == 'json') {
             ob_start();
             (new TripsCard())->render($filter_trips['trips']);
-            return ob_get_clean();
+            $tripsHtml = ob_get_clean();
+
+            // ob_start();
+            // (new Pagination())->render(ceil(Arr::get($filter_trips, 'total', 0) / 2));
+            // $paginationHtml = ob_get_clean();
+
+            wp_send_json_success(array(
+                'tripsHtml' => $tripsHtml,
+                // 'paginationHtml' => $paginationHtml,
+            ));
         }
+
+        $destinations = (new Destination())->getDestination(['place_name', 'id', 'place_slug']);
+        $activities = (new Activities())->getActivities(['trip_activity_name', 'id', 'trip_activity_slug']);
+        $trpTypes = (new Categories())->getCategories();
 
         return [
             'all_trips' => $filter_trips['trips'],
-            'total' => $filter_trips['total'],
+            'total' => Arr::get($filter_trips, 'total', 0),
+            'activities' => $activities,
+            'destinations' => $destinations,
+            'min_price' => $min_price,
+            'max_price' => $max_price,
+            'min_duration' => $min_duration,
+            'max_duration' => $max_duration,
+            'trip_types' => $trpTypes
         ];
     }
 
@@ -173,10 +224,10 @@ class Trips extends Model
             // Check for duration filter
             if (!empty($filters['duration'])) {
                 $duration = Arr::get($tripMeta, 'general.duration.duration', 0);
-                if (!empty($filters['duration']['min']) && $duration < $filters['duration']['min']) {
+                if (!empty($filters['duration'][0]) && $duration < $filters['duration'][0]) {
                     return false;
                 }
-                if (!empty($filters['duration']['max']) && $duration > $filters['duration']['max']) {
+                if (!empty($filters['duration'][1]) && $duration > $filters['duration'][1]) {
                     return false;
                 }
             }
@@ -184,10 +235,36 @@ class Trips extends Model
             // Check for price filter
             if (!empty($filters['price'])) {
                 $price = Arr::get($tripMeta, 'packages.0.pricing.0.selling_price');
-                if (!empty($filters['price']['min']) && $price < $filters['price']['min']) {
+                if (!empty($filters['price'][0]) && $price < $filters['price'][0]) {
                     return false;
                 }
-                if (!empty($filters['price']['max']) && $price > $filters['price']['max']) {
+                if (!empty($filters['price'][1]) && $price > $filters['price'][1]) {
+                    return false;
+                }
+            }
+
+            // Check for activities filter
+            // if (!empty($filters['activities'])) {
+            //     $activities = Arr::get($tripMeta, 'general.activities', []);
+            //     foreach ($filters['activities'] as $activity) {
+            //         if (!in_array($activity, $activities)) {
+            //             return false;
+            //         }
+            //     }
+            // }
+
+            // Check for destinations filter
+            if (!empty($filters['destinations'])) {
+                $destination = Arr::get($tripMeta, 'general.trip_destination', "");
+                if (!in_array($destination, $filters['destinations'])) {
+                    return false;
+                }
+            }
+
+            // Check for trip types filter
+            if (!empty($filters['trip_types'])) {
+                $trip_type = Arr::get($tripMeta, 'general.trip_type', "");
+                if (!in_array($trip_type, $filters['trip_types'])) {
                     return false;
                 }
             }

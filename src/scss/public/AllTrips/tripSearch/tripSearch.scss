@@ -368,224 +368,247 @@
             }
         
         }
-        .trm_category_trips{
-            margin-bottom: 32px;
-            .trm_trips_details{
-                padding: 32px 24px 24px;
-                box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 2px rgba(0, 0, 0, .06), 0px 0px 1px rgba(0, 0, 0, .04);
-                display: flex;
-                flex-wrap: wrap;
-                border-radius: 4px;
-                background-color: #fff;
-                transition: all .5s ease;
-                overflow: visible;
-                height: 100%;
-                &:hover{
-                    box-shadow: 0 10px 15px rgba(0, 0, 0, .1);
+        .trm_category_trips_wrapper {
+            position: relative;
+            &.trm_loading {
+                opacity: 0.5;
+                .trm_loader {
+                    border: 16px solid #f3f3f3; /* Light grey */
+                    border-top: 16px solid #3498db; /* Blue */
+                    border-radius: 50%;
+                    width: 120px;
+                    height: 120px;
+                    animation: spin 2s linear infinite;
+                    position: absolute;
+                    left: 40%;
+                    top: 40vh;
+                  }
+                  
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
                 }
-                .trm_trips_image{
-                    flex-basis: 40%;
-                    max-width: 40%;
-                    height: 220px;
-                    overflow: hidden;
-                    border-radius: 4px;
-                    @media only screen and (max-width: 831px) {
-                        flex-basis: 100%;
-                        max-width: 100%;
-                        height: 220px;
-                    }
-                    img{
-                        width: 100%;
-                        height: 100%;
-                        top: 0;
-                        left: 0;
-                        transition: all 1s ease; 
-                        &:hover{
-                            transform: scale(1.1);
-                        }               
-                    }
-                }
-                .trm_category_trip_content{
-                    flex: 0 0 60%;
-                    max-width: 60%;
-                    padding-left: 24px;
-                    padding-top: 0;
-                    @media only screen and (max-width: 831px) {
-                        flex-basis: 100%;
-                        max-width: 100%;
-                        padding-left: 0px;
-                    }
-                    .trm_category_title{
-                        margin-top: 0;
-                        padding: 0 20px;
-                        align-items: flex-start;
-                        @media only screen and (max-width: 831px) {
-                            padding: 0 0px;
-                        }
-                        h2{
-                            font-size: 22px;
-                            font-weight: 600;
-                            margin: 20px 0 12px;
-                            a{
-                                text-decoration: none;
-                                color:$tm-dark-600 ;
-                                transition: all ease .3s;
-                                &:hover{
-                                    color: $tm-primary-500;
-                                }
-                            }
-                        }
-                    }
-                    .trm_category_trip_detail{
-                        padding: 0 20px 25px;
-                        @media only screen and (max-width: 831px) {
-                            padding: 0 0px 25px;
-                        }
-                        .trm_trip_category_price{
-                            display: flex;
-                            flex-wrap: wrap;
-                            padding: 10px 0px;
-                            .trm_trip_desti{
-                                margin-bottom: 8px;
-                                flex-basis: 50%;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                                .trm_trip_loc{
-                                    margin-bottom: 12px;
-                                }
-                                    .icon{
-                                        color: $tm-primary-500;
-                                        font-size: 18px;
-                                        font-weight: 400;
-                                        line-height: 1.5;
-                                    
-                                    }
-                                    .trm_name{
-                                        font-size: 16px;
-                                        line-height: 1.5;
-                                        color:$tm-dark-300 ;
-                                        font-weight: 400;
-                                    }
-                                
-                            }
-                            .trm_trip_budget{
-                                flex-basis: 50%;
-                                border-left: 1px solid $tm-neutral-800;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                                padding-left: 48px;
-                                max-width: 40%;
-                                @media only screen and (max-width: 1220px) {
-                                    padding-left: 24px;
-                                }
-                                @media only screen and (max-width: 575px) {
-                                    max-width: none;
-                                    padding-left: 10px;
-                                }
-                                .trm_trip_discount{
-                                    display: inline-block;
-                                    font-size: .72em;
-                                    font-weight: 600;
-                                    line-height: 1;
-                                    padding: 5px 44px;
-                                    border-radius: 14px;
-                                    background-color: $tm-warning-500;
-                                    color: #fff;
-                                    margin-bottom: 16px;
-                                    vertical-align: top;
-                                    white-space: nowrap;
-                                    span{
-                                        color: #fff;
-                                        display: flex;
-                                        font-size: 1.3em;
-                                        justify-content: center;                                    
-                                        font-weight: 600;
-                                        line-height: 1;                                    
-                                    }
-                                }
-                                .trm_price_holder{
-                                    display: inline-flex;
-                                    flex-wrap: wrap;
-                                    align-items: flex-end;
-                                    .trm_actual_price{
-                                        font-size: 32px;
-                                        line-height: 1;
-                                        font-weight: 600;
-                                        color: $tm-dark-600;
-                                    }
-                                    .trm_striked_price{
-                                        text-decoration: line-through;
-                                        font-size: 18px;
-                                        opacity: .4;
-                                        margin-top: 5px;
-                                        margin-left: 8px;
-                                        color:$tm-dark-600;
-                                    }
-                                }
-    
-                            }
-                        }
-                        .trm_trip_desc{
-                            line-height: 1.5;
-                            font-size: 18px;
-                            margin-top: 24px;
-                            color: $tm-dark-700;
-                        }
-                    }
-                }
-                .trm_trip_aval_time{
-                    padding: 0;
-                    margin-top: 32px;
-                    padding-top: 22px;
-                    border-top: 1px solid $tm-neutral-800;
-                    gap: 16px;
-                    width: 100%;
+            }
+
+            .trm_category_trips{
+                margin-bottom: 32px;
+                .trm_trips_details{
+                    padding: 32px 24px 24px;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 2px rgba(0, 0, 0, .06), 0px 0px 1px rgba(0, 0, 0, .04);
                     display: flex;
                     flex-wrap: wrap;
-                    align-items: center;
-                    justify-content: space-between;
-                    .trm_category_trip_inner{
-                        display: flex;
-                        flex-direction: column;
-                        margin-bottom: 0;
-                        span{
-                            font-size: 14px;
-                            line-height: inherit;
-                            color: $tm-neutral-1000;
-                            font-style: normal;
-                            margin: 0;
-                            width: 100%;
+                    border-radius: 4px;
+                    background-color: #fff;
+                    transition: all .5s ease;
+                    overflow: visible;
+                    height: 100%;
+                    &:hover{
+                        box-shadow: 0 10px 15px rgba(0, 0, 0, .1);
+                    }
+                    .trm_trips_image{
+                        flex-basis: 40%;
+                        max-width: 40%;
+                        height: 220px;
+                        overflow: hidden;
+                        border-radius: 4px;
+                        @media only screen and (max-width: 831px) {
+                            flex-basis: 100%;
+                            max-width: 100%;
+                            height: 220px;
                         }
-                        ul{
-                            display: flex;
-                            flex-wrap: wrap;
-                            list-style: none;
-                            padding: 0;
-                            li{
-                                font-size: 14px;
-                                margin-right: 15px;
-                                color:$tm-dark-600 ;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            transition: all 1s ease; 
+                            &:hover{
+                                transform: scale(1.1);
+                            }               
+                        }
+                    }
+                    .trm_category_trip_content{
+                        flex: 0 0 60%;
+                        max-width: 60%;
+                        padding-left: 24px;
+                        padding-top: 0;
+                        @media only screen and (max-width: 831px) {
+                            flex-basis: 100%;
+                            max-width: 100%;
+                            padding-left: 0px;
+                        }
+                        .trm_category_title{
+                            margin-top: 0;
+                            padding: 0 20px;
+                            align-items: flex-start;
+                            @media only screen and (max-width: 831px) {
+                                padding: 0 0px;
+                            }
+                            h2{
+                                font-size: 22px;
+                                font-weight: 600;
+                                margin: 20px 0 12px;
+                                a{
+                                    text-decoration: none;
+                                    color:$tm-dark-600 ;
+                                    transition: all ease .3s;
+                                    &:hover{
+                                        color: $tm-primary-500;
+                                    }
+                                }
+                            }
+                        }
+                        .trm_category_trip_detail{
+                            padding: 0 20px 25px;
+                            @media only screen and (max-width: 831px) {
+                                padding: 0 0px 25px;
+                            }
+                            .trm_trip_category_price{
+                                display: flex;
+                                flex-wrap: wrap;
+                                padding: 10px 0px;
+                                .trm_trip_desti{
+                                    margin-bottom: 8px;
+                                    flex-basis: 50%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    .trm_trip_loc{
+                                        margin-bottom: 12px;
+                                    }
+                                        .icon{
+                                            color: $tm-primary-500;
+                                            font-size: 18px;
+                                            font-weight: 400;
+                                            line-height: 1.5;
+                                        
+                                        }
+                                        .trm_name{
+                                            font-size: 16px;
+                                            line-height: 1.5;
+                                            color:$tm-dark-300 ;
+                                            font-weight: 400;
+                                        }
+                                    
+                                }
+                                .trm_trip_budget{
+                                    flex-basis: 50%;
+                                    border-left: 1px solid $tm-neutral-800;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    padding-left: 48px;
+                                    max-width: 40%;
+                                    @media only screen and (max-width: 1220px) {
+                                        padding-left: 24px;
+                                    }
+                                    @media only screen and (max-width: 575px) {
+                                        max-width: none;
+                                        padding-left: 10px;
+                                    }
+                                    .trm_trip_discount{
+                                        display: inline-block;
+                                        font-size: .72em;
+                                        font-weight: 600;
+                                        line-height: 1;
+                                        padding: 5px 44px;
+                                        border-radius: 14px;
+                                        background-color: $tm-warning-500;
+                                        color: #fff;
+                                        margin-bottom: 16px;
+                                        vertical-align: top;
+                                        white-space: nowrap;
+                                        span{
+                                            color: #fff;
+                                            display: flex;
+                                            font-size: 1.3em;
+                                            justify-content: center;                                    
+                                            font-weight: 600;
+                                            line-height: 1;                                    
+                                        }
+                                    }
+                                    .trm_price_holder{
+                                        display: inline-flex;
+                                        flex-wrap: wrap;
+                                        align-items: flex-end;
+                                        .trm_actual_price{
+                                            font-size: 32px;
+                                            line-height: 1;
+                                            font-weight: 600;
+                                            color: $tm-dark-600;
+                                        }
+                                        .trm_striked_price{
+                                            text-decoration: line-through;
+                                            font-size: 18px;
+                                            opacity: .4;
+                                            margin-top: 5px;
+                                            margin-left: 8px;
+                                            color:$tm-dark-600;
+                                        }
+                                    }
+        
+                                }
+                            }
+                            .trm_trip_desc{
+                                line-height: 1.5;
+                                font-size: 18px;
+                                margin-top: 24px;
+                                color: $tm-dark-700;
                             }
                         }
                     }
-                    .trm_view_btn{
-                        background: $tm-primary-500;
-                        border:1px solid $tm-primary-500;
-                        padding: 13px 25px;
-                        border-radius: 35px;
-                        color: $tm_text_light;
-                        font-size: 14px;
-                        font-weight: 600;
-                        text-transform: uppercase;   
-                        text-decoration: none;     
-                        &:hover{
-                            background-color:$tm_text_light ;
-                            color: $tm-primary-500 ;
-                        }            
+                    .trm_trip_aval_time{
+                        padding: 0;
+                        margin-top: 32px;
+                        padding-top: 22px;
+                        border-top: 1px solid $tm-neutral-800;
+                        gap: 16px;
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: space-between;
+                        .trm_category_trip_inner{
+                            display: flex;
+                            flex-direction: column;
+                            margin-bottom: 0;
+                            span{
+                                font-size: 14px;
+                                line-height: inherit;
+                                color: $tm-neutral-1000;
+                                font-style: normal;
+                                margin: 0;
+                                width: 100%;
+                            }
+                            ul{
+                                display: flex;
+                                flex-wrap: wrap;
+                                list-style: none;
+                                padding: 0;
+                                li{
+                                    font-size: 14px;
+                                    margin-right: 15px;
+                                    color:$tm-dark-600 ;
+                                }
+                            }
+                        }
+                        .trm_view_btn{
+                            background: $tm-primary-500;
+                            border:1px solid $tm-primary-500;
+                            padding: 13px 25px;
+                            border-radius: 35px;
+                            color: $tm_text_light;
+                            font-size: 14px;
+                            font-weight: 600;
+                            text-transform: uppercase;   
+                            text-decoration: none;     
+                            &:hover{
+                                background-color:$tm_text_light ;
+                                color: $tm-primary-500 ;
+                            }            
+                        }
+                    
                     }
-                
                 }
             }
         }
@@ -600,4 +623,34 @@
     flex-wrap: wrap;
     gap: 20px;
     align-items: center;
+}
+
+
+// css for slider 
+.trm_cost_slider_range {
+    margin: 10px 0;
+}
+
+.ui-slider-horizontal {
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    position: relative;
+}
+
+.ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    top: -6px;
+}
+
+.trm_cost_slider_value {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 10px;
 }
